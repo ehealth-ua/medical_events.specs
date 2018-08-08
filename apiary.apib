@@ -1,0 +1,1089 @@
+FORMAT: 1A
+HOST: http://ehealth.edenlabllc.com/
+
+# eHealth Medical Events API
+
+# Group Medical Events
+
+## Visit Data Package [/api/patients/{id}/visits]
+
+### Submit Visit Package [POST]
+
+Using this web service you can submit:
+
+Object| Required| Part of Signed content
+-------|---------|------
+Episode| 0-*| false
+Visit| 0-1 | false
+Encounter| 1-* |true
+Condition| 0-* |true
+Observation| 0-* |true
+Allergy intolerance| 0-* |true
+Immunization| 0-* |true
+
++ Request Package with new episode (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + include `Submit_Visit`
+        
+
+    
+### Dummy Encounter [POST]
+This chapter describes different examples of Encounters that could be submitted as a signed content in Submit Visit web service.
+
++ Request Encounter with new Condition (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (Encounter_Request)
+        
+#### Dummy Observation [POST]
+Here you can find additional examples of Observations that could be submitted as a part of signed content.
+
++ Request Oservation (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Observation_Base`)
+    
+## Episode of Care [/api/patient/{id}/episodes{?page,page_size}]
+
+### Get Episodes with search params [GET]
++ Parameters
+    + `page`: 2 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Episode_Of_Care_Response`)
+    
+
+## Encounter [/api/patient/{id}/episodes/{id}/encounters{?page,page_size}]
+
+### Get Encounters[GET]
++ Parameters
+    + `page`: 2 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Episode_Of_Care_Response`)
+
+## Conditions [/api/patients/{id}/episodes/{id}/conditions{?id,page,page_size}]
+### Get Conditions by Episode [GET]
++ Parameters
+    + `id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677`
+    + `page`: 1 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `encounter_id` : `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (array[`Condition_Response`])
+    
+
+### Get Conditions by Encounter [GET /api/patients/{id}/episodes/{id}/encounters/{id}/conditions{?page,page_size}]
++ Parameters
+    + `id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677`
+    + `page`: 1 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (array[`Condition_Response`])
+
+
+
+## Observation [/api/patients/{id}/observations{?page,page_size}]
+### Get Observations by Patient[GET]
++ Parameters
+    + `page`: 1 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `episode_id`: `95a9e15b-b71b-4caf-8f2e-ff247e8a5639`(string, optional)
+    + `encounter_id`: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, optional)
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Observation_Response`)
+
+### Get Observations by Episode[GET /api/patients/{id}/episodes/{id}/observations{?page,page_size}]
++ Parameters
+    + `page`: 1 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `encounter_id`: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, optional)
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Observation_Response`)
+
+### Get Observations by Encounter[GET /api/patients/{id}/episodes/{id}/encounters/{id}/observations{?page,page_size}]
++ Parameters
+    + `page`: 1 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Observation_Response`)
+
+## Allergy Intolerance [/api/patient/{id}/episodes/{id}/allergy_intolerance{?page,page_size}]
+### Get Allergy Intolerances[GET]
++ Parameters
+    + `page`: 2 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Episode_Of_Care_Response`)
+
+## Immunization [/api/patient/{id}/episodes/{id}/immunization{?page,page_size}]
+### Get Immunizations[GET]
++ Parameters
+    + `page`: 2 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Episode_Of_Care_Response`)
+
+
+
+# Data Structures
+
+## Responses
+### `Response_Collection`
++ meta (Response__Meta, fixed-type)
++ data (array[], fixed-type)
++ paging (`Response__Pagination`, fixed-type)
+
+### `Response_Collection_OK`
++ meta (Response__Meta, fixed-type)
++ data (array[], fixed-type)
+
+### `Response_OK`
++ meta (Response__Meta, fixed-type)
++ data (object, fixed-type)
+
+### `Response__Process_OK`
++ meta (Response__Meta, fixed-type)
++ data (object, fixed-type)
+    + affordances (array[Affordance], required) - List of available affordances and their URLs
+
+### `Response_verification_by_phone`
++ `phone_number`: `+380508887700` (string, required)
+
+### `Response_Error`
++ meta (Response__Meta, fixed-type)
+    + code: 400 (number)
++ error (Response__Error, fixed-type)
+
+### `Response__Meta`
++ code: 200 (number) - HTTP response code.
++ url: http://example.com/resource (string) - URL to requested resource.
++ type (enum) - Type of data that is located in `data` attribute.
+    - object (string) - `data` attribute is a JSON object.
+    - list (string) - `data` attribute is a list.
++ `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
+
+### `Response__Error`
++ type: type_atom (string) - Atom that represents error type.
++ message: Error description (string) - Human-readable error message. This is for developers, not end-users.
+
+### `Response__Error_DuplicateEntity`
++ type: `object_already_exists` (string) - Atom that represents error type.
++ message: This API already exists (string) - Human-readable error message. This is for developers, not end-users.
+
+### `Response__Error_ValidationFailed`
++ type: validation_failed (string) - type of an error.
++ message: Validation failed. You can find validators description at our API Manifest: http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors. (string)
++ invalid (array)
+    + `entry_type`: `json_data_proprty` (string) - Type of error.
+    + entry: $.cvv (string) - JSON Path to an invalid property.
+    + rules (array)
+        + rule: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
+        + params (array) - Validation Parameters.
+
+### `Response__Pagination`
++ page_number: 2 (number) - Page number.
++ page_size: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
++ total_entries: 1000 (number) - Total number of objects in collection.
++ total_pages: 23 (number) - Total number of pages.
+
+### `Affordance`
++ action (string, required) - Affordance action.
++ url (string, required)
+
+### `Reference`
++ identifier (Identifier)
+
+### `Identifier`
++ `type`(Codeable_Concept, optional) - Description of identifier
++ `value` : `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required)- The value that is unique
+
+### `Codeable_Concept`
++ `coding` (array, required, fixed-type)
+    + (object)
+        + include `Coding`
+
+
+### `Coding`
++ system : `http://ehealth.edenlabllc.com/` (string, optional)
++ code : `patient` (string, required) - Symbol in syntax defined by the system
++ display : `Patient` (string, optional)- Representation defined by the system
+
+### `Period`
++ start : `2018-08-02T10:45:16.000Z`(string, required) - C? Starting time with inclusive boundary
++ end : `2018-08-02T11:00:00.000Z`(string, optional) - C? End time with inclusive boundary, if not ongoing
+
+### `Quantity`
++ value : `13,5` (number, required)
++ comparator : `>` (string, optional)
++ unit : `mg` (string, optinal)
++ system : `http:\\snomed` (string, optional)
++ code: `mg` (string, optional)
+        
+
+### `Range`
++ low (Quantity, required)
++ high (Quantity, required)
+
+## Episode Of Care
+
+### `Episode_Of_Care_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `type`: `Первинна допомога` (string, required)
++ `status`: `active`
+
+                    
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
+            
++ managing_organization (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    - display (string)
+            
++ period (Period, required)
+    - end (string, optional)
++ care_manager (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)
+                   
+            
+
+
+### `Episode_Of_Care_Request`
++ include `Episode_Of_Care_Base`
+
+### `Episode_Of_Care_Response`
++ include `Episode_Of_Care_Base`
+
+        
+##Visit
+
+### `Visit_Body`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ period (Period, required)
+    + end  : `2018-08-02T10:45:16.000Z` (string, required)
+
+### `Submit_Visit`
+
++ `episodes` (array, optional, fixed-type)
+    + (object)
+        + include `Episode_Of_Care_Request`
++ `visits` (array, optional, fixed-type)
+    + (object)
+        + include `Visit_Body`
++ `signed_data` (array, required, fixed-type)
+    + (string)
+        + `ew0KICAicGVyaW9kIjogew0KIC...`
+    + (string)
+        + `ICAgICAgICAgImNvZGUiOiAiVDQ...`
+
+
+
+## Diagnosis
+
+### `Diagnosis_New_Condition`
++ condition (Condition_Request, optional) - should be filled one of: condition or condition_id
++ `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
+    + coding (array, fixed-type)
+        + (Coding)
+            + `system`: `http://hl7.org/fhir/diagnosis-role`,
+            + `code`: `CC`,
+            - `display`(string)
+    
++ rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
+
+### `Diagnosis_Referrence_Condition_2`
+
++ `condition` (Reference, optional) - should be filled one of: condition or condition_id
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `condition` (string)
+                    - display (string)
+
++ `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
+    + coding (array, fixed-type)
+        + (Coding)
+            + `system`: `??`,
+            + `code`: `основний`,
+            - `display` (string)
++ rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
+
+### `Diagnosis_Referrence_Condition`
+
++ `condition` (Reference, optional) - should be filled one of: condition or condition_id
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `condition` (string)
+                    - display (string)
+
++ `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
+    + coding (array, fixed-type)
+        + (Coding)
+            + `system`: `??`,
+            + `code`: `основний`,
+            - `display` (string)
++ rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
+
+### `Diagnosis_Response`
+
+
+
+
+## Encouner
+### `Encounter_Base` (object)
++ id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
++ `status`: `finised`  (string, required)                 
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
+               
++ `episode` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
+                    - display (string)
++ `context` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `visit` (string)
+                    - display (string)
+            
++ period (Period, required)
++ class  (Coding, required)
+    + system : `http://hl7.org/fhir/v3/ActCode` (string)
+    + code: `AMB` (string)
+    - display (string)
+    
++ type (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `http://snomed.info/sct` (string)
+            + code: `11429006` (string)
+            - display (string)
++ incoming_referrals 
++ reasons (array,required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `??/ICPC2 (string)
+             + code: `A02` (string)
+             - display (string)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `??/ICPC2 (string)
+                + code: `D09` (string)
+                - display (string)
+        
++ diagnosis (array, required, fixed-type)
+    + (`Diagnosis_Referrence_Condition`)
+        
+        
++ actions (array, required, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `??/ICPC2 (string)
+             + code: `T47` (string)
+             - display (string)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `??/ICPC2 (string)
+             + code: `T50` (string)
+             - display (string)
++ division (Reference, required, fixed-type)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+                    - display (string)
+
+
+### `Encounter_Request` 
++ encounters (array, required, fixed-type)
+    + (`Encounter_Base`)
++ conditions (array, required, fixed-type)
+    + (`Condition_Request`)
+    + (`Condition_Request_2`)
++ observations (array, optional, fixed-type)
+    + (`Observation_Base`)    
++ allergy_intolerances (array, optional, fixed-type)
++ immunizations (array, optional, fixed-type)
+
+
+                
+
+
+###  `Encounter_Response`
++ include `Encounter_Base`
+
+## Condition
+### `Condition_Request`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
++ `context` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    - display (string)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `??/ICPC2 (string)
+            + code: `A89` (string)
+            - display (string)
++ clinical_status: `active` (string, required)
++ verification_status: `provisional` (string, required)
++ severity (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `55604002` (string)
+            - display (string)
+    
++ body_sites (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: ` http://snomed.info/sct` (string)
+                + code: `181414000` (string)
+                - display (string)   
+    
++ onset_date: `2018-08-02` (string, required)
++ stage (object, optional)
+    + summary (Codeable_Concept, required)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: ` http://snomed.info/sct` (string)
+                + code: `14803004` (string)
+                - display (string)
++ evidences
+    + code (array, optional, fixed-type)
+        + (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: ` http://snomed.info/sct` (string)
+                    + code: `169068008` (string)
+                    - display (string)
+    + detail (array, optional, fixed-type)
+        + (Reference)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `observation` (string)
+                            - display (string)
+        
+
+
+### `Condition_Request_2`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
++ `context` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    - display (string)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `??/ICPC2 (string)
+            + code: `K87` (string)
+            - display (string)
++ clinical_status: `active` (string, required)
++ verification_status: `provisional` (string, required)
++ severity (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `55604002` (string)
+            - display (string)
+    
++ body_sites (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: ` http://snomed.info/sct` (string)
+                + code: `181414000` (string)
+                - display (string)   
+    
++ onset_date: `2018-08-02` (string, required)
++ stage (object, optional)
+    + summary (Codeable_Concept, required)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: ` http://snomed.info/sct` (string)
+                + code: `14803004` (string)
+                - display (string)
++ evidences
+    + code (array, optional, fixed-type)
+        + (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: ` http://snomed.info/sct` (string)
+                    + code: `169068008` (string)
+                    - display (string)
+    + detail (array, optional, fixed-type)
+        + (Reference)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `observation` (string)
+                            - display (string)
+        
+
+
+### `Condition_Response`
++ id: `6fe6d880-f100-4e39-a278-1d14eb8472ef` (string, required)
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
++ `context` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    - display (string)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `ICPC2/Condition` (string)
+            + code: `K86` (string)
+            + display: `Гіпертонія неускладнена` (string)
++ clinical_status: `active` (string, required)
++ verification_status: `provisional` (string, required)
++ severity (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `24484000` (string)
+            + display: `Severe` (string)
+    
++ body_sites (array, optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: ` http://snomed.info/sct` (string)
+             + code: `181414000` (string)
+             + display: `Kidney` (string)   
+    
++ onset_date: `2018-08-02` (string, required)
++ stage (object, optional)
+    + summary (Codeable_Concept, required)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: ` http://snomed.info/sct` (string)
+                + code: `14803004` (string)
+                + display: `Temporary` (string)
++ evidences
+    + code (array, optional)
+        + (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: ` http://snomed.info/sct` (string)
+                    + code: `169068008` (string)
+                    + display: `CT of neck` (string)
+    + detail (array, optional, fixed-type)
+        + (Reference)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `observation` (string)
+                            - display (string)
+        
+
+
+
+
+## Observation
+
+### `Observation_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `valid` (string, required)
++ `context` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    - display (string)
++ based_on (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `referral` (string)
+                    - display (string)
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
++ category (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `vital_signs` (string)
+            - display (string)
+
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `10569-2` (string)
+            - display (string)
+
+- One Of
+    + effective_date_time: `2018-08-02` (string, optional)
+    + effective_period (Period, optional)
++ issued: `2018-08-02T10:45:16.000Z` (string, required)
++ performer (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)
+
++ interpretation (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `L` (string)
+            - display (string)
+    
++ comment: `Some comment` (string, optional)
++ body_side: 
+     + coding (array, fixed-type)
+        + (Coding)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `1341001:272741003=7771000` (string)
+            - display (string)
+
++ method (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `255459008` (string)
+            - display (string)
+
+- One Of
+    + value_quantity (Quantity, required)
+    + value_codeable_concept (Codeable_Concept, required)
+    + value_sampled_data (object, required)
+        + origin (number, optional) //SimpleQuantity Zero value and units
+        + period (number, optional) // decimal Number of milliseconds between samples
+        + factor (number, optional) // decimal Multiply data by this before adding to origin
+        + lowerLimit (number, optional)// decimal Lower limit of detection
+        + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+        + dimensions (number, optional) // positiveInt Number of sample points at each time point
+        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+    + value_string (string, required)
+    + value_boolean (boolean, required)
+    + value_range (Range, required, fixed-type)
+    + value_ratio (object, required)//Need an example 
+        + numerator (Quantity, required)
+        + denominator (Quantity, required)
+    + value_time (string, required)
+    + value_date_time (string, required)
+    + value_period (Period, required)
++ reference_range (array, optional, fixed-type)
+    + (object)
+        + low (Quantity, optional)
+        + high (Quantity, optional)
+            + value: `27,5` (number, required)
+            + comparator: `<` (string, required)
+        + type (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: ` http://snomed.info/sct` (string)
+                    + code: `normal` (string)
+                    - display (string)    
+        + applies_to (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: ` http://snomed.info/sct` (string)
+                    + code: `male` (string)
+                    - display (string) 
+        + age (Range, optional)
+            + low (Quantity, optional)
+                + value : `18` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `years` (string, optinal)
+                - system  (string, optional)
+                - code (string, optional)
+            + high (Quantity, optional)
+                + value : `35` (number, required)
+                + comparator : `<` (string, optional)
+                + unit : `years` (string, optinal)
+                - system (string, optional)
+                - code (string, optional)
+        + text: `Some text` (string, optional)
++ component (array, optional, fixed-type)
+    + (object)
+        + code (Codeable_Concept, required)
+        - One Of
+            + value_quantity (Quantity, required)
+            + value_codeable_concept (Codeable_Concept, required)
+            + value_sampled_data (object, required)
+                + origin (number, optional) //SimpleQuantity Zero value and units
+                + period (number, optional) // decimal Number of milliseconds between samples
+                + factor (number, optional) // decimal Multiply data by this before adding to origin
+                + lowerLimit (number, optional)// decimal Lower limit of detection
+                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+                + dimensions (number, optional) // positiveInt Number of sample points at each time point
+                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+            + value_string (string, required)
+            + value_boolean (boolean, required)
+            + value_range (object, required, fixed-type)
+                + low (Quantity, required)
+                + high (Quantity, required)
+            + value_ratio (object, required)//Need an example 
+                + numerator (Quantity, required)
+                + denominator (Quantity, required)
+            + value_time (string, required)
+            + value_date_time (string, required)
+            + value_period (Period, required)
+        + interpretation (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `http://hl7.org/fhir/v2/0078` (string)
+                    + code: `L` (string)
+                    - display (string)
+        + reference_range (array, optional, fixed-type)
+            + (object)
+                + low (Quantity, optional)
+                + high (Quantity, optional)
+                    + value: `27,5` (number, required)
+                    + comparator: `<` (string, required)
+                    + type (Codeable_Concept, optional)
+                        +  coding (array, fixed-type)
+                            + (Coding)
+                                + system: ` http://snomed.info/sct` (string)
+                                + code: `normal` (string)
+                                - display (string)    
+                + applies_to (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: ` http://snomed.info/sct` (string)
+                            + code: `male` (string)
+                            - display (string) 
+                + age (Range, optional)
+                    + low (Quantity, optional)
+                        + value : `18` (number, required)
+                        + comparator : `>` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system  (string, optional)
+                        - code (string, optional)
+                    + high (Quantity, optional)
+                        + value : `35` (number, required)
+                        + comparator : `<` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system (string, optional)
+                        - code (string, optional)
+                
+                + text: `Some text` (string, optional)
+
+### `Observation_Response`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `valid` (string, required)
++ `context` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    - display (string)
++ based_on (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `referral` (string)
+                    - display (string)
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
++ category (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `vital_signs` (string)
+            - display (string)
+
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `10569-2` (string)
+            + display (string)
+
+- One Of
+    + effective_date_time: `2018-08-02` (string, optional)
+    + effective_period (Period, optional)
++ issued: `2018-08-02T10:45:16.000Z` (string, required)
++ performer (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)
+
++ interpretation (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `L` (string)
+            + display: `Low` (string)
+    
++ comment: `Some comment` (string, optional)
++ body_side: 
+     + coding (array, fixed-type)
+        + (Coding)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `1341001:272741003=7771000` (string)
+            - display: `Thoracic nerve` (string)
+
++ method (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `255459008` (string)
+            + display: `Total measurement` (string)
+
+- One Of
+    + value_quantity (Quantity, required)
+    + value_codeable_concept (Codeable_Concept, required)
+    + value_sampled_data (object, required)
+        + origin (number, optional) //SimpleQuantity Zero value and units
+        + period (number, optional) // decimal Number of milliseconds between samples
+        + factor (number, optional) // decimal Multiply data by this before adding to origin
+        + lowerLimit (number, optional)// decimal Lower limit of detection
+        + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+        + dimensions (number, optional) // positiveInt Number of sample points at each time point
+        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+    + value_string (string, required)
+    + value_boolean (boolean, required)
+    + value_range (Range, required, fixed-type)
+    + value_ratio (object, required)//Need an example 
+        + numerator (Quantity, required)
+        + denominator (Quantity, required)
+    + value_time (string, required)
+    + value_date_time (string, required)
+    + value_period (Period, required)
++ reference_range (array, optional, fixed-type)
+    + (object)
+        + low (Quantity, optional)
+        + high (Quantity, optional)
+            + value: `27,5` (number, required)
+            + comparator: `<` (string, required)
+        + type (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: ` http://snomed.info/sct` (string)
+                    + code: `normal` (string)
+                    + display: `Normal` (string)    
+        + applies_to (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: ` http://snomed.info/sct` (string)
+                    + code: `male` (string)
+                    - display (string) 
+        + age (Range, optional)
+            + low (Quantity, optional)
+                + value : `18` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `years` (string, optinal)
+                - system  (string, optional)
+                - code (string, optional)
+            + high (Quantity, optional)
+                + value : `35` (number, required)
+                + comparator : `<` (string, optional)
+                + unit : `years` (string, optinal)
+                - system (string, optional)
+                - code (string, optional)
+        + text: `Some text` (string, optional)
++ component (array, optional, fixed-type)
+    + (object)
+        + code (Codeable_Concept, required)
+        - One Of
+            + value_quantity (Quantity, required)
+            + value_codeable_concept (Codeable_Concept, required)
+            + value_sampled_data (object, required)
+                + origin (number, optional) //SimpleQuantity Zero value and units
+                + period (number, optional) // decimal Number of milliseconds between samples
+                + factor (number, optional) // decimal Multiply data by this before adding to origin
+                + lowerLimit (number, optional)// decimal Lower limit of detection
+                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+                + dimensions (number, optional) // positiveInt Number of sample points at each time point
+                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+            + value_string (string, required)
+            + value_boolean (boolean, required)
+            + value_range (object, required, fixed-type)
+                + low (Quantity, required)
+                + high (Quantity, required)
+            + value_ratio (object, required)//Need an example 
+                + numerator (Quantity, required)
+                + denominator (Quantity, required)
+            + value_time (string, required)
+            + value_date_time (string, required)
+            + value_period (Period, required)
+        + interpretation (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `http://hl7.org/fhir/v2/0078` (string)
+                    + code: `L` (string)
+                    + display: `Low` (string)
+        + reference_range (array, optional, fixed-type)
+            + (object)
+                + low (Quantity, optional)
+                + high (Quantity, optional)
+                    + value: `27,5` (number, required)
+                    + comparator: `<` (string, required)
+                    + type (Codeable_Concept, optional)
+                        +  coding (array, fixed-type)
+                            + (Coding)
+                                + system: ` http://snomed.info/sct` (string)
+                                + code: `normal` (string)
+                                + display: `normal reference` (string)    
+                + applies_to (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: ` http://snomed.info/sct` (string)
+                            + code: `male` (string)
+                            - display (string) 
+                + age (Range, optional)
+                    + low (Quantity, optional)
+                        + value : `18` (number, required)
+                        + comparator : `>` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system  (string, optional)
+                        - code (string, optional)
+                    + high (Quantity, optional)
+                        + value : `35` (number, required)
+                        + comparator : `<` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system (string, optional)
+                        - code (string, optional)
+                
+                + text: `Some text` (string, optional)
