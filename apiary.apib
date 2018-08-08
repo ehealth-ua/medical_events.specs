@@ -14,7 +14,7 @@ Using this web service you can submit:
 Object| Required| Part of Signed content
 -------|---------|------
 Episode| 0-*| false
-Visit| 0-1 | false
+Visit| 1-1 | false
 Encounter| 1-* |true
 Condition| 0-* |true
 Observation| 0-* |true
@@ -192,7 +192,7 @@ Here you can find additional examples of Observations that could be submitted as
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Episode_Of_Care_Response`)
+    + Attributes (`Immunization_Request`)
 
 
 
@@ -353,11 +353,8 @@ Here you can find additional examples of Observations that could be submitted as
 + `visits` (array, optional, fixed-type)
     + (object)
         + include `Visit_Body`
-+ `signed_data` (array, required, fixed-type)
-    + (string)
-        + `ew0KICAicGVyaW9kIjogew0KIC...`
-    + (string)
-        + `ICAgICAgICAgImNvZGUiOiAiVDQ...`
++ `signed_data` : ew0KICAicGVyaW9kIjogew0KIC..., ICAgICAgICAgImNvZGUiOiAiVDQ... (array[string], required, fixed-type)
+
 
 
 
@@ -426,21 +423,21 @@ Here you can find additional examples of Observations that could be submitted as
                 + (Coding)
                     - display (string)
                
-+ `episode` (Reference, required)
-     + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `episode` (string)
-                    - display (string)
-+ `context` (Reference, required)
-     + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `visit` (string)
-                    - display (string)
-            
++ `contexts` (array, required, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `visit` (string)
+                        - display (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: episode (string)
+                        - display (string)        
 + period (Period, required)
 + class  (Coding, required)
     + system : `http://hl7.org/fhir/v3/ActCode` (string)
@@ -1087,3 +1084,126 @@ Here you can find additional examples of Observations that could be submitted as
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
+                
+                
+
+## `Immunization`
+
+### `Immunization_Request`
+ 
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
++ status : `completed` (string, required), //  completed | entered-in-error
++ not_given : `false` (boolean, required), //   Flag for whether immunization was given
++ `vaccine_code` : (Codeable_Concept, required), //   Vaccine product administered
+    +  coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `FLUVAX` (string)
+            - display (string)
++ patient : ( Reference, required), // R!  Who was immunized
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
++ encounter : ( Reference, required), // Encounter administered as part of
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    - display (string)
++ date :  `2018-07-01` (string, required), // Vaccination administration date
+  //primarySource : (boolean), // R!  Indicates context the data was recorded in
+  //reportOrigin : ( Codeable_Concept ), // Indicates the source of a secondarily reported record
++ legal_entity : ( Reference, optional), // Where vaccination occurred
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    - display (string)
++ manufacturer : ( Codeable_Concept, optional), // Vaccine manufacturer
++ lot_number : `AAJN11K` (string, optional), // Vaccine lot number
++ expiration_date : `2020-07-01` (string, optional), // Vaccine expiration date
++ site : ( Codeable_Concept, optional), // Body site vaccine  was administered
+    +  coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `LA` (string)
+            - display (string)
++ route : ( Codeable_Concept , optional), // How vaccine entered body
+    +  coding (array, fixed-type)
+        + (Coding)
+            + system: ` http://snomed.info/sct` (string)
+            + code: `IM` (string)
+            - display (string)
++ dose_quantity : ( Quantity, optional), // Amount of vaccine administered
+    + value : `18` (number, required)
+    - comparator  (string, optional)
+    + unit : `mg` (string, optinal)
+    + system: `http://unitsofmeasure.org` (string, optional)
+    - code (string, optional)
++ practitioner : ( Reference, optional),
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `practitioner` (string)
+                    - display (string)
++ explanation : ( object , optional)// Administration/non-administration reasons
+    - One Of
+        + reasons : ( array, optional, fixed_type), // Why immunization occurred
+            + (Codeable_Concept)
+               +  coding (array, fixed-type)
+                    + (Coding)
+                        + system: ` http://snomed.info/sct` (string)
+                        + code: `429060002` (string)
+                        - display (string) 
+        + reasonNotGiven : ( array, optional, fixed_type), // Why immunization did not occurr
+            + (Codeable_Concept)
+  ),
++ reactions : (array, optional) // Details of a reaction that follows immunization
+    + (object)
+        + date : `2018-07-02` (string, optional), // When reaction started
+        + detail : ( Reference, optional) , // Additional information on reaction Observation
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `observation` (string)
+                            - display (string)
+        + reported : `true` (boolean, optional) // Indicates self-reported reaction
+
++ `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
+    + (object)
+        + dose_sequence : 1 (number, optional), // Dose number within series
+        + description : Vaccination Protocol Sequence 1 (string, optional), // Details of vaccine protocol
+        + authority : (Codeable_Concept , optional), // Who is responsible for protocol
+            +  coding (array, fixed-type)
+                    + (Coding)
+                        + system: `?` (string)
+                        + code: `what` (string)
+                        - display (string)
+        + series : Vaccination Series 1 (string, optional), // Name of vaccine series
+        + series_doses : 2 (number, optional), // Recommended number of doses for immunity
+        + target_disease : (array, required)
+            + (Codeable_Concept ), //   Disease immunized against
+                +  coding (array, fixed-type)
+                    + (Coding)
+                        + system: `?` (string)
+                        + code: `1857005` (string)
+                        - display (string)
+        + `dose_status` : ( Codeable_Concept, required), // Indicates if dose counts towards immunity
+           +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `?` (string)
+                    + code: `count` (string)
+                    - display (string)
+        + `dose_status_reason` : ( Codeable_Concept,optional) ) // Why dose does (not) count
+           +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `?` (string)
+                    + code: `coldchbrk` (string)
+                    - display (string)
+)
