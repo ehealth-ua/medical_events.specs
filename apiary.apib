@@ -1123,7 +1123,7 @@ Here you can find additional examples of Observations that could be submitted as
                 + (Coding)
                     + code: `legal_entity` (string)
                     - display (string)
-+ manufacturer : ( Codeable_Concept, optional), // Vaccine manufacturer
++ manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
 + expiration_date : `2020-07-01` (string, optional), // Vaccine expiration date
 + site : ( Codeable_Concept, optional), // Body site vaccine  was administered
@@ -1160,7 +1160,7 @@ Here you can find additional examples of Observations that could be submitted as
                         + system: ` http://snomed.info/sct` (string)
                         + code: `429060002` (string)
                         - display (string) 
-        + reasonNotGiven : ( array, optional, fixed_type), // Why immunization did not occurr
+        + reason_not_given : ( array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
   ),
 + reactions : (array, optional) // Details of a reaction that follows immunization
