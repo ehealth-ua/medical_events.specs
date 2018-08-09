@@ -35,6 +35,22 @@ Immunization| 0-* |true
             + code: 202 (number)
         + data (`Async_Request`)
 
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
+
++ Response 422 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 422 (number)
+        + error
+            + type: unverified (string, required)
+            + message: `Property "is_active" has not been defined and the schema does not allow additional properties!` (string, required)
+
 
 ### Get Async Request processing details [GET /api/async_requests/{id}]
 this resource should be used to get the processing status of the async request
@@ -74,6 +90,13 @@ this resource should be used to get the processing status of the async request
             + code: 200 (number)
         + data (`Async_Request_Error`)
 
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Object not found` (string)
 
 ### Dummy Encounter [POST]
 This chapter describes different examples of Encounters that could be submitted as a signed content in Submit Visit web service.
