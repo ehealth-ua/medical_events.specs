@@ -116,7 +116,37 @@ Here you can find additional examples of Observations that could be submitted as
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
-    + Attributes (`Observation_Base`)
+    + Attributes (`Observation_Request`)
+    
+#### Dummy Condition [POST]
+Here you can find additional examples of Conditions that could be submitted as a part of signed content.
+
++ Request Oservation (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Condition_Request`)
+    
+#### Dummy Immunization [POST]
+Here you can find additional examples of Immunizations that could be submitted as a part of signed content.
+
++ Request Oservation (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Immunization_Request`) 
+    
+#### Dummy Allergy_Intolerance [POST]
+Here you can find additional examples of Allergy_Intolerances that could be submitted as a part of signed content.
+
++ Request Oservation (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Allergy_Intolerance_Request`)
     
 ## Episode of Care [/api/patient/{id}/episodes{?page,page_size}]
 
@@ -152,7 +182,7 @@ Here you can find additional examples of Observations that could be submitted as
     + Attributes (`Episode_Of_Care_Response`)
 
 ## Conditions [/api/patients/{id}/episodes/{id}/conditions{?id,page,page_size}]
-### Get Conditions by Episode [GET]
+### Get Conditions by Episodes [GET]
 + Parameters
     + `id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677`
     + `page`: 1 (number) - Page number.    
@@ -170,7 +200,7 @@ Here you can find additional examples of Observations that could be submitted as
     + Attributes (array[`Condition_Response`])
     
 
-### Get Conditions by Encounter [GET /api/patients/{id}/episodes/{id}/encounters/{id}/conditions{?page,page_size}]
+### Get Conditions by Encounters [GET /api/patients/{id}/episodes/{id}/encounters/{id}/conditions{?page,page_size}]
 + Parameters
     + `id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677`
     + `page`: 1 (number) - Page number.    
@@ -188,7 +218,7 @@ Here you can find additional examples of Observations that could be submitted as
 
 
 ## Observation [/api/patients/{id}/observations{?page,page_size}]
-### Get Observations by Patient[GET]
+### Get Observations by Patients[GET]
 + Parameters
     + `page`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -203,7 +233,7 @@ Here you can find additional examples of Observations that could be submitted as
 + Response 200 (application/json)
     + Attributes (array[`Observation_Response`])
 
-### Get Observations by Episode[GET /api/patients/{id}/episodes/{id}/observations{?page,page_size}]
+### Get Observations by Episodes[GET /api/patients/{id}/episodes/{id}/observations{?page,page_size}]
 + Parameters
     + `page`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -217,7 +247,7 @@ Here you can find additional examples of Observations that could be submitted as
 + Response 200 (application/json)
     + Attributes (array[`Observation_Response`])
 
-### Get Observations by Encounter[GET /api/patients/{id}/episodes/{id}/encounters/{id}/observations{?page,page_size}]
+### Get Observations by Encounters[GET /api/patients/{id}/episodes/{id}/encounters/{id}/observations{?page,page_size}]
 + Parameters
     + `page`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -231,8 +261,41 @@ Here you can find additional examples of Observations that could be submitted as
 + Response 200 (application/json)
     + Attributes (array[`Observation_Response`])
 
-## Allergy Intolerance [/api/patient/{id}/episodes/{id}/allergy_intolerance{?page,page_size}]
-### Get Allergy Intolerances[GET]
+## Allergy Intolerance [/api/patients/{id}/allergy_intolerances{?page,page_size}]
+### Get Allergy Intolerances by Patient[GET]
++ Parameters
+    + `page`: 2 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `episode_id`: `95a9e15b-b71b-4caf-8f2e-ff247e8a5639`(string, optional)
+    + `encounter_id`: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, optional)
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (array[`Allergy_Intolerance_Response`])
+    
+
+### Get Allergy Intolerances by Episodes[GET /api/patients/{id}/episodes/{id}/allergy_intolerances{?page,page_size}]
+
++ Parameters
+    + `page`: 2 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `encounter_id`: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, optional)
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (array[`Allergy_Intolerance_Response`])
+    
+
+### Get Allergy Intolerances by Encounters[GET /api/patients/{id}/episodes/{id}/encounters/{id}/allergy_intolerances{?page,page_size}]
+
 + Parameters
     + `page`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -244,7 +307,7 @@ Here you can find additional examples of Observations that could be submitted as
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Episode_Of_Care_Response`)
+    + Attributes (array[`Allergy_Intolerance_Response`])
 
 ## Immunization [/api/patients/{id}/episodes/{id}/immunizations{?page,page_size}]
 ### Get Immunizations by Patient[GET]
@@ -279,7 +342,7 @@ Here you can find additional examples of Observations that could be submitted as
 + Parameters
     + `page`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
+    
 + Request (application/json)
 
     + Headers
@@ -587,13 +650,13 @@ Here you can find additional examples of Observations that could be submitted as
 ### `Encounter_Request` 
 + encounters (array, required, fixed-type)
     + (`Encounter_Base`)
-+ conditions (array, required, fixed-type)
++ conditions (array, optional, fixed-type)
     + (`Condition_Request`)
     + (`Condition_Request_2`)
 + observations (array, optional, fixed-type)
-    + (`Observation_Base`)    
-+ allergy_intolerances (array, optional, fixed-type)
-+ immunizations (array, optional, fixed-type)
+    + (`Observation_Request`)    
++ `allergy_intolerances` (array[`Allergy_Intolerance_Request`], optional, fixed-type)
++ immunizations (array[`Immunization_Request`], optional, fixed-type)
 
 
                 
@@ -802,7 +865,7 @@ Here you can find additional examples of Observations that could be submitted as
 
 ## Observation
 
-### `Observation_Base`
+### `Observation_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required)
 + `context` (Reference, required)
@@ -1419,6 +1482,96 @@ Here you can find additional examples of Observations that could be submitted as
                     + code: `coldchbrk` (string)
                     + display: `Cold chain break` (string)
 )
+
+
+## `Allergy_Intolerance`
+### `Allergy_Intolerance_Request`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
++ clinical_status : `active` (string, required), // C? active | inactive | resolved
++ verification_status : `confirmed` (string, required), // C? R!  unconfirmed | confirmed | refuted | entered-in-error
++ type : `allergy` (string, required), // allergy | intolerance - Underlying mechanism (if known)
++ category : `food`(string, required), // food | medication | environment | biologic
++ criticality : `low`(string, required), // low | high | unable-to-assess
++ context: (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    - display (string)
++ code : ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
+    +  coding (array, fixed-type)
+        + (Coding)
+            + system: `?` (string)
+            + code: `227493005` (string)
++ patient : ( Reference, required), // R!  Who the sensitivity is for
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
++ onset_date_time : `2000-06-12` (string, required)
++ asserted_date: `2018-08-12` (string, required)
++ recorder : ( Reference, required ) // Who recorded the sensitivity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)   
++ asserter : ( Reference, required), // Source of the information about the allergy
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+                    - display (string)
++ last_occurrence : `2017-12-12` (string, optional) , // Date(/time) of last known occurrence of a reaction
+
+
+### `Allergy_Intolerance_Response`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
++ clinical_status : `active` (string, required), // C? active | inactive | resolved
++ verification_status : `confirmed` (string, required), // C? R!  unconfirmed | confirmed | refuted | entered-in-error
++ type : `allergy` (string, required), // allergy | intolerance - Underlying mechanism (if known)
++ category : `food`(string, required), // food | medication | environment | biologic
++ criticality : `low`(string, required), // low | high | unable-to-assess
++ context: (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    - display (string)
++ code : ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
+    +  coding (array, fixed-type)
+        + (Coding)
+            + system: `?` (string)
+            + code: `227493005` (string)
+            + display: `Cashew nuts` (string)    
++ patient : ( Reference, required), // R!  Who the sensitivity is for
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    - display (string)
++ onset_date_time : `2000-06-12` (string, required)
++ asserted_date: `2018-08-12` (string, required)
++ recorder : ( Reference, required ) // Who recorded the sensitivity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)   
++ asserter : ( Reference, required), // Source of the information about the allergy
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+                    - display (string)
++ last_occurrence : `2017-12-12` (string, optional) , // Date(/time) of last known occurrence of a reaction
 
 
 
