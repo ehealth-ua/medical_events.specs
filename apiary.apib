@@ -5,29 +5,28 @@ HOST: http://ehealth.edenlabllc.com/
 
 # Group Medical Events
 
-## Visit Data Package [/api/patients/{id}/visits]
+## Encounter Data Package [/api/patients/{id}/encounter_package]
 
-### Submit Visit Package [POST]
+### Submit Encounter PackagePOST]
 
 Using this web service you can submit:
 
 Object| Required| Part of Signed content
 -------|---------|------
-Episode| 0-*| false
-Visit| 1-1 | false
-Encounter| 1-* |true
+Visit| 0-1 | false
+Encounter| 1-1 |true
 Condition| 0-* |true
 Observation| 0-* |true
 Allergy intolerance| 0-* |true
 Immunization| 0-* |true
 
-+ Request Package with new episode (application/json)
++ Request Package (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
-        + include `Submit_Visit`
+        + include `Submit_Encounter_Package`
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -147,8 +146,45 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Allergy_Intolerance_Request`)
+
+
+### Cancel Encounter Package [GET]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes 
+        + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required) 
     
-## Episode of Care [/api/patient/{id}/episodes{?page,page_size}]
+    
+
+### Cancel Encounter Package Dummy[GET]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Encounter_Request_Cancel`)    
+
+## Episode of Care [/api/patient/{id}/episodes]
+
+### Create Episode  [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + include `Episode_Of_Care_Request`
+
++ Response 200 (application/json)
+    
 
 ### Get Episodes with search params [GET]
 + Parameters
@@ -165,6 +201,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + Attributes (`Episode_Of_Care_Response`)
     
 
+
 ## Encounter [/api/patient/{id}/episodes/{id}/encounters{?page,page_size}]
 
 ### Get Encounters[GET]
@@ -180,6 +217,10 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 + Response 200 (application/json)
     + Attributes (`Episode_Of_Care_Response`)
+    
+
+    
+`   
 
 ## Conditions [/api/patients/{id}/episodes/{id}/conditions{?id,page,page_size}]
 ### Get Conditions by Episodes [GET]
@@ -488,7 +529,31 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 
 ### `Episode_Of_Care_Request`
-+ include `Episode_Of_Care_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `type`: `Первинна допомога` (string, required)
++ `status`: `active`
+
+            
++ managing_organization (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    - display (string)
+            
++ period (Period, required)
+    - end (string, optional)
++ care_manager (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)
+                   
+            
+
 
 ### `Episode_Of_Care_Response`
 + include `Episode_Of_Care_Base`
@@ -501,15 +566,11 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + period (Period, required)
     + end  : `2018-08-02T10:45:16.000Z` (string, required)
 
-### `Submit_Visit`
+### `Submit_Encounter_Package`
 
-+ `episodes` (array, optional, fixed-type)
-    + (object)
-        + include `Episode_Of_Care_Request`
-+ `visits` (array, optional, fixed-type)
-    + (object)
-        + include `Visit_Body`
-+ `signed_data` : ew0KICAicGVyaW9kIjogew0KIC..., ICAgICAgICAgImNvZGUiOiAiVDQ... (array[string], required, fixed-type)
++ `visit` (object, optional, fixed-type)
+    + include `Visit_Body`
++ `signed_data` : 'ew0KICAicGVyaW9kIjogew0KIC...' (string, required, fixed-type)
 
 
 
@@ -659,8 +720,26 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + immunizations (array[`Immunization_Request`], optional, fixed-type)
 
 
-                
-
+### `Encounter_Request_Cancel`
++ encounters (array, required, fixed-type)
+    + (`Encounter_Base`)
+        + status: `entered-in-error` (string)
++ conditions (array, optional, fixed-type)
+    + (`Condition_Request`)
+        + status: `entered-in-error` (string)   
+    + (`Condition_Request_2`)
++ observations (array, optional, fixed-type)
+    + (`Observation_Request`)
+        + status: `entered-in-error` (string)
++ `allergy_intolerances` (array[`Allergy_Intolerance_Request`], optional, fixed-type)
++ immunizations (array[`Immunization_Request`], optional, fixed-type)
++ `explanatory_letter`: `Я, Шевченко Наталія Олександріна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи. ` (string, required)    
++ `cancel_reason` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth` (string)
+            + code: `misspelling` (string) \\ wrong_patient, misspelling
+            - display (string)
 
 ###  `Encounter_Response`
 + include `Encounter_Base`
