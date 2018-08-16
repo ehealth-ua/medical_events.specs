@@ -7,7 +7,7 @@ HOST: http://ehealth.edenlabllc.com/
 
 ## Encounter Data Package [/api/patients/{id}/encounter_package]
 
-### Submit Encounter PackagePOST]
+### Submit Encounter Package [POST]
 
 Using this web service you can submit:
 
@@ -171,7 +171,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Response 200 (application/json)
     + Attributes (`Encounter_Request_Cancel`)    
 
-## Episode of Care [/api/patient/{id}/episodes]
+## Episode of Care [/api/patients/{id}/episodes]
 
 ### Create Episode  [POST]
 
@@ -186,10 +186,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Response 200 (application/json)
     
 
-### Get Episodes with search params [GET]
+### Get Episodes[GET /api/patients/{id}/episodes/{id}]
 + Parameters
+    + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string)
+    + `code`: `A20`
     + `page`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    
 
 + Request (application/json)
 
@@ -462,7 +465,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + identifier (Identifier)
 
 ### `Identifier`
-+ `type`(Codeable_Concept, optional) - Description of identifier
++ `type`(Codeable_Concept, required) - Description of identifier
 + `value` : `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required)- The value that is unique
 
 ### `Codeable_Concept`
@@ -472,7 +475,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 
 ### `Coding`
-+ system : `http://ehealth.edenlabllc.com/` (string, optional)
++ system : `eHealth` (string, optional)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
 + display : `Patient` (string, optional)- Representation defined by the system
 
@@ -506,7 +509,20 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     - display (string)
++ diagnoses_hstr (array, optional, fixed-type)
+    + (object)
+        + date: `2018-08-02T10:45:16.000Z` (string, required)
+        + evidence (Reference, required, fixed-type)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
+                            - display (string)
             
+        + diagnoses (array, required, fixed-type)
+            + (Diagnosis_Referrence_Condition)
+            + (Diagnosis_Referrence_Condition_2)
 + managing_organization (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -597,7 +613,12 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: `condition` (string)
                     - display (string)
-
++ `code` (Codeable_Concept, required) 
+     + coding (array, fixed-type)
+        + (Coding)
+            + `system`: `ICPC2`,
+            + `code`: `D30`,
+            - `display` (string)
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
@@ -615,12 +636,17 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: `condition` (string)
                     - display (string)
-
++ `code` (Codeable_Concept, required) 
+     + coding (array, fixed-type)
+        + (Coding)
+            + `system`: `ICPC2`,
+            + `code`: `A20`,
+            - `display` (string)
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
             + `system`: `??`,
-            + `code`: `основний`,
+            + `code`: `супутній`,
             - `display` (string)
 + rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
 
@@ -633,12 +659,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 ### `Encounter_Base` (object)
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
 + `status`: `finised`  (string, required)                 
-+ `patient` (Reference, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    - display (string)
+
                
 + `contexts` (array, required, fixed-type)
     + (Reference)
@@ -747,12 +768,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 ## Condition
 ### `Condition_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ `patient` (Reference, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    - display (string)
+
 + `context` (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
@@ -812,12 +828,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Condition_Request_2`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ `patient` (Reference, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    - display (string)
+
 + `context` (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
@@ -961,12 +972,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: `referral` (string)
                     - display (string)
-+ `patient` (Reference, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    - display (string)
+
 + category (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
@@ -1335,12 +1341,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + system: ` http://snomed.info/sct` (string)
             + code: `FLUVAX` (string)
             - display (string)
-+ patient : ( Reference, required), // R!  Who was immunized
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    - display (string)
+
 + encounter : ( Reference, required), // Encounter administered as part of
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1583,12 +1584,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + (Coding)
             + system: `?` (string)
             + code: `227493005` (string)
-+ patient : ( Reference, required), // R!  Who the sensitivity is for
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    - display (string)
+
 + onset_date_time : `2000-06-12` (string, required)
 + asserted_date: `2018-08-12` (string, required)
 + recorder : ( Reference, required ) // Who recorded the sensitivity
