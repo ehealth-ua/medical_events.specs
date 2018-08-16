@@ -1350,8 +1350,20 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + code: `encounter` (string)
                     - display (string)
 + date :  `2018-07-01` (string, required), // Vaccination administration date
-  //primarySource : (boolean), // R!  Indicates context the data was recorded in
-  //reportOrigin : ( Codeable_Concept ), // Indicates the source of a secondarily reported record
++ recorder : ( Reference, required ) // Who recorded the sensitivity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)   
++ asserter : ( Reference, required), // Source of the information about the allergy
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+                    - display (string)
 + legal_entity : ( Reference, optional), // Where vaccination occurred
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1460,7 +1472,20 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    - display (string)
++ recorder : ( Reference, required ) // Who recorded the sensitivity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)   
++ asserter : ( Reference, required), // Source of the information about the allergy
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+                    - display  (string)
 + encounter : ( Reference, required), // Encounter administered as part of
     + identifier (Identifier)
         + type (Codeable_Concept)
