@@ -32,7 +32,7 @@ Immunization| 0-* |true
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
-        + data (`Async_Request`)
+        + data (`Job`)
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -51,8 +51,8 @@ Immunization| 0-* |true
             + message: `Property "is_active" has not been defined and the schema does not allow additional properties!` (string, required)
 
 
-### Get Async Request processing details [GET /api/async_requests/{id}]
-this resource should be used to get the processing status of the async request
+### Get async Job processing details [GET /api/jobs/{id}]
+this resource should be used to get the processing status of the async job
 
 + Parameters
     + id: `NBXk9EyErUZv1RhXgyvgg` (string, required) - request identifier
@@ -67,13 +67,13 @@ this resource should be used to get the processing status of the async request
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Async_Request`)
+        + data (`Job`)
 
 + Response 203 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 203 (number)
-        + data (`Async_Request`)
+        + data (`Job`)
             + status: `processed`
             + links (array, required, fixed-type)
                 + (object)
@@ -87,7 +87,7 @@ this resource should be used to get the processing status of the async request
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Async_Request_Error`)
+        + data (`Job_Error`)
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -1674,14 +1674,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 
 
-### Async_Request
+### Job
 + status: `processing` (string, required) - status of request processing.
 + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrival
 + links (array, required, fixed-type)
     + (object)
         + include `Link`
 
-### Async_Request_Error
+### Job_Error
 + status: `error` (string, required) - status of request processing.
 + links (array, required, fixed-type)
     + (object)
@@ -1697,5 +1697,5 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 
 ### Link
-+ entity: `async_request` (string, required) - name of the entity that link follows to
-+ href: `/async_requests/NBXk9EyErUZv1RhXgyvgg` (string, required) - link to entity
++ entity: `job` (string, required) - name of the entity that link follows to
++ href: `/Jobs/NBXk9EyErUZv1RhXgyvgg` (string, required) - link to entity
