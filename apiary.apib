@@ -501,7 +501,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + `type`: `Первинна допомога` (string, required)
 + `status`: `active`
-
++ name: `Діабет 2018` (string, required)
                     
 + `patient` (Reference, required)
     + identifier (Identifier)
@@ -548,7 +548,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + `type`: `Первинна допомога` (string, required)
 + `status`: `active`
-
++ name: `Діабет 2018` (string, required)
             
 + managing_organization (Reference, required)
     + identifier (Identifier)
@@ -703,7 +703,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + code: `D09` (string)
                 - display (string)
         
-+ diagnosis (array, required, fixed-type)
++ diagnoses (array, required, fixed-type)
     + (`Diagnosis_Referrence_Condition`)
         
         
@@ -730,8 +730,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 
 ### `Encounter_Request` 
-+ encounters (array, required, fixed-type)
-    + (`Encounter_Base`)
++ encounter (`Encounter_Base`, required, fixed-type)
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
     + (`Condition_Request_2`)
