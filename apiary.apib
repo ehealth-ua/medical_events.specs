@@ -652,7 +652,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 ## Diagnosis
 
 ### `Diagnosis_New_Condition`
-+ condition (Condition_Request, optional) - should be filled one of: condition or condition_id
++ condition (Condition_Request, required) - should be filled one of: condition or condition_id
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
@@ -664,7 +664,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Diagnosis_Referrence_Condition_2`
 
-+ `condition` (Reference, optional) - should be filled one of: condition or condition_id
++ `condition` (Reference, required) - should be filled one of: condition or condition_id
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -687,7 +687,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Diagnosis_Referrence_Condition`
 
-+ `condition` (Reference, optional) - should be filled one of: condition or condition_id
++ `condition` (Reference, required) - should be filled one of: condition or condition_id
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -1046,7 +1046,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 - One Of
     + effective_date_time: `2018-08-02` (string, optional)
-    + effective_period (Period, optional)
+    + effective_period (Period, optional, fixed-type)
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
 + performer (Reference, required)
     + identifier (Identifier)
