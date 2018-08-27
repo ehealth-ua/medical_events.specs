@@ -42,13 +42,6 @@ Immunization| 0-* |true
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-+ Response 422 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 422 (number)
-        + error
-            + type: unverified (string, required)
-            + message: `Property "is_active" has not been defined and the schema does not allow additional properties!` (string, required)
 
 
 ### Get async Job processing details [GET /api/jobs/{id}]
@@ -226,6 +219,76 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 + Response 200 (application/json)
     + Attributes (array[`Episode_Of_Care_Response`])
+    
+    
+
+### Update Episode [PATCH /api/patients/{id}/episodes/{id}]
++ Request Package (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + include `Update_Episode`
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
+
+### Close Episode [PATCH /api/patients/{id}/episodes/{id}/actions/close]
++ Request Package (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
+
+### Dismiss Episode [PATCH /api/patients/{id}/episodes/{id}/actions/dismiss]
+
++ Request Package (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
 
 ## Encounter [/api/patient/{id}/encounters]
 
@@ -456,7 +519,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + text (string, optional)
 
 ### `Coding`
-+ system : `eHealth` (string, optional)
++ system : `eHealth/resource` (string, optional)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
 + display : `Patient` (string, optional)- Representation defined by the system
 
@@ -555,7 +618,24 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 ### `Episode_Of_Care_Response`
 + include `Episode_Of_Care_Base`
 
-        
+
+### `Update_Episode`
++ name: `Інсулінонезалежний діабет` (string, optional)
++ care_manager (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    - display (string)
++ managing_organization (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    - display (string)
+
 ##Visit
 
 ### `Visit_Body`
