@@ -52,7 +52,7 @@ Immunization| 0-* |true
 
 
 ### Get async Job processing details [GET /api/jobs/{id}]
-this resource should be used to get the processing status of the async job
+This resource should be used to get the processing status of the async job
 
 + Parameters
     + id: `NBXk9EyErUZv1RhXgyvgg` (string, required) - request identifier
@@ -77,12 +77,20 @@ this resource should be used to get the processing status of the async job
             + status: `processed`
             + links (array, required, fixed-type)
                 + (object)
-                    + entity: `visit` (string, required)
-                    + href: `/visits/90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-                + (object)
                     + entity: `encounter` (string, required)
-                    + href: `/encounters/90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/encounters/90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
+                + (object)
+                    + entity: `condition` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/conditions/df112200-64da-451b-bf77-8e7655bbd48f` (string, required)
+                + (object)
+                    + entity: `observation` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/observations/d118cc02-3b9b-4d1a-b728-eda4e3d58f25` (string, required)
+                + (object)
+                    + entity: `allergy_intolerance` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/allergy_intolerances/5f41c64a-6742-4d6d-9f3b-c6742b2ee0a1` (string, required)
+                + (object)
+                    + entity: `immunization` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/immunizations/c2e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
