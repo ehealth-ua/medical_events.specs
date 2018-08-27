@@ -62,12 +62,13 @@ This resource should be used to get the processing status of the async job
             + code: 200 (number)
         + data (`Job`)
 
-+ Response 203 (application/json)
++ Response 303 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
-            + code: 203 (number)
+            + code: 303 (number)
         + data (`Job`)
             + status: `processed`
+            + status_code: `200`
             + links (array, required, fixed-type)
                 + (object)
                     + entity: `encounter` (string, required)
