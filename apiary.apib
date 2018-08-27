@@ -1838,17 +1838,16 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 
 ### Job
-+ status: `processing` (string, required) - status of request processing.
++ status: `pending` (string, required) - status of request processing.
 + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrival
++ status_code: `202` (string, optional) - processing result. Is relevant only for the processed jobs
 + links (array, required, fixed-type)
     + (object)
         + include `Link`
 
 ### Job_Error
-+ status: `error` (string, required) - status of request processing.
-+ links (array, required, fixed-type)
-    + (object)
-        + include `Link`
++ status: `error` (string, required) - status of request processing
++ status_code: `422` (string, required) - processing result
 + errors (array, optional, fixed-type)
     + (object)
         + include `Error`
