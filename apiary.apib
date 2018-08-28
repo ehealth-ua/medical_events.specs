@@ -150,7 +150,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + Attributes (`Allergy_Intolerance_Request`)
 
 
-### Cancel Encounter Package [GET]
+### Dismiss Encounter Package [PATCH]
 + Request (application/json)
 
     + Headers
@@ -163,7 +163,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     
     
 
-### Cancel Encounter Package Dummy[GET]
+### Dismiss Encounter Package Dummy[PATCH]
 + Request (application/json)
 
     + Headers
@@ -171,7 +171,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Encounter_Request_Cancel`)    
+    + Attributes (`Dismiss_Encounter`)    
 
 ## Episode of Care [/api/patients/{id}/episodes]
 
@@ -915,19 +915,23 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + code: `division` (string)
                     - display (string)
 
-### `Encounter_Request_Cancel`
-+ encounters (array, required, fixed-type)
+### `Dismiss_Encounter`
++ encounter (array, required, fixed-type)
     + (`Encounter_Base`)
-        + status: `entered-in-error` (string)
+        + status: `entered_in_error` (string)
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
-        + status: `entered-in-error` (string)   
+        + status: `entered_in_error` (string)   
     + (`Condition_Request_2`)
 + observations (array, optional, fixed-type)
     + (`Observation_Request`)
-        + status: `entered-in-error` (string)
-+ `allergy_intolerances` (array[`Allergy_Intolerance_Request`], optional, fixed-type)
-+ immunizations (array[`Immunization_Request`], optional, fixed-type)
+        + status: `entered_in_error` (string)
++ `allergy_intolerances` (array, optional, fixed-type)
+    + (`Allergy_Intolerance_Request`)
+        + status: `entered_in_error` (string)
++ immunizations (array, optional, fixed-type)
+    + (`Immunization_Request`)
+        + status: `entered_in_error` (string)
 + `explanatory_letter`: `Я, Шевченко Наталія Олександріна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи. ` (string, required)    
 + `cancel_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
