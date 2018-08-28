@@ -201,7 +201,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Episode_Of_Care_Response`)
+    + Attributes (`Response_OK`)
+        + data(`Episode_Of_Care_Response`)
     
 
 ### Get Episodes by search params[GET /api/patients/{id}/episodes]
@@ -219,7 +220,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (array[`Episode_Of_Care_Response`])
+    + Attributes (`Response_Collection`)
+        + data(array[`Episode_Of_Care_Response`])
     
     
 
@@ -303,7 +305,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Encounter_Response`)
+    + Attributes (`Response_OK`)
+        + data (`Encounter_Response`)
     
 
 ### Get Encounters by search params[GET /api/patient/{patient_id}/encounters]
@@ -318,7 +321,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (array[`Encounter_Response`])
+    + Attributes (`Response_Collection`)
+        + data (array[`Encounter_Response`])
 
 ## Conditions [/api/patients/{patinet_id}/conditions]
 
@@ -330,7 +334,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Condition_Response`)
+    + Attributes (`Response_OK`)
+        + data (`Condition_Response`)
     
 
 ### Get Conditions by search params [GET /api/patients/{patinet_id}/conditions]
@@ -347,7 +352,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (array[`Condition_Response`])
+    + Attributes (`Response_Collection`)
+        + data (array[`Condition_Response`])
     
 
 ## Observation [/api/patients/{patient_id}/observation/{id}]
@@ -362,7 +368,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Observation_Response`)
+    + Attributes (`Response_OK`)
+        + data (`Observation_Response`)
     
 
 ### Get Observations by searh params[GET /api/patients/{patient_id}/observations{?page,page_size}]
@@ -376,7 +383,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (array[`Observation_Response`])
+    + Attributes (`Response_Collection`)
+        + data (array[`Observation_Response`])
 
 
 
@@ -392,7 +400,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Allergy_Intolerance_Response`)
+    + Attributes (`Response_OK`)
+        + data (`Allergy_Intolerance_Response`)
 
 ### Get Allergy Intolerances by search params[GET /api/patients/{patient_id}/allergy_intolerances{?page,page_size}]
 + Parameters
@@ -406,7 +415,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (array[`Allergy_Intolerance_Response`])
+    + Attributes (`Response_Collection`)
+        + data (array[`Allergy_Intolerance_Response`])
     
 
 
@@ -423,7 +433,9 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
             Authorization: Bearer mF_9.B5f-4.1JqM
 
-+ Response 200 (`Immunization_Response`, fixed-type)
++ Response 200 
+    + Attributes (`Response_OK`)
+        + data (`Immunization_Response`, fixed-type)
 
 ### Get Immunizations by search params[GET api/patients/{patient_id}/immunizations]
 + Parameters
@@ -436,7 +448,9 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
             Authorization: Bearer mF_9.B5f-4.1JqM
 
-+ Response 200 (array[`Immunization_Response`], fixed-type)
++ Response 200 
+    + Attributes (`Response_Collection`)
+        + data (array[`Immunization_Response`], fixed-type)
 
 
     
