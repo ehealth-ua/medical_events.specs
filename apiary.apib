@@ -209,7 +209,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Parameters
     + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string)
     + `code`: `A20`
-    + `page`: 2 (number) - Page number.    
+    + `page_number`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     
 
@@ -311,7 +311,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Encounters by search params[GET /api/patient/{patient_id}/encounters]
 + Parameters
-    + `page`: 2 (number) - Page number.    
+    + `page_number`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     
 + Request (application/json)
@@ -340,7 +340,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Conditions by search params [GET /api/patients/{patinet_id}/conditions]
 + Parameters
-    + `page`: 1 (number) - Page number.    
+    + `page_number`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
  
     
@@ -374,7 +374,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Observations by searh params[GET /api/patients/{patient_id}/observations{?page,page_size}]
 + Parameters
-    + `page`: 1 (number) - Page number.    
+    + `page_number`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 + Request (application/json)
 
@@ -405,7 +405,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Allergy Intolerances by search params[GET /api/patients/{patient_id}/allergy_intolerances{?page,page_size}]
 + Parameters
-    + `page`: 2 (number) - Page number.    
+    + `page_number`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
@@ -439,7 +439,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Immunizations by search params[GET api/patients/{patient_id}/immunizations]
 + Parameters
-    + `page`: 2 (number) - Page number.    
+    + `page_number`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
@@ -1285,7 +1285,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + system: ` http://snomed.info/sct` (string)
                     + code: `normal` (string)
                     - display (string)    
-        + applies_to (Codeable_Concept, optional)
+        + `applies_to`(Codeable_Concept, optional)
             +  coding (array, fixed-type)
                 + (Coding)
                     + system: ` http://snomed.info/sct` (string)
