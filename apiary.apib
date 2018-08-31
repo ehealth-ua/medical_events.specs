@@ -558,7 +558,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Episode_Of_Care_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ `type`: `Первинна допомога` (string, required)
++ `type`: `primary_care` (string, required)
 + `status`: `active`
 + name: `Діабет 2018` (string, required)
                     
@@ -636,6 +636,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Update_Episode`
 + name: `Інсулінонезалежний діабет` (string, optional)
+
 + care_manager (Reference, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
