@@ -112,7 +112,7 @@ This chapter describes different examples of Encounters that could be submitted 
 #### Dummy Observation [POST]
 Here you can find additional examples of Observations that could be submitted as a part of signed content.
 
-+ Request Oservation (application/json)
++ Request  (application/json)
 
     + Headers
 
@@ -122,7 +122,7 @@ Here you can find additional examples of Observations that could be submitted as
 #### Dummy Condition [POST]
 Here you can find additional examples of Conditions that could be submitted as a part of signed content.
 
-+ Request Oservation (application/json)
++ Request (application/json)
 
     + Headers
 
@@ -132,7 +132,7 @@ Here you can find additional examples of Conditions that could be submitted as a
 #### Dummy Immunization [POST]
 Here you can find additional examples of Immunizations that could be submitted as a part of signed content.
 
-+ Request Oservation (application/json)
++ Request  (application/json)
 
     + Headers
 
@@ -142,7 +142,7 @@ Here you can find additional examples of Immunizations that could be submitted a
 #### Dummy Allergy_Intolerance [POST]
 Here you can find additional examples of Allergy_Intolerances that could be submitted as a part of signed content.
 
-+ Request Oservation (application/json)
++ Request  (application/json)
 
     + Headers
 
@@ -151,15 +151,29 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 
 ### Dismiss Encounter Package [PATCH]
-+ Request (application/json)
++ Request Package (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+          + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required) 
 
-+ Response 200 (application/json)
-    + Attributes 
-        + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required) 
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
+
+      
     
     
 
@@ -169,9 +183,10 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Dismiss_Encounter`) 
 
 + Response 200 (application/json)
-    + Attributes (`Dismiss_Encounter`)    
+   
 
 ## Episode of Care [/api/patients/{id}/episodes]
 
@@ -933,7 +948,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + (`Immunization_Request`)
         + status: `entered_in_error` (string)
 + `explanatory_letter`: `Я, Шевченко Наталія Олександріна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи. ` (string, required)    
-+ `cancel_reason` (Codeable_Concept, required)
++ `dismission_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth` (string)
