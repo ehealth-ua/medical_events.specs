@@ -150,7 +150,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + Attributes (`Allergy_Intolerance_Request`)
 
 
-### Dismiss Encounter Package [PATCH]
+### Cancel Encounter Package [PATCH]
 + Request Package (application/json)
 
     + Headers
@@ -177,13 +177,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     
     
 
-### Dismiss Encounter Package Dummy[PATCH]
+### Cancel Encounter Package Dummy[PATCH]
 + Request (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
-    + Attributes (`Dismiss_Encounter`) 
+    + Attributes (`Cancel_Encounter`) 
 
 + Response 200 (application/json)
    
@@ -285,7 +285,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Dismiss Episode [PATCH /api/patients/{id}/episodes/{id}/actions/dismiss]
+### Cancel Episode [PATCH /api/patients/{id}/episodes/{id}/actions/cancel]
 
 + Request Package (application/json)
 
@@ -357,7 +357,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Parameters
     + `page_number`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
- 
+    + `code`: `A20`
     
 
 + Request (application/json)
@@ -391,6 +391,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Parameters
     + `page_number`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `10569-2`
 + Request (application/json)
 
     + Headers
@@ -537,6 +538,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Reference`
 + identifier (Identifier)
++ display
 
 ### `Identifier`
 + `type`(Codeable_Concept, required) - Description of identifier
@@ -931,9 +933,17 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + code: `division` (string)
                     - display (string)
 
-### `Dismiss_Encounter`
-+ encounter (`Encounter_Base`, required, fixed-type)
+### `Cancel_Encounter`
++ encounter (object , required, fixed-type)
+    + (`Encounter_Base`)
         + status: `entered_in_error` (string)
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександріна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)    
+        + `cancellation_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth` (string)
+                    + code: `misspelling` (string) \\ wrong_patient, misspelling
+                    - display (string)
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
         + status: `entered_in_error` (string)   
@@ -947,13 +957,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + immunizations (array, optional, fixed-type)
     + (`Immunization_Request`)
         + status: `entered_in_error` (string)
-+ `explanatory_letter`: `Я, Шевченко Наталія Олександріна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи. ` (string, required)    
-+ `dismission_reason` (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth` (string)
-            + code: `misspelling` (string) \\ wrong_patient, misspelling
-            - display (string)
+
 
 
 
@@ -1325,7 +1329,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 - system (string, optional)
                 - code (string, optional)
         + text: `Some text` (string, optional)
-+ component (array, optional, fixed-type)
++ components (array, optional, fixed-type)
     + (object)
         + code (Codeable_Concept, required)
         - One Of
