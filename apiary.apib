@@ -538,7 +538,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Reference`
 + identifier (Identifier)
-+ display
+
 
 ### `Identifier`
 + `type`(Codeable_Concept, required) - Description of identifier
@@ -894,6 +894,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: employee (string)
                     - display (string)
+    + display: `Шевченко Олесь Вікторович' (string, required)
 + reasons (array,required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -935,8 +936,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Cancel_Encounter`
 + encounter (object , required, fixed-type)
-    + (`Encounter_Base`)
-        + status: `entered_in_error` (string)
+    + include (`Encounter_Base`)
+        + `status`: `entered_in_error` (string)
         + `explanatory_letter`: `Я, Шевченко Наталія Олександріна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)    
         + `cancellation_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
@@ -946,7 +947,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     - display (string)
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
-        + status: `entered_in_error` (string)   
+        + verification_status: `entered_in_error` (string)   
     + (`Condition_Request_2`)
 + observations (array, optional, fixed-type)
     + (`Observation_Request`)
@@ -980,6 +981,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + (Coding)
                         + code: `patient` (string)
                         - display (string)
+        
 + `context` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1040,15 +1042,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Condition_Request_2`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ primary_source: `false` (boolean, required)
++ primary_source: `true` (boolean, required)
 - One Of
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/information_sources` (string)
-                + code: `mother` (string)
-                - display (string)
-        + text: `Галина Олександрівна` (string)
     + asserter(Reference, optional)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -1056,6 +1051,15 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + (Coding)
                         + code: `patient` (string)
                         - display (string)    
+
+        
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/information_sources` (string)
+                + code: `mother` (string)
+                - display (string)
+        + text: `Галина Олександрівна` (string)
 + `context` (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1117,8 +1121,17 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Condition_Response`
 + id: `6fe6d880-f100-4e39-a278-1d14eb8472ef` (string, required)
-+ primary_source: `false` (boolean, required)
++ primary_source: `true` (boolean, required)
 - One Of
+    
+    + `asserter` (Reference, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `patient` (string)
+                        - display (string) 
+        + display: Шевченко Олесь Вікторович (string, required)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -1126,13 +1139,6 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + code: `mother` (string)
                 - display (string)
         + text: `Галина Олександрівна` (string)
-    + `asserter` (Reference, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `patient` (string)
-                        - display (string)        
 + `patient` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1219,12 +1225,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + code: `referral` (string)
                     - display (string)
 
-+ category (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `vital_signs` (string)
-            - display (string)
++ categories (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: ` http://snomed.info/sct` (string)
+                + code: `vital_signs` (string)
+                - display (string)
 
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
