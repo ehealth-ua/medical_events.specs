@@ -553,7 +553,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 ### `Coding`
 + system : `eHealth/resource` (string, optional)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
-+ display : `Patient` (string, optional)- Representation defined by the system
+
 
 ### `Period`
 + start : `2018-08-02T10:45:16.000Z`(string, required) - C? Starting time with inclusive boundary
@@ -871,14 +871,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + class  (Coding, required)
     + system : `http://hl7.org/fhir/v3/ActCode` (string)
     + code: `AMB` (string)
-    + display: `ambulatory` (string)
+
     
 + type (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/encounter_types` (string)
             + code: `PC` (string)
-            + display: `primary_consultation` (string)
+
 + incoming_referrals(array, required)
     + (Reference)
         + identifier (Identifier)
@@ -901,13 +901,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + (Coding)
              + system: `eHealth/ICPC2/Reasons` (string)
              + code: `T01` (string)
-             + display: `надмірна спрага` (string)
+
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/ICPC2/Reasons` (string)
                 + code: `T60` (string)
-                + display: `результати тестів/процедур` (string)
+
         
 + diagnoses (array, required, fixed-type)
     + (`Diagnosis_Referrence_Condition`)
@@ -919,13 +919,12 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + (Coding)
              + system: `eHealth/ICPC2/Actions`(string)
              + code: `T50` (string)
-             + display: `призначення ліків\ін'єкцій` (string)
+
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
              + system: `eHealth/ICPC2/Actions` (string)
              + code: `T47` (string)
-             + display: `консультація зі спеціалістом` (string)
 + division (Reference, required, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
