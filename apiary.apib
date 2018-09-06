@@ -358,7 +358,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + `page`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `code`: `A20`
-    
+    + `encounter_id`: 09dc3ed7-2169-45d8-8fa3-d918c6839bf9
+    + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
 
 + Request (application/json)
 
@@ -392,6 +393,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + `page`: 1 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `code`: `10569-2`
+    + `encounter_id`: 09dc3ed7-2169-45d8-8fa3-d918c6839bf9
+    + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
 + Request (application/json)
 
     + Headers
@@ -423,7 +426,9 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Parameters
     + `page`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
+    + `code`: 227493005
+    + `encounter_id`: 09dc3ed7-2169-45d8-8fa3-d918c6839bf9
+    + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
 + Request (application/json)
 
     + Headers
@@ -457,7 +462,9 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Parameters
     + `page`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
+    + `code`: wex-10
+    + `encounter_id`: 09dc3ed7-2169-45d8-8fa3-d918c6839bf9
+    + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
 + Request (application/json)
 
     + Headers
@@ -551,7 +558,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + text (string, optional)
 
 ### `Coding`
-+ system : `eHealth/resource` (string, optional)
++ system : `eHealth/resources` (string, optional)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
 
 
@@ -563,7 +570,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + value : `13,5` (number, required)
 + comparator : `>` (string, optional)
 + unit : `mg` (string, required)
-+ system : `http:\\snomed` (string, optional)
++ system : `eHealth/units` (string, optional)
 + code: `mg` (string, optional)
         
 
@@ -584,7 +591,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    - display (string)
+                    
 + diagnoses_hstr (array, optional, fixed-type)
     + (object)
         + date: `2018-08-02T10:45:16.000Z` (string, required)
@@ -594,7 +601,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `encounter` (string)
-                            - display (string)
+                            
             
         + diagnoses (array, required, fixed-type)
             + (Diagnosis_Referrence_Condition)
@@ -605,7 +612,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-                    - display (string)
+                    
             
 + period (Period, required)
     - end (string, optional)
@@ -615,7 +622,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-                    - display (string)
+                    
                    
             
 
@@ -632,7 +639,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-                    - display (string)
+                    
             
 + period (Period, required)
     - end (string, optional)
@@ -642,13 +649,55 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-                    - display (string)
+                    
                    
             
 
 
 ### `Episode_Of_Care_Response`
-+ include `Episode_Of_Care_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `type`: `primary_care` (string, required)
++ `status`: `active`
++ name: `Діабет 2018` (string, required)
+                    
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    
++ diagnoses_hstr (array, optional, fixed-type)
+    + (object)
+        + date: `2018-08-02T10:45:16.000Z` (string, required)
+        + evidence (Reference, required, fixed-type)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
+                            
+            
+        + diagnoses (array, required, fixed-type)
+            + (Diagnosis_Referrence_Condition)
+            + (Diagnosis_Referrence_Condition_2)
++ managing_organization (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    
+    + display: Лимич Медікал (string, required) 
+            
++ period (Period, required)
+    - end (string, optional)
++ care_manager (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    
 
 
 ### `Update_Episode`
@@ -660,14 +709,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-                    - display (string)
+                    
 + managing_organization (Reference, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-                    - display (string)
+                    
 
 ##Visit
 
@@ -694,7 +743,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + (Coding)
             + `system`: `http://hl7.org/fhir/diagnosis-role`,
             + `code`: `CC`,
-            - `display`(string)
+            
     
 + rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
 
@@ -706,19 +755,19 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `condition` (string)
-                    - display (string)
+                    
 + `code` (Codeable_Concept, required) 
      + coding (array, fixed-type)
         + (Coding)
             + `system`: `ICPC2`,
             + `code`: `D30`,
-            - `display` (string)
+            
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
             + `system`: `??`,
             + `code`: `основний`,
-            - `display` (string)
+           
 + rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
 
 ### `Diagnosis_Referrence_Condition`
@@ -729,19 +778,19 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `condition` (string)
-                    - display (string)
+                    
 + `code` (Codeable_Concept, required) 
      + coding (array, fixed-type)
         + (Coding)
-            + `system`: `ICPC2`,
+            + `system`: `eHealth/ICPC2/conditions`,
             + `code`: `A20`,
-            - `display` (string)
+            
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
-            + `system`: `??`,
-            + `code`: `супутній`,
-            - `display` (string)
+            + `system`: `eHealth/diagnoses_roles`,
+            + `code`: `cheif_complaint`,
+            
 + rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
 
 ### `Diagnosis_Response`
@@ -762,26 +811,26 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `visit` (string)
-                        - display (string)
+                        
     + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: episode (string)
-                        - display (string)        
+                               
 
 + class  (Coding, required)
     + system : `http://hl7.org/fhir/v3/ActCode` (string)
     + code: `AMB` (string)
-    - display (string)
+    
     
 + type (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `http://snomed.info/sct` (string)
             + code: `11429006` (string)
-            - display (string)array
+            
 + incoming_referrals(array, required)
     + (Reference)
         + identifier (Identifier)
@@ -789,14 +838,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: referral (string)
-                        - display (string)
+                    
 + performer (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: employee (string)
-                    - display (string)
+                    
 + reasons (array,required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -894,6 +943,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: employee (string)
                     - display (string)
+    
     + display: `Шевченко Олесь Вікторович' (string, required)
 + reasons (array,required)
     + (Codeable_Concept)
@@ -1138,11 +1188,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + code: `mother` (string)
                 - display (string)
         + text: `Галина Олександрівна` (string)
-+ `patient` (Reference, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
+
                     - display (string)
 + `context` (Reference, required)
      + identifier (Identifier)
@@ -1216,13 +1262,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: `encounter` (string)
                     - display (string)
-+ based_on (Reference, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `referral` (string)
-                    - display (string)
++ based_on (array, optional)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `referral` (string)
+                        - display (string)
 
 + categories (array, required)
     + (Codeable_Concept)
@@ -1252,6 +1299,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + (Coding)
                         + code: `employee` (string)
                         - display (string)
+        
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -1410,13 +1458,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: `encounter` (string)
                     - display (string)
-+ based_on (Reference, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `referral` (string)
-                    - display (string)
++ based_on (array, optional)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `referral` (string)
+                        - display (string)
 + `patient` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1451,6 +1500,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + (Coding)
                         + code: `employee` (string)
                         - display (string)
+        + display: Шевченко Олесь Вікторович (string, required)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -1464,7 +1514,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string)
             + code: `L` (string)
-            + display: `Low` (string)
+            
     
 + comment: `Some comment` (string, optional)
 + body_side: 
@@ -1472,14 +1522,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string)
             + code: `1341001:272741003=7771000` (string)
-            - display: `Thoracic nerve` (string)
+            
 
 + method (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string)
             + code: `255459008` (string)
-            + display: `Total measurement` (string)
+            
 
 - One Of
     + value_quantity (Quantity, required)
@@ -1563,7 +1613,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + system: `http://hl7.org/fhir/v2/0078` (string)
                     + code: `L` (string)
-                    + display: `Low` (string)
+                    
         + reference_range (array, optional, fixed-type)
             + (object)
                 + low (Quantity, optional)
@@ -1575,7 +1625,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                             + (Coding)
                                 + system: ` http://snomed.info/sct` (string)
                                 + code: `normal` (string)
-                                + display: `normal reference` (string)    
+                                   
                 + applies_to (Codeable_Concept, optional)
                     +  coding (array, fixed-type)
                         + (Coding)
@@ -1749,11 +1799,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + system: ` http://snomed.info/sct` (string)
             + code: `FLUVAX` (string)
             + display: `Fluvax (Influenza)` (string)
-+ patient : ( Reference, required), // R!  Who was immunized
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
+
    
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `false` (boolean, required)
@@ -1765,6 +1811,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + (Coding)
                         + code: `employee` (string)
                         - display (string)
+        + display: Шевченко Олесь Вікторович (string, required)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -1936,7 +1983,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + (Coding)
             + system: `?` (string)
             + code: `227493005` (string)
-            + display: `Cashew nuts` (string)    
+                
 + patient : ( Reference, required), // R!  Who the sensitivity is for
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1954,6 +2001,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + (Coding)
                         + code: `employee` (string)
                         - display (string)
+        + display: Шевченко Олесь Вікторович (string, required)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
