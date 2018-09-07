@@ -1821,7 +1821,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-                    - display (string)
+                    
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
 + expiration_date : `2020-07-01` (string, optional), // Vaccine expiration date
@@ -1830,13 +1830,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + (Coding)
             + system: ` http://snomed.info/sct` (string)
             + code: `LA` (string)
-            - display (string)
+            
 + route : ( Codeable_Concept , optional), // How vaccine entered body
     +  coding (array, fixed-type)
         + (Coding)
             + system: ` http://snomed.info/sct` (string)
             + code: `IM` (string)
-            - display (string)
+            
 + dose_quantity : ( Quantity, optional), // Amount of vaccine administered
     + value : `18` (number, required)
     - comparator  (string, optional)
@@ -1852,7 +1852,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + (Coding)
                         + system: ` http://snomed.info/sct` (string)
                         + code: `429060002` (string)
-                        - display (string) 
+                         
         + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
   ),
@@ -1916,7 +1916,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-                    - display (string)
+                    
 + code : ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
     +  coding (array, fixed-type)
         + (Coding)
@@ -1934,13 +1934,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-                        - display (string)
+                        
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/information_sources` (string)
                 + code: `mother` (string)
-                - display (string)
+                
         + text: `Галина Олександрівна` (string)
 + last_occurrence : `2017-12-12` (string, optional) , // Date(/time) of last known occurrence of a reaction
 
@@ -1958,19 +1958,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-                    - display (string)
+                    
 + code : ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
     +  coding (array, fixed-type)
         + (Coding)
             + system: `?` (string)
             + code: `227493005` (string)
                 
-+ patient : ( Reference, required), // R!  Who the sensitivity is for
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    - display (string)
+
 + onset_date_time : `2000-06-12` (string, required)
 + asserted_date: `2018-08-12` (string, required)
 + primary_source: `true` (boolean, required)
@@ -1981,14 +1976,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-                        - display (string)
+                        
         + display: Шевченко Олесь Вікторович (string, required)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/information_sources` (string)
                 + code: `mother` (string)
-                - display (string)
+            
         + text: `Галина Олександрівна` (string)
 + last_occurrence : `2017-12-12` (string, optional) , // Date(/time) of last known occurrence of a reaction
 
