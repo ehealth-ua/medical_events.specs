@@ -227,6 +227,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + `page`: 2 (number) - Page number.    
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     
+    
 
 + Request (application/json)
 
@@ -1047,7 +1048,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + code: `55604002` (string)
             
     
-+ body_sites (array, optional, fixed-type)
++ `body_sites` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
@@ -1055,7 +1056,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + code: `181414000` (string)
                    
     
-+ onset_date: `2018-08-02` (string, required)
++ onset_date: `2018-08-02` (string, required)//Estimated or actual date,  date-time when condition starts
++ asserted_date: `2018-09-04` (string, requierd)//Date record was believed accurate last time
 + stage (object, optional)
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
@@ -1125,7 +1127,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + code: `55604002` (string)
             
     
-+ body_sites (array, optional, fixed-type)
++ `body_sites` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
@@ -1134,6 +1136,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                    
     
 + onset_date: `2018-08-02T10:45:16.000Z` (string, required)
++ asserted_date: `2018-09-04` (string, requierd)//Date record was believed accurate last time
 + stage (object, optional)
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
@@ -1206,7 +1209,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + code: `24484000` (string)
             
     
-+ body_sites (array, optional)
++ `body_sites` (array, optional)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
@@ -1215,6 +1218,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 
     
 + onset_date: `2018-08-02` (string, required)
++ asserted_date: `2018-09-04` (string, requierd)//Date record was believed accurate last time
 + stage (object, optional)
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
@@ -1311,7 +1315,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             
     
 + comment: `Some comment` (string, optional)
-+ body_site: 
++ `body_site`: 
      + coding (array, fixed-type)
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string)
@@ -1461,12 +1465,12 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                         + code: `referral` (string)
                     
 
-+ category (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `vital_signs` (string)
-            
++ categories (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: ` http://snomed.info/sct` (string)
+                + code: `vital_signs` (string)
 
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
@@ -1506,7 +1510,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             
     
 + comment: `Some comment` (string, optional)
-+ body_side: 
++ `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string)
@@ -1552,7 +1556,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + system: ` http://snomed.info/sct` (string)
                     + code: `normal` (string)
                         
-        + applies_to (Codeable_Concept, optional)
+        + `applies_to` (Codeable_Concept, optional)
             +  coding (array, fixed-type)
                 + (Coding)
                     + system: ` http://snomed.info/sct` (string)
@@ -1572,7 +1576,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 - system (string, optional)
                 - code (string, optional)
         + text: `Some text` (string, optional)
-+ component (array, optional, fixed-type)
++ components (array, optional, fixed-type)
     + (object)
         + code (Codeable_Concept, required)
         - One Of
@@ -1615,7 +1619,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                                 + system: ` http://snomed.info/sct` (string)
                                 + code: `normal` (string)
                                    
-                + applies_to (Codeable_Concept, optional)
+                + `applies_to` (Codeable_Concept, optional)
                     +  coding (array, fixed-type)
                         + (Coding)
                             + system: ` http://snomed.info/sct` (string)
