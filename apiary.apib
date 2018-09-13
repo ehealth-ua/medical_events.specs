@@ -205,7 +205,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Episode by id[GET /api/patients/{patient_id}/episodes/{id}]
 + Parameters
-    + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string)
+    + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required)
 
     
 
@@ -222,12 +222,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Episodes by search params[GET /api/patients/{id}/episodes]
 + Parameters
-    + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string)
-    + `code`: `A20`
-    + `page`: 2 (number) - Page number.    
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `inserted_at_from`:`1990-01-01`
-    + `inserted_at_to`: `2000-01-01`
+    + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required)
+    + `code`: `A20` (string, optional)
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
+
+    + `period_from`: `2017-01-01` (string, optional)
+    + `period_to`: `2018-01-01` (string, optional)
     
 
 + Request (application/json)
@@ -266,11 +268,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + message: `Patient not found` (string)
 
 ### Close Episode [PATCH /api/patients/{id}/episodes/{id}/actions/close]
-+ Request Package (application/json)
++ Request  (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + include `Close_Episode`
 
 
 + Response 202 (application/json)
@@ -289,11 +293,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Cancel Episode [PATCH /api/patients/{id}/episodes/{id}/actions/cancel]
 
-+ Request Package (application/json)
++ Request  (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + include `Cancel_Episode`
 
 
 + Response 202 (application/json)
@@ -328,10 +334,10 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Encounters by search params[GET /api/patient/{patient_id}/encounters]
 + Parameters
-    + `page`: 2 (number) - Page number.    
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `inserted_at_from`:`1990-01-01`
-    + `inserted_at_to`: `2000-01-01`
+    + `page`: `2` (number, optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `date_at_from`:`1990-01-01`(string, optional)
+    + `date_at_to`: `2000-01-01`(string, optional)
 + Request (application/json)
 
     + Headers
@@ -358,13 +364,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Conditions by search params [GET /api/patients/{patinet_id}/conditions]
 + Parameters
-    + `page`: 1 (number) - Page number.    
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `code`: `A20`
-    + `encounter_id`: 09dc3ed7-2169-45d8-8fa3-d918c6839bf9
-    + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
-    + `inserted_at_from`:`1990-01-01`
-    + `inserted_at_to`: `2000-01-01`
+    + `page`: `1` (number,optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `A20` (string, optional)
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
+    + `onset_date_from`:`1990-01-01` (string, optional)
+    + `onset_date_to`: `2000-01-01` (string, optional)
 
 + Request (application/json)
 
@@ -393,15 +399,15 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + data (`Observation_Response`)
     
 
-### Get Observations by searh params[GET /api/patients/{patient_id}/observations{?page,page_size}]
+### Get Observations by searh params[GET /api/patients/{patient_id}/observations]
 + Parameters
-    + `page`: 1 (number) - Page number.    
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `code`: `10569-2`
-    + `encounter_id`: 09dc3ed7-2169-45d8-8fa3-d918c6839bf9
-    + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
-    + `inserted_at_from`:`1990-01-01`
-    + `inserted_at_to`: `2000-01-01`
+    + `page`: `1` (number, optional) - Page number    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `10569-2` (string, optional)
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
+    + `issued_from`:`1990-01-01` (string, optional)
+    + `issued_to`: `2000-01-01` (string, optional)
 + Request (application/json)
 
     + Headers
@@ -431,13 +437,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### Get Allergy Intolerances by search params[GET /api/patients/{patient_id}/allergy_intolerances{?page,page_size}]
 + Parameters
-    + `page`: 2 (number) - Page number.    
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `code`: 227493005
-    + `encounter_id`: 09dc3ed7-2169-45d8-8fa3-d918c6839bf9
-    + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
-    + `inserted_at_from`:`1990-01-01`
-    + `inserted_at_to`: `2000-01-01`
+    + `page`: `2` (number, optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `227493005` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional) 
+    + `onset_date_time_from`:`1990-01-01` (string, optional) 
+    + `onset_date_time_to`: `2000-01-01` (string, optional) 
 + Request (application/json)
 
     + Headers
@@ -471,13 +477,13 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 ### Get Immunizations by search params [GET /api/patients/{patient_id}/immunizations{?page,page_size,code,encounter_id,episode_id}]
 
 + Parameters
-    + `page`: 2 (number) - Page number.    
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `code`: wex-10
-    + `encounter_id`: 09dc3ed7-2169-45d8-8fa3-d918c6839bf9
-    + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
-    + `inserted_at_from`:`1990-01-01`
-    + `inserted_at_to`: `2000-01-01`
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `wex-10` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional) 
+    + `date_from`:`1990-01-01` (string, optional) 
+    + `date_to`: `2000-01-01` (string, optional) 
     
 
 + Request (application/json)
@@ -486,7 +492,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
             Authorization: Bearer mF_9.B5f-4.1JqM
 
-+ Response 200 
++ Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Immunization_Response`], fixed-type)
 
@@ -724,13 +730,28 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: `employee` (string)
                     
-+ managing_organization (Reference, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-                    
+
+### `Cancel_Episode`
++ `period` (object, required)
+    + `end`: "2018-09-10" (string, required)
++ `explanatory_letter`: `Епізод був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `cancellation_reason` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/cancellation_reasons` (string)
+            + code: `misspelling` (string) \\ wrong_patient, misspelling
+    - text (string)
+
+### `Close_Episode`
++ `period` (object, required)
+    + `end`: "2018-09-10" (string, required)
++ `closing_summary`: `Носові шляхи вільні, горло рожеве, температура в нормі` (string, optional)    
++ `closing_reason` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/episode_closing_reasons` (string)
+            + code: `cured` (string) \\ wrong_patient, misspelling
+    - text (string)
 
 ##Visit
 
@@ -993,9 +1014,9 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Cancel_Encounter`
 + encounter (object , required, fixed-type)
-    + include (`Encounter_Base`)
+    + (`Encounter_Base`)
         + `status`: `entered_in_error` (string)
-        + `explanatory_letter`: `Я, Шевченко Наталія Олександріна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)    
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)    
         + `cancellation_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
                 + (Coding)
@@ -1004,17 +1025,18 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
-        + verification_status: `entered_in_error` (string)   
+        + `verification_status`: `entered_in_error` (string)   
     + (`Condition_Request_2`)
+        + `verification_status`: `entered_in_error` (string)
 + observations (array, optional, fixed-type)
     + (`Observation_Request`)
-        + status: `entered_in_error` (string)
+        + `status`: `entered_in_error` (string)
 + `allergy_intolerances` (array, optional, fixed-type)
     + (`Allergy_Intolerance_Request`)
-        + status: `entered_in_error` (string)
+        + `verification_status`: `entered_in_error` (string)
 + immunizations (array, optional, fixed-type)
     + (`Immunization_Request`)
-        + status: `entered_in_error` (string)
+        + `status`: `entered_in_error` (string)
 
 
 
@@ -1375,6 +1397,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + code: `normal` (string)
                         
         + `applies_to`(Codeable_Concept, optional)
+            
             +  coding (array, fixed-type)
                 + (Coding)
                     + system: ` http://snomed.info/sct` (string)
@@ -1425,7 +1448,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + system: `http://hl7.org/fhir/v2/0078` (string)
                     + code: `L` (string)
                     
-        + reference_range (array, optional, fixed-type)
+        + reference_ranges (array, optional, fixed-type)
             + (object)
                 + low (Quantity, optional)
                 + high (Quantity, optional)
@@ -1496,7 +1519,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + effective_date_time: `2018-08-02` (string, optional)
     + effective_period (Period, optional)
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
-+ issued: `2018-08-02T10:45:16.000Z` (string, required)
+
 + primary_source: `false` (boolean, required)
 - One Of
     + `performer` (Reference, required)
@@ -1557,7 +1580,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + value_time (string, required)
     + value_date_time (string, required)
     + value_period (Period, required)
-+ reference_range (array, optional, fixed-type)
++ reference_ranges (array, optional, fixed-type)
     + (object)
         + low (Quantity, optional)
         + high (Quantity, optional)
@@ -1569,11 +1592,12 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + system: ` http://snomed.info/sct` (string)
                     + code: `normal` (string)
                         
-        + `applies_to` (Codeable_Concept, optional)
-            +  coding (array, fixed-type)
-                + (Coding)
-                    + system: ` http://snomed.info/sct` (string)
-                    + code: `male` (string)
+        + `applies_to` (array, optional)
+            + (Codeable_Concept)
+                +  coding (array, fixed-type)
+                    + (Coding)
+                        + system: ` http://snomed.info/sct` (string)
+                        + code: `male` (string)
                      
         + age (Range, optional)
             + low (Quantity, optional)
@@ -1620,7 +1644,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + system: `http://hl7.org/fhir/v2/0078` (string)
                     + code: `L` (string)
                     
-        + reference_range (array, optional, fixed-type)
+        + reference_ranges (array, optional, fixed-type)
             + (object)
                 + low (Quantity, optional)
                 + high (Quantity, optional)
@@ -1632,11 +1656,12 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                                 + system: ` http://snomed.info/sct` (string)
                                 + code: `normal` (string)
                                    
-                + `applies_to` (Codeable_Concept, optional)
-                    +  coding (array, fixed-type)
-                        + (Coding)
-                            + system: ` http://snomed.info/sct` (string)
-                            + code: `male` (string)
+                + `applies_to` (array, optional)
+                    + (Codeable_Concept)
+                        +  coding (array, fixed-type)
+                            + (Coding)
+                                + system: ` http://snomed.info/sct` (string)
+                                + code: `male` (string)
                             
                 + age (Range, optional)
                     + low (Quantity, optional)
