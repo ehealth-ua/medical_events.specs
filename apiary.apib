@@ -109,15 +109,7 @@ This chapter describes different examples of Encounters that could be submitted 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (Encounter_Request)
         
-#### Dummy Observation [POST]
-Here you can find additional examples of Observations that could be submitted as a part of signed content.
 
-+ Request  (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-    + Attributes (`Observation_Request`)
     
 #### Dummy Condition [POST]
 Here you can find additional examples of Conditions that could be submitted as a part of signed content.
@@ -128,6 +120,28 @@ Here you can find additional examples of Conditions that could be submitted as a
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Condition_Request`)
+    
+    
+#### Dummy Observation [POST]
+Here you can find additional examples of Observations that could be submitted as a part of signed content.
+
++ Request 1 (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Observation_Request_1`)
+    
+    
++ Request 2 (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Observation_Request_2`)
+
+        
+        
     
 #### Dummy Immunization [POST]
 Here you can find additional examples of Immunizations that could be submitted as a part of signed content.
@@ -718,7 +732,19 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + (Coding)
                     + code: `employee` (string)
                     
-
++ `closing_summary`: `Носові шляхи вільні, горло рожеве, температура в нормі` (string, optional)    
++ `closing_reason` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/episode_closing_reasons` (string)
+            + code: `cured` (string) \\ wrong_patient, misspelling
+            
++ `explanatory_letter`: `Епізод був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `cancellation_reason` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/cancellation_reasons` (string)
+            + code: `misspelling` (string) \\ wrong_patient, misspelling
 
 ### `Update_Episode`
 + name: `Інсулінонезалежний діабет` (string, optional)
@@ -732,8 +758,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     
 
 ### `Cancel_Episode`
-+ `period` (object, required)
-    + `end`: "2018-09-10" (string, required)
+
 + `explanatory_letter`: `Епізод був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
 + `cancellation_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
@@ -744,7 +769,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ### `Close_Episode`
 + `period` (object, required)
-    + `end`: "2018-09-10" (string, required)
+    + `end`: `2018-09-10` (string, required)
 + `closing_summary`: `Носові шляхи вільні, горло рожеве, температура в нормі` (string, optional)    
 + `closing_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
@@ -924,7 +949,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + (`Condition_Request`)
     + (`Condition_Request_2`)
 + observations (array, optional, fixed-type)
-    + (`Observation_Request`)    
+    + (`Observation_Request_1`)    
 + `allergy_intolerances` (array[`Allergy_Intolerance_Request`], optional, fixed-type)
 + immunizations (array[`Immunization_Request`], optional, fixed-type)
 
@@ -1013,15 +1038,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     
 
 ### `Cancel_Encounter`
-+ encounter (object , required, fixed-type)
-    + (`Encounter_Base`)
-        + `status`: `entered_in_error` (string)
-        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)    
-        + `cancellation_reason` (Codeable_Concept, required)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth` (string)
-                    + code: `misspelling` (string) \\ wrong_patient, misspelling
++ encounter (`Encounter_Base` , required, fixed-type)
+    + `status`: `entered_in_error` (string)
+    + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)    
+    + `cancellation_reason` (Codeable_Concept, required)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth` (string)
+                + code: `misspelling` (string) \\ wrong_patient, misspelling
                     
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
@@ -1029,7 +1053,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + (`Condition_Request_2`)
         + `verification_status`: `entered_in_error` (string)
 + observations (array, optional, fixed-type)
-    + (`Observation_Request`)
+    + (`Observation_Request_1`)
         + `status`: `entered_in_error` (string)
 + `allergy_intolerances` (array, optional, fixed-type)
     + (`Allergy_Intolerance_Request`)
@@ -1285,7 +1309,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 ## Observation
 
-### `Observation_Request`
+### `Observation_Request_1`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required)
 + `context` (Reference, required)
@@ -1421,6 +1445,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + (object)
         + code (Codeable_Concept, required)
         - One Of
+            + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
             + value_quantity (Quantity, required)
             + value_codeable_concept (Codeable_Concept, required)
             + value_sampled_data (object, required)
@@ -1431,7 +1456,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
                 + dimensions (number, optional) // positiveInt Number of sample points at each time point
                 + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
-            + value_string (string, required)
+            
             + value_boolean (boolean, required)
             + value_range (object, required, fixed-type)
                 + low (Quantity, required)
@@ -1481,6 +1506,214 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
+
+### `Observation_Request_2`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `valid` (string, required)
++ `context` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    
++ based_on (array, optional)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `referral` (string)
+                        
+
++ categories (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/observation_categories` (string)
+                + code: `vital_signs` (string)
+                
+
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/observations_codes` (string)
+            + code: `10569-2` (string)
+            
+
+- One Of
+    + effective_period (Period, optional, fixed-type)
+    + effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
++ issued: `2018-08-02T10:45:16.000Z` (string, required)
++ primary_source: `false` (boolean, required)
+- One Of
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+                
+        + text: `Галина Олександрівна` (string)
+    + `performer` (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+
++ interpretation (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/observation_interpretations` (string)
+            + code: `L` (string)
+            
+    
++ comment: `Some comment` (string, optional)
++ `body_site`: 
+     + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/body_sites` (string)
+            + code: `1341001:272741003=7771000` (string)
+            
+
++ method (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/observation_methods` (string)
+            + code: `255459008` (string)
+            
+
+- One Of
+    + value_period (Period, required)
+    + value_date_time (string, required)
+    + value_time: `18:31:42` (string, required)
+    + value_ratio (object, required)//Need an example 
+        + numerator (Quantity, required)
+        + denominator (Quantity, required)
+    + value_range (Range, required, fixed-type)
+    + value_boolean: true (boolean, required)
+    + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required) 
+    + value_sampled_data (object, required)
+        + origin: `2048` (number, optional) //SimpleQuantity Zero value and units
+        + period: `10` (number, optional) // decimal Number of milliseconds between samples
+        + factor: `1.612` (number, optional) // decimal Multiply data by this before adding to origin
+        + lower_limit: `-3300` (number, optional)// decimal Lower limit of detection
+        + upper_limit: `3300` (number, optional) // Σ 0..1 decimal Upper limit of detection
+        + dimensions: `1` (number, optional) // positiveInt Number of sample points at each time point
+        + data: `2041 2043 2037 2047 2060 2062 2051 2023 2014 2027 2034 2033 2040 2047 2047 2053 2058 2064 2059 2063 2061 2052 2053 2038 1966 1885 1884 2009 2129 2166 2137 2102 2086 2077 2067 2067 2060 2059 2062 2062 2060 2057 2045 2047 2057 2054 2042 2029 2027 2018 2007 1995 2001 2012 2024 2039 2068 2092 2111 2125 2131 2148 2137 2138 2128 2128 2115 2099 2097 2096 2101 2101 2091 2073 2076 2077 2084 2081 2088 2092 2070 2069 2074 2077 2075 2068 2064 2060 2062 2074 2075 2074 2075 2063 2058 2058 2064 2064 2070 2074 2067 2060 2062 2063 2061 2059 2048 2052 2049 2048 2051 2059 2059 2066 2077 2073` (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+   
+    
+    
+  
+    
+
+
+    + value_quantity (Quantity, required)
+    + value_codeable_concept (Codeable_Concept, required)
+        +  coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/gender` (string)
+                + code: `male` (string)
++ reference_ranges (array, optional, fixed-type)
+    + (object)
+        + low (Quantity, optional)
+        + high (Quantity, optional)
+            + value: `27,5` (number, required)
+            + comparator: `<` (string, required)
+        + type (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_types` (string)
+                    + code: `normal` (string)
+                        
+        + `applies_to`(Codeable_Concept, optional)
+            
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_applications` (string)
+                    + code: `male` (string)
+                     
+        + age (Range, optional)
+            + low (Quantity, optional)
+                + value : `18` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `years` (string, optinal)
+                - system  (string, optional)
+                - code (string, optional)
+            + high (Quantity, optional)
+                + value : `35` (number, required)
+                + comparator : `<` (string, optional)
+                + unit : `years` (string, optinal)
+                - system (string, optional)
+                - code (string, optional)
+        + text: `Some text` (string, optional)
+        
++ components (array, optional, fixed-type)
+    + (object)
+        + code (Codeable_Concept, required)
+        - One Of
+            + value_quantity (Quantity, required)
+            + value_codeable_concept (Codeable_Concept, required)
+            + value_sampled_data (object, required)
+                + origin (number, optional) //SimpleQuantity Zero value and units
+                + period (number, optional) // decimal Number of milliseconds between samples
+                + factor (number, optional) // decimal Multiply data by this before adding to origin
+                + lowerLimit (number, optional)// decimal Lower limit of detection
+                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+                + dimensions (number, optional) // positiveInt Number of sample points at each time point
+                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+            + value_string (string, required)
+            + value_boolean (boolean, required)
+            + value_range (object, required, fixed-type)
+                + low (Quantity, required)
+                + high (Quantity, required)
+            + value_ratio (object, required)//Need an example 
+                + numerator (Quantity, required)
+                + denominator (Quantity, required)
+            + value_time (string, required)
+            + value_date_time (string, required)
+            + value_period (Period, required)
+        + interpretation (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/observation_interpretations` (string)
+                    + code: `L` (string)
+                    
+        + reference_ranges (array, optional, fixed-type)
+            + (object)
+                + low (Quantity, optional)
+                + high (Quantity, optional)
+                    + value: `27,5` (number, required)
+                    + comparator: `<` (string, required)
+                + type (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_types` (string)
+                            + code: `normal` (string)
+                                
+                + applies_to (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_applications` (string)
+                            + code: `male` (string)
+                             
+                + age (Range, optional)
+                    + low (Quantity, optional)
+                        + value : `18` (number, required)
+                        + comparator : `>` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system  (string, optional)
+                        - code (string, optional)
+                    + high (Quantity, optional)
+                        + value : `35` (number, required)
+                        + comparator : `<` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system (string, optional)
+                        - code (string, optional)
+                
+                + text: `Some text` (string, optional)
+
+
 
 ### `Observation_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -1751,7 +1984,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 + `explanation`  (object , optional)// Administration/non-administration reasons
     - One Of
-        + `reasons` : (array, optional, fixed_type), // Why immunization occurred
+        + `reasons` : (array, optional, fixed_type) // Why immunization occurred
             + (Codeable_Concept)
                 +  coding (array, fixed-type)
                     + (Coding)
@@ -1776,7 +2009,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
     + (object)
         + dose_sequence : 1 (number, optional), // Dose number within series
-        + name : Vaccination Protocol Sequence 1 (string, optional), // Details of vaccine protocol
+        + description : Vaccination Protocol Sequence 1 (string, optional), // Details of vaccine protocol
         + `authority`  (Codeable_Concept , optional) // Who is responsible for protocol
             +  coding (array, fixed-type)
                 + (Coding)
@@ -1798,7 +2031,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                     + system: `eHealth/vaccination_dose_statuses` (string)
                     + code: `count` (string)
                     
-        + `dose_status_reason` : ( Codeable_Concept,optional) ) // Why dose does (not) count
+        + `dose_status_reason` : ( Codeable_Concept,optional)  // Why dose does (not) count
            +  coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/vaccination_dose_statuse_reasons` (string)
@@ -1993,8 +2226,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + code: `227493005` (string)
                 
 
-+ onset_date_time : `2000-06-12` (string, required)
-+ asserted_date: `2018-08-12` (string, required)
++ onset_date_time : `2016-01-01T00:00:00.000Z` (string, required)
++ asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
 + primary_source: `true` (boolean, required)
 - One Of
     + asserter (Reference, required)
@@ -2012,7 +2245,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
                 + code: `mother` (string)
             
         + text: `Галина Олександрівна` (string)
-+ last_occurrence : `2017-12-12` (string, optional) , // Date(/time) of last known occurrence of a reaction
++ last_occurrence : `2018-07-02T00:00:00.000Z` (string, optional) , // Date(/time) of last known occurrence of a reaction
 
 
 
