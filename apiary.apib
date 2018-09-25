@@ -362,9 +362,9 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + Attributes (`Response_Collection`)
         + data (array[`Encounter_Response`])
 
-## Conditions [/api/patients/{patinet_id}/conditions]
+## Conditions [/api/patients/{patient_id}/conditions]
 
-### Get Condition by id [GET /api/patients/{patinet_id}/conditions/{id}]
+### Get Condition by id [GET /api/patients/{patient_id}/conditions/{id}]
 + Request (application/json)
 
     + Headers
@@ -376,7 +376,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
         + data (`Condition_Response`)
     
 
-### Get Conditions by search params [GET /api/patients/{patinet_id}/conditions]
+### Get Conditions by search params [GET /api/patients/{patient_id}/conditions]
 + Parameters
     + `page`: `1` (number,optional) - Page number.    
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -496,7 +496,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + `code`: `wex-10` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional) 
-    + `date_from`:`1990-01-01` (string, optional) 
+    + `date_from`: `1990-01-01` (string, optional) 
     + `date_to`: `2000-01-01` (string, optional) 
     
 
@@ -510,7 +510,163 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + Attributes (`Response_Collection`)
         + data (array[`Immunization_Response`], fixed-type)
 
+## Patient Summary [/api/patients/{patient_id}/summary]
 
+----
+**Patient Summary** - is a set of services that provide access to the patient's basic Medical Data
+
+Basic Medical Data includes the following entities:
+
+Entity              | Access level 
+--------------------|-------------
+Allergy Intolerance | All *Allergy Intolerances* are available for Patient Summary
+Immunizations       | All *Immunizations* are available for Patient Summary
+Conditions          | Only specific *Conditions* are available for Patient Summary. Restrictions is based on *condition.code*
+Observations        | Only specific *Observations* are available for Patient Summary. Restrictions is based on *observation.code*
+
+### Get Immunizations [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,date_from,date_to}]
+
++ Parameters
+    + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `wex-10` (string, optional)
+    + `date_from`: `1990-01-01` (string, optional) 
+    + `date_to`: `2000-01-01` (string, optional)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Immunization_Response`], fixed-type)
+
+### Get Immunization by id [GET /api/patients/{patient_id}/summary/immunizations/{id}]
+
++ Parameters
+    + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique immunization identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 
+    + Attributes (`Response_OK`)
+        + data (`Immunization_Response`, fixed-type)
+
+### Get Allergy Intolerances [GET /api/patients/{patient_id}/summary/allergy_intolerances{?page,page_size,code,onset_date_time_from,onset_date_time_to}]
+
++ Parameters
+    + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + `page`: `2` (number, optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `227493005` (string, optional) 
+    + `onset_date_time_from`: `1990-01-01` (string, optional) 
+    + `onset_date_time_to`: `2000-01-01` (string, optional) 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Allergy_Intolerance_Response`], fixed-type)
+
+### Get Allergy Intolerance by id [GET /api/patients/{patient_id}/allergy_intolerances/{id}]
+
++ Parameters
+    + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique allergy intolerance identifier
+ 
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Allergy_Intolerance_Response`, fixed-type)
+
+### Get Observations [GET /api/patients/{patient_id}/summary/observations{?page,page_size,code,issued_from,issued_to}]
+
++ Parameters
+    + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + `page`: `1` (number, optional) - Page number
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `10569-2` (string, optional)
+    + `issued_from`: `1990-01-01` (string, optional)
+    + `issued_to`: `2000-01-01` (string, optional)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Observation_Response`], fixed-type)
+
+### Get Observation by id [GET /api/patients/{patient_id}/observations/{id}]
+
++ Parameters
+    + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique observation identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Observation_Response`, fixed-type)
+
+### Get Conditions [GET /api/patients/{patient_id}/summary/conditions{?page,page_size,code,onset_date_from,onset_date_to}]
+
++ Parameters
+    + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + `page`: `1` (number,optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `A20` (string, optional)
+    + `onset_date_from`: `1990-01-01` (string, optional)
+    + `onset_date_to`: `2000-01-01` (string, optional)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Condition_Response`], fixed-type)
+
+### Get Condition by id [GET /api/patients/{patient_id}/conditions/{id}]
+
++ Parameters
+    + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique condition identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Condition_Response`, fixed-type)
 
 # Data Structures
 
