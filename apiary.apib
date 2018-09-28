@@ -350,8 +350,8 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Parameters
     + `page`: `2` (number, optional) - Page number.    
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `date_at_from`:`1990-01-01`(string, optional)
-    + `date_at_to`: `2000-01-01`(string, optional)
+    + `date_from`:`1990-01-01`(string, optional)
+    + `date_to`: `2000-01-01`(string, optional)
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
 + Request (application/json)
 
@@ -1202,7 +1202,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + `cancellation_reason` (Codeable_Concept, required)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth` (string)
+                + system: `eHealth/cancellation_reasons` (string)
                 + code: `misspelling` (string) \\ wrong_patient, misspelling
                     
 + conditions (array, optional, fixed-type)
@@ -1318,7 +1318,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/information_sources` (string)
+                + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
@@ -1398,7 +1398,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/information_sources` (string)
+                + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
@@ -1518,7 +1518,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/information_sources` (string)
+                + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
@@ -1924,7 +1924,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/information_sources` (string)
+                + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
@@ -1932,7 +1932,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + system: eHealth/observation_interpretations` (string)
             + code: `L` (string)
             
     
@@ -1940,14 +1940,14 @@ Observations        | Only specific *Observations* are available for Patient Sum
 + `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + system: `eHealth/body_sites` (string)
             + code: `1341001:272741003=7771000` (string)
             
 
 + method (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + system: `eHealth/observation_methods` (string)
             + code: `255459008` (string)
             
 
@@ -2107,7 +2107,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/information_sources` (string)
+                + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
@@ -2229,7 +2229,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/information_sources` (string)
+                + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
