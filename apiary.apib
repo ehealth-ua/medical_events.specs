@@ -487,7 +487,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 + Response 200 
     + Attributes (`Response_OK`)
-        + data (`Immunization_Response`, fixed-type)
+        + data (`Immunization_Response`)
 
 ### Get Immunizations by search params [GET /api/patients/{patient_id}/immunizations{?page,page_size,code,encounter_id,episode_id}]
 
@@ -2199,6 +2199,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
 
 ### `Immunization_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
 + status : `completed` (string, required), //  completed | entered-in-error
 + not_given : `false` (boolean, required), //   Flag for whether immunization was given
 + `vaccine_code` : (Codeable_Concept, required), //   Vaccine product administered
@@ -2225,7 +2226,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-                        
+        + display: `Шевченко Тетяна Вікторівна`    (string, required)            
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -2246,29 +2247,29 @@ Observations        | Only specific *Observations* are available for Patient Sum
 + site : ( Codeable_Concept, optional), // Body site vaccine  was administered
     +  coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
+            + system: `eHealth/body_sites` (string)
             + code: `LA` (string)
             
 + route : ( Codeable_Concept , optional), // How vaccine entered body
     +  coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
+            + system: `eHealth/vaccination_routes` (string)
             + code: `IM` (string)
             
-+ dose_quantity : ( Quantity, optional), // Amount of vaccine administered
++ dose_quantity: ( Quantity, optional), // Amount of vaccine administered
     + value : `18` (number, required)
     - comparator  (string, optional)
-    + unit : `mg` (string, required)
-    + system: `http://unitsofmeasure.org` (string, required)
+    + unit : `mg` (string, optinal)
+    + system: `eHealth/dose_quantities` (string, optional)
     - code (string, optional)
 
 + `explanation`  (object , optional)// Administration/non-administration reasons
     - One Of
-        + `reasons` : (array, optional, fixed_type), // Why immunization occurred
+        + `reasons` : (array, optional, fixed_type) // Why immunization occurred
             + (Codeable_Concept)
                 +  coding (array, fixed-type)
                     + (Coding)
-                        + system: ` http://snomed.info/sct` (string)
+                        + system: `eHealth/reason_explanations` (string)
                         + code: `429060002` (string)
                          
         + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
@@ -2283,41 +2284,40 @@ Observations        | Only specific *Observations* are available for Patient Sum
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `observation` (string)
-                            
+                           
         + reported : `true` (boolean, optional) // Indicates self-reported reaction
 
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
     + (object)
         + dose_sequence : 1 (number, optional), // Dose number within series
-        + name : Vaccination Protocol Sequence 1 (string, optional), // Details of vaccine protocol
-        + authority : (Codeable_Concept , optional), // Who is responsible for protocol
+        + description : Vaccination Protocol Sequence 1 (string, optional), // Details of vaccine protocol
+        + `authority`  (Codeable_Concept , optional) // Who is responsible for protocol
             +  coding (array, fixed-type)
-                    + (Coding)
-                        + system: `?` (string)
-                        + code: `what` (string)
+                + (Coding)
+                    + system: `eHealth/vaccination_authorities` (string)
+                    + code: `WVO` (string)
                         
         + series : Vaccination Series 1 (string, optional), // Name of vaccine series
         + series_doses : 2 (number, optional), // Recommended number of doses for immunity
-        + target_disease : (array, required)
+        + target_diseases : (array, required)
             + (Codeable_Concept ), //   Disease immunized against
                 +  coding (array, fixed-type)
                     + (Coding)
-                        + system: `?` (string)
+                        + system: `eHealth/vaccination_target_diseases` (string)
                         + code: `1857005` (string)
                         
         + `dose_status` : ( Codeable_Concept, required), // Indicates if dose counts towards immunity
            +  coding (array, fixed-type)
                 + (Coding)
-                    + system: `?` (string)
+                    + system: `eHealth/vaccination_dose_statuses` (string)
                     + code: `count` (string)
                     
-        + `dose_status_reason` : ( Codeable_Concept,optional) ) // Why dose does (not) count
+        + `dose_status_reason` : ( Codeable_Concept,optional)  // Why dose does (not) count
            +  coding (array, fixed-type)
                 + (Coding)
-                    + system: `?` (string)
+                    + system: `eHealth/vaccination_dose_statuse_reasons` (string)
                     + code: `coldchbrk` (string)
                     
-)
 
 
 ## `Allergy_Intolerance`
