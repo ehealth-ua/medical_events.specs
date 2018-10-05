@@ -524,6 +524,7 @@ Allergy Intolerance | All *Allergy Intolerances* are available for Patient Summa
 Immunizations       | All *Immunizations* are available for Patient Summary
 Conditions          | Only specific *Conditions* are available for Patient Summary. Restrictions is based on *condition.code*
 Observations        | Only specific *Observations* are available for Patient Summary. Restrictions is based on *observation.code*
+Diagnoses           | Only current diagnoses related to active *Episodes* that refer to specific *Conditions* are available for Patient Summary. Restrictions is based on *condition.code*
 
 ### Get Immunizations [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,date_from,date_to}]
 
@@ -587,7 +588,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + Attributes (`Response_Collection`)
         + data (array[`Allergy_Intolerance_Response`], fixed-type)
 
-### Get Allergy Intolerance by id [GET /api/patients/{patient_id}/allergy_intolerances/{id}]
+### Get Allergy Intolerance by id [GET /api/patients/{patient_id}/summary/allergy_intolerances/{id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -627,7 +628,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + Attributes (`Response_Collection`)
         + data (array[`Observation_Response`], fixed-type)
 
-### Get Observation by id [GET /api/patients/{patient_id}/observations/{id}]
+### Get Observation by id [GET /api/patients/{patient_id}/summary/observations/{id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -667,7 +668,7 @@ Observations        | Only specific *Observations* are available for Patient Sum
     + Attributes (`Response_Collection`)
         + data (array[`Condition_Response`], fixed-type)
 
-### Get Condition by id [GET /api/patients/{patient_id}/conditions/{id}]
+### Get Condition by id [GET /api/patients/{patient_id}/summary/conditions/{id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -684,6 +685,30 @@ Observations        | Only specific *Observations* are available for Patient Sum
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Condition_Response`, fixed-type)
+
+### Get active Diagnoses [GET /api/patients/{patient_id}/conditions/{id}]
+
+This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/patient-summary/get-condition-by-id)
+
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
+    + `page`: `1` (number,optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `A20` (string, optional)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array, required, fixed-type)
+            + (Diagnosis_Referrence_Condition)
+            + (Diagnosis_Referrence_Condition_2)
 
 # Data Structures
 
@@ -865,11 +890,20 @@ Observations        | Only specific *Observations* are available for Patient Sum
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
 + `type`: `primary_care` (string, required)
-+ `status`: `active`
++ `status`: `active` (string, required)
 + name: `Діабет 2018` (string, required)
-
-                    
-+ diagnoses_hstr (array, optional, fixed-type)
++  `status_history`  (array, optional, fixed-type)
+    +(object)
+        + status: `closed` (string, required)
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/episode_closing_reasons` (string)
+                    + code: `cured` (string)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `current_diagnoses` (array, optional, fixed-type)
+    + (Diagnosis)
++ `diagnoses_history` (array, optional, fixed-type)
     + (object)
         + date: `2018-08-02T10:45:16.000Z` (string, required)
         + evidence (Reference, required, fixed-type)
@@ -902,18 +936,14 @@ Observations        | Only specific *Observations* are available for Patient Sum
                     + code: `employee` (string)
                     
 + `closing_summary`: `Носові шляхи вільні, горло рожеве, температура в нормі` (string, optional)    
-+ `closing_reason` (Codeable_Concept, required)
++ `status_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/episode_closing_reasons` (string)
             + code: `cured` (string) \\ wrong_patient, misspelling
             
 + `explanatory_letter`: `Епізод був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
-+ `cancellation_reason` (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/cancellation_reasons` (string)
-            + code: `misspelling` (string) \\ wrong_patient, misspelling
+
 
 ### `Update_Episode`
 + name: `Інсулінонезалежний діабет` (string, optional)
