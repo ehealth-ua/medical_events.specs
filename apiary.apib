@@ -1640,6 +1640,13 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 - system (string, optional)
                 - code (string, optional)
         + text: `Some text` (string, optional)
++ reaction_on (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `immunization` (string)
+    
 + components (array, optional, fixed-type)
     + (object)
         + code (Codeable_Concept, required)
@@ -1705,6 +1712,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
+                
+    
 
 ### `Observation_Request_2`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
