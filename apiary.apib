@@ -218,6 +218,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     
 
 ### Get Episode by id[GET /api/patients/{patient_id}/episodes/{id}]
+Use period_from period_to to find episodes that were active in a certain period of time
 + Parameters
     + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required)
 
@@ -1314,8 +1315,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + code: `181414000` (string)
                    
     
-+ onset_date: `2018-08-02` (string, required)//Estimated or actual date,  date-time when condition starts
-+ asserted_date: `2018-09-04` (string, requierd)//Date record was believed accurate last time
++ onset_date: `2018-10-08T09:46:37.694Z` (string, required)//Estimated or actual date,  date-time when condition starts
++ asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
 + stage (object, optional)
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
@@ -1394,7 +1395,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                    
     
 + onset_date: `2018-08-02T10:45:16.000Z` (string, required)
-+ asserted_date: `2018-09-04` (string, requierd)//Date record was believed accurate last time
++ asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
 + stage (object, optional)
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
@@ -1475,8 +1476,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
              + code: `181414000` (string)
                 
     
-+ onset_date: `2018-08-02` (string, required)
-+ asserted_date: `2018-09-04` (string, requierd)//Date record was believed accurate last time
++ onset_date: `2018-10-08T09:46:37.694Z` (string, required)
++ asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
 + stage (object, optional)
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
@@ -1957,7 +1958,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             
 
 - One Of
-    + effective_date_time: `2018-08-02` (string, optional)
+    + effective_date_time: `2018-10-08T09:46:37.694Z` (string, optional)
     + effective_period (Period, optional)
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
 
@@ -2143,7 +2144,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ date :  `2018-07-01` (string, required), // Vaccination administration date
++ date :  `2018-10-08T09:46:37.694Z` (string, required), // Vaccination administration date
 
 + primary_source: `false` (boolean, required)
 - One Of
@@ -2170,7 +2171,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
-+ expiration_date : `2020-07-01` (string, optional), // Vaccine expiration date
++ expiration_date : `2018-10-08T09:46:37.694Z` (string, optional), // Vaccine expiration date
 + site : ( Codeable_Concept, optional), // Body site vaccine  was administered
     +  coding (array, fixed-type)
         + (Coding)
@@ -2204,7 +2205,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
   ),
 + reactions : (array, optional) // Details of a reaction that follows immunization
     + (object)
-        + date : `2018-07-02` (string, optional), // When reaction started
+        + date : `2018-10-08T09:46:37.694Z` (string, optional), // When reaction started
         + detail : ( Reference, optional) , // Additional information on reaction Observation
             + identifier (Identifier)
                 + type (Codeable_Concept)
@@ -2266,7 +2267,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ date :  `2018-07-01` (string, required), // Vaccination administration date
++ date :  `2018-10-08T09:46:37.694Z` (string, required), // Vaccination administration date
 
 + primary_source: `false` (boolean, required)
 - One Of
@@ -2293,7 +2294,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
-+ expiration_date : `2020-07-01` (string, optional), // Vaccine expiration date
++ expiration_date : `2018-10-08T09:46:37.694Z` (string, optional), // Vaccine expiration date
 + site : ( Codeable_Concept, optional), // Body site vaccine  was administered
     +  coding (array, fixed-type)
         + (Coding)
@@ -2327,7 +2328,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
   ),
 + reactions : (array, optional) // Details of a reaction that follows immunization
     + (object)
-        + date : `2018-07-02` (string, optional), // When reaction started
+        + date : `2018-10-08T09:46:37.694Z` (string, optional), // When reaction started
         + detail : ( Reference, optional) , // Additional information on reaction Observation
             + identifier (Identifier)
                 + type (Codeable_Concept)
@@ -2391,8 +2392,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + system: `eHealth/allergy_intolerances_codes` (string)
             + code: `227493005` (string)
 
-+ onset_date_time : `2000-06-12` (string, required)
-+ asserted_date: `2018-08-12` (string, required)
++ onset_date_time : `2018-10-08T09:46:37.694Z` (string, required)
++ asserted_date: `2018-10-08T09:46:37.694Z` (string, required)
 
 + primary_source: `true` (boolean, required)
 - One Of
@@ -2410,7 +2411,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
-+ last_occurrence : `2017-12-12` (string, optional) , // Date(/time) of last known occurrence of a reaction
++ last_occurrence : `2017-10-08T00:00:00.000Z` (string, optional) , // Date(/time) of last known occurrence of a reaction
 
 
 ### `Allergy_Intolerance_Response`
