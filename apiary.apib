@@ -237,31 +237,29 @@ Use period_from period_to to find episodes that were active in a certain period 
         + data(`Episode_Of_Care_Response`)
     
 
-### Get Episodes by search params[GET /api/patients/{id}/episodes]
+### Get Episodes by search params[GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size}]
 + Parameters
-    + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required)
-    + `code`: `A20` (string, optional)
-    + `page`: 2 (number, optional) - Page number.    
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `page`: 2 (number, optional) - Page number
     + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-
     + `period_from`: `2017-01-01` (string, optional)
     + `period_to`: `2018-01-01` (string, optional)
-    
 
 + Request (application/json)
-
     + Headers
-
+    
             Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
-        + data(array[`Episode_Of_Care_Response`])
-    
-    
+        + data(array[`Episode_Of_Care_Short`])
 
-### Update Episode [PATCH /api/patients/{id}/episodes/{id}]
+### Update Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+
 + Request Package (application/json)
 
     + Headers
@@ -332,6 +330,105 @@ Use period_from period_to to find episodes that were active in a certain period 
         + error (Response__Error)
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
+
+### Get encounters by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters{?date_from,date_to,page,page_size}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `date_from`:`1990-01-01`(string, optional)
+    + `date_to`: `2000-01-01`(string, optional)
+    + `page`: `2` (number, optional) - Page number
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Encounter_Response`], fixed-type)
+
+### Get conditions by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/conditions{?code,onset_date_from,onset_date_to,page,page_size}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `code`: `A20` (string, optional)
+    + `onset_date_from`:`1990-01-01` (string, optional)
+    + `onset_date_to`: `2000-01-01` (string, optional)
+    + `page`: `2` (number, optional) - Page number
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Condition_Response`], fixed-type)
+
+### Get observations by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/observations{?code,issued_from,issued_to,page,page_size}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `code`: `10569-2` (string, optional)
+    + `issued_from`:`1990-01-01` (string, optional)
+    + `issued_to`: `2000-01-01` (string, optional)
+    + `page`: `2` (number, optional) - Page number
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Observation_Response`], fixed-type)
+
+### Get allergy intolerances by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances{?code,onset_date_time_from,onset_date_time_to,page,page_size}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `code`: `227493005` (string, optional)
+    + `onset_date_time_from`:`1990-01-01` (string, optional) 
+    + `onset_date_time_to`: `2000-01-01` (string, optional)
+    + `page`: `2` (number, optional) - Page number
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Allergy_Intolerance_Response`], fixed-type)
+
+### Get immunizations by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/immunizations{?code,date_from,date_to,page,page_size}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `vaccine_code`: `wex-10` (string, optional)
+    + `date_from`: `1990-01-01` (string, optional) 
+    + `date_to`: `2000-01-01` (string, optional)
+    + `page`: `2` (number, optional) - Page number
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Immunization_Response`], fixed-type)
 
 ## Encounter [/api/patient/{id}/encounters]
 
@@ -537,7 +634,7 @@ Diagnoses           | Only current diagnoses related to active *Episodes* that r
     + `patient_id`: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `code`: `wex-10` (string, optional)
+    + `vaccine_code`: `wex-10` (string, optional)
     + `date_from`: `1990-01-01` (string, optional) 
     + `date_to`: `2000-01-01` (string, optional)
 
@@ -689,7 +786,7 @@ Diagnoses           | Only current diagnoses related to active *Episodes* that r
     + Attributes (`Response_OK`)
         + data (`Condition_Response`, fixed-type)
 
-### Get active Diagnoses [GET /api/patients/{patient_id}/conditions/{id}]
+### Get active Diagnoses [GET /api/patients/{patient_id}/summary/diagnoses]
 
 This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/patient-summary/get-condition-by-id)
 
@@ -857,9 +954,6 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-                    
-                   
-            
 
 
 ### `Episode_Of_Care_Request`
@@ -884,10 +978,6 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-                    
-                   
-            
-
 
 ### `Episode_Of_Care_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -988,6 +1078,13 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + system: `eHealth/episode_closing_reasons` (string)
             + code: `cured` (string) \\ wrong_patient, misspelling
     - text (string)
+
+### `Episode_Of_Care_Short`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ name: `Діабет 2018` (string, required)
++ `status`: `active` (string, required)
++ period (Period, required)
+    - end (string, optional)
 
 ##Visit
 
@@ -1099,7 +1196,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + system: `http://snomed.info/sct` (string)
             + code: `11429006` (string)
             
-+ incoming_referrals(array, required)
++ incoming_referrals(array, optional)
     + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -1152,7 +1249,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `division` (string)
                     
-
++ prescriptions: 'Дієта №1, Омепразолу 40 мг 1 раз на добу + амоксициліну 500 мг + метронідазолу 400 мг при необхідності 500 мг або тинідазолу 500 мг 3 рази на добу протягом 1 тижня' (string, optional)
 
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
@@ -1247,6 +1344,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `division` (string)
                     
++ prescriptions: 'Дієта №1, Омепразолу 40 мг 1 раз на добу + амоксициліну 500 мг + метронідазолу 400 мг при необхідності 500 мг або тинідазолу 500 мг 3 рази на добу протягом 1 тижня' (string, optional)
 
 ### `Cancel_Encounter`
 + encounter (`Encounter_Base` , required, fixed-type)
