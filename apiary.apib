@@ -545,15 +545,15 @@ If you have an approval - you can obtain episode details and nested entities thr
         + data (`Encounter_Response`)
     
 
-### Get Encounters by search params[GET /api/patient/{patient_id}/encounters]
+### Get Encounters by search params[GET /api/patient/{patient_id}/encounters{?date_from,date_to,episode_id,page,page_size}]
 + Parameters
     + `page`: `2` (number, optional) - Page number.    
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `date_from`:`1990-01-01`(string, optional)
     + `date_to`: `2000-01-01`(string, optional)
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
-+ Request (application/json)
 
++ Request (application/json)
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -564,9 +564,13 @@ If you have an approval - you can obtain episode details and nested entities thr
 
 ## Conditions [/api/patients/{patient_id}/conditions]
 
-### Get Condition by id [GET /api/patients/{patient_id}/conditions/{id}]
-+ Request (application/json)
+### Get Condition by id [GET /api/patients/{patient_id}/conditions/{condition_id}]
 
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `condition_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Condition identifier
+
++ Request (application/json)
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -576,7 +580,7 @@ If you have an approval - you can obtain episode details and nested entities thr
         + data (`Condition_Response`)
     
 
-### Get Conditions by search params [GET /api/patients/{patient_id}/conditions]
+### Get Conditions by search params [GET /api/patients/{patient_id}/conditions{?encounter_id,episode_id,onset_date_from,onset_date_to,code,page,page_size}]
 + Parameters
     + `page`: `1` (number,optional) - Page number.    
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -587,7 +591,6 @@ If you have an approval - you can obtain episode details and nested entities thr
     + `onset_date_to`: `2000-01-01` (string, optional)
 
 + Request (application/json)
-
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -599,8 +602,11 @@ If you have an approval - you can obtain episode details and nested entities thr
 
 ## Observation [/api/patients/{patient_id}/observation/{id}]
 
-### Get Observation by id[GET /api/patients/{patient_id}/observations/{id}]
+### Get Observation by id[GET /api/patients/{patient_id}/observations/{observation_id}]
+
 + Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `observation_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Observation identifier
 
 + Request (application/json)
 
@@ -613,7 +619,7 @@ If you have an approval - you can obtain episode details and nested entities thr
         + data (`Observation_Response`)
     
 
-### Get Observations by searh params[GET /api/patients/{patient_id}/observations]
+### Get Observations by searh params[GET /api/patients/{patient_id}/observations{?encounter_id,episode_id,code,issued_from,issued_to,page,page_size}]
 + Parameters
     + `page`: `1` (number, optional) - Page number    
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -622,8 +628,8 @@ If you have an approval - you can obtain episode details and nested entities thr
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
     + `issued_from`:`1990-01-01` (string, optional)
     + `issued_to`: `2000-01-01` (string, optional)
-+ Request (application/json)
 
++ Request (application/json)
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -636,11 +642,13 @@ If you have an approval - you can obtain episode details and nested entities thr
 
 ## Allergy Intolerance [/api/patients/{patient_id}/allergy_intolerances/{id}]
 
-### Get Allergy Intolerance by id[GET /api/patients/{patient_id}/allergy_intolerances/{id}]
+### Get Allergy Intolerance by id[GET /api/patients/{patient_id}/allergy_intolerances/{allergy_intolerance_id}]
+
 + Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `allergy_intolerance_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Allergy intolerance identifier
  
 + Request (application/json)
-
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -649,17 +657,18 @@ If you have an approval - you can obtain episode details and nested entities thr
     + Attributes (`Response_OK`)
         + data (`Allergy_Intolerance_Response`)
 
-### Get Allergy Intolerances by search params[GET /api/patients/{patient_id}/allergy_intolerances{?page,page_size}]
+### Get Allergy Intolerances by search params[GET /api/patients/{patient_id}/allergy_intolerances{?encounter_id,episode_id,code,onset_date_time_from,onset_date_time_to,page,page_size}]
+
 + Parameters
     + `page`: `2` (number, optional) - Page number.    
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `code`: `227493005` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional) 
-    + `onset_date_time_from`:`1990-01-01` (string, optional) 
-    + `onset_date_time_to`: `2000-01-01` (string, optional) 
-+ Request (application/json)
+    + `onset_date_time_from`:`1990-01-01` (string, optional)
+    + `onset_date_time_to`: `2000-01-01` (string, optional)
 
++ Request (application/json)
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -672,14 +681,13 @@ If you have an approval - you can obtain episode details and nested entities thr
 
 ## Immunization [/api/patients/{patient_id}/immunizations]
 
-### Get Immunization by id [GET /api/patients/{patient_id}/immunizations/{id}]
+### Get Immunization by id [GET /api/patients/{patient_id}/immunizations/{immunization_id}]
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
-    + id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique immunization identifier
+    + immunization_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique immunization identifier
 
 + Request (application/json)
-
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -688,7 +696,7 @@ If you have an approval - you can obtain episode details and nested entities thr
     + Attributes (`Response_OK`)
         + data (`Immunization_Response`)
 
-### Get Immunizations by search params [GET /api/patients/{patient_id}/immunizations{?page,page_size,code,encounter_id,episode_id}]
+### Get Immunizations by search params [GET /api/patients/{patient_id}/immunizations{?vaccine_code,date_from,date_to,page,page_size,code,encounter_id,episode_id}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
