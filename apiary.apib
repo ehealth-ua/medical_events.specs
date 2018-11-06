@@ -3,6 +3,14 @@ HOST: http://ehealth.edenlabllc.com/
 
 # eHealth Medical Events API
 
+All the medical data stored in eHealth belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
+
+1. Only authenticated user with appropriate scope can access medical data
+2. Only user who has active declaration with patient is "authorized" to manage all patient's data (view history, add new medical events)
+3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
+
+![Access policy](https://image.ibb.co/fOPoTV/Referrals-Medical-events-usage.png)
+
 # Group Medical Events
 ###Sequence diagram
 ![Contract request flow](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgU3VibWl0dGluZyBtZWRpY2FsIGRhdGEgcGFja2FnZQoKcGFydGljaXBhbnQgTUlTIGFzIG1zcAAKDWVIZWFsdGggYXMgZWgABgUAKQ1Eb2N1bWVudCBzdG9yYWdlIGFzAAMICgoKbXNwLT4AMAc6IDw8U2VhcmNoIGZvciBhIHBlcnNvbj4-CgBRBy0-bXNwOiA8PFJlc3BvbnNlIHdpdGgAIAdzIGlkcz4-Cm9wdABIDjw8Q3JlYXRlIGVwaXNvZGUARAwAgSoHIDoAHAdhc3luYyBqb2IAZQ4AaghkAGsGam9iIGlkADUTOiAAXQ4AgU4RR2V0ADkFYnkAMg8AgUwNAFwLZGV0YWlscz4-CmVuZACBSBRVcGQAdGgAXQ4AgQxQAIQFBgCDXAUAgygIbmNvdW50ZXIAhQYJABkKU2lnbgAJGACEQwwAhVsFADgSAIMwVACFWQc6IFNhdmUgc2lnbmVkIGNvbnRlbnQgdG8AhWwJAIQjElByb2Nlc3MAgS0ZAIN7OwCFehRsb3MAhSZnAF4MAIVATAoKCgoKCgoK&s=modern-blue)
@@ -173,7 +181,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
-          + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required) 
+          + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -189,9 +197,6 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-      
-    
-    
 
 ### Cancel Encounter Package Dummy[PATCH]
 + Request (application/json)
@@ -219,15 +224,14 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 + Response 200 (application/json)
     
 
-### Get Episode by id[GET /api/patients/{patient_id}/episodes/{id}]
+### Get Episode by id[GET /api/patients/{patient_id}/episodes/{episode_id}]
 Use period_from period_to to find episodes that were active in a certain period of time
-+ Parameters
-    + `id` : `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required)
 
-    
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Episode identifier
 
 + Request (application/json)
-
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -237,7 +241,13 @@ Use period_from period_to to find episodes that were active in a certain period 
         + data(`Episode_Of_Care_Response`)
     
 
-### Get Episodes by search params[GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size}]
+### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size}]
+
+This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
+If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services
+
+**Scopes required:** `TBD`
+
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `page`: 2 (number, optional) - Page number
@@ -261,10 +271,10 @@ Use period_from period_to to find episodes that were active in a certain period 
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
 
 + Request Package (application/json)
-
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+
     + Attributes (object)
         + include `Update_Episode`
 
@@ -282,9 +292,12 @@ Use period_from period_to to find episodes that were active in a certain period 
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Close Episode [PATCH /api/patients/{id}/episodes/{id}/actions/close]
-+ Request  (application/json)
+### Close Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}/actions/close]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
 
++ Request  (application/json)
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
@@ -306,13 +319,16 @@ Use period_from period_to to find episodes that were active in a certain period 
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Cancel Episode [PATCH /api/patients/{id}/episodes/{id}/actions/cancel]
+### Cancel Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}/actions/cancel]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
 
 + Request  (application/json)
-
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+
     + Attributes (object)
         + include `Cancel_Episode`
 
@@ -331,7 +347,7 @@ Use period_from period_to to find episodes that were active in a certain period 
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Get encounters by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters{?date_from,date_to,page,page_size}]
+### Get encounters in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters{?date_from,date_to,page,page_size}]
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -350,7 +366,23 @@ Use period_from period_to to find episodes that were active in a certain period 
     + Attributes (`Response_Collection`)
         + data (array[`Encounter_Response`], fixed-type)
 
-### Get conditions by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/conditions{?code,onset_date_from,onset_date_to,page,page_size}]
+### Get encounter details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters/{encounter_id}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Encounter identifier
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Encounter_Response`)
+
+### Get conditions episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/conditions{?code,onset_date_from,onset_date_to,page,page_size}]
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -370,7 +402,23 @@ Use period_from period_to to find episodes that were active in a certain period 
     + Attributes (`Response_Collection`)
         + data (array[`Condition_Response`], fixed-type)
 
-### Get observations by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/observations{?code,issued_from,issued_to,page,page_size}]
+### Get conditions details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/conditions/{condition_id}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `condition_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Condition identifier
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Condition_Response`)
+
+### Get observations in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/observations{?code,issued_from,issued_to,page,page_size}]
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -390,7 +438,23 @@ Use period_from period_to to find episodes that were active in a certain period 
     + Attributes (`Response_Collection`)
         + data (array[`Observation_Response`], fixed-type)
 
-### Get allergy intolerances by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances{?code,onset_date_time_from,onset_date_time_to,page,page_size}]
+### Get observation details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/observations/{observation_id}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `observation_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Observation identifier
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Observation_Response`)
+
+### Get allergy intolerances in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances{?code,onset_date_time_from,onset_date_time_to,page,page_size}]
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -410,7 +474,23 @@ Use period_from period_to to find episodes that were active in a certain period 
     + Attributes (`Response_Collection`)
         + data (array[`Allergy_Intolerance_Response`], fixed-type)
 
-### Get immunizations by episode [GET /api/patients/{patient_id}/episodes/{episode_id}/immunizations{?code,date_from,date_to,page,page_size}]
+### Get allergy intolerance details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances/{allergy_intolerance_id}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `allergy_intolerance_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Allergy intolerance identifier
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Allergy_Intolerance_Response`)
+
+### Get immunizations in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/immunizations{?code,date_from,date_to,page,page_size}]
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -430,10 +510,29 @@ Use period_from period_to to find episodes that were active in a certain period 
     + Attributes (`Response_Collection`)
         + data (array[`Immunization_Response`], fixed-type)
 
+### Get immunization details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/immunizations/{immunization_id}]
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
+    + `immunization_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Immunization identifier
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Immunization_Response`)
+
 ## Encounter [/api/patient/{id}/encounters]
 
-### Get Encounter by  id[GET /api/patient/{patient_id}/encounters/{id}]
+### Get Encounter by  id[GET /api/patient/{patient_id}/encounters/{encounter_id}]
 
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `encounter_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Encounter identifier
 
 + Request (application/json)
 
@@ -869,7 +968,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + page: 2 (number) - Page number.
 + page_size: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 + total_entries: 1000 (number) - Total number of objects in collection.
-+ total_pages: 23 (number) - Total number of pages.
++ total_pages: 20 (number) - Total number of pages.
 
 ### `Affordance`
 + action (string, required) - Affordance action.
