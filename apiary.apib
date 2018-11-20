@@ -6,6 +6,10 @@ HOST: http://ehealth.edenlabllc.com/
 All the medical data stored in eHealth belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
 1. Only authenticated user with appropriate scope can access medical data
+List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles)
+
+[wiki: Scopes data model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/2004415/Scopes+model)
+
 2. Only user who has active declaration with patient is "authorized" to manage all patient's data (view history, add new medical events)
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
 
@@ -35,6 +39,9 @@ Allergy intolerance| 0-* |true
 Immunization| 0-* |true
 
 To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
+
+
+
 + Request Package (application/json)
 
     + Headers
@@ -124,7 +131,6 @@ This chapter describes different examples of Encounters that could be submitted 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (Encounter_Request)
         
-
     
 #### Dummy Condition [POST]
 Here you can find additional examples of Conditions that could be submitted as a part of signed content.
@@ -177,6 +183,754 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Allergy_Intolerance_Request`)
+
+
+#### Examples
+
+Example #1:
+Patient's reasons to come to the doctor: obtain heart observation (ICPC2 code K31)
+Asserted diagnosis: ICPC2 code K87
+Observations performed: weight 82 kg, heigh 170 cm, BMI 28,4 kg/m^2, BP 150/95, EKG, urine analysis (Action ICPC2 code K31)
+Prescriptions made: Спіронолактон 50, Еналаприл 10, Бісопролол 10 (Action ICPC2 code K50)
+
+In order to register this event in eHealth, next  objects should be created:
+
+```
+//Епізод №1 - Гіпертонія з ускладненням 
+{
+  "id": "90a9e15b-b71b-4caf-8f2e-ff247e8a5600",
+  "type": "Первинна допомога",
+  "status": "active",
+  "name": "Гіпертонія з ускладненням",
+  "managing_organization": {
+    "identifier": {
+      "type": {
+        "coding": [
+          {
+            "system": "eHealth/resources",
+            "code": "legal_entity"
+          }
+        ]
+      },
+      "value": "c88a4c57-5e65-47f7-bb16-c86a554a0984 "
+    }
+  },
+  "period": {
+    "start": "2018-11-02T10:45:16.000Z"
+  },
+  "care_manager": {
+    "identifier": {
+      "type": {
+        "coding": [
+          {
+            "system": "eHealth/resources",
+            "code": "employee"
+          }
+        ]
+      },
+      "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396 "
+    }
+  }
+}
+```
+
+```
+//Пакет даних, зібраних у рамках звернення по епізоду "Гіпертонія з ускладненням "
+{
+  "visit": {
+    "id": "d8c8a938-27bf-4ffb-aeda-1d2f9754cb25",
+    "period": {
+      "start": "2018-11-02T10:45:16.000Z",
+      "end": "2018-11-02T11:25:16.000Z"
+    }
+  },
+  "signed_data": "'ew0KICAicGVyaW9kIjogew0KIC...'"
+}
+```
+```
+//Розшифровка підписаного контенту
+{
+  "encounter": {
+    "id": "0545e134-58ce-4195-99a5-0a98dca9aff7",
+    "status": "finised",
+    "date": "2018-11-02",
+    "visit": {
+      "identifier": {
+        "type": {
+          "coding": [
+            {
+              "system": "eHealth/resources",
+              "code": "visit"
+            }
+          ]
+        },
+        "value": "d8c8a938-27bf-4ffb-aeda-1d2f9754cb25"
+      }
+    },
+    "episode": {
+      "identifier": {
+        "type": {
+          "coding": [
+            {
+              "system": "eHealth/resources",
+              "code": "episode"
+            }
+          ]
+        },
+        "value": "90a9e15b-b71b-4caf-8f2e-ff247e8a5600"
+      }
+    },
+    "class": {
+      "system": "eHealth/encounter_classes",
+      "code": "AMB"
+    },
+    "type": {
+      "coding": [
+        {
+          "system": "eHealth/encounter_types",
+          "code": "270427003"
+        }
+      ]
+    },
+    "performer": {
+      "identifier": {
+        "type": {
+          "coding": [
+            {
+              "system": "eHealth/resources",
+              "code": "employee"
+            }
+          ]
+        },
+        "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396 "
+      }
+    },
+    "reasons": [
+      {
+        "coding": [
+          {
+            "system": "eHealth/ICPC2/reasons",
+            "code": "K31"
+          }
+        ]
+      }
+    ],
+    "diagnoses": [
+      {
+        "condition": {
+          "identifier": {
+            "type": {
+              "coding": [
+                {
+                  "system": "eHealth/resources",
+                  "code": "condition"
+                }
+              ]
+            },
+            "value": "d66623f7-f2d9-4889-8567-4107309eac80"
+          }
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "eHealth/ICPC2/conditions",
+              "code": "K87"
+            }
+          ]
+        },
+        "role": {
+          "coding": [
+            {
+              "system": "eHealth/diagnoses_roles",
+              "code": "cheif_complaint"
+            }
+          ]
+        },
+        "rank": 1
+      }
+    ],
+    "actions": [
+      {
+        "coding": [
+          {
+            "system": "eHealth/ICPC2/actions",
+            "code": "K31"
+          }
+        ]
+      },
+      {
+        "coding": [
+          {
+            "system": "eHealth/ICPC2/actions",
+            "code": "K50"
+          }
+        ]
+      },
+      {
+        "coding": [
+          {
+            "system": "eHealth/ICPC2/actions",
+            "code": "K35"
+          }
+        ]
+      },
+      {
+        "coding": [
+          {
+            "system": "eHealth/ICPC2/actions",
+            "code": "K42"
+          }
+        ]
+      }
+    ],
+    "division": {
+      "identifier": {
+        "type": {
+          "coding": [
+            {
+              "system": "eHealth/resources",
+              "code": "division"
+            }
+          ]
+        },
+        "value": "9183a36b-4d45-4244-9339-63d81cd08d9c"
+      }
+    },
+    "prescriptions": "Спіронолактон 50 по 2 таблетки на день напротязі 10-ти днів після їжі, Еналаприл 10 по 1-й таб. в день напротязі 5-ти днів до їжі, Бісопролол 10 по 0,5 таблетки в день напротязі 5 днів підчас їжі. Дієта№1. Знизити фізичні навантаження."
+  },
+  "conditions": [
+    {
+      "id": "d66623f7-f2d9-4889-8567-4107309eac80",
+      "primary_source": true,
+      "asserter": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "employee"
+              }
+            ]
+          },
+          "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396"
+        }
+      },
+      "context": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "encounter"
+              }
+            ]
+          },
+          "value": "545e134-58ce-4195-99a5-0a98dca9aff7"
+        }
+      },
+      "code": {
+        "coding": [
+          {
+            "system": "eHealth/ICPC2/conditions",
+            "code": "K87"
+          }
+        ]
+      },
+      "clinical_status": "active",
+      "verification_status": "provisional",
+      "severity": {
+        "coding": [
+          {
+            "system": "eHealth/severities_codes",
+            "code": "55604002"
+          }
+        ]
+      },
+      "body_sites": [
+        {
+          "coding": [
+            {
+              "system": "eHealth/body_sites",
+              "code": "181414000"
+            }
+          ]
+        }
+      ],
+      "onset_date": "2018-01-01T00:00:00.000Z",
+      "asserted_date": "2018-11-02T10:46:37.694Z",
+      "stage": {
+        "summary": {
+          "coding": [
+            {
+              "system": "eHealth/condition_stages",
+              "code": "14803004"
+            }
+          ]
+        }
+      },
+      "evidences": [
+        {
+          "code": [
+            {
+              "coding": [
+                {
+                  "system": "eHealth/ICPC2/reasons",
+                  "code": "K85"
+                }
+              ]
+            }
+          ],
+          "detail": [
+            {
+              "identifier": {
+                "type": {
+                  "coding": [
+                    {
+                      "system": "eHealth/resources",
+                      "code": "observation"
+                    }
+                  ]
+                },
+                "value": "98cb9ee3-9b39-46bc-90aa-491940287edc"
+              }
+            },
+            {
+              "identifier": {
+                "type": {
+                  "coding": [
+                    {
+                      "system": "eHealth/resources",
+                      "code": "observation"
+                    }
+                  ]
+                },
+                "value": "538c7509-2ad0-4fb1-8eab-2718ed5e6874 "
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "98cb9ee3-9b39-46bc-90aa-491940287edc",
+      "status": "final",
+      "context": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "encounter"
+              }
+            ]
+          },
+          "value": "0545e134-58ce-4195-99a5-0a98dca9aff7"
+        }
+      },
+      "categories": [
+        {
+          "coding": [
+            {
+              "system": "eHealth/observation_categories",
+              "code": "laboratory"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC/observation_codes",
+            "code": "5778-6"
+          }
+        ]
+      },
+      "effective_date_time": "2018-11-02T10:55:16.000Z",
+      "issued": "2018-11-02T10:55:16.000Z",
+      "primary_source": true,
+      "performer": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "employee"
+              }
+            ]
+          },
+          "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396"
+        }
+      },
+      "value_codeable_concept": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC",
+            "code": "371244009"
+          }
+        ],
+        "text": "Yellow"
+      },
+      "reference_ranges": [
+        {
+          "text": "Yellow"
+        }
+      ]
+    },
+    {
+      "id": "f57dc3f4-add2-488a-9da2-86d615c731c7",
+      "status": "final",
+      "context": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "encounter"
+              }
+            ]
+          },
+          "value": "0545e134-58ce-4195-99a5-0a98dca9aff7"
+        }
+      },
+      "categories": [
+        {
+          "coding": [
+            {
+              "system": "eHealth/observation_categories",
+              "code": "laboratory"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC/observation_codes",
+            "code": "32167-9"
+          }
+        ]
+      },
+      "effective_date_time": "2018-11-02T10:55:16.000Z",
+      "issued": "2018-11-02T10:55:16.000Z",
+      "primary_source": true,
+      "performer": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "employee"
+              }
+            ]
+          },
+          "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396"
+        }
+      },
+      "value_codeable_concept": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC",
+            "code": "371244009"
+          }
+        ],
+        "text": "Cloudy"
+      },
+      "reference_ranges": [
+        {
+          "text": "Pure"
+        }
+      ]
+    },
+    {
+      "id": "50f5ecd3-11ce-45de-ac54-b63a26e03efd",
+      "status": "final",
+      "context": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "encounter"
+              }
+            ]
+          },
+          "value": "0545e134-58ce-4195-99a5-0a98dca9aff7"
+        }
+      },
+      "categories": [
+        {
+          "coding": [
+            {
+              "system": "eHealth/observation_categories",
+              "code": "vital-signs"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC/observation_codes",
+            "code": "29463-7"
+          }
+        ]
+      },
+      "effective_date_time": "2018-11-02T10:55:16.000Z",
+      "issued": "2018-11-02T10:55:16.000Z",
+      "primary_source": true,
+      "performer": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "employee"
+              }
+            ]
+          },
+          "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396"
+        }
+      },
+      "value_quantity": {
+        "value": 90,
+        "unit": "kg",
+        "system": "eHealth/units",
+        "code": "kg"
+      }
+    },
+    {
+      "id": "f579c430-3938-496d-8d30-859e5e1bed31",
+      "status": "final",
+      "context": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "encounter"
+              }
+            ]
+          },
+          "value": "0545e134-58ce-4195-99a5-0a98dca9aff7"
+        }
+      },
+      "categories": [
+        {
+          "coding": [
+            {
+              "system": "eHealth/observation_categories",
+              "code": "vital-signs"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC/observation_codes",
+            "code": "8302-2"
+          }
+        ]
+      },
+      "effective_date_time": "2018-11-02T10:55:16.000Z",
+      "issued": "2018-11-02T10:55:16.000Z",
+      "primary_source": true,
+      "performer": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "employee"
+              }
+            ]
+          },
+          "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396"
+        }
+      },
+      "value_quantity": {
+        "value": 190,
+        "unit": "cm",
+        "system": "eHealth/units",
+        "code": "cm"
+      }
+    },
+      {
+      "id": "ed275f26-702a-4a2f-aad8-14b1f883e683",
+      "status": "final",
+      "context": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "encounter"
+              }
+            ]
+          },
+          "value": "0545e134-58ce-4195-99a5-0a98dca9aff7"
+        }
+      },
+      "categories": [
+        {
+          "coding": [
+            {
+              "system": "eHealth/observation_categories",
+              "code": "vital-signs"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC/observation_codes",
+            "code": "39156-5"
+          }
+        ]
+      },
+      "effective_date_time": "2018-11-02T10:55:16.000Z",
+      "issued": "2018-11-02T10:55:16.000Z",
+      "primary_source": true,
+      "performer": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "employee"
+              }
+            ]
+          },
+          "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396"
+        }
+      },
+      "value_quantity": {
+        "value": 16.2,
+        "unit": "kg/m2",
+        "system": "eHealth/units",
+        "code": "kg/m2"
+      }
+    },
+     {
+      "id": "ada6d5cd-f14b-45f5-a427-3fa9d5a7bf1e",
+      "status": "final",
+      "context": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "encounter"
+              }
+            ]
+          },
+          "value": "0545e134-58ce-4195-99a5-0a98dca9aff7"
+        }
+      },
+      "categories": [
+        {
+          "coding": [
+            {
+              "system": "eHealth/observation_categories",
+              "code": "vital-signs"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC/observation_codes",
+            "code": "8480-6"
+          }
+        ]
+      },
+      "effective_date_time": "2018-11-02T10:55:16.000Z",
+      "issued": "2018-11-02T10:55:16.000Z",
+      "primary_source": true,
+      "performer": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "employee"
+              }
+            ]
+          },
+          "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396"
+        }
+      },
+      "value_quantity": {
+        "value": 150,
+        "unit": "mm[Hg]",
+        "system": "eHealth/units",
+        "code": "mm[Hg]"
+      }
+    },
+         {
+      "id": "ada6d5cd-f14b-45f5-a427-3fa9d5a7bf1e",
+      "status": "final",
+      "context": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "encounter"
+              }
+            ]
+          },
+          "value": "0545e134-58ce-4195-99a5-0a98dca9aff7"
+        }
+      },
+      "categories": [
+        {
+          "coding": [
+            {
+              "system": "eHealth/observation_categories",
+              "code": "vital-signs"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "eHealth/LOINC/observation_codes",
+            "code": "8462-4"
+          }
+        ]
+      },
+      "effective_date_time": "2018-11-02T10:55:16.000Z",
+      "issued": "2018-11-02T10:55:16.000Z",
+      "primary_source": true,
+      "performer": {
+        "identifier": {
+          "type": {
+            "coding": [
+              {
+                "system": "eHealth/resources",
+                "code": "employee"
+              }
+            ]
+          },
+          "value": "9a06bf93-7baa-4e9c-a063-0edd3b796396"
+        }
+      },
+      "value_quantity": {
+        "value": 95,
+        "unit": "mm[Hg]",
+        "system": "eHealth/units",
+        "code": "mm[Hg]"
+      }
+    }
+  ]
+}
+```
 
 
 ### Cancel Encounter Package [PATCH]
