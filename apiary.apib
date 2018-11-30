@@ -65,7 +65,8 @@ See extended example [here](https://github.com/edenlabllc/ehealth.specs/blob/mas
 
 
 ### Get async Job processing details [GET /api/jobs/{id}]
-This resource should be used to get the processing status of the async job
+This resource should be used to get the processing status of the async job.
+Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/612041003/Medical+events+Technical+Documentation#MedicaleventsTechnicalDocumentation-AsyncjobprocessingSequencediagram)
 
 + Parameters
     + id: `NBXk9EyErUZv1RhXgyvgg` (string, required) - request identifier
@@ -186,6 +187,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
 
 
 ### Cancel Encounter Package [PATCH]
+Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
 + Request Package (application/json)
 
     + Headers
@@ -221,9 +223,9 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
    
 
 ## Episode of Care [/api/patients/{id}/episodes]
-
+Episode of care is a resource that contains general information about a patient`s medical case, such as care manager and diagnoses history.
 ### Create Episode  [POST]
-
+Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/620134482/Create+Episode)
 + Request (application/json)
 
     + Headers
@@ -277,6 +279,7 @@ If you have an approval - you can obtain episode details and nested entities thr
         + data(array[`Episode_Of_Care_Short`])
 
 ### Update Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}]
+Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/623837304/Update+Episode)
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -304,6 +307,7 @@ If you have an approval - you can obtain episode details and nested entities thr
             + message: `Patient not found` (string)
 
 ### Close Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}/actions/close]
+Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/624951347/Close+Episode)
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -1019,9 +1023,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 ### `Quantity`
 + value : `13,5` (number, required)
 + comparator : `>` (string, optional)
-+ unit : `mg` (string, required)
-+ system : `eHealth/units` (string, optional)
-+ code: `mg` (string, optional)
++ unit : `mg` (string, optional) - for future use
++ system : `eHealth/units` (string, required)
++ code: `mg` (string, required)
         
 
 ### `Range`
@@ -1146,7 +1150,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `legal_entity` (string)
                     
-    + display: Лимич Медікал (string, required) 
+    + display: Лимич Медікал (string, required) - This field is filled on creating and never updated after
             
 + period (Period, required)
     - end (string, optional)
@@ -1316,13 +1320,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + system: `eHealth/encounter_types` (string) 
             + code: `11429006` (string)- `dictionary eHealth/encounter_types`
             
-+ incoming_referrals(array, optional)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: referral (string)
+
                     
 + performer (Reference, required)
      + identifier (Identifier)
@@ -1410,14 +1408,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + system: `eHealth/encounter_types` (string)
             + code: `PC` (string) - `dictionary eHealth/encounter_types`
 
-+ incoming_referrals(array, required)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: referral (string)
-                        
+
 + performer (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1426,7 +1417,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: employee (string)
                     
     
-    + display: `Шевченко Олесь Вікторович' (string, required)
+    + display: `Шевченко Олесь Вікторович' (string, required) - This field is filled on creating and never updated after
 + reasons (array,required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -1667,7 +1658,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + (Coding)
                         + code: `patient` (string)
                         
-        + display: Шевченко Олесь Вікторович (string, required)
+        + display: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -1750,13 +1741,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ based_on (array, optional)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `referral` (string)
+
                         
 
 + categories (array, required)
@@ -1956,13 +1941,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ based_on (array, optional)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `referral` (string)
+
                         
 
 + categories (array, required)
@@ -2163,13 +2142,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ based_on (array, optional)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `referral` (string)
+
                     
 
 + categories (array, required)
@@ -2200,7 +2173,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + (Coding)
                         + code: `employee` (string)
                         
-        + display: Шевченко Олесь Вікторович (string, required)
+        + display: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -2409,7 +2382,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-        + display: `Шевченко Тетяна Вікторівна`    (string, required)            
+        + display: `Шевченко Тетяна Вікторівна`    (string, required) - This field is filled on creating and never updated after           
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
