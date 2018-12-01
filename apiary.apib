@@ -1456,6 +1456,13 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: `division` (string)
                     
 + prescriptions: 'Дієта №1, Омепразолу 40 мг 1 раз на добу + амоксициліну 500 мг + метронідазолу 400 мг при необхідності 500 мг або тинідазолу 500 мг 3 рази на добу протягом 1 тижня' (string, optional)
++ `cancellation_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/episode_closing_reasons` (string)
+            + code: `cured` (string) - wrong_patient, misspelling
+            
++ `explanatory_letter`: `Діагноз був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
 
 ### `Cancel_Encounter`
 + encounter (`Encounter_Base` , required, fixed-type)
