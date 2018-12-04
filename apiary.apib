@@ -1208,6 +1208,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + `status`: `active` (string, required)
 + period (Period, required)
     - end (string, optional)
+    
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 
 ##Visit
 
@@ -1247,11 +1250,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `condition` (string)
                     
-+ `code` (Codeable_Concept, required) 
-     + coding (array, fixed-type)
-        + (Coding)
-            + `system`: `eHealth/ICPC2/condition_codes`,
-            + `code`: `D30` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`
+
             
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
@@ -1270,11 +1269,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `condition` (string)
                     
-+ `code` (Codeable_Concept, required) 
-     + coding (array, fixed-type)
-        + (Coding)
-            + `system`: `eHealth/ICPC2/conditions`,
-            + `code`: `A20` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`
+
             
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
@@ -2386,7 +2381,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: `encounter` (string)
                     
 + date :  `2018-10-08T09:46:37.694Z` (string, required), // Vaccination administration date
-
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `false` (boolean, required)
 - One Of
     + `performer` (Reference, required)
