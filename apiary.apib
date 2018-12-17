@@ -6,6 +6,8 @@ HOST: http://ehealth.edenlabllc.com/
 All the medical data stored in eHealth belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
 1. Only authenticated user with appropriate scope can access medical data
+List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles) [wiki: Scopes data model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/2004415/Scopes+model)
+
 2. Only user who has active declaration with patient is "authorized" to manage all patient's data (view history, add new medical events)
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
 
@@ -35,6 +37,9 @@ Allergy intolerance| 0-* |true
 Immunization| 0-* |true
 
 To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
+See extended example [here](https://github.com/edenlabllc/ehealth.specs/blob/master/Examples/ME_JSON_Example)
+
+
 + Request Package (application/json)
 
     + Headers
@@ -60,7 +65,8 @@ To find out more about the process of encounter package creation read [Confluenc
 
 
 ### Get async Job processing details [GET /api/jobs/{id}]
-This resource should be used to get the processing status of the async job
+This resource should be used to get the processing status of the async job.
+Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/612041003/Medical+events+Technical+Documentation#MedicaleventsTechnicalDocumentation-AsyncjobprocessingSequencediagram)
 
 + Parameters
     + id: `NBXk9EyErUZv1RhXgyvgg` (string, required) - request identifier
@@ -124,7 +130,6 @@ This chapter describes different examples of Encounters that could be submitted 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (Encounter_Request)
         
-
     
 #### Dummy Condition [POST]
 Here you can find additional examples of Conditions that could be submitted as a part of signed content.
@@ -179,7 +184,10 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + Attributes (`Allergy_Intolerance_Request`)
 
 
+
+
 ### Cancel Encounter Package [PATCH]
+Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
 + Request Package (application/json)
 
     + Headers
@@ -215,9 +223,9 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
    
 
 ## Episode of Care [/api/patients/{id}/episodes]
-
+Episode of care is a resource that contains general information about a patient`s medical case, such as care manager and diagnoses history.
 ### Create Episode  [POST]
-
+Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/620134482/Create+Episode)
 + Request (application/json)
 
     + Headers
@@ -271,6 +279,7 @@ If you have an approval - you can obtain episode details and nested entities thr
         + data(array[`Episode_Of_Care_Short`])
 
 ### Update Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}]
+Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/623837304/Update+Episode)
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -298,6 +307,7 @@ If you have an approval - you can obtain episode details and nested entities thr
             + message: `Patient not found` (string)
 
 ### Close Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}/actions/close]
+Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/624951347/Close+Episode)
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -1013,9 +1023,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 ### `Quantity`
 + value : `13,5` (number, required)
 + comparator : `>` (string, optional)
-+ unit : `mg` (string, required)
-+ system : `eHealth/units` (string, optional)
-+ code: `mg` (string, optional)
++ unit : `mg` (string, optional) - for future use
++ system : `eHealth/units` (string, required)
++ code: `mg` (string, required)
         
 
 ### `Range`
@@ -1026,8 +1036,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### `Episode_Of_Care_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ `type`: `primary_care` (string, required)
-+ `status`: `active`
++ `type`: `primary_care` (string, required)- `dictionary - eHealth/episode_types`
++ `status`: `active` (string, required)- `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
                     
 + `patient` (Reference, required)
@@ -1036,7 +1046,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + coding (array, fixed-type)
                 + (Coding)
                     
-+ diagnoses_hstr (array, optional, fixed-type)
++ diagnoses_history (array, optional, fixed-type)
     + (object)
         + date: `2018-08-02T10:45:16.000Z` (string, required)
         + evidence (Reference, required, fixed-type)
@@ -1070,10 +1080,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### `Episode_Of_Care_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ `type`: `Первинна допомога` (string, required)
-+ `status`: `active`
++ `type`: `Первинна допомога` (string, required) - `dictionary - eHealth/episode_types`
++ `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
-+ number: `XXAB-4567CH` (string, required) - Unique human readable episode of care number. Must be generated by the client before sending request
             
 + managing_organization (Reference, required)
     + identifier (Identifier)
@@ -1095,10 +1104,10 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 ### `Episode_Of_Care_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
-+ `type`: `primary_care` (string, required)
-+ `status`: `active` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
++ `type`: `primary_care` (string, required) - `dictionary - eHealth/episode_types`
++ `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
-+ number: `XXAB-4567CH` (string, required) - Unique human readable episode of care number. Must be generated by the client before sending request
 +  `status_history`  (array, optional, fixed-type)
     +(object)
         + status: `closed` (string, required)
@@ -1140,7 +1149,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `legal_entity` (string)
                     
-    + display: Лимич Медікал (string, required) 
+    + display: Лимич Медікал (string, required) - This field is filled on creating and never updated after
             
 + period (Period, required)
     - end (string, optional)
@@ -1199,6 +1208,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + `status`: `active` (string, required)
 + period (Period, required)
     - end (string, optional)
+    
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 
 ##Visit
 
@@ -1223,11 +1235,11 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
-            + `system`: `http://hl7.org/fhir/diagnosis-role`,
-            + `code`: `CC`,
+            + `system`: `eHealth/diagnosis_roles`
+            + `code`: `CC`
             
     
-+ rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
++ rank: `1` (number, optional) - Ranking of the diagnosis. Max value = 10 (for each role type)
 
 ### `Diagnosis_Referrence_Condition_2`
 
@@ -1238,17 +1250,13 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `condition` (string)
                     
-+ `code` (Codeable_Concept, required) 
-     + coding (array, fixed-type)
-        + (Coding)
-            + `system`: `ICPC2`,
-            + `code`: `D30`,
+
             
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
-            + `system`: `??`,
-            + `code`: `основний`,
+            + `system`: `eHealth/diagnosis_roles`
+            + `code`: `CC`
            
 + rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
 
@@ -1261,21 +1269,17 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `condition` (string)
                     
-+ `code` (Codeable_Concept, required) 
-     + coding (array, fixed-type)
-        + (Coding)
-            + `system`: `eHealth/ICPC2/conditions`,
-            + `code`: `A20`,
+
             
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
-            + `system`: `eHealth/diagnoses_roles`,
-            + `code`: `cheif_complaint`,
+            + `system`: `eHealth/diagnosis_roles`
+            + `code`: `CC`
             
 + rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
 
-### `Diagnosis_Response`
+
 
 
 
@@ -1283,8 +1287,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 ## Encouner
 ### `Encounter_Base` (object)
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
-+ `status`: `finised`  (string, required)                 
-+ `date`: `2018-08-02` (string, required)              
++ `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)              
 + `visit` (Reference, required, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1300,23 +1304,17 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: `episode` (string)
 
 + class  (Coding, required)
-    + system : `http://hl7.org/fhir/v3/ActCode` (string)
-    + code: `AMB` (string)
+    + system : `eHealth/encounter_classes` (string)
+    + code: `AMB` (string) - `dictionary eHealth/encounter_classes`
     
     
 + type (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `http://snomed.info/sct` (string)
-            + code: `11429006` (string)
+            + system: `eHealth/encounter_types` (string) 
+            + code: `11429006` (string)- `dictionary eHealth/encounter_types`
             
-+ incoming_referrals(array, optional)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: referral (string)
+
                     
 + performer (Reference, required)
      + identifier (Identifier)
@@ -1329,14 +1327,14 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-             + system: `??/ICPC2 (string)
-             + code: `A02` (string)
+             + system: `eHealth/ICPC2/reasons` (string) 
+             + code: `A02` (string) - `dictionary eHealth/ICPC2/reasons`
              
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `??/ICPC2 (string)
-                + code: `D09` (string)
+                + system: `eHealth/ICPC2/reasons` (string)
+                + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons`
                 
         
 + diagnoses (array, required, fixed-type)
@@ -1347,16 +1345,16 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-             + system: `??/ICPC2 (string)
-             + code: `T47` (string)
+             + system: `eHealth/ICPC2/actions` (string)
+             + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
              
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-             + system: `??/ICPC2 (string)
-             + code: `T50` (string)
+             + system: `eHealth/ICPC2/actions` (string)
+             + code: `T50` (string)- `dictionary eHealth/ICPC2/actions`
              
-+ division (Reference, required, fixed-type)
++ division (Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -1377,8 +1375,10 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
-+ `status`: `finised`  (string, required)                 
-+ `date`: `2018-08-02` (string, required)              
++ `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                   
++ `date`: `2018-08-02` (string, required)
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + `visit` (Reference, required, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1394,24 +1394,17 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: `episode` (string)
 
 + class  (Coding, required)
-    + system : `http://hl7.org/fhir/v3/ActCode` (string)
-    + code: `AMB` (string)
+    + system : `eHealth/encounter_classes` (string) 
+    + code: `AMB` (string)- `dictionary eHealth/encounter_classes`
 
     
 + type (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/encounter_types` (string)
-            + code: `PC` (string)
+            + code: `PC` (string) - `dictionary eHealth/encounter_types`
 
-+ incoming_referrals(array, required)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: referral (string)
-                        
+
 + performer (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1420,19 +1413,19 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: employee (string)
                     
     
-    + display: `Шевченко Олесь Вікторович' (string, required)
+    + display: `Шевченко Олесь Вікторович' (string, required) - This field is filled on creating and never updated after
 + reasons (array,required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-             + system: `eHealth/ICPC2/Reasons` (string)
-             + code: `T01` (string)
+                + system: `eHealth/ICPC2/reasons` (string) 
+                + code: `T01` (string) - `dictionary eHealth/ICPC2/reasons`
 
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/ICPC2/Reasons` (string)
-                + code: `T60` (string)
+                + system: `eHealth/ICPC2/reasons` (string) 
+                + code: `T90` (string) - `dictionary eHealth/ICPC2/reasons`
 
         
 + diagnoses (array, required, fixed-type)
@@ -1443,15 +1436,15 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-             + system: `eHealth/ICPC2/Actions`(string)
-             + code: `T50` (string)
+             + system: `eHealth/ICPC2/actions` (string)
+             + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
 
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-             + system: `eHealth/ICPC2/Actions` (string)
-             + code: `T47` (string)
-+ division (Reference, required, fixed-type)
+             + system: `eHealth/ICPC2/actions` (string)
+             + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
++ division (Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -1459,31 +1452,38 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: `division` (string)
                     
 + prescriptions: 'Дієта №1, Омепразолу 40 мг 1 раз на добу + амоксициліну 500 мг + метронідазолу 400 мг при необхідності 500 мг або тинідазолу 500 мг 3 рази на добу протягом 1 тижня' (string, optional)
++ `cancellation_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/episode_closing_reasons` (string)
+            + code: `cured` (string) - wrong_patient, misspelling
+            
++ `explanatory_letter`: `Діагноз був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
 
 ### `Cancel_Encounter`
 + encounter (`Encounter_Base` , required, fixed-type)
-    + `status`: `entered_in_error` (string)
+    + `status`: `entered_in_error` (string) - `dictionary eHealth/encounter_statuses`
     + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)    
     + `cancellation_reason` (Codeable_Concept, required)
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/cancellation_reasons` (string)
-                + code: `misspelling` (string) \\ wrong_patient, misspelling
+                + code: `misspelling` (string) - `dictionary eHealth/cancellation_reasons`
                     
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
-        + `verification_status`: `entered_in_error` (string)   
+        + `verification_status`: `entered_in_error` (string) - `dictionary eHealth/condition_verification_statuses`  
     + (`Condition_Request_2`)
-        + `verification_status`: `entered_in_error` (string)
+        + `verification_status`: `entered_in_error` (string)- `dictionary eHealth/condition_verification_statuses`
 + observations (array, optional, fixed-type)
     + (`Observation_Request_1`)
-        + `status`: `entered_in_error` (string)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/observation_statuses`
 + `allergy_intolerances` (array, optional, fixed-type)
     + (`Allergy_Intolerance_Request`)
-        + `verification_status`: `entered_in_error` (string)
+        + `verification_status`: `entered_in_error` (string)- `dictionary eHealth/allergy_intolerance_verification_statuses`
 + immunizations (array, optional, fixed-type)
     + (`Immunization_Request`)
-        + `status`: `entered_in_error` (string)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/immunization_statuses`
 
 
 
@@ -1496,8 +1496,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/information_sources` (string)
-                + code: `mother` (string)
+                + system: `eHealth/report_origins` (string) 
+                + code: `mother` (string) - `dictionary eHealth/report_origins`
                 
         + text: `Галина Олександрівна` (string)
     + asserter(Reference, optional)
@@ -1518,24 +1518,24 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `??/ICPC2 (string)
-            + code: `A89` (string)
+            + system: `eHealth/ICD10/condition_codes` (string)
+            + code: `A89` (string) - `dictionary - eHealth/ICD10/condition_codes`
             
-+ clinical_status: `active` (string, required)
-+ verification_status: `provisional` (string, required)
++ clinical_status: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
++ verification_status: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
 + severity(Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `55604002` (string)
+            + system: `eHealth/condition_severities` (string)  
+            + code: `55604002` (string) -`dictionary - eHealth/condition_severities`
             
     
 + `body_sites` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + system: ` http://snomed.info/sct` (string)
-                + code: `181414000` (string)
+                + system: `eHealth/body_sites` (string)
+                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
                    
     
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)//Estimated or actual date,  date-time when condition starts
@@ -1544,8 +1544,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
             + (Coding)
-                + system: ` http://snomed.info/sct` (string)
-                + code: `14803004` (string)
+                + system: `eHealth/condition_stages` (string)
+                + code: `14803004` (string) - `dictionary - eHealth/condition_stages`
                 
 + evidences (array, optional, fixed-type)
     + (object)
@@ -1553,8 +1553,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + system: ` http://snomed.info/sct` (string)
-                        + code: `169068008` (string)
+                        + system: `eHealth/ICPC2/reasons` (string)
+                        + code: `169068008` (string) - `dictionary - eHealth/ICPC2/reasons`
                         
         + detail (array, optional, fixed-type)
             + (Reference)
@@ -1583,8 +1583,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
+                + system: `eHealth/report_origins` (string) 
+                + code: `mother` (string) - `dictionary eHealth/report_origins`
                 
         + text: `Галина Олександрівна` (string)
 + `context` (Reference, required)
@@ -1597,34 +1597,36 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `??/ICPC2 (string)
-            + code: `K87` (string)
+            + system: `eHealth/ICD10/condition_codes` (string)
+            + code: `K87` (string) - `dictionary - eHealth/ICD10/condition_codes`
             
-+ clinical_status: `active` (string, required)
-+ verification_status: `provisional` (string, required)
++ clinical_status: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
++ verification_status: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
 + severity(Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `55604002` (string)
+            + system: `eHealth/condition_severities` (string)  
+            + code: `55604002` (string) -`dictionary - eHealth/condition_severities`
             
     
 + `body_sites` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + system: ` http://snomed.info/sct` (string)
-                + code: `181414000` (string)
+                + system: `eHealth/body_sites` (string)
+                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
                    
     
 + onset_date: `2018-08-02T10:45:16.000Z` (string, required)
 + asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
+
 + stage (object, optional)
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
             + (Coding)
-                + system: ` http://snomed.info/sct` (string)
-                + code: `14803004` (string)
+                + system: `eHealth/condition_stages` (string)
+                + code: `14803004` (string) - `dictionary - eHealth/condition_stages`
+                
                 
 + evidences (array, optional, fixed-type)
     + (object)
@@ -1632,8 +1634,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + system: ` http://snomed.info/sct` (string)
-                        + code: `169068008` (string)
+                        + system: `eHealth/ICPC2/reasons` (string)
+                        + code: `169068008` (string) - `dictionary - eHealth/ICPC2/reasons`
+                        
                         
         + detail (array, optional, fixed-type)
             + (Reference)
@@ -1659,12 +1662,12 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + (Coding)
                         + code: `patient` (string)
                         
-        + display: Шевченко Олесь Вікторович (string, required)
+        + display: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
+                + system: `eHealth/report_origins` (string) 
+                + code: `mother` (string) - `dictionary eHealth/report_origins`
                 
         + text: `Галина Олександрівна` (string)
 
@@ -1679,34 +1682,36 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `ICPC2/Condition` (string)
-            + code: `K86` (string)
+            + system: `eHealth/ICD10/condition_codes` (string)
+            + code: `K87` (string) - `dictionary - eHealth/ICD10/condition_codes`
             
-+ clinical_status: `active` (string, required)
-+ verification_status: `provisional` (string, required)
++ clinical_status: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
++ verification_status: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
 + severity(Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `24484000` (string)
+            + system: `eHealth/condition_severities` (string)  
+            + code: `55604002` (string) -`dictionary - eHealth/condition_severities`
             
     
-+ `body_sites` (array, optional)
++ `body_sites` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-             + system: ` http://snomed.info/sct` (string)
-             + code: `181414000` (string)
+                + system: `eHealth/body_sites` (string)
+                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
                 
     
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)
 + asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + stage (object, optional)
     + summary (Codeable_Concept, required)
         + coding (array, fixed-type)
             + (Coding)
-                + system: ` http://snomed.info/sct` (string)
-                + code: `14803004` (string)
+                + system: `eHealth/condition_stages` (string)
+                + code: `14803004` (string) - `dictionary - eHealth/condition_stages`
                 
 + evidences (array, optional, fixed-type)
     + (object)
@@ -1714,8 +1719,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + system: ` http://snomed.info/sct` (string)
-                        + code: `169068008` (string)
+                        + system: `eHealth/ICPC2/reasons` (string)
+                        + code: `169068008` (string) - `dictionary - eHealth/ICPC2/reasons`
                         
         + details (array, optional, fixed-type)
             + (Reference)
@@ -1734,7 +1739,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### `Observation_Request_1`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ status: `valid` (string, required)
++ status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
 + `context` (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1742,34 +1747,29 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ based_on (array, optional)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `referral` (string)
+
                         
 
 + categories (array, required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + system: ` http://snomed.info/sct` (string)
-                + code: `vital_signs` (string)
+                + system: `eHealth/observation_categories` (string)
+                + code: `vital_signs` (string) - `dictionary - eHealth/observation_categories`
                 
 
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `10569-2` (string)
+            + system: `eHealth/LOINC/observation_codes` (string)
+            + code: `10569-2` (string)- `dictionary - eHealth/LOINC/observation_codes`
             
 
 - One Of
     + effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
     + effective_period (Period, optional, fixed-type)
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
+
 + primary_source: `true` (boolean, required)
 - One Of
     + `performer` (Reference, required)
@@ -1792,23 +1792,23 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string)
-            + code: `L` (string)
+            + system: `eHealth/observation_interpretations` (string)
+            + code: `L` (string) `dictionary - eHealth/observation_interpretations`
             
     
 + comment: `Some comment` (string, optional)
-+ `body_site`: 
++ `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string)
-            + code: `1341001:272741003=7771000` (string)
+            + system: `http://hl7.org/fhir/v2/0078` (string) 
+            + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
             
 
 + method (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string)
-            + code: `255459008` (string)
+            + code: `255459008` (string) - `dictionary - eHealth/observation_methods`
             
 
 - One Of
@@ -1840,15 +1840,14 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         + type (Codeable_Concept, optional)
             +  coding (array, fixed-type)
                 + (Coding)
-                    + system: ` http://snomed.info/sct` (string)
-                    + code: `normal` (string)
+                    + system: `eHealth/reference_range_types` (string)
+                    + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
                         
         + `applies_to`(Codeable_Concept, optional)
-            
             +  coding (array, fixed-type)
                 + (Coding)
-                    + system: ` http://snomed.info/sct` (string)
-                    + code: `male` (string)
+                    + system: `eHealth/reference_range_applications` (string)
+                    + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
                      
         + age (Range, optional)
             + low (Quantity, optional)
@@ -1900,8 +1899,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         + interpretation (Codeable_Concept, optional)
             + coding (array, fixed-type)
                 + (Coding)
-                    + system: `http://hl7.org/fhir/v2/0078` (string)
-                    + code: `L` (string)
+                    + system: `eHealth/observation_interpretations` (string)
+                    + code: `L` (string) `dictionary - eHealth/observation_interpretations`
                     
         + reference_ranges (array, optional, fixed-type)
             + (object)
@@ -1912,14 +1911,14 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + type (Codeable_Concept, optional)
                     +  coding (array, fixed-type)
                         + (Coding)
-                            + system: ` http://snomed.info/sct` (string)
-                            + code: `normal` (string)
+                            + system: `eHealth/reference_range_types` (string)
+                            + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
                                 
                 + applies_to (Codeable_Concept, optional)
                     +  coding (array, fixed-type)
                         + (Coding)
-                            + system: ` http://snomed.info/sct` (string)
-                            + code: `male` (string)
+                            + system: `eHealth/reference_range_applications` (string)
+                            + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
                              
                 + age (Range, optional)
                     + low (Quantity, optional)
@@ -1941,7 +1940,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### `Observation_Request_2`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ status: `valid` (string, required)
++ status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
 + `context` (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
@@ -1949,13 +1948,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ based_on (array, optional)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `referral` (string)
+
                         
 
 + categories (array, required)
@@ -1963,22 +1956,30 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/observation_categories` (string)
-                + code: `vital_signs` (string)
+                + code: `vital_signs` (string) - `dictionary - eHealth/observation_categories`
                 
 
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/observations_codes` (string)
-            + code: `10569-2` (string)
+            + system: `eHealth/LOINC/observation_codes` (string)
+            + code: `10569-2` (string)- `dictionary - eHealth/LOINC/observation_codes`
             
 
 - One Of
-    + effective_period (Period, optional, fixed-type)
     + effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    + effective_period (Period, optional, fixed-type)
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
-+ primary_source: `false` (boolean, required)
++ primary_source: `true` (boolean, required)
 - One Of
+    + `performer` (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        
+        
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -1986,66 +1987,50 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
-    + `performer` (Reference, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
+
 
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/observation_interpretations` (string)
-            + code: `L` (string)
+            + code: `L` (string) `dictionary - eHealth/observation_interpretations`
             
     
 + comment: `Some comment` (string, optional)
-+ `body_site`: 
++ `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/body_sites` (string)
-            + code: `1341001:272741003=7771000` (string)
+            + system: `http://hl7.org/fhir/v2/0078` (string) 
+            + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
             
 
 + method (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/observation_methods` (string)
-            + code: `255459008` (string)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `255459008` (string) - `dictionary - eHealth/observation_methods`
             
 
 - One Of
-    + value_period (Period, required)
-    + value_date_time (string, required)
-    + value_time: `18:31:42` (string, required)
+    + value_quantity (Quantity, required)
+    + value_codeable_concept (Codeable_Concept, required)
+    + value_sampled_data (object, required)
+        + origin (number, optional) //SimpleQuantity Zero value and units
+        + period (number, optional) // decimal Number of milliseconds between samples
+        + factor (number, optional) // decimal Multiply data by this before adding to origin
+        + lower_limit (number, optional)// decimal Lower limit of detection
+        + upper_limit (number, optional) // Σ 0..1 decimal Upper limit of detection
+        + dimensions (number, optional) // positiveInt Number of sample points at each time point
+        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+    + value_string (string, required)
+    + value_boolean (boolean, required)
+    + value_range (Range, required, fixed-type)
     + value_ratio (object, required)//Need an example 
         + numerator (Quantity, required)
         + denominator (Quantity, required)
-    + value_range (Range, required, fixed-type)
-    + value_boolean: true (boolean, required)
-    + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required) 
-    + value_sampled_data (object, required)
-        + origin: `2048` (number, optional) //SimpleQuantity Zero value and units
-        + period: `10` (number, optional) // decimal Number of milliseconds between samples
-        + factor: `1.612` (number, optional) // decimal Multiply data by this before adding to origin
-        + lower_limit: `-3300` (number, optional)// decimal Lower limit of detection
-        + upper_limit: `3300` (number, optional) // Σ 0..1 decimal Upper limit of detection
-        + dimensions: `1` (number, optional) // positiveInt Number of sample points at each time point
-        + data: `2041 2043 2037 2047 2060 2062 2051 2023 2014 2027 2034 2033 2040 2047 2047 2053 2058 2064 2059 2063 2061 2052 2053 2038 1966 1885 1884 2009 2129 2166 2137 2102 2086 2077 2067 2067 2060 2059 2062 2062 2060 2057 2045 2047 2057 2054 2042 2029 2027 2018 2007 1995 2001 2012 2024 2039 2068 2092 2111 2125 2131 2148 2137 2138 2128 2128 2115 2099 2097 2096 2101 2101 2091 2073 2076 2077 2084 2081 2088 2092 2070 2069 2074 2077 2075 2068 2064 2060 2062 2074 2075 2074 2075 2063 2058 2058 2064 2064 2070 2074 2067 2060 2062 2063 2061 2059 2048 2052 2049 2048 2051 2059 2059 2066 2077 2073` (string, required) // Decimal values with spaces, or "E" | "U" | "L"
-   
-    
-    
-  
-    
-
-
-    + value_quantity (Quantity, required)
-    + value_codeable_concept (Codeable_Concept, required)
-        +  coding (array, fixed-type)
-             + (Coding)
-                + system: `eHealth/gender` (string)
-                + code: `male` (string)
+    + value_time (string, required)
+    + value_date_time (string, required)
+    + value_period (Period, required)
 + reference_ranges (array, optional, fixed-type)
     + (object)
         + low (Quantity, optional)
@@ -2056,14 +2041,13 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             +  coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/reference_range_types` (string)
-                    + code: `normal` (string)
+                    + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
                         
         + `applies_to`(Codeable_Concept, optional)
-            
             +  coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/reference_range_applications` (string)
-                    + code: `male` (string)
+                    + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
                      
         + age (Range, optional)
             + low (Quantity, optional)
@@ -2079,11 +2063,18 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 - system (string, optional)
                 - code (string, optional)
         + text: `Some text` (string, optional)
-        
++ reaction_on (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `immunization` (string)
+    
 + components (array, optional, fixed-type)
     + (object)
         + code (Codeable_Concept, required)
         - One Of
+            + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
             + value_quantity (Quantity, required)
             + value_codeable_concept (Codeable_Concept, required)
             + value_sampled_data (object, required)
@@ -2094,7 +2085,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
                 + dimensions (number, optional) // positiveInt Number of sample points at each time point
                 + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
-            + value_string (string, required)
+            
             + value_boolean (boolean, required)
             + value_range (object, required, fixed-type)
                 + low (Quantity, required)
@@ -2109,7 +2100,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/observation_interpretations` (string)
-                    + code: `L` (string)
+                    + code: `L` (string) `dictionary - eHealth/observation_interpretations`
                     
         + reference_ranges (array, optional, fixed-type)
             + (object)
@@ -2121,13 +2112,13 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     +  coding (array, fixed-type)
                         + (Coding)
                             + system: `eHealth/reference_range_types` (string)
-                            + code: `normal` (string)
+                            + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
                                 
                 + applies_to (Codeable_Concept, optional)
                     +  coding (array, fixed-type)
                         + (Coding)
                             + system: `eHealth/reference_range_applications` (string)
-                            + code: `male` (string)
+                            + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
                              
                 + age (Range, optional)
                     + low (Quantity, optional)
@@ -2144,7 +2135,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
-
+                
+    
 
 
 ### `Observation_Response`
@@ -2157,34 +2149,29 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ based_on (array, optional)
-    + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `referral` (string)
+
                     
 
 + categories (array, required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + system: ` http://snomed.info/sct` (string)
-                + code: `vital_signs` (string)
+                + system: `eHealth/observation_categories` (string)
+                + code: `vital_signs` (string) - `dictionary - eHealth/observation_categories`
 
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `10569-2` (string)
+            + system: `eHealth/LOINC/observation_codes` (string)
+            + code: `10569-2` (string)- `dictionary - eHealth/LOINC/observation_codes`
             
 
 - One Of
     + effective_date_time: `2018-10-08T09:46:37.694Z` (string, optional)
     + effective_period (Period, optional)
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
-
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `false` (boolean, required)
 - One Of
     + `performer` (Reference, required)
@@ -2194,7 +2181,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + (Coding)
                         + code: `employee` (string)
                         
-        + display: Шевченко Олесь Вікторович (string, required)
+        + display: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -2206,23 +2193,23 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: eHealth/observation_interpretations` (string)
-            + code: `L` (string)
+            + system: `eHealth/observation_interpretations` (string)
+            + code: `L` (string) `dictionary - eHealth/observation_interpretations`
             
     
 + comment: `Some comment` (string, optional)
 + `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/body_sites` (string)
-            + code: `1341001:272741003=7771000` (string)
+            + system: `http://hl7.org/fhir/v2/0078` (string) 
+            + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
             
 
 + method (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/observation_methods` (string)
-            + code: `255459008` (string)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `255459008` (string) - `dictionary - eHealth/observation_methods`
             
 
 - One Of
@@ -2245,104 +2232,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + value_time (string, required)
     + value_date_time (string, required)
     + value_period (Period, required)
-+ reference_ranges (array, optional, fixed-type)
-    + (object)
-        + low (Quantity, optional)
-        + high (Quantity, optional)
-            + value: `27,5` (number, required)
-            + comparator: `<` (string, required)
-        + type (Codeable_Concept, optional)
-            +  coding (array, fixed-type)
-                + (Coding)
-                    + system: ` http://snomed.info/sct` (string)
-                    + code: `normal` (string)
-                        
-        + `applies_to` (array, optional)
-            + (Codeable_Concept)
-                +  coding (array, fixed-type)
-                    + (Coding)
-                        + system: ` http://snomed.info/sct` (string)
-                        + code: `male` (string)
-                     
-        + age (Range, optional)
-            + low (Quantity, optional)
-                + value : `18` (number, required)
-                + comparator : `>` (string, optional)
-                + unit : `years` (string, optinal)
-                - system  (string, optional)
-                - code (string, optional)
-            + high (Quantity, optional)
-                + value : `35` (number, required)
-                + comparator : `<` (string, optional)
-                + unit : `years` (string, optinal)
-                - system (string, optional)
-                - code (string, optional)
-        + text: `Some text` (string, optional)
-+ components (array, optional, fixed-type)
-    + (object)
-        + code (Codeable_Concept, required)
-        - One Of
-            + value_quantity (Quantity, required)
-            + value_codeable_concept (Codeable_Concept, required)
-            + value_sampled_data (object, required)
-                + origin (number, optional) //SimpleQuantity Zero value and units
-                + period (number, optional) // decimal Number of milliseconds between samples
-                + factor (number, optional) // decimal Multiply data by this before adding to origin
-                + lowerLimit (number, optional)// decimal Lower limit of detection
-                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
-                + dimensions (number, optional) // positiveInt Number of sample points at each time point
-                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
-            + value_string (string, required)
-            + value_boolean (boolean, required)
-            + value_range (object, required, fixed-type)
-                + low (Quantity, required)
-                + high (Quantity, required)
-            + value_ratio (object, required)//Need an example 
-                + numerator (Quantity, required)
-                + denominator (Quantity, required)
-            + value_time (string, required)
-            + value_date_time (string, required)
-            + value_period (Period, required)
-        + interpretation (Codeable_Concept, optional)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `http://hl7.org/fhir/v2/0078` (string)
-                    + code: `L` (string)
-                    
-        + reference_ranges (array, optional, fixed-type)
-            + (object)
-                + low (Quantity, optional)
-                + high (Quantity, optional)
-                    + value: `27,5` (number, required)
-                    + comparator: `<` (string, required)
-                    + type (Codeable_Concept, optional)
-                        +  coding (array, fixed-type)
-                            + (Coding)
-                                + system: ` http://snomed.info/sct` (string)
-                                + code: `normal` (string)
-                                   
-                + `applies_to` (array, optional)
-                    + (Codeable_Concept)
-                        +  coding (array, fixed-type)
-                            + (Coding)
-                                + system: ` http://snomed.info/sct` (string)
-                                + code: `male` (string)
-                            
-                + age (Range, optional)
-                    + low (Quantity, optional)
-                        + value : `18` (number, required)
-                        + comparator : `>` (string, optional)
-                        + unit : `years` (string, optinal)
-                        - system  (string, optional)
-                        - code (string, optional)
-                    + high (Quantity, optional)
-                        + value : `35` (number, required)
-                        + comparator : `<` (string, optional)
-                        + unit : `years` (string, optinal)
-                        - system (string, optional)
-                        - code (string, optional)
-                
-                + text: `Some text` (string, optional)
+
                 
                 
 
@@ -2357,7 +2247,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     +  coding (array, fixed-type)
         + (Coding)
             + system: ` http://snomed.info/sct` (string)
-            + code: `FLUVAX` (string)
+            + code: `FLUVAX` (string) - `dictionary - eHealth/vaccine_code`
             
 
 + context : ( Reference, required), // Encounter administered as part of
@@ -2399,19 +2289,19 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     +  coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/body_sites` (string)
-            + code: `LA` (string)
+            + code: `LA` (string) - `dictionary - eHealth/body_sites`
             
 + route : ( Codeable_Concept , optional), // How vaccine entered body
     +  coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/vaccination_routes` (string)
-            + code: `IM` (string)
+            + code: `IM` (string)- `dictionary - eHealth/immunization_routes`
             
 + dose_quantity: ( Quantity, optional), // Amount of vaccine administered
     + value : `18` (number, required)
     - comparator  (string, optional)
     + unit : `mg` (string, optinal)
-    + system: `eHealth/dose_quantities` (string, optional)
+    + system: `eHealth/ucum/units` (string, optional)
     - code (string, optional)
 
 + `explanation`  (object , optional)// Administration/non-administration reasons
@@ -2421,7 +2311,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 +  coding (array, fixed-type)
                     + (Coding)
                         + system: `eHealth/reason_explanations` (string)
-                        + code: `429060002` (string)
+                        + code: `429060002` (string) `dictionary - eHealth/reason_explanations`
                          
         + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
@@ -2455,19 +2345,19 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 +  coding (array, fixed-type)
                     + (Coding)
                         + system: `eHealth/vaccination_target_diseases` (string)
-                        + code: `1857005` (string)
+                        + code: `1857005` (string) -  `dictionary - eHealth/vaccination_target_diseases` 
                         
         + `dose_status` : ( Codeable_Concept, required), // Indicates if dose counts towards immunity
            +  coding (array, fixed-type)
                 + (Coding)
-                    + system: `eHealth/vaccination_dose_statuses` (string)
-                    + code: `count` (string)
+                    + system: `eHealth/vaccination_dose_statuses` (string) 
+                    + code: `count` (string) - `eHealth/vaccination_dose_statuses`
                     
         + `dose_status_reason` : ( Codeable_Concept,optional)  // Why dose does (not) count
            +  coding (array, fixed-type)
                 + (Coding)
-                    + system: `eHealth/vaccination_dose_statuse_reasons` (string)
-                    + code: `coldchbrk` (string)
+                    + system: `eHealth/vaccination_dose_statuse_reasons` (string) 
+                    + code: `coldchbrk` (string) - `eHealth/vaccination_dose_statuse_reasons`
                     
 
 
@@ -2480,7 +2370,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     +  coding (array, fixed-type)
         + (Coding)
             + system: ` http://snomed.info/sct` (string)
-            + code: `FLUVAX` (string)
+            + code: `FLUVAX` (string) - `dictionary - eHealth/vaccine_code`
             
 
 + context : ( Reference, required), // Encounter administered as part of
@@ -2491,7 +2381,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: `encounter` (string)
                     
 + date :  `2018-10-08T09:46:37.694Z` (string, required), // Vaccination administration date
-
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `false` (boolean, required)
 - One Of
     + `performer` (Reference, required)
@@ -2500,7 +2391,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-        + display: `Шевченко Тетяна Вікторівна`    (string, required)            
+        + display: `Шевченко Тетяна Вікторівна`    (string, required) - This field is filled on creating and never updated after           
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -2528,7 +2419,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     +  coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/vaccination_routes` (string)
-            + code: `IM` (string)
+            + code: `IM` (string) `dictionary- eHealth/vaccination_routes`
             
 + dose_quantity: ( Quantity, optional), // Amount of vaccine administered
     + value : `18` (number, required)
@@ -2544,7 +2435,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 +  coding (array, fixed-type)
                     + (Coding)
                         + system: `eHealth/reason_explanations` (string)
-                        + code: `429060002` (string)
+                        + code: `429060002` (string) - `dictionaries- eHealth/reason_explanations`
                          
         + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
@@ -2578,30 +2469,30 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 +  coding (array, fixed-type)
                     + (Coding)
                         + system: `eHealth/vaccination_target_diseases` (string)
-                        + code: `1857005` (string)
+                        + code: `1857005` (string) `dictionary - eHealth/vaccination_target_diseases`
                         
         + `dose_status` : ( Codeable_Concept, required), // Indicates if dose counts towards immunity
            +  coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/vaccination_dose_statuses` (string)
-                    + code: `count` (string)
+                    + code: `count` (string) `dictionary - eHealth/vaccination_dose_statuses`
                     
         + `dose_status_reason` : ( Codeable_Concept,optional)  // Why dose does (not) count
            +  coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/vaccination_dose_statuse_reasons` (string)
-                    + code: `coldchbrk` (string)
+                    + code: `coldchbrk` (string) `dictionary - eHealth/vaccination_dose_statuse_reasons`
                     
 
 
 ## `Allergy_Intolerance`
 ### `Allergy_Intolerance_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
-+ clinical_status : `active` (string, required), // C? active | inactive | resolved
-+ verification_status : `confirmed` (string, required), // C? R!  unconfirmed | confirmed | refuted | entered-in-error
-+ type : `allergy` (string, required), // allergy | intolerance - Underlying mechanism (if known)
-+ category : `food`(string, required), // food | medication | environment | biologic
-+ criticality : `low`(string, required), // low | high | unable-to-assess
++ `clinical_status` : `active` (string, required) - `dictionary - eHealth/allergy_intolerance_clinical_statuses`
++ `verification_status` : `confirmed` (string, required) - `dictionary - eHealth/allergy_intolerance_verification_statuses`
++ type : `allergy` (string, required)- `dictionary - eHealth/allergy_intolerance_types`
++ category : `food`(string, required)- `dictionary - eHealth/allergy_intolerance_categories`
++ criticality : `low`(string, required)- `dictionary - eHealth/allergy_intolerance_criticalities`
 + context (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -2613,7 +2504,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     +  coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/allergy_intolerances_codes` (string)
-            + code: `227493005` (string)
+            + code: `227493005` (string)- `dictionary - eHealth/allergy_intolerances_codes`
 
 + onset_date_time : `2018-10-08T09:46:37.694Z` (string, required)
 + asserted_date: `2018-10-08T09:46:37.694Z` (string, required)
@@ -2639,11 +2530,11 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### `Allergy_Intolerance_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
-+ clinical_status : `active` (string, required), // C? active | inactive | resolved
-+ verification_status : `confirmed` (string, required), // C? R!  unconfirmed | confirmed | refuted | entered-in-error
-+ type : `allergy` (string, required), // allergy | intolerance - Underlying mechanism (if known)
-+ category : `food`(string, required), // food | medication | environment | biologic
-+ criticality : `low`(string, required), // low | high | unable-to-assess
++ `clinical_status` : `active` (string, required) - `dictionary - eHealth/allergy_intolerance_clinical_statuses`
++ `verification_status` : `confirmed` (string, required) - `dictionary - eHealth/allergy_intolerance_verification_statuses`
++ type : `allergy` (string, required)- `dictionary - eHealth/allergy_intolerance_types`
++ category : `food`(string, required)- `dictionary - eHealth/allergy_intolerance_categories`
++ criticality : `low`(string, required)- `dictionary - eHealth/allergy_intolerance_criticalities`
 + context: (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -2654,12 +2545,14 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + code : ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
     +  coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/allergy_intolerances_codes` (string)
-            + code: `227493005` (string)
+            2+ system: `eHealth/allergy_intolerances_codes` (string)
+            + code: `227493005` (string)- `dictionary - eHealth/allergy_intolerances_codes`
                 
 
 + onset_date_time : `2016-01-01T00:00:00.000Z` (string, required)
 + asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
++ inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
++ updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `true` (boolean, required)
 - One Of
     + asserter (Reference, required)
