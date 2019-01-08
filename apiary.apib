@@ -1465,6 +1465,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + `allergy_intolerances` (array[`Allergy_Intolerance_Request`], optional, fixed-type)
 + immunizations (array[`Immunization_Request`], optional, fixed-type)
 + devices (array[`Device_Request`], optional, fixed-type)
++ risk_assessments(array[`Risk_Assessment_Request`], optional, fixed-type)
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -2726,8 +2727,25 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                         + code: `observation` (string)
 + predictions (array, optional, fixed-type)
     + (object)
-        + outcome
-        
+        + outcome (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/risk_assessment_outcomes` (string)
+                    + code: `default_outcome` (string)
+        - One Of
+            + probability_decimal (number, optional)
+            + probability_range (Range, optional)
+        + qualitative_risk (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/risk_assessment_qualitative_risks` (string)
+                    + code: `default_qualitative_risk` (string)
+        + relative_risk(number, optional)
+        - One Of
+            + when_period (Period, optional)
+            + when_range (Range, optional)
+        + rationale: `some text` (string, optional)
+            
 + mitigation: `some text` (string, optional)
 + comment: `some text` (string, optional)
 
@@ -2737,6 +2755,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
+## `Device`
 ### `Device_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status:  `inactive` (string, required) - `dictionary - eHealth/device_statuses`
