@@ -750,16 +750,16 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
     + Attributes (`Response_OK`)
         + data (`Risk_Assessment_Response`)
 
-### Get Risk Assessments by search params [GET /api/patients/{patient_id}/risk_assessments{?vaccine_code,date_from,date_to,page,page_size,code,encounter_id,episode_id}]
+### Get Risk Assessments by search params [GET /api/patients/{patient_id}/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `vaccine_code`: `wex-10` (string, optional) 
+    + `code`: `R80` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional) 
-    + `date_from`: `1990-01-01` (string, optional) 
-    + `date_to`: `2000-01-01` (string, optional) 
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
     
 
 + Request (application/json)
@@ -825,7 +825,9 @@ Immunizations       | All *Immunizations* are available for Patient Summary
 Conditions          | Only specific *Conditions* are available for Patient Summary. Restrictions is based on *condition.code*
 Observations        | Only specific *Observations* are available for Patient Summary. Restrictions is based on *observation.code*
 Diagnoses           | Only current diagnoses related to active *Episodes* that refer to specific *Conditions* are available for Patient Summary. Restrictions is based on *condition.code*
-
+Risk Assessment     | All patient's risk assessments
+Device              | All patient`s devices
+Medication Statment | All patient`s medication statments
 ### Get Immunizations [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,date_from,date_to}]
 
 **Scopes required:** `patient_summary:read`
@@ -1009,6 +1011,46 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         + data (array, required, fixed-type)
             + (Diagnosis_Referrence_Condition)
             + (Diagnosis_Referrence_Condition_2)
+
+
+
+
+### Get Risk Assessment by id [GET /api/patients/{patient_id}/summary/risk_assessments/{risk_assessment_id}]
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + risk_assessment_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique immunization identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Risk_Assessment_Response`)
+
+### Get Risk Assessments by search params [GET /api/patients/{patient_id}/summary/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `R80` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional) 
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Risk_Assessment_Response`], fixed-type)
 
 # Data Structures
 
@@ -1579,9 +1621,12 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + (`Immunization_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/immunization_statuses`
 
-+ devices (array[`Device_Request`], optional, fixed-type)
++ devices (array, optional, fixed-type)
     + (`Device_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/device_statuses`
++ `risk_assessments` (array, optional, fixed-type)
+    + (`Risk_Assessment_Request`)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/risk_assessment_statuses`
 
 ## Condition
 ### `Condition_Request`
