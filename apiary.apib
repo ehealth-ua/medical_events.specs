@@ -790,13 +790,14 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
     + Attributes (`Response_OK`)
         + data (`Device_Response`)
 
-### Get Devices by search params [GET /api/patients/{patient_id}/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id}]
+### Get Devices by search params [GET /api/patients/{patient_id}/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `type`: `spine_board` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `asserted_date_from`: `1990-01-01` (string, optional) 
     + `asserted_date_to`: `2000-01-01` (string, optional) 
     
@@ -1032,6 +1033,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### Get Risk Assessments by search params [GET /api/patients/{patient_id}/summary/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
 
+**Scopes required:** `patient_summary:read`
+
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -1051,6 +1054,36 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Risk_Assessment_Response`], fixed-type)
+
+### Get Device by id [GET /api/patients/{patient_id}/summary/devices/{device_id}]
+
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + device_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique device identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Device_Response`)
+
+### Get Devices by search params [GET /api/patients/{patient_id}/summary/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
+
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `type`: `spine_board` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
 
 # Data Structures
 
