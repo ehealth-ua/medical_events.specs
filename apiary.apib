@@ -1169,7 +1169,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + text (string, optional)
 
 ### `Coding`
-+ system : `eHealth/resources` (string, optional)
++ system : `eHealth/resources` (string, required)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
 
 
@@ -2813,7 +2813,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         - One Of
             + probability_decimal (number, optional)
             + probability_range (Range, optional)
-        + qualitative_risk (Codeable_Concept, optional)
+        + `qualitative_risk` (Codeable_Concept, optional)
             + coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/risk_assessment_qualitative_risks` (string)
