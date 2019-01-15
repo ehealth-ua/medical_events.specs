@@ -35,9 +35,12 @@ Condition| 0-* |true
 Observation| 0-* |true
 Allergy intolerance| 0-* |true
 Immunization| 0-* |true
+Risk assessment|0-*| true
+Device|0-*| true
+Medication statement|0-*|true
 
 To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
-See extended example [here](https://github.com/edenlabllc/ehealth.specs/blob/master/Examples/ME_JSON_Example)
+
 
 
 + Request Package (application/json)
@@ -183,7 +186,15 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Allergy_Intolerance_Request`)
 
+#### Dummy Risk_Assessment [POST]
+Here you can find additional examples of Risk_Assessment that could be submitted as a part of signed content.
 
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Risk_Assessment_Request`)
 
 
 ### Cancel Encounter Package [PATCH]
@@ -733,6 +744,85 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
     + Attributes (`Response_Collection`)
         + data (array[`Immunization_Response`], fixed-type)
 
+## Risk Assessment [/api/patients/{patient_id}/risk_assessments]
+
+### Get Risk Assessment by id [GET /api/patients/{patient_id}/risk_assessments/{risk_assessment_id}]
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + risk_assessment_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique immunization identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Risk_Assessment_Response`)
+
+### Get Risk Assessments by search params [GET /api/patients/{patient_id}/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `R80` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional) 
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Risk_Assessment_Response`], fixed-type)
+
+
+## Device [/api/patients/{patient_id}/devices]
+
+### Get Device by id [GET /api/patients/{patient_id}/devices/{device_id}]
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + device_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique device identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Device_Response`)
+
+### Get Devices by search params [GET /api/patients/{patient_id}/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `type`: `spine_board` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Device_Response`], fixed-type)
+
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
 ----
@@ -747,7 +837,9 @@ Immunizations       | All *Immunizations* are available for Patient Summary
 Conditions          | Only specific *Conditions* are available for Patient Summary. Restrictions is based on *condition.code*
 Observations        | Only specific *Observations* are available for Patient Summary. Restrictions is based on *observation.code*
 Diagnoses           | Only current diagnoses related to active *Episodes* that refer to specific *Conditions* are available for Patient Summary. Restrictions is based on *condition.code*
-
+Risk Assessment     | All patient's risk assessments
+Device              | All patient`s devices
+Medication Statment | All patient`s medication statments
 ### Get Immunizations [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,date_from,date_to}]
 
 **Scopes required:** `patient_summary:read`
@@ -932,6 +1024,78 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + (Diagnosis_Referrence_Condition)
             + (Diagnosis_Referrence_Condition_2)
 
+
+
+
+### Get Risk Assessment by id [GET /api/patients/{patient_id}/summary/risk_assessments/{risk_assessment_id}]
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + risk_assessment_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique immunization identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Risk_Assessment_Response`)
+
+### Get Risk Assessments by search params [GET /api/patients/{patient_id}/summary/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
+
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `R80` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional) 
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Risk_Assessment_Response`], fixed-type)
+
+### Get Device by id [GET /api/patients/{patient_id}/summary/devices/{device_id}]
+
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + device_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique device identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Device_Response`)
+
+### Get Devices by search params [GET /api/patients/{patient_id}/summary/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
+
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `type`: `spine_board` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+
 # Data Structures
 
 ## Responses
@@ -997,6 +1161,10 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + action (string, required) - Affordance action.
 + url (string, required)
 
+### `Ext_Reference`
++ reference (Reference, optional)
++ text (string, optional)
+
 ### `Reference`
 + identifier (Identifier)
 
@@ -1012,7 +1180,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + text (string, optional)
 
 ### `Coding`
-+ system : `eHealth/resources` (string, optional)
++ system : `eHealth/resources` (string, required)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
 
 
@@ -1036,7 +1204,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### `Episode_Of_Care_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ `type`: `primary_care` (string, required)- `dictionary - eHealth/episode_types`
++ type  (Coding, required)
+    + system : `eHealth/episode_types` (string)
+    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
 + `status`: `active` (string, required)- `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
                     
@@ -1080,7 +1250,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### `Episode_Of_Care_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ `type`: `Первинна допомога` (string, required) - `dictionary - eHealth/episode_types`
++ type  (Coding, required)
+    + system : `eHealth/episode_types` (string)
+    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
 + `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
             
@@ -1105,7 +1277,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
-+ `type`: `primary_care` (string, required) - `dictionary - eHealth/episode_types`
++ type  (Coding, required)
+    + system : `eHealth/episode_types` (string)
+    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
 + `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
 +  `status_history`  (array, optional, fixed-type)
@@ -1230,7 +1404,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ## Diagnosis
 
-### `Diagnosis_New_Condition`
+### `Diagnosis_Request`
 + condition (Condition_Request, required)
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
@@ -1249,7 +1423,12 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `condition` (string)
-                    
+
++ `code` (Codeable_Concept, required) 
+     + coding (array, fixed-type)
+        + (Coding)
+            + `system`: `eHealth/ICPC2/conditions`,
+            + `code`: `A20` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`                    
 
             
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
@@ -1269,7 +1448,11 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `condition` (string)
                     
-
++ `code` (Codeable_Concept, required) 
+     + coding (array, fixed-type)
+        + (Coding)
+            + `system`: `eHealth/ICPC2/conditions`,
+            + `code`: `A20` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`
             
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
@@ -1278,11 +1461,6 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             + `code`: `CC`
             
 + rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
-
-
-
-
-
 
 ## Encouner
 ### `Encounter_Base` (object)
@@ -1305,7 +1483,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 + class  (Coding, required)
     + system : `eHealth/encounter_classes` (string)
-    + code: `AMB` (string) - `dictionary eHealth/encounter_classes`
+    + code: `inpatient` (string) - `dictionary eHealth/encounter_classes`
     
     
 + type (Codeable_Concept, required)
@@ -1338,7 +1516,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 
         
 + diagnoses (array, required, fixed-type)
-    + (`Diagnosis_Referrence_Condition`)
+    + (`Diagnosis_Request`)
         
         
 + actions (array, required, fixed-type)
@@ -1372,6 +1550,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + (`Observation_Request_1`)    
 + `allergy_intolerances` (array[`Allergy_Intolerance_Request`], optional, fixed-type)
 + immunizations (array[`Immunization_Request`], optional, fixed-type)
++ devices (array[`Device_Request`], optional, fixed-type)
++ `risk_assessments`(array[`Risk_Assessment_Request`], optional, fixed-type)
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -1394,8 +1574,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: `episode` (string)
 
 + class  (Coding, required)
-    + system : `eHealth/encounter_classes` (string) 
-    + code: `AMB` (string)- `dictionary eHealth/encounter_classes`
+    + system : `eHealth/encounter_classes` (string)
+    + code: `inpatient` (string) - `dictionary eHealth/encounter_classes`
 
     
 + type (Codeable_Concept, required)
@@ -1485,8 +1665,12 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + (`Immunization_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/immunization_statuses`
 
-
-
++ devices (array, optional, fixed-type)
+    + (`Device_Request`)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/device_statuses`
++ `risk_assessments` (array, optional, fixed-type)
+    + (`Risk_Assessment_Request`)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/risk_assessment_statuses`
 
 ## Condition
 ### `Condition_Request`
@@ -2306,14 +2490,14 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 + `explanation`  (object , optional)// Administration/non-administration reasons
     - One Of
-        + `reasons` : (array, optional, fixed_type) // Why immunization occurred
+        + `reasons`  (array, optional, fixed_type) // Why immunization occurred
             + (Codeable_Concept)
                 +  coding (array, fixed-type)
                     + (Coding)
                         + system: `eHealth/reason_explanations` (string)
                         + code: `429060002` (string) `dictionary - eHealth/reason_explanations`
                          
-        + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
+        + `reasons_not_given`  (array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
   ),
 + reactions : (array, optional) // Details of a reaction that follows immunization
@@ -2542,7 +2726,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + (Coding)
                     + code: `encounter` (string)
                     
-+ code : ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
++ code ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
     +  coding (array, fixed-type)
         + (Coding)
             2+ system: `eHealth/allergy_intolerances_codes` (string)
@@ -2573,6 +2757,146 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + last_occurrence : `2018-07-02T00:00:00.000Z` (string, optional) , // Date(/time) of last known occurrence of a reaction
 
 
+## `Risk_Assesment`
+### `Risk_Assessment_Request`
++ id: `70a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
++ status: `preliminary` (string, required)
++ method ( Codeable_Concept, optional) 
+    +  coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/risk_assesment_methods` (string)
+            + code: `deafult_code` (string)- `dictionary - eHealth/risk_assesment_methods`
++ code ( Codeable_Concept, required)
+    +  coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/risk_assesment_codes` (string)
+            + code: `R80` (string)- `dictionary - eHealth/risk_assesment_codes`
++ context: (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
+
++ primary_source: `true` (boolean, required)
+- One Of
+    + performer (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+                
+        + text: `Галина Олександрівна` (string)
+- One Of
+    + reason_codeable_concept (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/risk_assessment_reasons` (string)
+                + code: `default_reason` (string)
+    + reason_reference (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ basis (Ext_Reference, optional)
+    + reference
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `observation` (string)
++ predictions (array, optional, fixed-type)
+    + (object)
+        + outcome (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/risk_assessment_outcomes` (string)
+                    + code: `default_outcome` (string)
+        - One Of
+            + probability_decimal (number, optional)
+            + probability_range (Range, optional)
+        + `qualitative_risk` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/risk_assessment_qualitative_risks` (string)
+                    + code: `default_qualitative_risk` (string)
+        + relative_risk(number, optional)
+        - One Of
+            + when_period (Period, optional)
+            + when_range (Range, optional)
+        + rationale: `some text` (string, optional)
+            
++ mitigation: `some text` (string, optional)
++ comment: `some text` (string, optional)
+
+
+### `Risk_Assessment_Response`
++ include `Risk_Assessment_Request`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
+
+## `Device`
+### `Device_Request`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ udi: `Spine_board NSPX30` (string, required)
++ status:  `inactive` (string, required) - `dictionary - eHealth/device_statuses`
++ asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
++ usage_period (Period, required)
+    + start : `2000-01-01T00:00:00.000Z`(string, required) 
+    + end : `2018-08-02T11:00:00.000Z`(string, optional)
+
++ context: (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ primary_source: `true` (boolean, required)
+- One Of
+    + asserter (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
++ type (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/device_types` (string) 
+            + code: `Spine_board` (string)- `dictionary -  eHealth/device_types`
++ lot_number: `RZ12345678` (string, optional)
++ manufacturer: `GlobalMed, Inc` (string, optional)
++ manufacture_date: `1999-01-01T00:00:00.000Z` (string, optional)
++ expiration_date: `2020-01-01T00:00:00.000Z` (string, optional)
++ model: `NSPX30` (string, optional)
++ version: `v1.0.1` (string, optional)
++ note: `Імплант був вилучений по причині заміни на новий` (string, optional)
++ safety (array, optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/device_safety` (string) 
+                + code: `Magnetic_Resonance_Safe` (string)- `dictionary -  eHealth/device_safety`
+
+### `Device_Response`
++ include `Device_Request`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
 ### Job
 + status: `pending` (string, required) - status of request processing.
