@@ -196,7 +196,27 @@ Here you can find additional examples of Risk_Assessment that could be submitted
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Risk_Assessment_Request`)
 
+#### Dummy Device [POST]
+Here you can find additional examples of Device that could be submitted as a part of signed content.
 
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Device_Request`)
+
+
+#### Dummy Medication Stetement [POST]
+Here you can find additional examples of Medication_Statement that could be submitted as a part of signed content.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Device_Request`)
+    
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
 + Request Package (application/json)
@@ -2886,7 +2906,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + model: `NSPX30` (string, optional)
 + version: `v1.0.1` (string, optional)
 + note: `Імплант був вилучений по причині заміни на новий` (string, optional)
-+ safety (array, optional)
++ safety (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
