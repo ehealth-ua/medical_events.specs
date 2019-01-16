@@ -265,8 +265,19 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
     + Attributes (object)
         + include `Episode_Of_Care_Request`
 
-+ Response 200 (application/json)
-    
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
 
 ### Get Episode by id[GET /api/patients/{patient_id}/episodes/{episode_id}]
 Use period_from period_to to find episodes that were active in a certain period of time
