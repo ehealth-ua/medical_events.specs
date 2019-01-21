@@ -108,7 +108,16 @@ Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/allergy_intolerances/5f41c64a-6742-4d6d-9f3b-c6742b2ee0a1` (string, required)
                 + (object)
                     + entity: `immunization` (string, required)
-                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/immunizations/c2e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/immunizations/12e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+                + (object)
+                    + entity: `risk_assessment` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/risk_assessments/22e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+                + (object)
+                    + entity: `device` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/devices/32e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+                + (object)
+                    + entity: `medication_statemet` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/medication_statemets/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -215,8 +224,8 @@ Here you can find additional examples of Medication_Statement that could be subm
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
-    + Attributes (`Device_Request`)
-    
+    + Attributes (`Medication_Statement_Request`)
+ 
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
 + Request Package (application/json)
@@ -853,6 +862,43 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Device_Response`], fixed-type)
+
+
+## Medication_Statement
+### Get Medication Statement by id  [GET /api/patients/{patient_id}/medication_statements/{medication_statement_id}]
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + medication_statement_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique device identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medication_Statement_Response`)
+
+### Get Medication Statement by search params [GET /api/patients/{patient_id}/medication_statements/{?asserted_date_from,asserted_date_to,page,page_size,medication_code,encounter_id,episode_id}]
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `medication_code`: `spine_board` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Medication_Statement_Response`], fixed-type)
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
@@ -1583,6 +1629,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + immunizations (array[`Immunization_Request`], optional, fixed-type)
 + devices (array[`Device_Request`], optional, fixed-type)
 + `risk_assessments`(array[`Risk_Assessment_Request`], optional, fixed-type)
++ `medication_statements` (array[`Medication_Statement_Request`], optional, fixed-type)
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -1702,6 +1749,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + `risk_assessments` (array, optional, fixed-type)
     + (`Risk_Assessment_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/risk_assessment_statuses`
++ `medication_statement` (array, optional, fixed-type)
+    + (`Medication_Statement_Request`)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/medication_statement_statuses`
 
 ## Condition
 ### `Condition_Request`
@@ -2917,6 +2967,52 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + version: `v1.0.1` (string, optional)
 + note: `Імплант був вилучений по причині заміни на новий` (string, optional)
 
+## `Medication Statement`
+### `Medication_Statement_Request`
++ id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ based_on (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medication_request` (string)
++ asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
++ status:  `active` (string, required) - `dictionary - eHealth/medication_satement_statuses`
++ context: (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ primary_source: `true` (boolean, required)
+- One Of
+    + asserter (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
++ effective_period: `Вживає з 2017-го року регулярно` (string, optional) 
+
++ medication_codeable_concept (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/medical_statement_medications` (string) 
+            + code: `Spine_board` (string)- `dictionary -  eHealth/medication_statement_medications`
++ note `Some text` (string, optional)
++ dosage `5 ml/day` (string, optional)
+
+
+### `Medication_Statement_Response`
++ include `Medication_Statement_Request`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
 ### `Device_Response`
 + include `Device_Request`
