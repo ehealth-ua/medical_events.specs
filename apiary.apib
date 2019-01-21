@@ -1173,6 +1173,43 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + `asserted_date_from`: `1990-01-01` (string, optional) 
     + `asserted_date_to`: `2000-01-01` (string, optional) 
 
+### Get Medication Statement by id  [GET /api/patients/{patient_id}/summary/medication_statements/{medication_statement_id}]
+**Scopes required:** `patient_summary:read`
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + medication_statement_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique device identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medication_Statement_Response`)
+
+### Get Medication Statement by search params [GET /api/patients/{patient_id}/summary/medication_statements/{?asserted_date_from,asserted_date_to,page,page_size,medication_code,encounter_id,episode_id}]
+**Scopes required:** `patient_summary:read`
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `medication_code`: `spine_board` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `asserted_date_from`: `1990-01-01` (string, optional) 
+    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Medication_Statement_Response`], fixed-type)
+
 # Data Structures
 
 ## Responses
