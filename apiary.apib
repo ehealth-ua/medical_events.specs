@@ -1786,7 +1786,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + `risk_assessments` (array, optional, fixed-type)
     + (`Risk_Assessment_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/risk_assessment_statuses`
-+ `medication_statement` (array, optional, fixed-type)
++ `medication_statements` (array, optional, fixed-type)
     + (`Medication_Statement_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/medication_statement_statuses`
 
@@ -3037,13 +3037,13 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                 + code: `mother` (string)
 + effective_period: `Вживає з 2017-го року регулярно` (string, optional) 
 
-+ medication_codeable_concept (Codeable_Concept, required)
++ `medication_code` (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/medical_statement_medications` (string) 
             + code: `Spine_board` (string)- `dictionary -  eHealth/medication_statement_medications`
-+ note `Some text` (string, optional)
-+ dosage `5 ml/day` (string, optional)
++ note: `Some text` (string, optional)
++ dosage: `5 ml/day` (string, optional)
 
 
 ### `Medication_Statement_Response`
