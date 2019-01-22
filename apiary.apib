@@ -3,13 +3,14 @@ HOST: http://ehealth.edenlabllc.com/
 
 # eHealth Medical Events API
 
-All the medical data stored in eHealth belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
+All the medical data, stored in eHealth, belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
 1. Only authenticated user with appropriate scope can access medical data
 List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles) [wiki: Scopes data model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/2004415/Scopes+model)
 
-2. Only user who has active declaration with patient is "authorized" to manage all patient's data (view history, add new medical events)
+2. Only user who has active declaration with patient is "authorized" to manage all patient's data (view history)
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
+4. Post methods are async
 
 ![Access policy](https://image.ibb.co/fOPoTV/Referrals-Medical-events-usage.png)
 
@@ -864,7 +865,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
         + data (array[`Device_Response`], fixed-type)
 
 
-## Medication_Statement
+## Medication Statement [/api/patients/{patient_id}/medication_statements]
 ### Get Medication Statement by id  [GET /api/patients/{patient_id}/medication_statements/{medication_statement_id}]
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
