@@ -2947,12 +2947,13 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + (Coding)
                         + code: `condition` (string)
 + basis (Ext_Reference, optional)
-    + reference
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `observation` (string)
+    + reference (array, fixed-type)
+        + (object)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `observation` (string)
 + predictions (array, optional, fixed-type)
     + (object)
         + outcome (Codeable_Concept, optional)
@@ -2961,8 +2962,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + system: `eHealth/risk_assessment_outcomes` (string)
                     + code: `default_outcome` (string)
         - One Of
-            + probability_decimal (number, optional)
             + probability_range (Range, optional)
+            + probability_decimal (number, optional)
+
         + `qualitative_risk` (Codeable_Concept, optional)
             + coding (array, fixed-type)
                 + (Coding)
@@ -2970,8 +2972,9 @@ This endpoint returns current diagnoses related only to active episodes. In orde
                     + code: `default_qualitative_risk` (string)
         + relative_risk(number, optional)
         - One Of
-            + when_period (Period, optional)
             + when_range (Range, optional)
+            + when_period (Period, optional)
+            
         + rationale: `some text` (string, optional)
             
 + mitigation: `some text` (string, optional)
