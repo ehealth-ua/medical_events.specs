@@ -319,6 +319,8 @@ If you have an approval - you can obtain episode details and nested entities thr
     + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `period_from`: `2017-01-01` (string, optional)
     + `period_to`: `2018-01-01` (string, optional)
+    + `service_request_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
+    + `code`: `R80` (string, optional)
 
 + Request (application/json)
     + Headers
@@ -328,33 +330,8 @@ If you have an approval - you can obtain episode details and nested entities thr
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
-        + data(array[`Episode_Of_Care_Short`])
+        + data(array[`Episode_Of_Care_Response`])
         
-
-
-### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size}]
-
-This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
-If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services
-
-**Scopes required:** `TBD`
-
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `page`: 2 (number, optional) - Page number
-    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `period_from`: `2017-01-01` (string, optional)
-    + `period_to`: `2018-01-01` (string, optional)
-
-+ Request (application/json)
-    + Headers
-    
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data(array[`Episode_Of_Care_Short`])
 
 ### Update Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}]
 Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/623837304/Update+Episode)
