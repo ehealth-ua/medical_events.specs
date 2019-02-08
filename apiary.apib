@@ -373,184 +373,6 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Get encounters in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters{?date_from,date_to,page,page_size}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `date_from`:`1990-01-01`(string, optional)
-    + `date_to`: `2000-01-01`(string, optional)
-    + `page`: `2` (number, optional) - Page number
-    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data (array[`Encounter_Response`], fixed-type)
-
-### Get encounter details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/encounters/{encounter_id}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Encounter identifier
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`Encounter_Response`)
-
-### Get conditions in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/conditions{?code,onset_date_from,onset_date_to,page,page_size}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `code`: `A20` (string, optional)
-    + `onset_date_from`:`1990-01-01` (string, optional)
-    + `onset_date_to`: `2000-01-01` (string, optional)
-    + `page`: `2` (number, optional) - Page number
-    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data (array[`Condition_Response`], fixed-type)
-
-### Get conditions details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/conditions/{condition_id}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `condition_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Condition identifier
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`Condition_Response`)
-
-### Get observations in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/observations{?code,issued_from,issued_to,page,page_size}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `code`: `10569-2` (string, optional)
-    + `issued_from`:`1990-01-01` (string, optional)
-    + `issued_to`: `2000-01-01` (string, optional)
-    + `page`: `2` (number, optional) - Page number
-    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data (array[`Observation_Response`], fixed-type)
-
-### Get observation details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/observations/{observation_id}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `observation_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Observation identifier
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`Observation_Response`)
-
-### Get allergy intolerances in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances{?code,onset_date_time_from,onset_date_time_to,page,page_size}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `code`: `227493005` (string, optional)
-    + `onset_date_time_from`:`1990-01-01` (string, optional)
-    + `onset_date_time_to`: `2000-01-01` (string, optional)
-    + `page`: `2` (number, optional) - Page number
-    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data (array[`Allergy_Intolerance_Response`], fixed-type)
-
-### Get allergy intolerance details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/allergy_intolerances/{allergy_intolerance_id}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `allergy_intolerance_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Allergy intolerance identifier
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`Allergy_Intolerance_Response`)
-
-### Get immunizations in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/immunizations{?code,date_from,date_to,page,page_size}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `vaccine_code`: `wex-10` (string, optional)
-    + `date_from`: `1990-01-01` (string, optional)
-    + `date_to`: `2000-01-01` (string, optional)
-    + `page`: `2` (number, optional) - Page number
-    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data (array[`Immunization_Response`], fixed-type)
-
-### Get immunization details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/immunizations/{immunization_id}]
-+ Parameters
-    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `immunization_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Immunization identifier
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (`Immunization_Response`)
 
 ## Encounter [/api/patient/{id}/encounters]
 
@@ -1626,14 +1448,19 @@ This service must be used to discover service requests by requisition number. If
 ## Diagnosis
 
 ### `Diagnosis_Request`
-+ condition (Condition_Request, required)
++ `condition` (Reference, required) 
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `condition` (string)
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
             + `system`: `eHealth/diagnosis_roles`
             + `code`: `CC`
-
-
+            
+    
 + rank: `1` (number, optional) - Ranking of the diagnosis. Max value = 10 (for each role type)
 
 ### `Diagnosis_Referrence_Condition_2`
