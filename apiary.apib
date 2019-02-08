@@ -1565,7 +1565,12 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 ## Diagnosis
 
 ### `Diagnosis_Request`
-+ condition (Condition_Request, required)
++ `condition` (Reference, required) 
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `condition` (string)
 + `role` (Codeable_Concept, required) - Role that this diagnosis has within the episode of care
     + coding (array, fixed-type)
         + (Coding)
