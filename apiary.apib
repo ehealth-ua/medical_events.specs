@@ -3117,10 +3117,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrival
 + status_code: `202` (string, optional) - processing result. Is relevant only for the processed jobs
 - one of
-    - links (array, optional, fixed-type) - links to resources that has been impactedas a job processing result
-        + (object)
-            + include `Link`
-    - data (object, optional) - response data payload of the request that has initiated this job. It's Structure depends on the request.
+    - links (array[Link], optional) - links to resources that has been impactedas a job processing result
+    - response_data (object, optional) - response data payload of the request that has initiated this job. It's Structure depends on the request.
 
 ### Job_Error
 + status: `error` (string, required) - status of request processing
