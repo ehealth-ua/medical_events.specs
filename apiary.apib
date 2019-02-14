@@ -1236,6 +1236,356 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
 
+# Group Service Requests
+
+###Sequence diagram
+
+## Manage Service Requests in patient context [/api/patients/{patient_id}/service_requests]
+
+### Create Service Request [POST]
+
+This method must be used to register new Service Request in the eHealth. 
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of Service Request in Media Content Storage if all checks is passed. 
+
+Signed content consists of JSON object with Service Request data.
+
+**Scopes required:** `service_request:write`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Service Request [POST /dummy/patients/{id}/service_requests]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+    + Attributes (Service_Request_Create)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Get Service Requests list [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests{?status}]
+
+This method returns all service requests related to specified episode of care.
+
+**Scopes required:** `service_request:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
+    + status: active (string, optional) - The status of the service request. Default: active
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Service_Request_Show`])
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Episode or patient not found` (string)
+
+### Get Service Request details [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests/{service_request_id}]
+
+**Scopes required:** `service_request:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
+    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + data (`Service_Request_Show`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Service request not found` (string)
+
+### Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel]
+
+This method must be used to cancel existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of service request must be equal to service request stored in DB. See Get Service Request details
+2. status_reason and explanatory_letter (optional) must be added to signed content
+
+Please see [Service request (Referral) state model](https://edenlab.atlassian.net/wiki/x/aoDzJg) and Dummy Cancel Service Request for more details
+
+
+**Scopes required:** `service_request:write`
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel/dummy]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (Service_Request_Base)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/service_request_cancel_reasons` (string)
+                    + code: `default` (string)
+        + `explanatory_letter`: `Направлення було відмінене у зв'язку з помилкою при виборі пацієнта ` (string, optional)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Recall Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall]
+
+This method must be used to recall existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of service request must be equal to service request stored in DB. See Get Service Request details
+2. status_reason and explanatory_letter (optional) must be added to signed content
+
+Please see [Service request (Referral) state model](https://edenlab.atlassian.net/wiki/x/aoDzJg) and Dummy Recall Service Request for more details
+
+**Scopes required:** `service_request:write`
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Recall Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall/dummy]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (Service_Request_Base)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/service_request_rceall_reasons` (string)
+                    + code: `default` (string)
+        + `explanatory_letter`: `Направлення було відкликане у зв'язку з помилкою при виборі пацієнта ` (string, optional)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+## Manage Service Requests [/api/service_requests]
+
+### Search for a service requests [GET /api/service_requests{?requisition,status}]
+
+This service must be used to discover service requests by requisition number. If nothing found by requisition number - it will return empty list
+
+**Scopes required:** `service_request:read`
+
++ Parameters
+    + requisition: `AX654-654T` (string, required) - A shared identifier common to all service requests that were authorized more or less simultaneously by a single author, representing the composite or group identifier
+    + status: active (string, optional) - The status of the service request. Default: active
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Service_Request_Base`])
+
+### Use Service Request [PATCH /api/service_requests/{service_request_id}/actions/use]
+
+**Scopes required:** `service_request:use`
+
++ Parameters
+    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+    + Attributes (Use_Service_Request_Request)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Release Service Request [PATCH /api/service_requests/{service_request_id}/actions/release]
+
+**Scopes required:** `service_request:use`
+
++ Parameters
+    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+## Group Approvals
+### Create approval [POST /api/patients/{patient_id}/approvals]
+Method to create approval: time-limited access to user's resources.
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
+
++ Parameters
+    + `patient_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+    + Attributes (object)
+        + include `Approval_Request`
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Approval_Response`)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Verify approval [PATCH /api/patients/{patiend_id}/approvals/{id}]
+
++ Parameters
+    + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
+    + `id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - approval_id
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+
+    + Attributes (object)
+        + `code`: 3782 (number)
+
++ Response 200 (application/json)
+
+### Resend SMS on approval [POST /api/patients/{patiend_id}/approvals/{id}/actions/resend_sms]
+
++ Parameters
+    + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
+    + `id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - approval_id
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+
++ Response 200 (application/json)
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 # Data Structures
 
 ## Responses
@@ -3145,3 +3495,269 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + `episode_id`: f48d1b6c-a021-4d6a-a5a4-aee93e152ecc
 + `inserted_at_from`:`1990-01-01`
 + `inserted_at_to`: `2000-01-01`
+
+## Service Request
+
+### `Service_Request_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ requisition: `AX654654T` (string, required)
++ `status`: `active` (string, required)
++ `status_history`  (array, optional, fixed-type)
+    + (object)
+        + status: `closed` (string, required)
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/service_request_status_reasons` (string)
+                    + code: `cured` (string)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ intent: `order` (string, required)
++ priority: `routine` (string, optional)
++ category (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/service_request_categories` (string)
+            + code: `409063005` (string)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: ` eHealth/SNOMED/procedure_codes` (string)
+            + code: `128004` (string)
++ `patient` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `context` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+- One Of
+    - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
+    - `occurrence_period` (`Period`, optional)
++ authored_on: `2018-08-02T10:45:16.000Z` (string, required)
++ `requester` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `performer_type` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/service_request_performer_roles` (string)
+            + code: `psychiatrist` (string)
++ `reason_reference` (array, optional)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ `supporting_info` (array, optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
++ note: `Some notes` (string, optional)
++ patient_instruction: `Some patient instructions` (string, optional)
++ expiration_date: `2018-08-02T10:45:16.000Z` (string, optional)
++ `permitted_episodes` (array, optional)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
++ `used_by` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
+
+### `Service_Request_Show`
++ include `Service_Request_Base`
+
+### `Service_Request_Create`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `active` (string, required)
++ intent: `order` (string, required)
++ priority: `routine` (string, optional)
++ category (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/service_request_categories` (string)
+            + code: `409063005` (string)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/procedure_codes` (string)
+            + code: `128004` (string)
++ `context` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+- One Of
+    - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
+    - `occurrence_period` (`Period`, optional)
++ authored_on: `2018-08-02T10:45:16.000Z` (string, required)
++ `requester` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `performer_type` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/service_request_performer_roles` (string)
+            + code: `psychiatrist` (string)
++ `reason_reference` (array, optional)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ `supporting_info` (array, optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
++ note: `Some notes` (string, optional)
++ patient_instruction: `Some patient instructions` (string, optional)
++ `permitted_episodes` (array, optional)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
+
+### `Use_Service_Request_Request`
++ `used_by` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+
+## Approvals
+
+### `Approval_Request`
+- One Of
+    + `resources` (array, optional) - list of resources that are requested access to be granted
+        + (Reference)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `episode_of_care` (string)
+                + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+    + `service_request` (object, optional)
+        + (Reference)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `service_request` (string)
+                + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_to` (Reference, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ access_level: `read` (enum, required) - only `read` is supported
+    - read
+
+### `Approval_Response_crud`
++ `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
++ `patient_id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - mpi_id hash
++ `granted_resources` (array, required) - list of resources that are allowed by approval
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
+            + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_to` (Reference, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ expires_at: 1498749591 (number, required) - expiration date-time timestamp
++ `granted_by` (Reference, required) - type and identifier of entity who has granted access - user_id
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `mpi-hash` (string)
++ reason (Reference, optional) - type and identifier of entity based on which approval has been created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `status`: new (enum, required) - status of approval
+    - new
+    - active
++ access_level: `read` (string, required) - only `read` is supported
++ `authentication_method` (object, required)
+    + type: `OTP` (enum, required)
+        - OTP
+        - OFFLINE
+        - NA
+    + number: `+38093*****85` (string, optional)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
+
+### `Approval_Response`
++ `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
++ `granted_resources` (array, required)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
+            + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_to` (Reference, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ expires_at: 1498749591 (number, required) - expiration date-time timestamp
++ reason (Reference, optional) - type and identifier of entity based on which approval has been created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `status`: new (enum, required) - status of approval
+    - new
+    - active
++ access_level: `read` (string, required) - only `read` is supported
++ `authentication_method_current` (object, required)
+    + type: `OTP` (enum, required)
+        - OTP
+        - OFFLINE
+        - NA
+    + number: `+38093*****85` (string, optional)
