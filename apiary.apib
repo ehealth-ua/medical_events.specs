@@ -68,7 +68,7 @@ To find out more about the process of encounter package creation read [Confluenc
 
 
 
-### Get async Job processing details [GET /api/jobs/{id}]
+### Get async Job processing details [GET /api/jobs/{id}] <job name="job"/>
 This resource should be used to get the processing status of the async job.
 Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/612041003/Medical+events+Technical+Documentation#MedicaleventsTechnicalDocumentation-AsyncjobprocessingSequencediagram)
 
@@ -1566,6 +1566,12 @@ http code| processing method | Client recommendations
 + Response 200 (application/json)
 
 ### Resend SMS on approval [POST /api/patients/{patiend_id}/approvals/{id}/actions/resend_sms]
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](#get-async-Job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Parameters
     + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
@@ -3521,7 +3527,7 @@ http code| processing method | Client recommendations
         + (Coding)
             + system: ` eHealth/SNOMED/procedure_codes` (string)
             + code: `128004` (string)
-+ `patient` (Reference, required)
++ `subject` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
