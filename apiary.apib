@@ -68,7 +68,7 @@ To find out more about the process of encounter package creation read [Confluenc
 
 
 
-### Get async Job processing details [GET /api/jobs/{id}] <job name="job"/>
+### Get async Job processing details [GET /api/jobs/{id}]
 This resource should be used to get the processing status of the async job.
 Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/612041003/Medical+events+Technical+Documentation#MedicaleventsTechnicalDocumentation-AsyncjobprocessingSequencediagram)
 
@@ -1584,6 +1584,7 @@ http code| processing method | Client recommendations
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
 
 + Response 200 (application/json)
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2059,6 +2060,20 @@ http code| processing method | Client recommendations
                     + code: `division` (string)
                     
 + prescriptions: 'Дієта №1, Омепразолу 40 мг 1 раз на добу + амоксициліну 500 мг + метронідазолу 400 мг при необхідності 500 мг або тинідазолу 500 мг 3 рази на добу протягом 1 тижня' (string, optional)
++ supporting_info (array,optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `observation` (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `diagnostic_report` (string)
+    
 
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
@@ -2152,6 +2167,19 @@ http code| processing method | Client recommendations
                     + code: `division` (string)
                     
 + prescriptions: 'Дієта №1, Омепразолу 40 мг 1 раз на добу + амоксициліну 500 мг + метронідазолу 400 мг при необхідності 500 мг або тинідазолу 500 мг 3 рази на добу протягом 1 тижня' (string, optional)
++ supporting_info (array,optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `observation` (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `diagnostic_report` (string)
 + `cancellation_reason` (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
