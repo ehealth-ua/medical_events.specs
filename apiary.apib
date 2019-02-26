@@ -3082,17 +3082,7 @@ http code| processing method | Client recommendations
                         + system: `eHealth/vaccination_target_diseases` (string)
                         + code: `1857005` (string) -  `dictionary - eHealth/vaccination_target_diseases` 
                         
-        + `dose_status` : ( Codeable_Concept, required), // Indicates if dose counts towards immunity
-           +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/vaccination_dose_statuses` (string) 
-                    + code: `count` (string) - `eHealth/vaccination_dose_statuses`
-                    
-        + `dose_status_reason` : ( Codeable_Concept,optional)  // Why dose does (not) count
-           +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/vaccination_dose_statuse_reasons` (string) 
-                    + code: `coldchbrk` (string) - `eHealth/vaccination_dose_statuse_reasons`
+    
                     
 
 
@@ -3206,17 +3196,6 @@ http code| processing method | Client recommendations
                         + system: `eHealth/vaccination_target_diseases` (string)
                         + code: `1857005` (string) `dictionary - eHealth/vaccination_target_diseases`
                         
-        + `dose_status` : ( Codeable_Concept, required), // Indicates if dose counts towards immunity
-           +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/vaccination_dose_statuses` (string)
-                    + code: `count` (string) `dictionary - eHealth/vaccination_dose_statuses`
-                    
-        + `dose_status_reason` : ( Codeable_Concept,optional)  // Why dose does (not) count
-           +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/vaccination_dose_statuse_reasons` (string)
-                    + code: `coldchbrk` (string) `dictionary - eHealth/vaccination_dose_statuse_reasons`
                     
 
 
