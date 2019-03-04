@@ -7,8 +7,7 @@ All the medical data, stored in eHealth, belongs to the patient and must be prop
 
 1. Only authenticated user with appropriate scope can access medical data
 List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles) [wiki: Scopes data model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/2004415/Scopes+model)
-
-2. Only user who has active declaration with patient is "authorized" to manage all patient's data (view history)
+2. Access to Patient Medical Data is driven by Attribute-based access control(ABAC). Rules [https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature]
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
 4. Post methods are async
 
@@ -3450,6 +3449,82 @@ co
 + note: `Some text` (string, optional)
 + dosage: `5 ml/day` (string, optional)
 
+##`Diagnostic Report`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ based_on (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ initial_episode( Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
++ status: `final` (string, required)
++ categoty (array, required, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `LAB` (string)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/diagnostic_report_categories` (string)
+                + code: `MB` (string)
+    
++ code (array, required, fixed-type)
+   + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/LOINC/diagnostic_report_codes` (string)
+                + code: `10217-8` (string)
+
++ encounter (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ effective_period(Period, optional)
++ issued: `2018-10-08T09:46:37.694Z` (string, required)
++ primary_source: `true` (boolean, required)
+- One Of
+    + performer (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
++ recored_by (Reference, required)
+    + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+- One Of                        
+    + `results_interpriter_reference` (Reference, optional)
+        + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+    + `results_interpriter_string`: `Опанасенко Петро Васильович` (string, optional)
++ conclusion: `At risk of osteoporotic fracture` (string, optional)
++ `conclusion_code` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/clinical_findings` (string)
+            + code: `109006` (string)
 
 ### `Medication_Statement_Response`
 + include `Medication_Statement_Request`
