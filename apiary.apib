@@ -38,6 +38,7 @@ Immunization| 0-* |true
 Risk assessment|0-*| true
 Device|0-*| true
 Medication statement|0-*|true
+Diagnostic report|0-*| true
 
 To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
 
@@ -921,7 +922,7 @@ Device              | All patient`s devices
 Medication Statment | All patient`s medication statments
 
 
-### Get Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
+### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
 
 This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
 If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services
@@ -1834,7 +1835,6 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-co
 + `closing_summary`: `Носові шляхи вільні, горло рожеве, температура в нормі` (string, optional)    
 + `status_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
@@ -2074,6 +2074,7 @@ co
 + devices (array[`Device_Request`], optional, fixed-type)
 + `risk_assessments`(array[`Risk_Assessment_Request`], optional, fixed-type)
 + `medication_statements` (array[`Medication_Statement_Request`], optional, fixed-type)
++ `diagnostic_reports` (array[`Diagnostic_Report_EncounterPCG_Request`], optional, fixed-type)
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -2670,8 +2671,6 @@ co
                 + (Coding)
                     + code: `encounter` (string)
                     
-
-                        
 
 + categories (array, required)
     + (Codeable_Concept)
@@ -3450,7 +3449,7 @@ co
 + dosage: `5 ml/day` (string, optional)
 
 ##`Diagnostic Report`
-### `Diagnostic_Report_Request`
+### `Diagnostic_Report_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + based_on (Reference, optional)
     + identifier (Identifier)
@@ -3458,12 +3457,6 @@ co
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
-+ initial_episode( Reference, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `episode` (string)
 + status: `final` (string, required)
 + categoty (array, required, fixed-type)
     + (Codeable_Concept)
@@ -3483,18 +3476,108 @@ co
              + (Coding)
                 + system: `eHealth/LOINC/diagnostic_report_codes` (string)
                 + code: `10217-8` (string)
++ effective_period(Period, optional)
++ issued: `2018-10-08T09:46:37.694Z` (string, required)
++ conclusion: `At risk of osteoporotic fracture` (string, optional)
++ `conclusion_code` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/clinical_findings` (string)
+            + code: `109006` (string)
 
-+ encounter (Reference, optional)
+### `Diagnostic_Report_EncounterPCG_Request`
++ include `Diagnostic_Report_Base`
++ encounter (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ effective_period(Period, optional)
-+ issued: `2018-10-08T09:46:37.694Z` (string, required)
-+ primary_source: `true` (boolean, required)
++ primary_source: `true` (boolean, required) - could be false
 - One Of
-    + performer (Reference, required)
+    + performer (optional)
+    - One Of
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+        + text: `Опанасенко Олексій Володимирович` (string, optional)
+                        
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
++ result_interpreter (optional)
+    - One Of
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+        + text: `Опанасенко Олексій Володимирович` (string, optional) 
+
+### `Diagnostic_Report_Package_Request`
++ include `Diagnostic_Report_Base`
++ primary_source: `true` (boolean, required) - could NOT be false
++ performer (optional)
+    - One Of
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+        + text: `Опанасенко Олексій Володимирович` (string, optional)             
+                    
++ legal_entity (Reference, required)
+    + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `legal_enity` (string)
++ result_interpreter (optional)
+    - One Of
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+        + text: `Опанасенко Олексій Володимирович` (string, optional) 
++ encounter (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)                       
+
+### `Diagnostic_Report_Response`
++ include `Diagnostic_Report_Base`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ initial_episode (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
+                    
++ legal_entity (Reference, optional)
+    + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `legal_enity` (string)
++ result_interpreter (optional)
+    - One Of
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+        + text: `Опанасенко Олексій Володимирович` (string, optional) 
+- One Of
+    + performer (Reference, optional)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
@@ -3506,31 +3589,7 @@ co
             + (Coding)
                 + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
-+ recored_by (Reference, required)
-    + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
-- One Of                        
-    + `results_interpriter_reference` (Reference, optional)
-        + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-    + `results_interpriter_string`: `Опанасенко Петро Васильович` (string, optional)
-+ conclusion: `At risk of osteoporotic fracture` (string, optional)
-+ `conclusion_code` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/SNOMED/clinical_findings` (string)
-            + code: `109006` (string)
-
-### `Diagnostic_Report_Response`
-+ include `Diagnostic_Report_Request`
-+ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
-+ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
+                
 
 ### `Medication_Statement_Response`
 + include `Medication_Statement_Request`
