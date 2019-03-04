@@ -3450,6 +3450,7 @@ co
 + dosage: `5 ml/day` (string, optional)
 
 ##`Diagnostic Report`
+### `Diagnostic_Report_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + based_on (Reference, optional)
     + identifier (Identifier)
@@ -3525,6 +3526,11 @@ co
         + (Coding)
             + system: `eHealth/SNOMED/clinical_findings` (string)
             + code: `109006` (string)
+
+### `Diagnostic_Report_Response`
++ include `Diagnostic_Report_Request`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
 ### `Medication_Statement_Response`
 + include `Medication_Statement_Request`
