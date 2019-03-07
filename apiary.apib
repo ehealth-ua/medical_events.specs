@@ -13,6 +13,16 @@ List of scopes available for the specific user role can be recieved using [/role
 
 ![Access policy](https://image.ibb.co/fOPoTV/Referrals-Medical-events-usage.png)
 
+## About ABAC
+Some routes in eHealth are managed not only by scope-based  model, but Atribute Bаsed Access Control (ABAC) model.
+Routes, that responds with lists, are not designed to cut responses automatically(show only allowed items). In order to access list, user should specify filters (search params) to cut entities that are not allowed by ABAC rules. 
+For example,
+to access this route:
+/patient/{patient_id}/conditions
+user should have approval on ALL patients medical data, otherwise the response will be 403.
+But, by specifinig filters, user can access requested data, if one of the ABAC rules returns true:
+/patient/{patient_id}/conditions?episode_context={episode_1}
+Here you can find the list of current [rules](https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature).
 # Group Medical Events
 Medical events API is a set of web services designed to provide methods of communication between eHealth Medical Data Storage and medical information systems (MIS).
 Medical events API is based on the international framework for exchanging digital health records - FHIR( Release 3 (STU)). Most of  major resources, data types, data structures and their way of interpretation are inherited from FHIR. However, there are minor сhanges described in Apiary.
@@ -901,6 +911,48 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
+        
+        
+
+## Diagnostic Report [/api/patients/{patient_id}/diagnostic_reports]
+### Get Diagnostic Report by id [GET /api/patients/{patient_id}/diagnostic_reports/{diagnostic_report_id}]
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + diagnostic_report_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique DR identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (`Diagnostic_Report_Response`)
+
+### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `12345` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `initial_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `issued_from`: `1990-01-01` (string, optional) 
+    + `issued_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Diagnostic_Report_Response`], fixed-type)
+
+
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
@@ -2210,6 +2262,10 @@ http code| processing method | Client recommendations
 + `medication_statements` (array, optional, fixed-type)
     + (`Medication_Statement_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/medication_statement_statuses`
++ `diagnostic_reports` (array, optional, fixed-type)
+    + (`Diagnostic_Report_EncounterPCG_Request`)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/diagnostic_reports_statuses`
+        
 
 ## Condition
 ### `Condition_Request`
@@ -3603,8 +3659,7 @@ http code| processing method | Client recommendations
 
 ### Job
 + status: `pending` (string, required) - status of request processing.
-+ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrival
-+ status_code: `202` (string, optional) - processing result. Is relevant only for the processed jobs
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
 - one of
     - links (array[Link], optional) - links to resources that has been impactedas a job processing result
     - response_data (object, optional) - response data payload of the request that has initiated this job. It's Structure depends on the request.
