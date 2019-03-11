@@ -3540,6 +3540,13 @@ http code| processing method | Client recommendations
         + (Coding)
             + system: `eHealth/SNOMED/clinical_findings` (string)
             + code: `109006` (string)
++ recorded_by (Reference, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+
 
 ### `Diagnostic_Report_EncounterPCG_Request`
 + include `Diagnostic_Report_Base`
@@ -3550,6 +3557,12 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `encounter` (string)
 + primary_source: `true` (boolean, required) - could be false
++ managing_organization (Reference, optional)
+    + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `legal_enity` (string)
 - One Of
     + performer (optional)
     - One Of
@@ -3586,7 +3599,7 @@ http code| processing method | Client recommendations
                         + code: `employee` (string)
         + text: `Опанасенко Олексій Володимирович` (string, optional)             
                     
-+ legal_entity (Reference, required)
++ managing_organization (Reference, required)
     + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
@@ -3618,12 +3631,13 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `episode` (string)
                     
-+ legal_entity (Reference, optional)
++ managing_organization (Reference, optional)
     + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `legal_enity` (string)
+    + text: `Опанасенко Олексій Володимирович` (string, optional)                    
 + result_interpreter (optional)
     - One Of
         + identifier (Identifier, optional, fixed-type)
@@ -3639,13 +3653,20 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-                        
+        + text: `Опанасенко Олексій Володимирович` (string, optional)                     
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
++ recorded_by (Reference, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+    + text: `Опанасенко Олексій Володимирович` (string, optional)                
 
 ### `Medication_Statement_Response`
 + include `Medication_Statement_Request`
