@@ -2767,6 +2767,12 @@ http code| processing method | Client recommendations
 ### `Observation_Request_2`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
++ diagnostic_report (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
 + `context` (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
@@ -2966,6 +2972,12 @@ http code| processing method | Client recommendations
 ### `Observation_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required)
++ diagnostic_report (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
 + `context` (Reference, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
