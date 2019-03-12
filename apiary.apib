@@ -3630,10 +3630,10 @@ http code| processing method | Client recommendations
 + primary_source: `true` (boolean, required) - could be false
 + managing_organization (Reference, optional)
     + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `legal_enity` (string)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
 - One Of
     + performer (optional)
         -One Of
@@ -3653,12 +3653,13 @@ http code| processing method | Client recommendations
                 
 + results_interpreter (optional)
     - One Of
-    
-        + identifier (Identifier, optional, fixed-type)
-            + type (Codeable_Concept, required)
-                + coding (array, required,fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
+        + reference (Reference,optional)
+            + identifier (Identifier, required)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+            + display: `Опанасенко Олексій Володимирович` (string, optional)            
         + text: `Опанасенко Олексій Володимирович` (string, optional) 
 
 ### `Diagnostic_Report_Package_Request`
@@ -3690,7 +3691,7 @@ http code| processing method | Client recommendations
                         + (Coding)
                             + code: `employee` (string)
             + display: `Опанасенко Олексій Володимирович` (string, optional)            
-        + text: `Опанасенко Олексій Володимирович` (string, optional)
+        + text: `Опанасенко Олексій Володимирович` (string, optional) 
 + encounter (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
