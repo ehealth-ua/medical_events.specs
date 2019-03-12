@@ -236,6 +236,18 @@ Here you can find additional examples of Medication_Statement that could be subm
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Medication_Statement_Request`)
+    
+    
+#### Dummy Diagnostic report [POST]
+Here you can find additional examples of Medication_Statement that could be submitted as a part of signed content.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Diagnostic_Report_EncounterPCG_Request`)
+    
  
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
@@ -3637,7 +3649,7 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
-+ result_interpreter (optional)
++ results_interpreter (optional)
     - One Of
         + identifier (Identifier, optional, fixed-type)
             + type (Codeable_Concept, required)
@@ -3664,7 +3676,7 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `legal_enity` (string)
-+ result_interpreter (optional)
++ results_interpreter (optional)
     - One Of
         + identifier (Identifier, optional, fixed-type)
             + type (Codeable_Concept, required)
@@ -3697,7 +3709,7 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `legal_enity` (string)
     + text: `Опанасенко Олексій Володимирович` (string, optional)                    
-+ result_interpreter (optional)
++ results_interpreter (optional)
     - One Of
         + identifier (Identifier, optional, fixed-type)
             + type (Codeable_Concept, required)
