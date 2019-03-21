@@ -1029,6 +1029,7 @@ Diagnoses           | Only current diagnoses related to active *Episodes* that r
 Risk Assessment     | All patient's risk assessments
 Device              | All patient`s devices
 Medication Statment | All patient`s medication statments
+Diagnostic Report   | Only specific *Diagnostic Reports* are available for Patient Summary
 
 
 ### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size,status}]
@@ -1342,6 +1343,41 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
+
+### Get Diagnostic Report by id [GET /api/patients/{patient_id}/summary/diagnostic_reports/{diagnostic_report_id}]
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + diagnostic_report_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique DR identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (`Diagnostic_Report_Response`)
+
+### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `12345` (string, optional) 
+    + `issued_from`: `1990-01-01` (string, optional) 
+    + `issued_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Diagnostic_Report_Response`], fixed-type)
+
 
 # Group Service Requests
 
