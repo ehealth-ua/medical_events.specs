@@ -13,6 +13,16 @@ List of scopes available for the specific user role can be recieved using [/role
 
 ![Access policy](https://image.ibb.co/fOPoTV/Referrals-Medical-events-usage.png)
 
+## About ABAC
+Some routes in eHealth are managed not only by scope-based  model, but Atribute Bаsed Access Control (ABAC) model.
+Routes, that responds with lists, are not designed to cut responses automatically(show only allowed items). In order to access list, user should specify filters (search params) to cut entities that are not allowed by ABAC rules. 
+For example,
+to access this route:
+/patient/{patient_id}/conditions
+user should have approval on ALL patients medical data, otherwise the response will be 403.
+But, by specifinig filters, user can access requested data, if one of the ABAC rules returns true:
+/patient/{patient_id}/conditions?episode_context={episode_1}
+Here you can find the list of current [rules](https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature).
 # Group Medical Events
 Medical events API is a set of web services designed to provide methods of communication between eHealth Medical Data Storage and medical information systems (MIS).
 Medical events API is based on the international framework for exchanging digital health records - FHIR( Release 3 (STU)). Most of  major resources, data types, data structures and their way of interpretation are inherited from FHIR. However, there are minor сhanges described in Apiary.
@@ -38,6 +48,7 @@ Immunization| 0-* |true
 Risk assessment|0-*| true
 Device|0-*| true
 Medication statement|0-*|true
+Diagnostic report|0-*| true
 
 To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
 
@@ -132,8 +143,7 @@ Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/
             + type: NOT_FOUND (string)
             + message: `Object not found` (string)
 
-### Dummy Encounter [POST]
-This chapter describes different examples of Encounters that could be submitted as a signed content in Submit Visit web service.
+### Dummy Encounter Package[POST]
 
 + Request Encounter with new Condition (application/json)
 
@@ -144,7 +154,7 @@ This chapter describes different examples of Encounters that could be submitted 
         
     
 #### Dummy Condition [POST]
-Here you can find additional examples of Conditions that could be submitted as a part of signed content.
+This chapter describes the structure of a single unsigned condition that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request (application/json)
 
@@ -155,7 +165,7 @@ Here you can find additional examples of Conditions that could be submitted as a
     
     
 #### Dummy Observation [POST]
-Here you can find additional examples of Observations that could be submitted as a part of signed content.
+This chapter describes the structure of a single unsigned observation that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request 1 (application/json)
 
@@ -176,7 +186,7 @@ Here you can find additional examples of Observations that could be submitted as
         
     
 #### Dummy Immunization [POST]
-Here you can find additional examples of Immunizations that could be submitted as a part of signed content.
+This chapter describes the structure of a single unsigned immunization that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request  (application/json)
 
@@ -186,7 +196,7 @@ Here you can find additional examples of Immunizations that could be submitted a
     + Attributes (`Immunization_Request`) 
     
 #### Dummy Allergy_Intolerance [POST]
-Here you can find additional examples of Allergy_Intolerances that could be submitted as a part of signed content.
+This chapter describes the structure of a single unsigned allergy_intolerance that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request  (application/json)
 
@@ -196,7 +206,7 @@ Here you can find additional examples of Allergy_Intolerances that could be subm
     + Attributes (`Allergy_Intolerance_Request`)
 
 #### Dummy Risk_Assessment [POST]
-Here you can find additional examples of Risk_Assessment that could be submitted as a part of signed content.
+This chapter describes the structure of a single unsigned risk_assessment that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request  (application/json)
 
@@ -206,7 +216,7 @@ Here you can find additional examples of Risk_Assessment that could be submitted
     + Attributes (`Risk_Assessment_Request`)
 
 #### Dummy Device [POST]
-Here you can find additional examples of Device that could be submitted as a part of signed content.
+This chapter describes the structure of a single unsigned device that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request  (application/json)
 
@@ -217,7 +227,7 @@ Here you can find additional examples of Device that could be submitted as a par
 
 
 #### Dummy Medication Stetement [POST]
-Here you can find additional examples of Medication_Statement that could be submitted as a part of signed content.
+This chapter describes the structure of a single unsigned medication statement that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request  (application/json)
 
@@ -225,7 +235,19 @@ Here you can find additional examples of Medication_Statement that could be subm
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Medication_Statement_Request`)
+    
+    
+#### Dummy Diagnostic report [POST]
+This chapter describes the structure of a single unsigned diagnostic report that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Diagnostic_Report_EncounterPCG_Request`)
+    
+ 
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
 + Request Package (application/json)
@@ -234,7 +256,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
-        + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
+          + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -260,7 +282,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
     + Attributes (`Cancel_Encounter`) 
 
 + Response 200 (application/json)
-
+   
 
 ## Episode of Care [/api/patients/{id}/episodes]
 Episode of care is a resource that contains general information about a patient`s medical case, such as care manager and diagnoses history.
@@ -305,7 +327,7 @@ Use period_from period_to to find episodes that were active in a certain period 
         + data(`Episode_Of_Care_Response`)
     
 
-### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size}]
+### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size,status}]
 
 
 **Scopes required:** `TBD`
@@ -318,6 +340,7 @@ Use period_from period_to to find episodes that were active in a certain period 
     + `period_to`: `2018-01-01` (string, optional)
     + `service_request_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
     + `code`: `R80` (string, optional)
+    + `status`: `active` (string, optional)
 
 + Request (application/json)
     + Headers
@@ -714,7 +737,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `allergy_intolerance_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Allergy intolerance identifier
-
+ 
 + Request (application/json)
     + Headers
 
@@ -900,6 +923,92 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
+        
+
+## Diagnostic Report Data Package [/api/patients/{id}/diagnostic_report_package]
+
+### Submit Diagnostic Report  Package [POST]
+
+Using this web service you can submit:
+
+Object| Required| Part of Signed content
+-------|---------|------
+Observation| 0-* |true
+Diagnostic report|1-1| true
+
+To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
+
++ Request Package (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + `signed_data` : 'ew0KICAicGVyaW9kIjogew0KIC...' (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)     
+            
+
+### Dummy Submit Diagnostic Report  Package [POST]            
++ Request Package (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + include `Submit_DR_Package`
+
+## Diagnostic Report [/api/patients/{patient_id}/diagnostic_reports]
+### Get Diagnostic Report by id [GET /api/patients/{patient_id}/diagnostic_reports/{diagnostic_report_id}]
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + diagnostic_report_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique DR identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (`Diagnostic_Report_Response`)
+
+### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `12345` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `initial_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `issued_from`: `1990-01-01` (string, optional) 
+    + `issued_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Diagnostic_Report_Response`], fixed-type)
+
+
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
@@ -919,9 +1028,10 @@ Diagnoses           | Only current diagnoses related to active *Episodes* that r
 Risk Assessment     | All patient's risk assessments
 Device              | All patient`s devices
 Medication Statment | All patient`s medication statments
+Diagnostic Report   | Only specific *Diagnostic Reports* are available for Patient Summary
 
 
-### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
+### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size,status}]
 
 This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
 If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services
@@ -934,7 +1044,7 @@ If you have an approval - you can obtain episode details and nested entities thr
     + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `period_from`: `2017-01-01` (string, optional)
     + `period_to`: `2018-01-01` (string, optional)
-
+    + `status`: `active` (string, optional)
 + Request (application/json)
     + Headers
     
@@ -1015,7 +1125,7 @@ If you have an approval - you can obtain episode details and nested entities thr
 + Parameters
     + patient_id: `7a489bbd-d8e2-48d9-92fd-fcf0102f7b08` (string, required) - Unique patient identifier
     + id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique allergy intolerance identifier
-
+ 
 + Request (application/json)
 
     + Headers
@@ -1232,6 +1342,41 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
+
+### Get Diagnostic Report by id [GET /api/patients/{patient_id}/summary/diagnostic_reports/{diagnostic_report_id}]
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + diagnostic_report_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique DR identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (`Diagnostic_Report_Response`)
+
+### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `12345` (string, optional) 
+    + `issued_from`: `1990-01-01` (string, optional) 
+    + `issued_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Diagnostic_Report_Response`], fixed-type)
+
 
 # Group Service Requests
 
@@ -1834,7 +1979,6 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-
 + `closing_summary`: `Носові шляхи вільні, горло рожеве, температура в нормі` (string, optional)    
 + `status_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
@@ -1856,6 +2000,7 @@ http code| processing method | Client recommendations
                     + code: `employee` (string)
 
                     
+
 ### `Cancel_Episode`
 
 + `explanatory_letter`: `Епізод був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
@@ -1931,7 +2076,7 @@ http code| processing method | Client recommendations
                     + code: `condition` (string)
 
 + `code` (Codeable_Concept, required) 
-    + coding (array, fixed-type)
+     + coding (array, fixed-type)
         + (Coding)
             + `system`: `eHealth/ICPC2/conditions`,
             + `code`: `A20` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`                    
@@ -1942,7 +2087,7 @@ http code| processing method | Client recommendations
         + (Coding)
             + `system`: `eHealth/diagnosis_roles`
             + `code`: `CC`
-        
+           
 + rank: `1` (number, optional) - Ranking of the diagnosis (for each role type)
 
 ### `Diagnosis_Referrence_Condition`
@@ -1955,7 +2100,7 @@ http code| processing method | Client recommendations
                     + code: `condition` (string)
                     
 + `code` (Codeable_Concept, required) 
-    + coding (array, fixed-type)
+     + coding (array, fixed-type)
         + (Coding)
             + `system`: `eHealth/ICPC2/conditions`,
             + `code`: `A20` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`
@@ -2001,7 +2146,7 @@ http code| processing method | Client recommendations
 
                     
 + performer (Reference, required)
-    + identifier (Identifier)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
@@ -2011,9 +2156,9 @@ http code| processing method | Client recommendations
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-            + system: `eHealth/ICPC2/reasons` (string) 
-            + code: `A02` (string) - `dictionary eHealth/ICPC2/reasons`
-            
+             + system: `eHealth/ICPC2/reasons` (string) 
+             + code: `A02` (string) - `dictionary eHealth/ICPC2/reasons`
+             
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
@@ -2029,15 +2174,15 @@ http code| processing method | Client recommendations
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-            + system: `eHealth/ICPC2/actions` (string)
-            + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
-            
+             + system: `eHealth/ICPC2/actions` (string)
+             + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
+             
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-            + system: `eHealth/ICPC2/actions` (string)
-            + code: `T50` (string)- `dictionary eHealth/ICPC2/actions`
-            
+             + system: `eHealth/ICPC2/actions` (string)
+             + code: `T50` (string)- `dictionary eHealth/ICPC2/actions`
+             
 + division (Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -2046,6 +2191,20 @@ http code| processing method | Client recommendations
                     + code: `division` (string)
                     
 + prescriptions: 'Дієта №1, Омепразолу 40 мг 1 раз на добу + амоксициліну 500 мг + метронідазолу 400 мг при необхідності 500 мг або тинідазолу 500 мг 3 рази на добу протягом 1 тижня' (string, optional)
++ supporting_info (array,optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `observation` (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `diagnostic_report` (string)
+    
 
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
@@ -2059,6 +2218,7 @@ http code| processing method | Client recommendations
 + devices (array[`Device_Request`], optional, fixed-type)
 + `risk_assessments`(array[`Risk_Assessment_Request`], optional, fixed-type)
 + `medication_statements` (array[`Medication_Statement_Request`], optional, fixed-type)
++ `diagnostic_reports` (array[`Diagnostic_Report_EncounterPCG_Request`], optional, fixed-type)
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -2093,7 +2253,7 @@ http code| processing method | Client recommendations
 
 
 + performer (Reference, required)
-    + identifier (Identifier)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
@@ -2123,14 +2283,14 @@ http code| processing method | Client recommendations
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-            + system: `eHealth/ICPC2/actions` (string)
-            + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
+             + system: `eHealth/ICPC2/actions` (string)
+             + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
 
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-            + system: `eHealth/ICPC2/actions` (string)
-            + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
+             + system: `eHealth/ICPC2/actions` (string)
+             + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
 + division (Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -2139,6 +2299,19 @@ http code| processing method | Client recommendations
                     + code: `division` (string)
                     
 + prescriptions: 'Дієта №1, Омепразолу 40 мг 1 раз на добу + амоксициліну 500 мг + метронідазолу 400 мг при необхідності 500 мг або тинідазолу 500 мг 3 рази на добу протягом 1 тижня' (string, optional)
++ supporting_info (array,optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `observation` (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `diagnostic_report` (string)
 + `cancellation_reason` (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
@@ -2181,6 +2354,10 @@ http code| processing method | Client recommendations
 + `medication_statements` (array, optional, fixed-type)
     + (`Medication_Statement_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/medication_statement_statuses`
++ `diagnostic_reports` (array, optional, fixed-type)
+    + (`Diagnostic_Report_EncounterPCG_Request`)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/diagnostic_reports_statuses`
+        
 
 ## Condition
 ### `Condition_Request`
@@ -2230,7 +2407,7 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `eHealth/body_sites` (string)
                 + code: `181414000` (string) - `dictionary - eHealth/body_sites`
-                
+                   
     
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)//Estimated or actual date,  date-time when condition starts
 + asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
@@ -2282,7 +2459,7 @@ http code| processing method | Client recommendations
                 
         + text: `Галина Олександрівна` (string)
 + `context` (Reference, required)
-    + identifier (Identifier)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
@@ -2309,7 +2486,7 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `eHealth/body_sites` (string)
                 + code: `181414000` (string) - `dictionary - eHealth/body_sites`
-                
+                   
     
 + onset_date: `2018-08-02T10:45:16.000Z` (string, required)
 + asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
@@ -2367,7 +2544,7 @@ http code| processing method | Client recommendations
 
                     
 + `context` (Reference, required)
-    + identifier (Identifier)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
@@ -2434,16 +2611,18 @@ http code| processing method | Client recommendations
 ### `Observation_Request_1`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
-+ `context` (Reference, required)
++ diagnostic_report (Reference, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
+                    + code: `diagnostic_report` (string)
++ `context` (Reference, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
                     + code: `encounter` (string)
-                    
-
-                        
-
 + categories (array, required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -2492,7 +2671,7 @@ http code| processing method | Client recommendations
     
 + comment: `Some comment` (string, optional)
 + `body_site` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
+     + coding (array, fixed-type)
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string) 
             + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
@@ -2542,7 +2721,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + system: `eHealth/reference_range_applications` (string)
                     + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
-                    
+                     
         + age (Range, optional)
             + low (Quantity, optional)
                 + value : `18` (number, required)
@@ -2613,7 +2792,7 @@ http code| processing method | Client recommendations
                         + (Coding)
                             + system: `eHealth/reference_range_applications` (string)
                             + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
-                            
+                             
                 + age (Range, optional)
                     + low (Quantity, optional)
                         + value : `18` (number, required)
@@ -2635,15 +2814,19 @@ http code| processing method | Client recommendations
 ### `Observation_Request_2`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
-+ `context` (Reference, required)
++ diagnostic_report (Reference, optional)
     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
++ `context` (Reference, required)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
                     
-
-                        
 
 + categories (array, required)
     + (Codeable_Concept)
@@ -2692,7 +2875,7 @@ http code| processing method | Client recommendations
     
 + comment: `Some comment` (string, optional)
 + `body_site` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
+     + coding (array, fixed-type)
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string) 
             + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
@@ -2742,7 +2925,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + system: `eHealth/reference_range_applications` (string)
                     + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
-                    
+                     
         + age (Range, optional)
             + low (Quantity, optional)
                 + value : `18` (number, required)
@@ -2813,7 +2996,7 @@ http code| processing method | Client recommendations
                         + (Coding)
                             + system: `eHealth/reference_range_applications` (string)
                             + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
-                            
+                             
                 + age (Range, optional)
                     + low (Quantity, optional)
                         + value : `18` (number, required)
@@ -2836,8 +3019,14 @@ http code| processing method | Client recommendations
 ### `Observation_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required)
-+ `context` (Reference, required)
++ diagnostic_report (Reference, optional)
     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
++ `context` (Reference, required)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
@@ -2893,7 +3082,7 @@ http code| processing method | Client recommendations
     
 + comment: `Some comment` (string, optional)
 + `body_site` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
+     + coding (array, fixed-type)
         + (Coding)
             + system: `http://hl7.org/fhir/v2/0078` (string) 
             + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
@@ -2933,7 +3122,7 @@ http code| processing method | Client recommendations
 ## `Immunization`
 
 ### `Immunization_Request`
-
+ 
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
 + status : `completed` (string, required), //  completed | entered-in-error
 + not_given : `false` (boolean, required), //   Flag for whether immunization was given
@@ -3006,10 +3195,10 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + system: `eHealth/reason_explanations` (string)
                         + code: `429060002` (string) `dictionary - eHealth/reason_explanations`
-                        
+                         
         + `reasons_not_given`  (array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
-),
+  ),
 + reactions : (array, optional) // Details of a reaction that follows immunization
     + (object)
         + date : `2018-10-08T09:46:37.694Z` (string, optional), // When reaction started
@@ -3019,7 +3208,7 @@ http code| processing method | Client recommendations
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `observation` (string)
-                        
+                           
         + reported : `true` (boolean, optional) // Indicates self-reported reaction
 
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
@@ -3041,19 +3230,9 @@ http code| processing method | Client recommendations
                         + system: `eHealth/vaccination_target_diseases` (string)
                         + code: `1857005` (string) -  `dictionary - eHealth/vaccination_target_diseases` 
                         
-        + `dose_status` : ( Codeable_Concept, required), // Indicates if dose counts towards immunity
-        +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/vaccination_dose_statuses` (string)
-                    + code: `count` (string) - `eHealth/vaccination_dose_statuses`
-
-        + `dose_status_reason` : ( Codeable_Concept,optional)  // Why dose does (not) count
-        +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/vaccination_dose_statuse_reasons` (string)
-                    + code: `coldchbrk` (string) - `eHealth/vaccination_dose_statuse_reasons`
     
                     
+
 
 ### `Immunization_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) 
@@ -3130,10 +3309,10 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + system: `eHealth/reason_explanations` (string)
                         + code: `429060002` (string) - `dictionaries- eHealth/reason_explanations`
-                        
+                         
         + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
-),
+  ),
 + reactions : (array, optional) // Details of a reaction that follows immunization
     + (object)
         + date : `2018-10-08T09:46:37.694Z` (string, optional), // When reaction started
@@ -3143,7 +3322,7 @@ http code| processing method | Client recommendations
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `observation` (string)
-                        
+                           
         + reported : `true` (boolean, optional) // Indicates self-reported reaction
 
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
@@ -3165,18 +3344,7 @@ http code| processing method | Client recommendations
                         + system: `eHealth/vaccination_target_diseases` (string)
                         + code: `1857005` (string) `dictionary - eHealth/vaccination_target_diseases`
                         
-        + `dose_status` : ( Codeable_Concept, required), // Indicates if dose counts towards immunity
-        +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/vaccination_dose_statuses` (string)
-                    + code: `count` (string) `dictionary - eHealth/vaccination_dose_statuses`
-
-        + `dose_status_reason` : ( Codeable_Concept,optional)  // Why dose does (not) count
-        +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/vaccination_dose_statuse_reasons` (string)
-                    + code: `coldchbrk` (string) `dictionary - eHealth/vaccination_dose_statuse_reasons`
-            
+                    
 
 
 ## `Allergy_Intolerance`
@@ -3443,7 +3611,7 @@ http code| processing method | Client recommendations
 + dosage: `5 ml/day` (string, optional)
 
 ##`Diagnostic Report`
-### `Diagnostic_Report_Request`
+### `Diagnostic_Report_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + based_on (Reference, optional)
     + identifier (Identifier)
@@ -3451,79 +3619,188 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
-+ initial_episode( Reference, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `episode` (string)
 + status: `final` (string, required)
-+ categoty (array, required, fixed-type)
++ category (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+             + (Coding)
+                + system: `eHealth/diagnostic_report_categories` (string)
                 + code: `LAB` (string)
     + (Codeable_Concept)
         + coding (array, fixed-type)
-            + (Coding)
+             + (Coding)
                 + system: `eHealth/diagnostic_report_categories` (string)
                 + code: `MB` (string)
     
-+ code (array, required, fixed-type)
-+ (Codeable_Concept)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/LOINC/diagnostic_report_codes` (string)
-                + code: `10217-8` (string)
-
-+ encounter (Reference, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/LOINC/diagnostic_report_codes` (string)
+            + code: `10217-8` (string)
 + effective_period(Period, optional)
 + issued: `2018-10-08T09:46:37.694Z` (string, required)
-+ primary_source: `true` (boolean, required)
-- One Of
-    + performer (Reference, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
-                        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
-+ recored_by (Reference, required)
-    + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
-- One Of                        
-    + `results_interpriter_reference` (Reference, optional)
-        + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-    + `results_interpriter_string`: `Опанасенко Петро Васильович` (string, optional)
 + conclusion: `At risk of osteoporotic fracture` (string, optional)
 + `conclusion_code` (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/SNOMED/clinical_findings` (string)
             + code: `109006` (string)
++ recorded_by (Reference, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+
+
+### `Diagnostic_Report_EncounterPCG_Request`
++ include `Diagnostic_Report_Base`
++ encounter (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ primary_source: `true` (boolean, required) - could be false
++ managing_organization (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
+- One Of
+    + performer (optional)
+        -One Of
+            + reference (Reference, optional)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `employee` (string)
+                + display: `Опанасенко Олексій Володимирович` (string, optional)   
+            + text: `Опанасенко Олексій Володимирович` (string, optional)
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+                
++ results_interpreter (optional)
+    - One Of
+        + reference (Reference,optional)
+            + identifier (Identifier, required)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+        + text: `Опанасенко Олексій Володимирович` (string, optional) 
+
+### `Diagnostic_Report_Package_Request`
++ include `Diagnostic_Report_Base`
++ primary_source: `true` (boolean, required) - could NOT be false
++ performer (required)
+    -One Of
+        + reference (Reference, optional)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+            + display: `Опанасенко Олексій Володимирович` (string, optional)   
+        + text: `Опанасенко Олексій Володимирович` (string, optional)          
+                    
++ managing_organization (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
++ results_interpreter (optional)
+    - One Of
+        + reference (Reference,optional)
+            + identifier (Identifier, required)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+            + display: `Опанасенко Олексій Володимирович` (string, optional)            
+        + text: `Опанасенко Олексій Володимирович` (string, optional) 
++ encounter (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)                       
 
 ### `Diagnostic_Report_Response`
-+ include `Diagnostic_Report_Request`
++ include `Diagnostic_Report_Base`
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ origin_episode (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
+                    
++ managing_organization (Reference, optional)
+    + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `legal_enity` (string)
+    + display: `Київська обласна лікарня №1` (string, optional)                    
++ results_interpreter (optional)
+    - One Of
+        + reference (Reference,optional)
+            + identifier (Identifier, required)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+            + display: `Опанасенко Олексій Володимирович` (string, optional)            
+        + text: `Опанасенко Олексій Володимирович` (string, optional) 
+- One Of
+    + performer (optional)
+        -One Of
+            + reference (Reference, optional)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `employee` (string)
+                + display: `Опанасенко Олексій Володимирович` (string, optional)   
+            + text: `Опанасенко Олексій Володимирович` (string, optional)
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+                
++ recorded_by (Reference, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+    + display: `Опанасенко Олексій Володимирович` (string, optional)                
+
+## `Diagnostic Report Package`
+### `Submit_DR_Package`
++ `diagnostic_report` (Diagnostic_Report_Package_Request, required)
++ observations (array, optional, fixed-type)
+    + (Observation_Request_1)
+
+### `Cancel_DR_Package`
++ include `Submit_DR_Package`
++ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `cancellation_reason` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/cancellation_reasons` (string)
+            + code: `misspelling` (string) \\ wrong_patient, misspelling
+    - text (string)
+
 
 ### `Medication_Statement_Response`
 + include `Medication_Statement_Request`
@@ -3537,8 +3814,7 @@ http code| processing method | Client recommendations
 
 ### Job
 + status: `pending` (string, required) - status of request processing.
-+ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrival
-+ status_code: `202` (string, optional) - processing result. Is relevant only for the processed jobs
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
 - one of
     - links (array[Link], optional) - links to resources that has been impactedas a job processing result
     - response_data (object, optional) - response data payload of the request that has initiated this job. It's Structure depends on the request.
