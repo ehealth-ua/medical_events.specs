@@ -1360,6 +1360,8 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         + data (`Diagnostic_Report_Response`)
 
 ### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
+
+This web service returns a catalog of services that could be submitted in eHealth. The catalog has a tree data structure. Each node represents group of services (or sub-group), except end-node, that represents services themselves. Maximum nesting level is 4.
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -1656,6 +1658,21 @@ This service must be used to discover service requests by requisition number. If
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+        
+
+### Get Services Dictionary [GET /api/dictionaries/services]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Service_in_group`)
 
 ## Group Approvals
 ### Create approval [POST /api/patients/{patient_id}/approvals]
@@ -4128,15 +4145,23 @@ http code| processing method | Client recommendations
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
 + `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
 
-### `Service_in_group`
+### `Service_group`
 + id: `e5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
-+ name: `Ультразвукові дослідження в гастроентерології' (string, required)
-+ code: `2FJ` (string, required)
++ name: `Ультразвукові дослідження' (string, required)
++ code: `FJ` (string, required)
 + is_active: true (boolean, required)
-+ request_allowed: true (boolean, required)
++ request_allowed: false (boolean, required)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
 + `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
 + `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
-+ content (array, required, fixed-type)
-    + (Service)
+
+### `Service_in_group`
++ include (Service_group)
++ groups (array, optional, fixed-type)
+    + (Service_group)
+        + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+        + name: `Ультразвукові дослідження в гастроентерології' (string, required)
+        + code: `2FJ` (string, required)
+        + services (array, optional, fixed-type)
+             + (`Service`)
