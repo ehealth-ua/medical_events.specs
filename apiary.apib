@@ -1361,7 +1361,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
 
-This web service returns a catalog of services that could be submitted in eHealth. The catalog has a tree data structure. Each node represents group of services (or sub-group), except end-node, that represents services themselves. Maximum nesting level is 4.
+
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -1661,6 +1661,7 @@ This service must be used to discover service requests by requisition number. If
         
 
 ### Get Services Dictionary [GET /api/dictionaries/services]
+This web service returns a catalog of services that could be submitted in eHealth. The catalog has a tree data structure. Each node represents group of services (or sub-group), except end-node, that represents services themselves. Maximum nesting level is 4.
 + Request (application/json)
 
     + Headers
