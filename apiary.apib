@@ -17,11 +17,12 @@ List of scopes available for the specific user role can be recieved using [/role
 Some routes in eHealth are managed not only by scope-based  model, but Atribute Bаsed Access Control (ABAC) model.
 Routes, that responds with lists, are not designed to cut responses automatically(show only allowed items). In order to access list, user should specify filters (search params) to cut entities that are not allowed by ABAC rules. 
 For example,
-to access this route:
-/patient/{patient_id}/conditions
+- to access this route:
+ `/patient/{patient_id}/conditions`
 user should have approval on ALL patients medical data, otherwise the response will be 403.
-But, by specifinig filters, user can access requested data, if one of the ABAC rules returns true:
-/patient/{patient_id}/conditions?episode_context={episode_1}
+- But, by specifinig filters, user can access requested data, if one of the ABAC rules returns true:
+ `/patient/{patient_id}/conditions?episode_context={episode_1}`
+
 Here you can find the list of current [rules](https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature).
 # Group Medical Events
 Medical events API is a set of web services designed to provide methods of communication between eHealth Medical Data Storage and medical information systems (MIS).
@@ -4110,3 +4111,21 @@ http code| processing method | Client recommendations
         - OFFLINE
         - NA
     + number: `+38093*****85` (string, optional)
+    
+
+## `Service_dictionary`
+### `Service`
++ id: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ name: `Ультразвукове дослідження черевного відділу стравоходу' (string, required)
++ code: `JF2 01` (string, required)
++ is_active: true (boolean, required)
++ parent_id: null (string, optional)
++ category: `imaging` (string, required)
++ is_composition: false (boolean, required)
++ request_allowed: true (boolean, required)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
+
+### `Service_in_group`
