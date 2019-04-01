@@ -339,7 +339,6 @@ Use period_from period_to to find episodes that were active in a certain period 
     + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `period_from`: `2017-01-01` (string, optional)
     + `period_to`: `2018-01-01` (string, optional)
-    + `service_request_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
     + `code`: `R80` (string, optional)
     + `status`: `active` (string, optional)
 
@@ -443,6 +442,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
     + `date_from`:`1990-01-01`(string, optional)
+    + `incoming_referral`: `f10aeafb-0df2-4091-bc83-f07e92a100ae` (string, optional)
     + `date_to`: `2000-01-01`(string, optional)
     + `page`: `2` (number, optional) - Page number
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -643,6 +643,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
     + `date_from`:`1990-01-01`(string, optional)
     + `date_to`: `2000-01-01`(string, optional)
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
+    + `incoming_referral`: `f10aeafb-0df2-4091-bc83-f07e92a100ae` (string, optional)
 
 + Request (application/json)
     + Headers
@@ -2243,6 +2244,12 @@ http code| processing method | Client recommendations
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
 + `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                   
 + `date`: `2018-08-02` (string, required)
++ `incoming_refereal`(Reference, required, fixed-type)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
 + inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + `visit` (Reference, required, fixed-type)
