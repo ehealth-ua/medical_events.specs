@@ -988,16 +988,17 @@ To find out more about the process of diagnostic report package creation read [C
     + Attributes (`Response_Collection`)
         + data (`Diagnostic_Report_Response`)
 
-### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
+### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, origin_episode_id}]
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `code`: `12345` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
-    + `initial_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `origin_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `issued_from`: `1990-01-01` (string, optional) 
     + `issued_to`: `2000-01-01` (string, optional) 
+    + `based_on`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     
 
 + Request (application/json)
@@ -3751,12 +3752,7 @@ http code| processing method | Client recommendations
                             + code: `employee` (string)
             + display: `Опанасенко Олексій Володимирович` (string, optional)            
         + text: `Опанасенко Олексій Володимирович` (string, optional) 
-+ encounter (Reference, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)                       
+                      
 
 ### `Diagnostic_Report_Response`
 + include `Diagnostic_Report_Base`
@@ -3941,13 +3937,20 @@ http code| processing method | Client recommendations
 + note: `Some notes` (string, optional)
 + patient_instruction: `Some patient instructions` (string, optional)
 + expiration_date: `2018-08-02T10:45:16.000Z` (string, optional)
-+ `permitted_episodes` (array, optional)
++ `permitted_resources` (array, optional)
     + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `episode_of_care` (string)
+     + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `diagnostic_report` (string)                    
+                        
 + `used_by` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
