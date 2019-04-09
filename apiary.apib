@@ -972,6 +972,39 @@ To find out more about the process of diagnostic report package creation read [C
     + Attributes (object)
         + include `Submit_DR_Package`
 
+### Cancel Diagnostic Report Package[PATCH]
++ Request Package (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + `signed_data` : 'ew0KICAicGVyaW9kIjogew0KIC...' (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
+            
+
+### Cancel Diagnostic Report Package [PATCH]          
++ Request Package (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (object)
+        + include `Cancel_DR_Package`
+
 ## Diagnostic Report [/api/patients/{patient_id}/diagnostic_reports]
 ### Get Diagnostic Report by id [GET /api/patients/{patient_id}/diagnostic_reports/{diagnostic_report_id}]
 + Parameters
@@ -3309,7 +3342,7 @@ http code| processing method | Client recommendations
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
 + expiration_date : `2018-10-08T09:46:37.694Z` (string, optional), // Vaccine expiration date
-+ site : ( Codeable_Concept, optional), // Body site vaccine  was administered
++ site  ( Codeable_Concept, optional), // Body site vaccine  was administered
     +  coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/body_sites` (string)
@@ -3804,12 +3837,26 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `employee` (string)
     + display: `Опанасенко Олексій Володимирович` (string, optional)                
++ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `cancellation_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/cancellation_reasons` (string)
+            + code: `misspelling` (string) \\ wrong_patient, misspelling
+    - text (string)
+
 
 ## `Diagnostic Report Package`
 ### `Submit_DR_Package`
 + `diagnostic_report` (Diagnostic_Report_Package_Request, required)
 + observations (array, optional, fixed-type)
     + (Observation_Request_1)
+        + diagnostic_report (Reference, required)
+            + identifier (Identifier, optional, fixed-type)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `diagnostic_report` (string)
 
 ### `Cancel_DR_Package`
 + include `Submit_DR_Package`
