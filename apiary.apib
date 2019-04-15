@@ -2277,6 +2277,12 @@ http code| processing method | Client recommendations
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
++ `origin_episode` (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
 + `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                   
 + `date`: `2018-08-02` (string, required)
 + `incoming_refereal`(Reference, required, fixed-type)
