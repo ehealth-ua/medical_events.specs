@@ -86,8 +86,11 @@ To find out more about the process of encounter package creation read [Confluenc
 
 ### Get async Job processing details [GET /api/jobs/{id}]
 This resource should be used to get the processing status of the async job.
-Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/612041003/Medical+events+Technical+Documentation#MedicaleventsTechnicalDocumentation-AsyncjobprocessingSequencediagram)
-Read more about [errors structures](https://apimanifest.docs.apiary.io/#introduction/interacting-with-api/errors)
+
+>Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/612041003/Medical+events+Technical+Documentation#MedicaleventsTechnicalDocumentation-AsyncjobprocessingSequencediagram)
+
+>Read more about [errors structures](https://apimanifest.docs.apiary.io/#introduction/interacting-with-api/errors)
+
 + Parameters
     + id: `NBXk9EyErUZv1RhXgyvgg` (string, required) - request identifier
 
@@ -649,7 +652,8 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
     + `date_from`:`1990-01-01`(string, optional)
     + `date_to`: `2000-01-01`(string, optional)
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
-    + `incoming_referral`: `f10aeafb-0df2-4091-bc83-f07e92a100ae` (string, optional)
+    + `incoming_referral_id`: `f10aeafb-0df2-4091-bc83-f07e92a100ae` (string, optional)
+    + `origin_episode_id`: `d11aeafb-0df2-4091-bc83-f07e92a100af` (string, optional)
 
 + Request (application/json)
     + Headers
@@ -1474,7 +1478,7 @@ Signed content consists of JSON object with Service Request data.
             + code: 202 (number)
         + data (`Job`)
 
-### Get Service Requests list [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests{?status}]
+### Get Service Requests list Episode Context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests{?status}]
 
 This method returns all service requests related to specified episode of care.
 
@@ -1503,6 +1507,43 @@ This method returns all service requests related to specified episode of care.
         + error (Response__Error)
             + type: NOT_FOUND (string)
             + message: `Episode or patient not found` (string)
+            
+            
+            
+
+### Get Service Requests by search params [GET /api/patients/{patient_id/service_requests{?status,requester_legal_entity, used_by_legal_entity, episode_id}]
+
+This method returns all service requests related to specified episode of care.
+
+**Scopes required:** `service_request:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier
+    + status: active (string, optional) 
+    + `requester_legal_entity` : `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) 
+    + `used_by_legal_entity`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
+    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Service_Request_Show`])
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
 
 ### Get Service Request details [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests/{service_request_id}]
 
@@ -1680,6 +1721,28 @@ This service must be used to discover service requests by requisition number. If
             + code: 202 (number)
         + data (`Job`)
 
+
+### Change service request status to In progress [PATCH /api/service_requests/{service_request_id}/actions/process]
+
+**Scopes required:** `service_request:use`
+
++ Parameters
+    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 ### Release Service Request [PATCH /api/service_requests/{service_request_id}/actions/release]
 
 **Scopes required:** `service_request:use`
@@ -1699,10 +1762,14 @@ This service must be used to discover service requests by requisition number. If
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
-        
 
-### Get Services Dictionary [GET /api/services]
-This web service returns a catalog of services that could be submitted in eHealth. The catalog has a tree data structure. Each node represents group of services (or sub-group), except end-node, that represents services themselves. Maximum nesting level is 4.
+### Complete Service Request [PATCH /api/service_requests/{service_request_id}/actions/complete]
+
+**Scopes required:** `service_request:write`
+
++ Parameters
+    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
+
 + Request (application/json)
 
     + Headers
@@ -1710,11 +1777,13 @@ This web service returns a catalog of services that could be submitted in eHealt
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
 
-+ Response 200 (application/json)
+    + Attributes (Complete_Service_Request)
+    
++ Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
-            + code: 200 (number)
-        + data (array[`Service_in_group`])
+            + code: 202 (number)
+        + data (`Job`)
 
 ## Group Approvals
 ### Create approval [POST /api/patients/{patient_id}/approvals]
@@ -1769,13 +1838,7 @@ http code| processing method | Client recommendations
 
 + Response 200 (application/json)
 
-### Resend SMS on approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/resend]
-It can be processed in both sync and async methods depends on Server decision.
-Depends on processing method Server might answer with:
-http code| processing method | Client recommendations
---|--|--
-201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](#get-async-Job-processing-details) to get processing result. Response payload will be returned in the job details
+### Resend SMS on approval [POST /api/patients/{patiend_id}/approvals/{id}/actions/resend_sms]
 
 + Parameters
     + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
@@ -1788,12 +1851,12 @@ http code| processing method | Client recommendations
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
 
 + Response 200 (application/json)
-
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 
 # Data Structures
 
@@ -2284,7 +2347,7 @@ http code| processing method | Client recommendations
                     + code: `episode` (string)
 + `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                   
 + `date`: `2018-08-02` (string, required)
-+ `incoming_refereal`(Reference, required, fixed-type)
++ `incoming_referral`(Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3940,11 +4003,12 @@ http code| processing method | Client recommendations
         + (Coding)
             + system: `eHealth/SNOMED/service_request_categories` (string)
             + code: `409063005` (string)
-+ code (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: ` eHealth/SNOMED/procedure_codes` (string)
-            + code: `128004` (string)
++ code (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
 + `subject` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -3960,18 +4024,25 @@ http code| processing method | Client recommendations
     - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
     - `occurrence_period` (`Period`, optional)
 + authored_on: `2018-08-02T10:45:16.000Z` (string, required)
-+ `requester` (Reference, required)
++ `requester_employee` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ `requester_legal_entity` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
 + `performer_type` (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/SNOMED/service_request_performer_roles` (string)
             + code: `psychiatrist` (string)
-+ `reason_reference` (array, optional)
++ `reason_references` (array, optional)
     + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -3988,21 +4059,14 @@ http code| processing method | Client recommendations
 + note: `Some notes` (string, optional)
 + patient_instruction: `Some patient instructions` (string, optional)
 + expiration_date: `2018-08-02T10:45:16.000Z` (string, optional)
-+ `permitted_resources` (array, optional)
++ `permitted_episodes` (array, optional)
     + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `episode_of_care` (string)
-     + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `diagnostic_report` (string)                    
-                        
-+ `used_by` (Reference, required)
++ `used_by` (Reference, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -4010,6 +4074,21 @@ http code| processing method | Client recommendations
                     + code: `legal_entity` (string)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `completed_with` (Reference, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string) - or encounter
++ `used_by_legal_entity` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+
+                
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -4024,11 +4103,12 @@ http code| processing method | Client recommendations
         + (Coding)
             + system: `eHealth/SNOMED/service_request_categories` (string)
             + code: `409063005` (string)
-+ code (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/SNOMED/procedure_codes` (string)
-            + code: `128004` (string)
++ code (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
 + `context` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4039,18 +4119,25 @@ http code| processing method | Client recommendations
     - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
     - `occurrence_period` (`Period`, optional)
 + authored_on: `2018-08-02T10:45:16.000Z` (string, required)
-+ `requester` (Reference, required)
++ `requester_employee` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ `requester_legal_entity` (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
 + `performer_type` (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/SNOMED/service_request_performer_roles` (string)
             + code: `psychiatrist` (string)
-+ `reason_reference` (array, optional)
++ `reason_references` (array, optional)
     + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -4075,13 +4162,35 @@ http code| processing method | Client recommendations
                         + code: `episode_of_care` (string)
 
 ### `Use_Service_Request_Request`
-+ `used_by` (Reference, required)
-    + identifier (Identifier)
++ `used_by` (Reference, optional)
+    + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
         + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `used_by_legal_entity` (Reference, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+        
+
+### `Complete_Service_Request`
++ `completed_with` (Reference, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string) 
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/service_request_complete_reasons` (string)
+            + code: `default` (string)
+
 
 ## Approvals
 
@@ -4190,6 +4299,7 @@ http code| processing method | Client recommendations
         - OFFLINE
         - NA
     + number: `+38093*****85` (string, optional)
+
     
 
 ## `Service_dictionary`
