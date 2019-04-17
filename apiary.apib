@@ -3,6 +3,10 @@ HOST: http://ehealth.edenlabllc.com/
 
 # eHealth Medical Events API
 
+Environment: **DEVELOPMENT**
+
+> In order to get specification for PREPROD/PROD environment please proceed [here](https://medicaleventsmisapi.docs.apiary.io/#)
+
 All the medical data, stored in eHealth, belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
 1. Only authenticated user with appropriate scope can access medical data
@@ -12,6 +16,7 @@ List of scopes available for the specific user role can be recieved using [/role
 4. Post methods are async
 
 ![Access policy](https://image.ibb.co/fOPoTV/Referrals-Medical-events-usage.png)
+
 
 ## About ABAC
 Some routes in eHealth are managed not only by scope-based  model, but Atribute Bаsed Access Control (ABAC) model.
@@ -82,7 +87,7 @@ To find out more about the process of encounter package creation read [Confluenc
 ### Get async Job processing details [GET /api/jobs/{id}]
 This resource should be used to get the processing status of the async job.
 Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/612041003/Medical+events+Technical+Documentation#MedicaleventsTechnicalDocumentation-AsyncjobprocessingSequencediagram)
-
+Read more about [errors structures](https://apimanifest.docs.apiary.io/#introduction/interacting-with-api/errors)
 + Parameters
     + id: `NBXk9EyErUZv1RhXgyvgg` (string, required) - request identifier
 
