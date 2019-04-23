@@ -6,7 +6,8 @@ HOST: http://ehealth.edenlabllc.com/
 Environment: **DEVELOPMENT**
 
 > In order to get specification for PREPROD/PROD environment please proceed [here](https://medicaleventsmisapi.docs.apiary.io/#)
-> Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api/errors)
+
+> Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
 
 All the medical data, stored in eHealth, belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
@@ -56,6 +57,9 @@ Risk assessment|0-*| true
 Device|0-*| true
 Medication statement|0-*|true
 Diagnostic report|0-*| true
+
+
+You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
 
 To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
 
