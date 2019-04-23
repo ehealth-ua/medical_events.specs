@@ -367,6 +367,27 @@ Use period_from period_to to find episodes that were active in a certain period 
         + data(array[`Episode_Of_Care_Response`])
         
 
+
+### Get Approved Episodes [GET /api/patients/{patient_id}/approved_episodes]
+
+This web service returns episodes, that patient gave approvals to read by a current employee.
+**Scopes required:** `TBD`
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data(array[`Episode_Of_Care_Response`])
+
 ### Update Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}]
 Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/623837304/Update+Episode)
 + Parameters
