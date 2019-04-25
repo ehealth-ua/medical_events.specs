@@ -2027,7 +2027,6 @@ http code| processing method | Client recommendations
                     
             
 + period (Period, required)
-    - end (string, optional)
 + care_manager (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -2052,8 +2051,8 @@ http code| processing method | Client recommendations
                     + code: `legal_entity` (string)
                     
             
-+ period (Period, required)
-    - end (string, optional)
++ period (object , required)
+    + start: `2018-08-02` (string, required)
 + care_manager (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
