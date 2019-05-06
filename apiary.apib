@@ -3971,14 +3971,15 @@ http code| processing method | Client recommendations
     - response_data (object, optional) - response data payload of the request that has initiated this job. It's Structure depends on the request.
 
 ### Job_Error
-+ status: `error` (string, required) - status of request processing
++ status: `failed` (string, required) - status of request processing
 + status_code: `422` (string, required) - processing result
 + errors (array, optional, fixed-type)
     + (object)
         + include `Error`
++ eta: `2019-04-26T09:16:15.936` (string, required) 
+        
 
 ### Error
-+ code: 422 (string, required)
 + type: type_atom (string, required) - Atom that represents error type.
 + message: Error description (string, required) - Human-readable error message. This is for developers, not end-users.
 
