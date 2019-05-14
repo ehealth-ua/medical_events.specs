@@ -1922,7 +1922,7 @@ http code| processing method | Client recommendations
 + `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
 
 ### `Response__Error`
-+ type: type_atom (string) - Atom that represents error type.
++ type: error_type (string) - Atom that represents error type.
 + message: Error description (string) - Human-readable error message. This is for developers, not end-users.
 
 ### `Response__Error_DuplicateEntity`
@@ -1932,12 +1932,15 @@ http code| processing method | Client recommendations
 ### `Response__Error_ValidationFailed`
 + type: validation_failed (string) - type of an error.
 + message: Validation failed. You can find validators description at our API Manifest: http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors. (string)
-+ invalid (array)
-    + `entry_type`: `json_data_proprty` (string) - Type of error.
-    + entry: $.cvv (string) - JSON Path to an invalid property.
-    + rules (array)
-        + rule: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
-        + params (array) - Validation Parameters.
++ invalid (array, optional)
+    + (object)
+        + `entry_type`: `json_data_proprty` (string) - Type of error.
+        + `entry`: $.cvv (string) - JSON Path to an invalid property.
+        + `rules` (array)
+            + (object)
+                + `rule`: `required` (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
+                + `params` (array) - Validation Parameters.
+                + `description`: must be present (string, optional)
 
 ### `Response__Pagination`
 + page: 2 (number) - Page number.
@@ -3973,9 +3976,7 @@ http code| processing method | Client recommendations
 ### Job_Error
 + status: `failed` (string, required) - status of request processing
 + status_code: `422` (string, required) - processing result
-+ errors (array, optional, fixed-type)
-    + (object)
-        + include `Error`
++ error (`Response__Error_ValidationFailed`, required)
 + eta: `2019-04-26T09:16:15.936` (string, required) 
         
 
