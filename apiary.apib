@@ -1079,6 +1079,27 @@ To find out more about the process of diagnostic report package creation read [C
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Diagnostic_Report_Response`], fixed-type)
+        
+        
+
+### Get Approved Diagnostic Reports  [GET /api/patients/{patient_id}/approved_diagnostic_reports/{page,page_size,code}]
+This web service allows to get a list of diagnostic reports that were allowed to read by the doctor via patients approval.
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `code`: `12345` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Diagnostic_Report_Response`], fixed-type)
 
 
 
@@ -1458,6 +1479,49 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ## Manage Service Requests in patient context [/api/patients/{patient_id}/service_requests]
 
+### PreQualify Service Request [POST /api/service_requests/prequalify]
+
+This method is used to pre-qualify service request in order to define whether the medical program could be applied in this particular case or not.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + `service_request` (object, required)
+            + include `Service_Request_Create`
+        + `programs` (array, required) - Medical programs list for qualify
+            + (Reference)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: medical_program (string)
+                
+        
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****85` (string, optional)
+        + meta (Response__Meta)
+        +  data (array[`Qualify_Service_Request_Responce`]))
+
++ Response 422 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: unverified (string, required)
+            + message: `Patient is not active` (string, required)
+
+
 ### Create Service Request [POST]
 
 This method must be used to register new Service Request in the eHealth. 
@@ -1520,8 +1584,7 @@ This method returns all service requests related to specified episode of care.
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
     + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
     + status: active (string, optional) - The status of the service request. Default: active
-    + `program_processing_status`: new (string, optional)
-    + `program_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+   
 
 + Request (application/json)
 
@@ -1558,8 +1621,7 @@ This method returns all service requests related to specified episode of care.
     + `requester_legal_entity` : `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) 
     + `used_by_legal_entity`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
-    + `program_processing_status`: new (string, optional)
-    + `program_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    
 
 + Request (application/json)
 
@@ -4123,6 +4185,15 @@ http code| processing method | Client recommendations
 ### `Service_Request_Show`
 + include `Service_Request_Base`
 
+### `Qualify_Service_Request_Responce`
++ `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
++ `program_name` : `Fee-For-Service`(string, required)
++ `status` : `INVALID` (enum, required) - Status for ability use program for this Service Request
+    - VALID
+    - INVALID
++ `rejection_reason` : `Service is not included in the program` (string) - Reason to fetch invalid status
+
+
 ### `Service_Request_Create`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `active` (string, required)
@@ -4201,6 +4272,14 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `program` (Reference, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `e5a6d991-0bf7-476f-b3cf-bec83f044b2f` (string, required)
+
         
 
 ### `Complete_Service_Request`
