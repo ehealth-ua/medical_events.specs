@@ -3,6 +3,12 @@ HOST: http://ehealth.edenlabllc.com/
 
 # eHealth MIS Medical Events API
 
+Environment: **DEVELOPMENT**
+
+> In order to get specification for PREPROD/PROD environment please proceed [here](https://medicaleventsmisapi.docs.apiary.io/#)
+
+> Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
+
 All the medical data, stored in eHealth, belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
 1. Only authenticated user with appropriate scope can access medical data
@@ -13,15 +19,17 @@ List of scopes available for the specific user role can be recieved using [/role
 
 ![Access policy](https://image.ibb.co/fOPoTV/Referrals-Medical-events-usage.png)
 
+
 ## About ABAC
 Some routes in eHealth are managed not only by scope-based  model, but Atribute Bаsed Access Control (ABAC) model.
 Routes, that responds with lists, are not designed to cut responses automatically(show only allowed items). In order to access list, user should specify filters (search params) to cut entities that are not allowed by ABAC rules. 
 For example,
-to access this route:
-/patient/{patient_id}/conditions
+- to access this route:
+ `/patient/{patient_id}/conditions`
 user should have approval on ALL patients medical data, otherwise the response will be 403.
-But, by specifinig filters, user can access requested data, if one of the ABAC rules returns true:
-/patient/{patient_id}/conditions?episode_context={episode_1}
+- But, by specifinig filters, user can access requested data, if one of the ABAC rules returns true:
+ `/patient/{patient_id}/conditions?episode_context={episode_1}`
+
 Here you can find the list of current [rules](https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature).
 # Group Medical Events
 Medical events API is a set of web services designed to provide methods of communication between eHealth Medical Data Storage and medical information systems (MIS).
@@ -1542,7 +1550,7 @@ This method returns all service requests related to specified episode of care.
     + `requester_legal_entity` : `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) 
     + `used_by_legal_entity`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
-    
+
 
 + Request (application/json)
 
@@ -1571,7 +1579,7 @@ This method returns all service requests related to specified episode of care.
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
     + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
     + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
-
+  
 + Request (application/json)
 
     + Headers
@@ -1914,7 +1922,7 @@ http code| processing method | Client recommendations
 + `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
 
 ### `Response__Error`
-+ type: type_atom (string) - Atom that represents error type.
++ type: error_type (string) - Atom that represents error type.
 + message: Error description (string) - Human-readable error message. This is for developers, not end-users.
 
 ### `Response__Error_DuplicateEntity`
@@ -1924,12 +1932,15 @@ http code| processing method | Client recommendations
 ### `Response__Error_ValidationFailed`
 + type: validation_failed (string) - type of an error.
 + message: Validation failed. You can find validators description at our API Manifest: http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors. (string)
-+ invalid (array)
-    + `entry_type`: `json_data_proprty` (string) - Type of error.
-    + entry: $.cvv (string) - JSON Path to an invalid property.
-    + rules (array)
-        + rule: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
-        + params (array) - Validation Parameters.
++ invalid (array, optional)
+    + (object)
+        + `entry_type`: `json_data_proprty` (string) - Type of error.
+        + `entry`: $.cvv (string) - JSON Path to an invalid property.
+        + `rules` (array)
+            + (object)
+                + `rule`: `required` (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
+                + `params` (array) - Validation Parameters.
+                + `description`: must be present (string, optional)
 
 ### `Response__Pagination`
 + page: 2 (number) - Page number.
@@ -3965,9 +3976,7 @@ http code| processing method | Client recommendations
 ### Job_Error
 + status: `failed` (string, required) - status of request processing
 + status_code: `422` (string, required) - processing result
-+ errors (array, optional, fixed-type)
-    + (object)
-        + include `Error`
++ error (`Response__Error_ValidationFailed`, required)
 + eta: `2019-04-26T09:16:15.936` (string, required) 
         
 
