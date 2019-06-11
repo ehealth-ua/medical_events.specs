@@ -3949,6 +3949,12 @@ http code| processing method | Client recommendations
 + include `Diagnostic_Report_Base`
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ encounter (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
 + origin_episode (Reference, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -3997,6 +4003,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `employee` (string)
     + display: `Опанасенко Олексій Володимирович` (string, optional)                
+
 + `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
 + `cancellation_reason` (Codeable_Concept, optional)
     + coding (array, fixed-type)
