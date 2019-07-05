@@ -1102,7 +1102,38 @@ This web service allows to get a list of diagnostic reports that were allowed to
     + Attributes (`Response_Collection`)
         + data (array[`Diagnostic_Report_Response`], fixed-type)
 
+## Procedures [/api/patients/{patient_id}/procedures]
 
+### Create procedure [POST]
+This WS allows to register procedure by its own. Also prosedure can be registered as a part of encounter package.
+Scopes required: `procedure:write`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy procedure [POST]
+This chapter describes the structure of a single procedure creation. This is not an actual web-service.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Procedure_Request`)
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
@@ -1544,12 +1575,6 @@ Signed content consists of JSON object with Service Request data.
             api-key: aFBLVTZ6Z2dON1V
     
     + Attributes (object)
-        + `program` (Reference, optional)
-             + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `medical_program` (string)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
 + Response 202 (application/json)
@@ -4078,6 +4103,212 @@ http code| processing method | Client recommendations
 + `inserted_at_from`:`1990-01-01`
 + `inserted_at_to`: `2000-01-01`
 
+## Procedures
+### Procedure_Request
++ `status` : `COMPLETED` (enum, required) - Status for provided procedure
+    - `COMPLETED`
+    - `ENTERED_EN_ERROR`
+    - `NOT_DONE`
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_status_reasons` (string)
+            + code: `default` (string)
++ code (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ encounter (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required)
++ recorded_by (Reference, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ primary_source: `true` (boolean, required)
+- One Of
+    + `performer` (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        
+        
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+                
+        + text: `Галина Олександрівна` (string)
++ division (Reference, optional, fixed-type)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ managing_organization (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ reason_references (array, reference, optional)
+    + object (Codeable_Concept, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string) //  procedure | diagnostic_report
++ `body_sites` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/body_sites` (string)
+                + code: `leg` (string)
++ outcome (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/procedure_outcomes` (string)
+                    + code: `default_outcome` (string)
++ report (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
++ complications (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/procedure_complications` (string)
+                    + code: `default_complication` (string)
++ complication_details (array, reference, optional)
+    + object (Codeable_Concept, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ note: `Додаткова інформація по процедурі` (string, optional)
++ used_references (array, reference, optional)
+    + object (Codeable_Concept, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `medication` (string)
+
+### Procedure_Response
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `status` : `COMPLETED` (enum, required) - Status for provided procedure
+    - `COMPLETED`
+    - `ENTERED_EN_ERROR`
+    - `NOT_DONE`
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_status_reasons` (string)
+            + code: `default` (string)
++ code (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ encounter (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required)
++ recorded_by (Reference, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ primary_source: `true` (boolean, required)
+- One Of
+    + `performer` (Reference, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        
+        
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+                
+        + text: `Галина Олександрівна` (string)
++ division (Reference, optional, fixed-type)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ managing_organization (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ reason_references (array, reference, optional)
+    + object (Codeable_Concept, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string) //  procedure | diagnostic_report
++ `body_sites` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/body_sites` (string)
+                + code: `leg` (string)
++ outcome (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/procedure_outcomes` (string)
+                    + code: `default_outcome` (string)
++ report (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
++ complications (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/procedure_complications` (string)
+                    + code: `default_complication` (string)
++ complication_details (array, reference, optional)
+    + object (Codeable_Concept, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ note: `Додаткова інформація по процедурі` (string, optional)
++ used_references (array, reference, optional)
+    + object (Codeable_Concept, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `medication` (string)
+
 ## Service Request
 
 ### `Service_Request_Base`
@@ -4218,6 +4449,13 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
+                    
++ `program` (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
 + `context` (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
