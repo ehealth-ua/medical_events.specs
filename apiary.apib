@@ -57,6 +57,7 @@ Risk assessment|0-*| true
 Device|0-*| true
 Medication statement|0-*|true
 Diagnostic report|0-*| true
+Procedure|0-*| true
 
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
@@ -143,6 +144,13 @@ This resource should be used to get the processing status of the async job.
                 + (object)
                     + entity: `medication_statemet` (string, required)
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/medication_statemets/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+                + (object)
+                    + entity: `diagnostic_report` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/diagnostic_reports/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+                + (object)
+                    + entity: `procedure` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/procedure/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -260,7 +268,17 @@ This chapter describes the structure of a single unsigned diagnostic report that
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Diagnostic_Report_EncounterPCG_Request`)
-    
+
+
+#### Dummy Procedure [POST]
+This chapter describes the structure of a single unsigned procedure that could be submitted as a part of Encounter Package. Procedure in Encounter Package does not need to have reference to Service Request. This is not an actual web-service.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Procedure_EncounterPCG_Request`)  
  
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
@@ -1105,8 +1123,8 @@ This web service allows to get a list of diagnostic reports that were allowed to
 ## Procedures [/api/patients/{patient_id}/procedures]
 
 ### Create procedure [POST]
-This WS allows to register procedure by its own. Also prosedure can be registered as a part of encounter package.
-Scopes required: `procedure:write`
+This WS allows to register procedure by its own. Also prosedure can be registered as a part of [encounter package](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
+**Scopes required:** `procedure:write`
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
@@ -1125,7 +1143,7 @@ Scopes required: `procedure:write`
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy procedure [POST]
+### Dummy create procedure [POST]
 This chapter describes the structure of a single procedure creation. This is not an actual web-service.
 
 + Request (application/json)
@@ -1134,6 +1152,91 @@ This chapter describes the structure of a single procedure creation. This is not
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Procedure_Request`)
+    
+### Get Procedure by search params [GET /api/patients/{patient_id}/procedures{?id,status,episode_id,code,service_request_id,recorded_by}]
+**Scopes required:** `procedure:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique procedure identifier
+    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier
+    + status: COMPLETED (string, optional) - status of procedure
+    + service_request_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique service request identifier
+    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
+    + recorded_by: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique employee identifier
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Procedure_Response`])
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)
+
+### Cancel Procedure [PATCH /api/patients/{person_id}/procedures/{id}/actions/cancel]
+
+This WS allows to cancel existing procedure and change its status to `entered_in_error` in case of any mistake. The new correct procedure could be created instead.
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of procedure must be equal to procedure stored in DB. See [Get Procedure by search params](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/procedures/get-procedure-by-search-params)
+2. `status_reason` and `explanatory_letter` (optional) must be added to signed content
+
+Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
+
+
+**Scopes required:** `procedure:write`
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Cancel Procedure [PATCH]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (Procedure_Request)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/procedure_cancel_reasons` (string)
+                    + code: `default` (string)
+        + `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
@@ -4105,209 +4208,161 @@ http code| processing method | Client recommendations
 
 ## Procedures
 ### Procedure_Request
++ based_on (Reference, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
 + `status` : `COMPLETED` (enum, required) - Status for provided procedure
     - `COMPLETED`
     - `ENTERED_EN_ERROR`
-    - `NOT_DONE`
-+ `status_reason` (Codeable_Concept, optional)
++ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/procedure_status_reasons` (string)
             + code: `default` (string)
-+ code (Reference, required)
++ `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional) - Explanatory letter is mandatory fo status `entered_in_error`
++ code (Reference, required) - code of procedure
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ encounter (Reference, optional)
++ encounter (Reference, optional) - is mandatory fo procedures that submited in encouner pckg
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required)
-+ recorded_by (Reference, required)
++ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
++ recorded_by (Reference, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ primary_source: `true` (boolean, required)
++ primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
 - One Of
-    + `performer` (Reference, required)
+    + `performer` (Reference, required) - is filled in in case primary_source is true
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-                        
-        
-    + `report_origin` (Codeable_Concept, optional)
+    + `report_origin` (Codeable_Concept, optional) - is filled in in case primary_source is false
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
-+ division (Reference, optional, fixed-type)
++ `division` (Reference, optional, fixed-type) - Division of legal_entity where procedure have been performed.
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `division` (string)
-+ managing_organization (Reference, required)
++ `managing_organization` (Reference, required) - Organization where procedure have been performed. Reference to legal_entity
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-+ reason_references (array, reference, optional)
++ `reason_references` (array, reference, optional) - The justification of why the procedure was performed.
     + object (Codeable_Concept, optional)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `condition` (string) //  procedure | diagnostic_report
-+ `body_sites` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/body_sites` (string)
-                + code: `leg` (string)
-+ outcome (Codeable_Concept, optional)
++ `outcome` (Codeable_Concept, optional) - The outcome of the procedure - did it resolve the reasons for the procedure being performed?
             + coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/procedure_outcomes` (string)
                     + code: `default_outcome` (string)
-+ report (Reference, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `diagnostic_report` (string)
-+ complications (Codeable_Concept, optional)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/procedure_complications` (string)
-                    + code: `default_complication` (string)
-+ complication_details (array, reference, optional)
-    + object (Codeable_Concept, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `condition` (string)
-+ note: `Додаткова інформація по процедурі` (string, optional)
-+ used_references (array, reference, optional)
-    + object (Codeable_Concept, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `medication` (string)
++ note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
 
 ### Procedure_Response
-+ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
++ include (Procedure_Request)
+
+### Procedure_EncounterPCG_Request
 + `status` : `COMPLETED` (enum, required) - Status for provided procedure
     - `COMPLETED`
     - `ENTERED_EN_ERROR`
-    - `NOT_DONE`
-+ `status_reason` (Codeable_Concept, optional)
++ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/procedure_status_reasons` (string)
             + code: `default` (string)
-+ code (Reference, required)
++ `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional) - Explanatory letter is mandatory fo status `entered_in_error`
++ code (Reference, required) - code of procedure
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ encounter (Reference, optional)
++ encounter (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required)
-+ recorded_by (Reference, required)
++ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
++ recorded_by (Reference, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ primary_source: `true` (boolean, required)
++ primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
 - One Of
-    + `performer` (Reference, required)
+    + `performer` (Reference, required) - is filled in in case primary_source is true
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-                        
-        
-    + `report_origin` (Codeable_Concept, optional)
+    + `report_origin` (Codeable_Concept, optional) - is filled in in case primary_source is false
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
-+ division (Reference, optional, fixed-type)
++ `division` (Reference, optional, fixed-type) - Division of legal_entity where procedure have been performed.
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `division` (string)
-+ managing_organization (Reference, required)
++ `managing_organization` (Reference, required) - Organization where procedure have been performed. Reference to legal_entity
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-+ reason_references (array, reference, optional)
++ `reason_references` (array, reference, optional) - The justification of why the procedure was performed.
     + object (Codeable_Concept, optional)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `condition` (string) //  procedure | diagnostic_report
-+ `body_sites` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/body_sites` (string)
-                + code: `leg` (string)
-+ outcome (Codeable_Concept, optional)
++ `outcome` (Codeable_Concept, optional) - The outcome of the procedure - did it resolve the reasons for the procedure being performed?
             + coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/procedure_outcomes` (string)
                     + code: `default_outcome` (string)
-+ report (Reference, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `diagnostic_report` (string)
-+ complications (Codeable_Concept, optional)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/procedure_complications` (string)
-                    + code: `default_complication` (string)
-+ complication_details (array, reference, optional)
++ complication_details (array, reference, required) - Any complications that occurred during the procedure, or in the immediate post-performance period. Could be filled only for procedure in encounter package and only with reference to condition from same encounter 
     + object (Codeable_Concept, optional)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `condition` (string)
-+ note: `Додаткова інформація по процедурі` (string, optional)
-+ used_references (array, reference, optional)
-    + object (Codeable_Concept, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `medication` (string)
++ note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
 
 ## Service Request
 
