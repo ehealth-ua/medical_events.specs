@@ -386,7 +386,7 @@ Use period_from period_to to find episodes that were active in a certain period 
         
 
 
-### Get Approved Episodes [GET /api/patients/{patient_id}/approved_episodes]
+### Get Approved Episodes [GET /api/patients/{patient_id}/episodes/approved]
 
 This web service returns episodes, that patient gave approvals to read by a current employee.
 **Scopes required:** `TBD`
@@ -1101,7 +1101,7 @@ To find out more about the process of diagnostic report package creation read [C
         
         
 
-### Get Approved Diagnostic Reports  [GET /api/patients/{patient_id}/approved_diagnostic_reports/{?page,page_size,code}]
+### Get Approved Diagnostic Reports  [GET /api/patients/{patient_id}/diagnostic_reports/approved{?page,page_size,code}]
 This web service allows to get a list of diagnostic reports that were allowed to read by the doctor via patients approval.
 
 + Parameters
@@ -1649,6 +1649,12 @@ This method is used to pre-qualify service request in order to define whether th
     + Attributes (object)
         + `service_request` (object, required)
             + include `Service_Request_Create`
+                + `context` (Reference, optional)
+                    + identifier (Identifier)
+                        + type (Codeable_Concept)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `encounter` (string)
         + `programs` (array, required) - Medical programs list for qualify
             + (Reference)
                 + identifier (Identifier)
@@ -4289,18 +4295,18 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-+ `reason_references` (array, reference, optional) - The justification of why the procedure was performed.
-    + object (Codeable_Concept, optional)
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
+    + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `condition` (string) //  procedure | diagnostic_report
+                        + code: `condition` (string)
 + `outcome` (Codeable_Concept, optional) - The outcome of the procedure - did it resolve the reasons for the procedure being performed?
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/procedure_outcomes` (string)
-                    + code: `default_outcome` (string)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_outcomes` (string)
+            + code: `default_outcome` (string)
 + note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
 
 ### Procedure_Response
@@ -4362,13 +4368,14 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-+ `reason_references` (array, reference, optional) - The justification of why the procedure was performed.
-    + object (Codeable_Concept, optional)
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
+    + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `condition` (string) //  procedure | diagnostic_report
+                        + code: `condition` (string)
+
 + `outcome` (Codeable_Concept, optional) - The outcome of the procedure - did it resolve the reasons for the procedure being performed?
             + coding (array, fixed-type)
                 + (Coding)
@@ -4508,7 +4515,7 @@ http code| processing method | Client recommendations
 
 
 ### `Service_Request_Create`
-+ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
+
 + status: `active` (string, required)
 + intent: `order` (string, required)
 + priority: `routine` (string, optional)
