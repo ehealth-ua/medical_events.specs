@@ -4261,6 +4261,7 @@ http code| processing method | Client recommendations
 
 ## Procedures
 ### Procedure_Request
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
 + based_on (Reference, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4334,6 +4335,7 @@ http code| processing method | Client recommendations
 + include (Procedure_Request)
 
 ### Procedure_EncounterPCG_Request
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
 + `status` : `COMPLETED` (enum, required) - Status for provided procedure
     - `COMPLETED`
     - `ENTERED_EN_ERROR`
