@@ -4434,6 +4434,11 @@ http code| processing method | Client recommendations
                     + system: `eHealth/service_request_status_reasons` (string)
                     + code: `cured` (string)
         + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        
++ `program_processing_status_history`  (array, optional, fixed-type)
+    + (object)
+        + program_processing_status: `closed` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
 + intent: `order` (string, required)
 + priority: `routine` (string, optional
 + category (Codeable_Concept, required)
