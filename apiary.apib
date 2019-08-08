@@ -1169,8 +1169,7 @@ This chapter describes the structure of a single procedure creation. This is not
             api-key: aFBLVTZ6Z2dON1V
 
 + Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array[`Procedure_Response`])
+    + Attributes (`Procedure_Response`)
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -4334,6 +4333,26 @@ http code| processing method | Client recommendations
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
 + include (Procedure_Request)
++ encounter (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional)
++ origin_episode (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
++ complication_details (array, reference, required) - Any complications that occurred during the procedure, or in the immediate post-performance period. Could be filled only for procedure in encounter package and only with reference to condition from same encounter 
+    + object (Codeable_Concept, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
 
 ### Procedure_EncounterPCG_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
