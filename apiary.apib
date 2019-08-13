@@ -4346,8 +4346,8 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `episode` (string)
-+ complication_details (array, reference, required) - Any complications that occurred during the procedure, or in the immediate post-performance period. Could be filled only for procedure in encounter package and only with reference to condition from same encounter 
-    + object (Codeable_Concept, optional)
++ complication_details (array, reference, optional) - Any complications that occurred during the procedure, or in the immediate post-performance period. Could be filled only for procedure in encounter package and only with reference to condition from same encounter
+    + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
@@ -4423,8 +4423,8 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + system: `eHealth/procedure_outcomes` (string)
                     + code: `default_outcome` (string)
-+ complication_details (array, reference, required) - Any complications that occurred during the procedure, or in the immediate post-performance period. Could be filled only for procedure in encounter package and only with reference to condition from same encounter 
-    + object (Codeable_Concept, optional)
++ complication_details (array, reference, optional) - Any complications that occurred during the procedure, or in the immediate post-performance period. Could be filled only for procedure in encounter package and only with reference to condition from same encounter
+    + (Reference)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
