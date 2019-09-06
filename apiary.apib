@@ -2685,7 +2685,7 @@ http code| processing method | Client recommendations
                     + code: employee (string)
                     
     
-    + display: `Шевченко Олесь Вікторович' (string, required) - This field is filled on creating and never updated after
+    + display_value: `Шевченко Олесь Вікторович' (string, required) - This field is filled on creating and never updated after
 + reasons (array,required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -2963,7 +2963,7 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `patient` (string)
                         
-        + display: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
+        + display_value: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -3494,7 +3494,7 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `employee` (string)
                         
-        + display: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
+        + display_value: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -3629,17 +3629,6 @@ http code| processing method | Client recommendations
         + `reasons_not_given`  (array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
   ),
-+ reactions : (array, optional) // Details of a reaction that follows immunization
-    + (object)
-        + date : `2018-10-08T09:46:37.694Z` (string, optional), // When reaction started
-        + detail : ( Reference, optional) , // Additional information on reaction Observation
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `observation` (string)
-                           
-        + reported : `true` (boolean, optional) // Indicates self-reported reaction
 
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
     + (object)
@@ -3854,7 +3843,7 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `employee` (string)
                         
-        + display: Шевченко Олесь Вікторович (string, required)
+        + display_value: Шевченко Олесь Вікторович (string, required)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
