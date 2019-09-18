@@ -56,6 +56,7 @@ Immunization| 0-* |true
 Risk assessment|0-*| true
 Device|0-*| true
 Medication statement|0-*|true
+Medication administration|0-*|true
 Diagnostic report|0-*| true
 Procedure|0-*| true
 
@@ -279,7 +280,17 @@ This chapter describes the structure of a single unsigned procedure that could b
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Procedure_EncounterPCG_Request`)  
- 
+
+#### Dummy Medication Administration [POST]
+This chapter describes the structure of a single unsigned medication that could be submitted as a part of Encounter Package. This is not an actual web-service.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Medication_Administration_EncounterPCG_Request`) 
+
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
 + Request Package (application/json)
@@ -288,7 +299,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
-          + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
+            + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -981,7 +992,45 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
-        
+
+## Medication Administration [/api/patients/{patient_id}/medication_administrations]
+### Get Medication Administration by id  [GET /api/patients/{patient_id}/medication_administrations/{medication_administration_id}]
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + medication_administration_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique medication administration identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medication_Administration_Response`)
+
+### Get Medication Administration by search params [GET /api/patients/{patient_id}/medication_administrations/{?asserted_date_from,asserted_date_to,page,page_size,medication_code,encounter_id,episode_id}]
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + status: `completed` (string, optional) 
+    + category_code: `409063005` (string, optional) - Type of medication usage
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) - unique identifier 
+    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `managing_organization_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `medication_request_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `performed_date_from`: `1990-01-01` (string, optional) 
+    + `performed_date_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Medication_Administration_Response`], fixed-type)
 
 ## Diagnostic Report Data Package [/api/patients/{id}/diagnostic_report_package]
 
@@ -4363,9 +4412,9 @@ http code| processing method | Client recommendations
 
 ### Procedure_EncounterPCG_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
-+ `status` : `COMPLETED` (enum, required) - Status for provided procedure
-    - `COMPLETED`
-    - `ENTERED_EN_ERROR`
++ `status` : `completed` (enum, required) - Status for provided procedure
+    - `completed`
+    - `entered_in_error`
 + `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
     + coding (array, fixed-type)
         + (Coding)
@@ -4438,6 +4487,154 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `condition` (string)
 + note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
+
+### `Medication_Administration_EncounterPCG_Request`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique medication admnistration identifier
++ `part_of` (array, optional) - A larger event of which this particular event is a component or step.
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `Procedure|Medication administration` (string)
++ status : `completed` (enum, required) - Status for provided medication administration
+    - `completed`
+    - `entered_in_error`
++ category (Codeable_Concept, required) - Type of medication usage
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/medication_administration_categories` (string)
+            + code: `409063005` (string)
++ medication (Codeable_Concept, required) - What was administered
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/innms` (string)
+            + code: `A10AE04` (string)
++ `context` (Reference, required) - Encounter or Episode of Care administered as part of
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
++ performer (Reference, required) - Who performed the medication administration
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: employee (string)
++ `reason_references` (array, optional) - Condition or observation that supports why the medication was administered
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition|Observation|Diagnostic_report` (string)
++ request (Reference, optional) - Request administration performed against
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medication_request` (string)
++ note: `Some notes` (string, optional)
++ dosage (array, required, fixed-type) - Details of how medication was taken. SHALL have at least one of dosage.dose or dosage.rate
+    + (Dosage)
+
+### `Dosage`
++ text: `Rapid daily-dose escalation, until tolerated, from 3 mg/d, and then 10 mg/d, to the recommended maintenance dose of 30 mg IV over 120 min, 3 times per wk on alternate days for up to 12 wk` (string, optional) - Free text dosage instructions e.g. SIG
++ site (Codeable_Concept) - Body site administered to
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/anatomical_structure_administration_site_codes` (string)
+            + code: `344001` (string)
++ route (Codeable_Concept) - How drug should enter body
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/route_codes` (string)
+            + code: `46713006` (string)
++ method (Codeable_Concept) - Technique for administering medication
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/administration_methods` (string)
+            + code: `419747000` (string)
++ dose (Simple_Quantity) - Amount of medication per dose
+- One Of
+    + rate_ratio (Ratio)
+    + rate_quantity (Simple_Quantity)
+
+### `Simple_Quantity`
++ value : `13,5` (number, required)
++ unit : `mg` (string, required)
++ system : `eHealth/ucum/units` (string, optional)
++ code: `mg` (string, optional)
+
+### `Ratio`
++ numerator (Simple_Quantity, required)
++ denominator (Simple_Quantity, required)
+
+### `Medication_Administration_Response`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique medication admnistration identifier
++ `part_of` (array, optional) - A larger event of which this particular event is a component or step.
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `Procedure|Medication administration` (string)
++ status : `completed` (enum, required) - Status for provided medication administration
+    - `completed`
+    - `entered_in_error`
++ `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/procedure_cancel_reasons` (string)
+                    + code: `default` (string)
++ category (Codeable_Concept, required) - Type of medication usage
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/SNOMED/medication_administration_categories` (string)
+            + code: `409063005` (string)
++ medication (Codeable_Concept, required) - What was administered
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/innms` (string)
+            + code: `A10AE04` (string)
++ `context` (Reference, required) - Encounter or Episode of Care administered as part of
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
++ performer (Reference, required) - Who performed the medication administration
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: employee (string)
++ `managing_organization` (Reference, required) - legal entity where medication administration was provided
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ `reason_references` (array, optional) - Condition or observation that supports why the medication was administered
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition|Observation|Diagnostic_report` (string)
++ request (Reference, optional) - Request administration performed against
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medication_request` (string)
++ note: `Some notes` (string, optional)
++ dosage (array, required, fixed-type) - Details of how medication was taken. SHALL have at least one of dosage.dose or dosage.rate
+    + (Dosage)
+
 
 ## Service Request
 
