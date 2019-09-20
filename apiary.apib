@@ -357,7 +357,6 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
             + message: `Patient not found` (string)
 
 ### Get Episode by id[GET /api/patients/{patient_id}/episodes/{episode_id}]
-Use period_from period_to to find episodes that were active in a certain period of time
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
@@ -374,6 +373,7 @@ Use period_from period_to to find episodes that were active in a certain period 
     
 
 ### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size,status}]
+Use period_from period_to to find episodes that were active in a certain period of time
 
 
 **Scopes required:** `TBD`
@@ -1336,7 +1336,7 @@ Procedure                   | Only specific *Procedures* are available for Patie
 ### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size,status}]
 
 This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
-If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services
+If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services.
 
 **Scopes required:** `TBD`
 
