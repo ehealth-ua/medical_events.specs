@@ -4512,11 +4512,12 @@ http code| processing method | Client recommendations
         + (Coding)
             + system: `eHealth/SNOMED/medication_administration_categories` (string)
             + code: `409063005` (string)
-+ medication (Codeable_Concept, required) - What was administered
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/innms` (string)
-            + code: `A10AE04` (string)
++ medication (Reference, required) - What was administered, medication with type BRAND
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medication` (string)
 + `context` (Reference, required) - Encounter or Episode of Care administered as part of
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4601,11 +4602,12 @@ http code| processing method | Client recommendations
         + (Coding)
             + system: `eHealth/SNOMED/medication_administration_categories` (string)
             + code: `409063005` (string)
-+ medication (Codeable_Concept, required) - What was administered
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/innms` (string)
-            + code: `A10AE04` (string)
++ medication (Reference, required) - What was administered, medication with type BRAND
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medication` (string)
 + `context` (Reference, required) - Encounter or Episode of Care administered as part of
     + identifier (Identifier)
         + type (Codeable_Concept)
