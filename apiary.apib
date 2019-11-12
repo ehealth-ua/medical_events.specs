@@ -3615,8 +3615,8 @@ http code| processing method | Client recommendations
 + `vaccine_code` : (Codeable_Concept, required), //   Vaccine product administered
     +  coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `FLUVAX` (string) - `dictionary - eHealth/vaccine_code`
+            + system: `eHealth/vaccine_code` (string)
+            + code: `HepAHepB` (string) - `dictionary - eHealth/vaccine_code`
             
 
 + context : ( Reference, required), // Encounter administered as part of
@@ -3657,14 +3657,14 @@ http code| processing method | Client recommendations
 + site : ( Codeable_Concept, optional), // Body site vaccine  was administered
     +  coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/body_sites` (string)
-            + code: `LA` (string) - `dictionary - eHealth/body_sites`
+            + system: `eHealth/immunization_body_sites` (string)
+            + code: `oral` (string) - `dictionary - eHealth/immunization_body_sites`
             
 + route : ( Codeable_Concept , optional), // How vaccine entered body
     +  coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/vaccination_routes` (string)
-            + code: `IM` (string)- `dictionary - eHealth/immunization_routes`
+            + code: `IM` (string)- `dictionary - eHealth/vaccination_routes`
             
 + dose_quantity: ( Quantity, optional), // Amount of vaccine administered
     + value : `18` (number, required)
@@ -3684,7 +3684,6 @@ http code| processing method | Client recommendations
                          
         + `reasons_not_given`  (array, optional, fixed_type), // Why immunization did not occurr
             + (Codeable_Concept)
-  ),
 
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
     + (object)
@@ -3717,8 +3716,8 @@ http code| processing method | Client recommendations
 + `vaccine_code` : (Codeable_Concept, required), //   Vaccine product administered
     +  coding (array, fixed-type)
         + (Coding)
-            + system: ` http://snomed.info/sct` (string)
-            + code: `FLUVAX` (string) - `dictionary - eHealth/vaccine_code`
+            + system: `eHealth/vaccine_code` (string)
+            + code: `HepAHepB` (string) - `dictionary - eHealth/vaccine_code`
             
 
 + context : ( Reference, required), // Encounter administered as part of
@@ -3760,8 +3759,8 @@ http code| processing method | Client recommendations
 + site  ( Codeable_Concept, optional), // Body site vaccine  was administered
     +  coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/body_sites` (string)
-            + code: `LA` (string)
+            + system: `eHealth/immunization_body_sites` (string)
+            + code: `oral` (string) - `dictionary - eHealth/immunization_body_sites`
             
 + route : ( Codeable_Concept , optional), // How vaccine entered body
     +  coding (array, fixed-type)
