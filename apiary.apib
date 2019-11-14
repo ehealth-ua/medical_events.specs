@@ -1332,7 +1332,7 @@ Diagnostic Report           | Only specific *Diagnostic Reports* are available f
 Procedure                   | Only specific *Procedures* are available for Patient Summary
 
 
-### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size,status}]
+### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
 
 This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
 If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services.
@@ -1345,7 +1345,6 @@ If you have an approval - you can obtain episode details and nested entities thr
     + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `period_from`: `2017-01-01` (string, optional)
     + `period_to`: `2018-01-01` (string, optional)
-    + `status`: `active` (string, optional)
 + Request (application/json)
     + Headers
     
