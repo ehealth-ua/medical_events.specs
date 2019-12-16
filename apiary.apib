@@ -169,7 +169,7 @@ This resource should be used to get the processing status of the async job.
             + type: NOT_FOUND (string)
             + message: `Object not found` (string)
 
-### Dummy Encounter Package[POST]
+### Dummy Encounter Package [POST]
 
 + Request Encounter with new Condition (application/json)
 
@@ -4144,6 +4144,12 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_enity` (string)
++ `division` (Reference, optional, fixed-type) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
 - One Of
     + performer (optional)
         -One Of
@@ -4190,6 +4196,12 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_enity` (string)
++ `division` (Reference, optional, fixed-type) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
 + results_interpreter (optional)
     - One Of
         + reference (Reference,optional)
@@ -4217,7 +4229,13 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `episode` (string)
-                    
++ `division` (Reference, optional) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+    + display: `Перше відділення обласної лікарня №1` (string, optional)
 + managing_organization (Reference, optional)
     + identifier (Identifier)
             + type (Codeable_Concept)
