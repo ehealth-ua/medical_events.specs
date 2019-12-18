@@ -2674,20 +2674,18 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `diagnostic_report` (string)
-+ hospitalization (array,optional)
-    + (`Hospitalization`)
++ hospitalization (object,optional)
+    + admit_source - From where patient was admitted (physician referral, transfer)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `Health/encounter_admit_source` (string) 
+                + code: `default` (string)- `dictionary eHealth/encounter_types`
+    + re_admission - The type of hospital re-admission that has occurred
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `Health/encounter_re_admission` (string) 
+                + code: `default` (string)- `dictionary eHealth/encounter_types`
 
-### `Hospitalization`
-+ admit_source - From where patient was admitted (physician referral, transfer)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `Health/encounter_admit_source` (string) 
-            + code: `default` (string)- `dictionary eHealth/encounter_types`
-+ re_admission - The type of hospital re-admission that has occurred
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `Health/encounter_re_admission` (string) 
-            + code: `default` (string)- `dictionary eHealth/encounter_types`
 
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
@@ -2816,8 +2814,17 @@ http code| processing method | Client recommendations
             + code: `cured` (string) - wrong_patient, misspelling
             
 + `explanatory_letter`: `Діагноз був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
-+ hospitalization (array,optional)
-    + (`Hospitalization`)
++ hospitalization (object,optional)
+    + admit_source - From where patient was admitted (physician referral, transfer)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `Health/encounter_admit_source` (string) 
+                + code: `default` (string)- `dictionary eHealth/encounter_types`
+    + re_admission - The type of hospital re-admission that has occurred
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `Health/encounter_re_admission` (string) 
+                + code: `default` (string)- `dictionary eHealth/encounter_types`
 
 ### `Cancel_Encounter`
 + encounter (`Encounter_Base` , required, fixed-type)
