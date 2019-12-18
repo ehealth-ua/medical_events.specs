@@ -2674,7 +2674,20 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `diagnostic_report` (string)
-    
++ hospitalization (array,optional)
+    + (`Hospitalization`)
+
+### `Hospitalization`
++ admit_source - From where patient was admitted (physician referral, transfer)
+    + coding (Codeable_Concept, fixed-type)
+        + (Coding)
+         + system: `eHealth/encounter_admit_source` (string)
+         + code: `default` (string)- `dictionary eHealth/encounter_admit_source`
++ re_admission - The type of hospital re-admission that has occurred
+    + coding (Codeable_Concept, fixed-type)
+        + (Coding)
+         + system: `eHealth/encounter_re_admission` (string)
+         + code: `default` (string)- `dictionary eHealth/encounter_re_admission`
 
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
