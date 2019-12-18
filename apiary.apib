@@ -695,7 +695,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 
 ## Encounter [/api/patient/{id}/encounters]
 
-### Get Encounter by  id[GET /api/patient/{patient_id}/encounters/{encounter_id}]
+### Get Encounter by id[GET /api/patient/{patient_id}/encounters/{encounter_id}]
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
@@ -2679,15 +2679,15 @@ http code| processing method | Client recommendations
 
 ### `Hospitalization`
 + admit_source - From where patient was admitted (physician referral, transfer)
-    + coding (Codeable_Concept, fixed-type)
+    + coding (array, fixed-type)
         + (Coding)
-         + system: `eHealth/encounter_admit_source` (string)
-         + code: `default` (string)- `dictionary eHealth/encounter_admit_source`
+            + system: `Health/encounter_admit_source` (string) 
+            + code: `default` (string)- `dictionary eHealth/encounter_types`
 + re_admission - The type of hospital re-admission that has occurred
-    + coding (Codeable_Concept, fixed-type)
+    + coding (array, fixed-type)
         + (Coding)
-         + system: `eHealth/encounter_re_admission` (string)
-         + code: `default` (string)- `dictionary eHealth/encounter_re_admission`
+            + system: `Health/encounter_re_admission` (string) 
+            + code: `default` (string)- `dictionary eHealth/encounter_types`
 
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
@@ -2816,6 +2816,8 @@ http code| processing method | Client recommendations
             + code: `cured` (string) - wrong_patient, misspelling
             
 + `explanatory_letter`: `Діагноз був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ hospitalization (array,optional)
+    + (`Hospitalization`)
 
 ### `Cancel_Encounter`
 + encounter (`Encounter_Base` , required, fixed-type)
