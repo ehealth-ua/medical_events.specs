@@ -2713,6 +2713,19 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `Health/encounter_re_admission` (string) 
                 + code: `default` (string)- `dictionary eHealth/encounter_types`
+    + destination - Location/organization to which the patient is discharged
+        + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `division/legal_entity` (string)
+    + discharge_disposition - Category or kind of location after discharge
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `Health/encounter_discharge_disposition` (string) 
+                + code: `default` (string)- `dictionary eHealth/encounter_types`
+    + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
 
 
 ### `Encounter_Request` 
@@ -2853,6 +2866,19 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `Health/encounter_re_admission` (string) 
                 + code: `default` (string)- `dictionary eHealth/encounter_types`
+    + destination - Location/organization to which the patient is discharged
+        + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `division/legal_entity` (string)
+    + discharge_disposition - Category or kind of location after discharge
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `Health/encounter_discharge_disposition` (string) 
+                + code: `default` (string)- `dictionary eHealth/encounter_types`
+    + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
 
 ### `Cancel_Encounter`
 + encounter (`Encounter_Base` , required, fixed-type)
