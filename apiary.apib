@@ -2064,9 +2064,13 @@ This service must be used to discover service requests by requisition number. If
             api-key: aFBLVTZ6Z2dON1V
 
     + Attributes
-        + `programs` (array, required) - Service programs list for qualify
-            + (object)
-                + id: `3c871d5d-6d25-4d95-bf1d-27081fba8dd5` - service program id
+        + `programs` (array, required) - Medical programs list for qualify
+            + (Reference)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: medical_program (string)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
