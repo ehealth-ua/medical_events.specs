@@ -2049,6 +2049,30 @@ This service must be used to discover service requests by requisition number. If
     + Attributes (Response_Collection)
         + data (array[`Service_Request_Base`])
 
+### Qualify Service request by ID [POST /api/service_requests/{service_request_id}/actions/qualify]
+
+**Scopes required:** `service_request:write`
+
++ Parameters
+    + service_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique service request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+    + Attributes
+        + `programs` (array, required) - Service programs list for qualify
+            + (object)
+                + id: `3c871d5d-6d25-4d95-bf1d-27081fba8dd5` - service program id
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+        +  data (array[`Qualify_Service_Request_Responce`]))
+
 ### Use Service Request [PATCH /api/service_requests/{service_request_id}/actions/use]
 
 **Scopes required:** `service_request:use`
