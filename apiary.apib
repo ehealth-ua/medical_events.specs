@@ -12,7 +12,7 @@ Environment: **DEVELOPMENT**
 All the medical data, stored in eHealth, belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
 1. Only authenticated user with appropriate scope can access medical data
-List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles) [wiki: Scopes data model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/2004415/Scopes+model)
+List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles) [wiki: Scopes data model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583404101/Scopes+model)
 2. Access to Patient Medical Data is driven by Attribute-based access control(ABAC). Rules [https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature]
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
 4. Post methods are async
@@ -34,7 +34,7 @@ Here you can find the list of current [rules](https://github.com/edenlabllc/ehea
 # Group Medical Events
 Medical events API is a set of web services designed to provide methods of communication between eHealth Medical Data Storage and medical information systems (MIS).
 Medical events API is based on the international framework for exchanging digital health records - FHIR( Release 3 (STU)). Most of  major resources, data types, data structures and their way of interpretation are inherited from FHIR. However, there are minor сhanges described in Apiary.
-To find out more about business logic behind the API read [this](https://edenlab.atlassian.net/wiki/spaces/EH/pages/604241979/Medical+Events+API).
+To find out more about business logic behind the API read [this](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402836/Medical+Events+API).
 ###Sequence diagram
 In order to provide a consistency of submitted data the established flow should be followed:
 ![Contract request flow](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgU3VibWl0dGluZyBtZWRpY2FsIGRhdGEgcGFja2FnZQoKcGFydGljaXBhbnQgTUlTIGFzIG1zcAAKDWVIZWFsdGggYXMgZWgABgUAKQ1Eb2N1bWVudCBzdG9yYWdlIGFzAAMICgoKbXNwLT4AMAc6IDw8U2VhcmNoIGZvciBhIHBlcnNvbj4-CgBRBy0-bXNwOiA8PFJlc3BvbnNlIHdpdGgAIAdzIGlkcz4-Cm9wdABIDjw8Q3JlYXRlIGVwaXNvZGUARAwAgSoHIDoAHAdhc3luYyBqb2IAZQ4AaghkAGsGam9iIGlkADUTOiAAXQ4AgU4RR2V0ADkFYnkAMg8AgUwNAFwLZGV0YWlscz4-CmVuZACBSBRVcGQAdGgAXQ4AgQxQAIQFBgCDXAUAgygIbmNvdW50ZXIAhQYJABkKU2lnbgAJGACEQwwAhVsFADgSAIMwVACFWQc6IFNhdmUgc2lnbmVkIGNvbnRlbnQgdG8AhWwJAIQjElByb2Nlc3MAgS0ZAIN7OwCFehRsb3MAhSZnAF4MAIVATAoKCgoKCgoK&s=modern-blue)
@@ -63,7 +63,7 @@ Procedure|0-*| true
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
 
-To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
+To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402843/Submit+Encounter+Data+Package).
 
 
 
@@ -94,7 +94,7 @@ To find out more about the process of encounter package creation read [Confluenc
 ### Get async Job processing details [GET /api/jobs/{id}]
 This resource should be used to get the processing status of the async job.
 
->Read more about [job processing algorithms.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/612041003/Medical+events+Technical+Documentation#MedicaleventsTechnicalDocumentation-AsyncjobprocessingSequencediagram)
+>Read more about [job processing algorithms.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402225/Medical+events+Technical+Documentation)
 
 
 
@@ -302,7 +302,7 @@ This chapter describes the structure of a single unsigned medication that could 
     + Attributes (`Medication_Administration_EncounterPCG_Request`) 
 
 ### Cancel Encounter Package [PATCH]
-Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/618726129/Cancel+Encounter+Data+Package+WS)
+Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402534/Cancel+Encounter+Data+Package+WS)
 + Request Package (application/json)
 
     + Headers
@@ -340,7 +340,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
 ## Episode of Care [/api/patients/{id}/episodes]
 Episode of care is a resource that contains general information about a patient`s medical case, such as care manager and diagnoses history.
 ### Create Episode  [POST]
-Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/620134482/Create+Episode)
+Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402023/Create+Episode)
 + Request (application/json)
 
     + Headers
@@ -429,7 +429,7 @@ This web service returns episodes, that patient gave approvals to read by a curr
         + data(array[`Episode_Of_Care_Response`])
 
 ### Update Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}]
-Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/623837304/Update+Episode)
+Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402015/Update+Episode)
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -457,7 +457,7 @@ Read more about [business logic and validations.](https://edenlab.atlassian.net/
             + message: `Patient not found` (string)
 
 ### Close Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}/actions/close]
-Read more about [business logic and validations.](https://edenlab.atlassian.net/wiki/spaces/EH/pages/624951347/Close+Episode)
+Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402019/Close+Episode)
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
@@ -1052,7 +1052,7 @@ Object| Required| Part of Signed content
 Observation| 0-* |true
 Diagnostic report|1-1| true
 
-To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://edenlab.atlassian.net/wiki/spaces/EH/pages/608272488/Submit+Encounter+Data+Package).
+To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402843/Submit+Encounter+Data+Package).
 
 + Request Package (application/json)
 
@@ -1934,7 +1934,7 @@ This method must be used to cancel existing Service Request. Method receives sig
 1. Signed content of service request must be equal to service request stored in DB. See Get Service Request details
 2. status_reason and explanatory_letter (optional) must be added to signed content
 
-Please see [Service request (Referral) state model](https://edenlab.atlassian.net/wiki/x/aoDzJg) and Dummy Cancel Service Request for more details
+Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402276/Referrals+State+Model+-+V1) and Dummy Cancel Service Request for more details
 
 
 **Scopes required:** `service_request:write`
@@ -1986,7 +1986,7 @@ This method must be used to recall existing Service Request. Method receives sig
 1. Signed content of service request must be equal to service request stored in DB. See Get Service Request details
 2. status_reason and explanatory_letter (optional) must be added to signed content
 
-Please see [Service request (Referral) state model](https://edenlab.atlassian.net/wiki/x/aoDzJg) and Dummy Recall Service Request for more details
+Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402276/Referrals+State+Model+-+V1) and Dummy Recall Service Request for more details
 
 **Scopes required:** `service_request:write`
 
