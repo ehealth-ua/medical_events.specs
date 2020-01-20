@@ -2340,11 +2340,36 @@ http code| processing method | Client recommendations
 + unit : `mg` (string, optional) - for future use
 + system : `eHealth/units` (string, required)
 + code: `mg` (string, required)
-        
 
 ### `Range`
 + low (Quantity, required)
 + high (Quantity, required)
+
+### `Timing`
++ event: `2018-08-02T10:45:16.000Z`
++ repeat (object)
+    + include `Repeat`
++ code: `TIMING_ABBREVIATION` (string, optional)
+
+### `Repeat`
++ count: 10 (string, optional) - Number of times to repeat
+- One Of
+    + `bounds_duration` (Quantity, optional)
+    + bounds_range (Range, optional)
+    + bounds_period (Period, optional)
++ `count_max`: 20 (string, optional) - Maximum number of times to repeat
++ duration: 15 (string, optional) - How long when it happens
++ `duration_max`: 25 (string, optional) - How long when it happens
++ `duration_unit`: `UNITS_OF_TIME` (string, optional) - unit of time dictionary
++ frequency: 1 (string, optional) - Event occurs frequency times per period
++ `requency_max`: 4 (string, optinal) - Event occurs up to requency max times per period
++ `period`: 1 (string, optinal) - Event occurs frequency times per period
++ `period_max`: 3 (string, optional) - Upper limit of period, 3-4 hours
++ `period_unit`: `UNITS_OF_TIME` (string, optional) - unit of time dictionary
++ `day_of_week`: `DAYS_OF_WEEK` (string, optinal) - DAYS OF WEEK dictionary
++ `time_of_day`: `15:30` (string, optinal) - Time of day for action
++ when: `EVENT_TIMING` (optional) - Code for time period of occurrence
++ offset: 20 (string, optinal) - Minutes from event, before or after
 
 ## Episode Of Care
 
@@ -2718,11 +2743,11 @@ http code| processing method | Client recommendations
                 + code: `default` (string)- `dictionary eHealth/encounter_types`
     + destination - Location/organization to which the patient is discharged
         + (Reference)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `division/legal_entity` (string)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `division/legal_entity` (string)
     + discharge_disposition - Category or kind of location after discharge
         + coding (array, fixed-type)
             + (Coding)
@@ -3934,7 +3959,7 @@ http code| processing method | Client recommendations
             + system: `eHealth/allergy_intolerance_codes` (string)
             + code: `227493005` (string)- `dictionary - eHealth/allergy_intolerance_codes`
 
-+ onset_date_time : `2018-10-08T09:46:37.694Z` (string, required)
++ `onset_date_time` : `2018-10-08T09:46:37.694Z` (string, required)
 + asserted_date: `2018-10-08T09:46:37.694Z` (string, required)
 
 + primary_source: `true` (boolean, required)
@@ -4916,7 +4941,6 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-                    
 + `program` (Reference, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4930,6 +4954,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `encounter` (string)
 - One Of
+    - `occurrence_timing` (`Timing`, optional)
     - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
     - `occurrence_period` (`Period`, optional)
 + `requester_employee` (Reference, required)
