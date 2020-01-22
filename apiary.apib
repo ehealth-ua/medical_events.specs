@@ -2031,7 +2031,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
 
 ## Manage Service Requests [/api/service_requests]
 
-### Search for a service requests [GET /api/service_requests{?requisition,status}]
+### Search for a service requests [GET /api/service_requests{?requisition,status,page,page_size}]
 
 This service must be used to discover service requests by requisition number. If nothing found by requisition number - it will return empty list
 
@@ -2040,6 +2040,8 @@ This service must be used to discover service requests by requisition number. If
 + Parameters
     + requisition: `AX654-654T` (string, required) - A shared identifier common to all service requests that were authorized more or less simultaneously by a single author, representing the composite or group identifier
     + status: active (string, optional) - The status of the service request. Default: active
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
 
