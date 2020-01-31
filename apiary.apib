@@ -2757,7 +2757,6 @@ http code| processing method | Client recommendations
                 + code: `default` (string)- `dictionary eHealth/encounter_types`
     + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
 
-
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
 + conditions (array, optional, fixed-type)
@@ -4913,8 +4912,25 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-
-                
++ `performer` (Reference, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `location_reference` (Reference, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `performer_type` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `SPECIALITY_TYPE` (string)
+            + code: `DIETETICS` (string)
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -4996,6 +5012,25 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `episode_of_care` (string)
++ `performer` (Reference, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `location_reference` (Reference, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `performer_type` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `SPECIALITY_TYPE` (string)
+            + code: `DIETETICS` (string)
 
 ### `Use_Service_Request_Request`
 + `used_by_employee` (Reference, optional)
@@ -5005,12 +5040,19 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `employee` (string)
         + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
-+ `used_by_legal_entity` (Reference, required)
++ `used_by_legal_entity` (Reference, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `used_by_division` (Reference, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
 + `program` (Reference, optional)
     + identifier (Identifier)
