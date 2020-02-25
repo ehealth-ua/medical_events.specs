@@ -2672,7 +2672,11 @@ http code| processing method | Client recommendations
             + system: `eHealth/encounter_types` (string) 
             + code: `11429006` (string)- `dictionary eHealth/encounter_types`
             
-
++ priority (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/encounter_priority` (string) 
+            + code: `routine` (string)- `dictionary eHealth/encounter_types`
                     
 + performer (Reference, required)
      + identifier (Identifier)
