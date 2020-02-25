@@ -1917,7 +1917,7 @@ This method returns all service requests related to specified episode of care.
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + data (`Service_Request_Show`)
-            + person (`Person_service_request`, required)
+            + identity (`Person_service_request`, required) - Person info for identification. To be deprecated 
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
