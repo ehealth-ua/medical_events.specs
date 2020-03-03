@@ -2715,12 +2715,13 @@ http code| processing method | Client recommendations
             + (Coding)
              + system: `eHealth/ICPC2/actions` (string)
              + code: `T50` (string)- `dictionary eHealth/ICPC2/actions`
-+ action_references  (Reference, optional)
++ action_references  (array, Reference, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
+                    
 + division (Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -2868,7 +2869,7 @@ http code| processing method | Client recommendations
              + system: `eHealth/ICPC2/actions` (string)
              + code: `T47` (string)- `dictionary eHealth/ICPC2/actions`
 
-+ action_references  (Reference, optional)
++ action_references  (array, Reference, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
