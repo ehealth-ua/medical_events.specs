@@ -1725,8 +1725,6 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 # Group Service Requests
 
-###Sequence diagram
-
 ## Manage Service Requests in patient context [/api/patients/{patient_id}/service_requests]
 
 Use [GET Service Catalog](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-programs/medical-program/get-services-dictionary) to receive current catalog of services. 
@@ -1918,7 +1916,6 @@ This method returns all service requests related to specified episode of care.
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + data (`Service_Request_Show`)
-            + identity (`Person_service_request`, required) - Person info for identification. To be deprecated 
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
