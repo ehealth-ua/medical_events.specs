@@ -2775,12 +2775,12 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_admit_source` (string) 
-                + code: `default` (string)- `dictionary eHealth/encounter_types`
+                + code: `default` (string)- `dictionary eHealth/encounter_admit_source`
     + re_admission - The type of hospital re-admission that has occurred
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_re_admission` (string) 
-                + code: `default` (string)- `dictionary eHealth/encounter_types`
+                + code: `default` (string)- `dictionary eHealth/encounter_re_admission`
 
     + destination (Reference, optional)
         + identifier (Identifier)
@@ -2793,7 +2793,7 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_discharge_disposition` (string) 
-                + code: `default` (string)- `dictionary eHealth/encounter_types`
+                + code: `default` (string)- `dictionary eHealth/encounter_discharge_disposition`
     + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
 
 ### `Encounter_Request` 
@@ -2937,12 +2937,12 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_admit_source` (string) 
-                + code: `default` (string)- `dictionary eHealth/encounter_types`
+                + code: `default` (string)- `dictionary eHealth/encounter_admit_source`
     + re_admission - The type of hospital re-admission that has occurred
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_re_admission` (string) 
-                + code: `default` (string)- `dictionary eHealth/encounter_types`
+                + code: `default` (string)- `dictionary eHealth/encounter_re_admission`
 
     + destination (Reference, optional)
         + identifier (Identifier)
@@ -2955,7 +2955,7 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_discharge_disposition` (string) 
-                + code: `default` (string)- `dictionary eHealth/encounter_types`
+                + code: `default` (string)- `dictionary eHealth/encounter_discharge_disposition`
     + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
 
 ### `Cancel_Encounter`
