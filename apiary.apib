@@ -2523,7 +2523,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `legal_entity` (string)
                     
-    + display: Лимич Медікал (string, required) - This field is filled on creating and never updated after
+    + display_value: Лимич Медікал (string, required) - This field is filled on creating and never updated after
             
 + period (Period, required)
     - end (string, optional)
@@ -3902,7 +3902,7 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-        + display: `Шевченко Тетяна Вікторівна`    (string, required) - This field is filled on creating and never updated after           
+        + display_value: `Шевченко Тетяна Вікторівна`    (string, required) - This field is filled on creating and never updated after           
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
@@ -4314,7 +4314,7 @@ http code| processing method | Client recommendations
                         + coding (array, fixed-type)
                             + (Coding)
                                 + code: `employee` (string)
-                + display: `Опанасенко Олексій Володимирович` (string, optional)   
+                + display_value: `Опанасенко Олексій Володимирович` (string, optional)   
             + text: `Опанасенко Олексій Володимирович` (object, optional)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
@@ -4390,14 +4390,14 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `division` (string)
-    + display: `Перше відділення обласної лікарня №1` (string, optional)
+    + display_value: `Перше відділення обласної лікарня №1` (string, optional)
 + managing_organization (Reference, optional)
     + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `legal_enity` (string)
-    + display: `Київська обласна лікарня №1` (string, optional)                    
+    + display_value: `Київська обласна лікарня №1` (string, optional)                    
 + results_interpreter (optional)
     - One Of
         + reference (Reference,optional)
@@ -4406,7 +4406,7 @@ http code| processing method | Client recommendations
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `employee` (string)
-            + display: `Опанасенко Олексій Володимирович` (string, optional)            
+            + display_value: `Опанасенко Олексій Володимирович` (string, optional)            
         + text: `Опанасенко Олексій Володимирович` (object, optional) 
 - One Of
     + performer (optional)
@@ -4417,7 +4417,7 @@ http code| processing method | Client recommendations
                         + coding (array, fixed-type)
                             + (Coding)
                                 + code: `employee` (string)
-                + display: `Опанасенко Олексій Володимирович` (string, optional)   
+                + display_value: `Опанасенко Олексій Володимирович` (string, optional)   
             + text: `Опанасенко Олексій Володимирович` (object, optional)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
@@ -4431,7 +4431,7 @@ http code| processing method | Client recommendations
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-    + display: `Опанасенко Олексій Володимирович` (string, optional)                
+    + display_value: `Опанасенко Олексій Володимирович` (string, optional)                
 
 + `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
 + `cancellation_reason` (Codeable_Concept, optional)
