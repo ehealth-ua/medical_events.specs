@@ -4869,7 +4869,7 @@ http code| processing method | Client recommendations
         + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
         + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
         
-+ `program_service` (Reference, required)
++ `program_service` (Reference, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -5074,7 +5074,7 @@ http code| processing method | Client recommendations
             + code: `DIETETICS` (string)
 
 ### `Service_Request_Create`
-
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `active` (string, required)
 + intent: `order` (string, required)
 + priority: `routine` (string, required)
