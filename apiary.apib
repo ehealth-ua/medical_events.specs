@@ -2522,7 +2522,6 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-                    
     + display_value: Лимич Медікал (string, required) - This field is filled on creating and never updated after
             
 + period (Period, required)
@@ -2857,14 +2856,13 @@ http code| processing method | Client recommendations
 
 
 + performer (Reference, required)
-     + identifier (Identifier)
+    + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: employee (string)
-                    
-    
     + display_value: `Шевченко Олесь Вікторович' (string, required) - This field is filled on creating and never updated after
+
 + reasons (array,required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -3709,7 +3707,6 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-                        
         + display_value: Шевченко Олесь Вікторович (string, required) - This field is filled on creating and never updated after
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
@@ -4252,7 +4249,7 @@ http code| processing method | Client recommendations
 + dosage: `5 ml/day` (string, optional)
 
 ##`Diagnostic Report`
-### `Diagnostic_Report_Base`
+### `Diagnostic_Report_Base_request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + based_on (Reference, optional)
     + identifier (Identifier)
@@ -4283,9 +4280,41 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `employee` (string)
 
+### `Diagnostic_Report_Base_response`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ based_on (Reference, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ status: `final` (string, required)
++ code (Reference, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ category (array, optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/diagnostic_report_categories` (string)
+                + code: `diagnostic_procedure` (string)
++ effective_period(Period, optional)
++ issued: `2018-10-08T09:46:37.694Z` (string, required)
++ conclusion: `At risk of osteoporotic fracture` (string, optional)
++ recorded_by (Reference, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+    + display_value: `Опанасенко Олексій Володимирович` (string, required)
+
 
 ### `Diagnostic_Report_EncounterPCG_Request`
-+ include `Diagnostic_Report_Base`
++ include `Diagnostic_Report_Base_request`
 + encounter (Reference, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4314,7 +4343,6 @@ http code| processing method | Client recommendations
                         + coding (array, fixed-type)
                             + (Coding)
                                 + code: `employee` (string)
-                + display_value: `Опанасенко Олексій Володимирович` (string, optional)   
             + text: `Опанасенко Олексій Володимирович` (object, optional)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
@@ -4333,7 +4361,7 @@ http code| processing method | Client recommendations
         + text: `Опанасенко Олексій Володимирович` (object, optional) 
 
 ### `Diagnostic_Report_Package_Request`
-+ include `Diagnostic_Report_Base`
++ include `Diagnostic_Report_Base_request`
 + primary_source: `true` (boolean, required) - could NOT be false
 + performer (required)
     -One Of
@@ -4369,7 +4397,7 @@ http code| processing method | Client recommendations
                       
 
 ### `Diagnostic_Report_Response`
-+ include `Diagnostic_Report_Base`
++ include `Diagnostic_Report_Base_response`
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + encounter (Reference, optional)
@@ -4397,7 +4425,8 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `legal_enity` (string)
-    + display_value: `Київська обласна лікарня №1` (string, optional)                    
+    + display_value: `Київська обласна лікарня №1` (string, required)          
+    
 + results_interpreter (optional)
     - One Of
         + reference (Reference,optional)
@@ -4406,7 +4435,7 @@ http code| processing method | Client recommendations
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `employee` (string)
-            + display_value: `Опанасенко Олексій Володимирович` (string, optional)            
+            + display_value: `Опанасенко Олексій Володимирович` (string, required)            
         + text: `Опанасенко Олексій Володимирович` (object, optional) 
 - One Of
     + performer (optional)
@@ -4417,7 +4446,7 @@ http code| processing method | Client recommendations
                         + coding (array, fixed-type)
                             + (Coding)
                                 + code: `employee` (string)
-                + display_value: `Опанасенко Олексій Володимирович` (string, optional)   
+                + display_value: `Опанасенко Олексій Володимирович` (string, required)   
             + text: `Опанасенко Олексій Володимирович` (object, optional)
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
@@ -4431,7 +4460,7 @@ http code| processing method | Client recommendations
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-    + display_value: `Опанасенко Олексій Володимирович` (string, optional)                
+    + display_value: `Опанасенко Олексій Володимирович` (string, required)                
 
 + `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
 + `cancellation_reason` (Codeable_Concept, optional)
@@ -4564,6 +4593,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
+
 + `reason_reference` (array, optional) - The justification of why the procedure was performed.
     + (Reference)
         + identifier (Identifier)
@@ -4811,17 +4841,21 @@ http code| processing method | Client recommendations
                     + code: `encounter` (string)
 + `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
 + performer (Reference, required) - Who performed the medication administration
-     + identifier (Identifier)
+    + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: employee (string)
+    + display_value: `Опанасенко Олексій Володимирович` (string, required)   
+    
 + `managing_organization` (Reference, required) - legal entity where medication administration was provided
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
+    + display_value: `Київська обласна лікарня №1` (string, required)
+
 + `reason_reference` (array, optional) - Condition or observation that supports why the medication was administered
     + (Reference)
         + identifier (Identifier)
@@ -4968,6 +5002,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Опанасенко Олексій Володимирович` (string, required)
 + `location_reference` (Reference, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
