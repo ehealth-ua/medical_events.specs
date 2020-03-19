@@ -3119,8 +3119,8 @@ http code| processing method | Client recommendations
             + system: `eHealth/ICD10/condition_codes` (string)
             + code: `K87` (string) - `dictionary - eHealth/ICD10/condition_codes`
             
-+ clinical_status: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
-+ verification_status: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
++ `clinical_status`: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
++ `verification_status`: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
 + severity(Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
@@ -3204,8 +3204,8 @@ http code| processing method | Client recommendations
             + system: `eHealth/ICD10/condition_codes` (string)
             + code: `K87` (string) - `dictionary - eHealth/ICD10/condition_codes`
             
-+ clinical_status: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
-+ verification_status: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
++ `clinical_status`: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
++ `verification_status`: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
 + severity(Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
@@ -3259,7 +3259,7 @@ http code| processing method | Client recommendations
 ### `Observation_Request_1`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
-+ diagnostic_report (Reference_request, optional)
++ `diagnostic_report` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3384,7 +3384,7 @@ http code| processing method | Client recommendations
                 - system (string, optional)
                 - code (string, optional)
         + text: `Some text` (string, optional)
-+ reaction_on (Reference_request, optional)
++ `reaction_on` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3435,7 +3435,7 @@ http code| processing method | Client recommendations
                             + system: `eHealth/reference_range_types` (string)
                             + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
                                 
-                + applies_to (Codeable_Concept, optional)
+                + `applies_to` (Codeable_Concept, optional)
                     +  coding (array, fixed-type)
                         + (Coding)
                             + system: `eHealth/reference_range_applications` (string)
@@ -3462,7 +3462,7 @@ http code| processing method | Client recommendations
 ### `Observation_Request_2`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
-+ diagnostic_report (Reference_request, optional)
++ `diagnostic_report` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3588,7 +3588,7 @@ http code| processing method | Client recommendations
                 - system (string, optional)
                 - code (string, optional)
         + text: `Some text` (string, optional)
-+ reaction_on (Reference_request, optional)
++ `reaction_on` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3639,7 +3639,7 @@ http code| processing method | Client recommendations
                             + system: `eHealth/reference_range_types` (string)
                             + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
                                 
-                + applies_to (Codeable_Concept, optional)
+                + `applies_to` (Codeable_Concept, optional)
                     +  coding (array, fixed-type)
                         + (Coding)
                             + system: `eHealth/reference_range_applications` (string)
@@ -3805,7 +3805,7 @@ http code| processing method | Client recommendations
                 + code: `mother` (string)
                 
         + text: `Галина Олександрівна` (string)
-+ legal_entity : (Reference_request, optional), // Where vaccination occurred
++ `legal_entity` : (Reference_request, optional), // Where vaccination occurred
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -4214,7 +4214,7 @@ http code| processing method | Client recommendations
 ## `Medication Statement`
 ### `Medication_Statement_Request`
 + id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ based_on (Reference_request, optional)
++ `based_on` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -4255,7 +4255,7 @@ http code| processing method | Client recommendations
 ##`Diagnostic Report`
 ### `Diagnostic_Report_Base_request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ based_on (Reference_request, optional)
++ `based_on` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -4277,7 +4277,7 @@ http code| processing method | Client recommendations
 + effective_period(Period, optional)
 + issued: `2018-10-08T09:46:37.694Z` (string, required)
 + conclusion: `At risk of osteoporotic fracture` (string, optional)
-+ recorded_by (Reference_request, required)
++ `recorded_by` (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
@@ -4326,7 +4326,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `encounter` (string)
 + primary_source: `true` (boolean, required) - could be false
-+ managing_organization (Reference_request, optional)
++ `managing_organization` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -4543,7 +4543,7 @@ http code| processing method | Client recommendations
 ## Procedures
 ### Procedure_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
-+ based_on (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
++ `based_on` (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -4564,7 +4564,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `service` (string)
 + `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
-+ recorded_by (Reference_request, required) - employee who submit procedure to e-Health
++ `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
@@ -4605,11 +4605,13 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `condition` (string)
-+ `outcome` (Codeable_Concept, optional) - The outcome of the procedure - did it resolve the reasons for the procedure being performed?
+                        
++ `outcome` (Codeable_Concept, optional) - The outcome of the procedure
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/procedure_outcomes` (string)
             + code: `default_outcome` (string)
+            
 + note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
 + `category` (Codeable_Concept, required) - Classification of the procedure
     + coding (array, fixed-type)
@@ -4664,7 +4666,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `encounter` (string)
 + `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
-+ recorded_by (Reference_request, required) - employee who submit procedure to e-Health
++ `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
@@ -4705,11 +4707,12 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `condition` (string)
 
-+ `outcome` (Codeable_Concept, optional) - The outcome of the procedure - did it resolve the reasons for the procedure being performed?
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/procedure_outcomes` (string)
-                    + code: `default_outcome` (string)
++ `outcome` (Codeable_Concept, optional) - The outcome of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_outcomes` (string)
+            + code: `default_outcome` (string)
+
 + complication_details (array, reference, optional) - Any complications that occurred during the procedure, or in the immediate post-performance period. Could be filled only for procedure in encounter package and only with reference to condition from same encounter
     + (Reference_request)
         + identifier (Identifier)
@@ -4797,7 +4800,7 @@ http code| processing method | Client recommendations
 + dose (Simple_Quantity) - Amount of medication per dose
 - One Of
     + rate_ratio (Ratio)
-    + rate_quantity (Simple_Quantity)
+    + `rate_quantity` (Simple_Quantity)
 
 ### `Simple_Quantity`
 + value : `13,5` (number, required)
