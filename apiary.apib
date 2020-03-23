@@ -2797,6 +2797,11 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `Health/encounter_discharge_disposition` (string) 
                 + code: `default` (string)- `dictionary eHealth/encounter_discharge_disposition`
+    + discharge_department - `Department from which patient has been discharged. It is not division`
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `Health/encounter_discharge_department` (string) 
+                + code: `default` (string)- `dictionary eHealth/encounter_discharge_department`
     + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
 
 ### `Encounter_Request` 
