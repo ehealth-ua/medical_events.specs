@@ -2248,7 +2248,7 @@ http code| processing method | Client recommendations
 
 + Response 200 (application/json)
 
-### Resend SMS on approval [POST /api/patients/{patiend_id}/approvals/{id}/actions/resend_sms]
+### Resend SMS on approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/resend]
 
 + Parameters
     + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
@@ -2675,7 +2675,14 @@ http code| processing method | Client recommendations
 ### `Encounter_Base` (object)
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
 + `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                
-+ `date`: `2018-08-02T10:45:16.000Z` (string, required)              
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `incoming_referral`(Reference_response, optional, fixed-type)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
 + `visit` (Reference_request, required, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -2836,6 +2843,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
 + inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + `visit` (Reference_response, required, fixed-type)
@@ -2963,6 +2971,11 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `Health/encounter_discharge_disposition` (string) 
                 + code: `default` (string)- `dictionary eHealth/encounter_discharge_disposition`
+    + discharge_department - `Department from which patient has been discharged. It is not division`
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `Health/encounter_discharge_department` (string) 
+                + code: `default` (string)- `dictionary eHealth/encounter_discharge_department`
     + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
 
 ### `Cancel_Encounter`
@@ -3011,6 +3024,14 @@ http code| processing method | Client recommendations
         + `status`: `entered_in_error` (string)- `dictionary eHealth/diagnostic_reports_statuses`
         + `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional)
       
+### `Paper_referral`
++ requisition: `1111-2222-3333-4444` (string, optional) - `Service request number`
++ requester_legal_entity_name: `Some clinic` (string, optional) - Requester legal entity name
++ requester_legal_entity_edrpou: `12345678` (string, required) - Requester legal entity edrpou
++ requester_employee_name: `John` (string, required) - Requester employee name
++ `service_request_date`: `2018-10-08T09:46:37.694Z` (string, required) - Service request date
++ note: `Some notes` (string, optional) - Some notes
+
 
 ## Condition
 ### `Condition_Request`
@@ -4257,7 +4278,7 @@ http code| processing method | Client recommendations
 + note: `Some text` (string, optional)
 + dosage: `5 ml/day` (string, optional)
 
-##`Diagnostic Report`
+## `Diagnostic Report`
 ### `Diagnostic_Report_Base_request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + `based_on` (Reference_request, optional)
@@ -4266,6 +4287,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
 + status: `final` (string, required)
 + code (Reference_request, required)
     + identifier (Identifier)
@@ -4297,6 +4319,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
 + status: `final` (string, required)
 + code (Reference_response, required)
     + identifier (Identifier)
@@ -4554,6 +4577,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
 + `status` : `COMPLETED` (enum, required) - Status for provided procedure
     - `COMPLETED`
     - `ENTERED_EN_ERROR`
