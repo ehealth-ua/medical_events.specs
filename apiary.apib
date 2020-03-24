@@ -2739,7 +2739,7 @@ http code| processing method | Client recommendations
     + (`Diagnosis_Request`)
         
         
-+ actions (array, optional, fixed-type) - action is required for PHC
++ actions (array, optional, fixed-type) - actions are required for class PHC and forbidden for other classes
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
@@ -2751,7 +2751,7 @@ http code| processing method | Client recommendations
             + (Coding)
              + system: `eHealth/ICPC2/actions` (string)
              + code: `T50` (string)- `dictionary eHealth/ICPC2/actions`
-+ `action_references`  (array, Reference_request, optional)
++ `action_references` (array, Reference_request, optional) - action references are forbidden for class PHC
     + (object)
         + identifier (Identifier)
             + type (Codeable_Concept)
