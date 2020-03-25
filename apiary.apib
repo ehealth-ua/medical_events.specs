@@ -1850,6 +1850,7 @@ This method returns all service requests related to specified episode of care.
 + Response 200 (application/json)
     + Attributes (Response_Collection)
         + data (array[`Service_Request_Show`])
+        
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -1886,7 +1887,7 @@ This method returns all service requests related to specified episode of care.
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
-        + data (array[`Service_Request_Show`])
+        + data (array[`Service_Request_List`])
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -5054,6 +5055,10 @@ http code| processing method | Client recommendations
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
+
+### `Service_Request_List`
++ include `Service_Request_Base`
++ identity (`Person_service_request`, required)
 
 ### `Qualify_Service_Request_Responce`
 + `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
