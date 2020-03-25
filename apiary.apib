@@ -1887,7 +1887,7 @@ This method returns all service requests related to specified episode of care.
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
-        + data (array[`Service_Request_List`])
+        + data (array[`Service_Request_Base`])
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -2080,7 +2080,7 @@ This service must be used to discover service requests by requisition number. If
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
-        + data (array[`Service_Request_Base`])
+        + data (array[`Service_Request_List`])
 
 ### Qualify Service request by ID [POST /api/service_requests/{service_request_id}/actions/qualify]
 
