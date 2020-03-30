@@ -788,12 +788,13 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (`Observation_Response`)
     
 
-### Get Observations by searh params[GET /api/patients/{patient_id}/observations{?encounter_id,episode_id,code,issued_from,issued_to,page,page_size}]
+### Get Observations by searсh params[GET /api/patients/{patient_id}/observations{?encounter_id,episode_id,code,issued_from,issued_to,page,page_size}]
 + Parameters
     + `page`: `1` (number, optional) - Page number    
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `code`: `10569-2` (string, optional)
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `diagnostic_report_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
     + `issued_from`:`1990-01-01` (string, optional)
     + `issued_to`: `2000-01-01` (string, optional)
@@ -4420,13 +4421,13 @@ http code| processing method | Client recommendations
                     + code: `division` (string)
 + results_interpreter (optional)
     - One Of
-        + reference (Reference_request,optional)
+        + `reference` (Reference_request,optional)
             + identifier (Identifier, required)
                 + type (Codeable_Concept, required)
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `employee` (string)
-        + text: `Опанасенко Олексій Володимирович` (object, optional) 
+        + text: `Опсенко Олексій Володимирович` (object, optional) 
                       
 
 ### `Diagnostic_Report_Response`
