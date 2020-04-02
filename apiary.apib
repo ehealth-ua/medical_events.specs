@@ -1078,7 +1078,7 @@ To find out more about the process of diagnostic report package creation read [C
             + message: `Patient not found` (string)     
             
 
-### Dummy Submit Diagnostic Report  Package [POST]            
+### Dummy Submit Diagnostic Report Package [POST]            
 + Request Package (application/json)
 
     + Headers
@@ -1118,7 +1118,7 @@ To find out more about the process of diagnostic report package creation read [C
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
-        + include `Cancel_DR_Package`
+        + include `Submit_DR_Package_Cancel`
 
 ## Diagnostic Report [/api/patients/{patient_id}/diagnostic_reports]
 ### Get Diagnostic Report by id [GET /api/patients/{patient_id}/diagnostic_reports/{diagnostic_report_id}]
@@ -4428,7 +4428,49 @@ http code| processing method | Client recommendations
                         + (Coding)
                             + code: `employee` (string)
         + text: `Опсенко Олексій Володимирович` (object, optional) 
-                      
+
+### `Diagnostic_Report_Package_Request_Cancel`
++ include `Diagnostic_Report_Base_request`
++ primary_source: `true` (boolean, required) - could NOT be false
++ performer (required)
+    -One Of
+        + reference (Reference_request, optional)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+        + text: `Опанасенко Олексій Володимирович` (object, optional)          
+                    
++ `managing_organization` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
++ `division` (Reference_request, optional, fixed-type) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ results_interpreter (optional)
+    - One Of
+        + `reference` (Reference_request,optional)
+            + identifier (Identifier, required)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+        + text: `Опсенко Олексій Володимирович` (object, optional)
++ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `cancellation_reason` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/cancellation_reasons` (string)
+            + code: `misspelling` (string) \\ wrong_patient, misspelling
+    - text (string)
+
 
 ### `Diagnostic_Report_Response`
 + include `Diagnostic_Report_Base_response`
@@ -4508,24 +4550,25 @@ http code| processing method | Client recommendations
 ## `Diagnostic Report Package`
 ### `Submit_DR_Package`
 + `diagnostic_report` (Diagnostic_Report_Package_Request, required)
-+ observations (array, optional, fixed-type)
++ `observations` (array, optional, fixed-type)
     + (Observation_Request_1)
-        + diagnostic_report (Reference_request, required)
+        + `diagnostic_report` (Reference_request, required)
             + identifier (Identifier, optional, fixed-type)
                 + type (Codeable_Concept, required)
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `diagnostic_report` (string)
 
-### `Cancel_DR_Package`
-+ include `Submit_DR_Package`
-+ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
-+ `cancellation_reason` (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/cancellation_reasons` (string)
-            + code: `misspelling` (string) \\ wrong_patient, misspelling
-    - text (string)
+### `Submit_DR_Package_Cancel`
++ `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
++ `observations` (array, optional, fixed-type)
+    + (Observation_Request_1)
+        + `diagnostic_report` (Reference_request, required)
+            + identifier (Identifier, optional, fixed-type)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `diagnostic_report` (string)
 
 
 ### `Medication_Statement_Response`
