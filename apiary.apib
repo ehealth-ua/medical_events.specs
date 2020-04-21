@@ -2819,7 +2819,13 @@ http code| processing method | Client recommendations
     + (`Condition_Request`)
     + (`Condition_Request_2`)
 + observations (array, optional, fixed-type)
-    + (`Observation_Request_1`)    
+    + (`Observation_Request_1`)
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
 + `allergy_intolerances` (array[`Allergy_Intolerance_Request`], optional, fixed-type)
 + immunizations (array[`Immunization_Request`], optional, fixed-type)
 + devices (array[`Device_Request`], optional, fixed-type)
@@ -2998,6 +3004,12 @@ http code| processing method | Client recommendations
 + observations (array, optional, fixed-type)
     + (`Observation_Request_1`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/observation_statuses`
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
 + `allergy_intolerances` (array, optional, fixed-type)
     + (`Allergy_Intolerance_Request`)
         + `verification_status`: `entered_in_error` (string)- `dictionary eHealth/allergy_intolerance_verification_statuses`
@@ -3284,7 +3296,7 @@ http code| processing method | Client recommendations
 
 ## Observation
 
-### `Observation_Request_1`
+### `Observation_Request_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
 + `diagnostic_report` (Reference_request, optional)
@@ -3293,12 +3305,6 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `diagnostic_report` (string)
-+ `context` (Reference_request, required)
-     + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)
 + categories (array, required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -3484,213 +3490,22 @@ http code| processing method | Client recommendations
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
-                
-    
 
-### `Observation_Request_2`
-+ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
-+ `diagnostic_report` (Reference_request, optional)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `diagnostic_report` (string)
-+ `context` (Reference_request, required)
+### `Observation_Request_1` (`Observation_Request_Base`)
++ `context` (Reference_request, optional)
      + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-                    
 
-+ categories (array, required)
-    + (Codeable_Concept)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/observation_categories` (string)
-                + code: `vital_signs` (string) - `dictionary - eHealth/observation_categories`
-                
-
-+ code (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/LOINC/observation_codes` (string)
-            + code: `10569-2` (string)- `dictionary - eHealth/LOINC/observation_codes`
-            
-
-- One Of
-    + effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
-    + effective_period (Period, optional, fixed-type)
-+ issued: `2018-08-02T10:45:16.000Z` (string, required)
-+ primary_source: `true` (boolean, required)
-- One Of
-    + `performer` (Reference_request, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
-                        
-        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
-                
-        + text: `Галина Олександрівна` (string)
-
-
-+ interpretation (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/observation_interpretations` (string)
-            + code: `L` (string) `dictionary - eHealth/observation_interpretations`
-            
-    
-+ comment: `Some comment` (string, optional)
-+ `body_site` (Codeable_Concept, optional)
-     + coding (array, fixed-type)
-        + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string) 
-            + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
-            
-
-+ method (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string)
-            + code: `255459008` (string) - `dictionary - eHealth/observation_methods`
-            
-
-- One Of
-    + value_quantity (Quantity, required)
-    + value_codeable_concept (Codeable_Concept, required)
-    + value_sampled_data (object, required)
-        + origin (number, optional) //SimpleQuantity Zero value and units
-        + period (number, optional) // decimal Number of milliseconds between samples
-        + factor (number, optional) // decimal Multiply data by this before adding to origin
-        + lower_limit (number, optional)// decimal Lower limit of detection
-        + upper_limit (number, optional) // Σ 0..1 decimal Upper limit of detection
-        + dimensions (number, optional) // positiveInt Number of sample points at each time point
-        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
-    + value_string (string, required)
-    + value_boolean (boolean, required)
-    + value_range (Range, required, fixed-type)
-    + value_ratio (object, required)//Need an example 
-        + numerator (Quantity, required)
-        + denominator (Quantity, required)
-    + value_time (string, required)
-    + value_date_time (string, required)
-    + value_period (Period, required)
-+ reference_ranges (array, optional, fixed-type)
-    + (object)
-        + low (Quantity, optional)
-        + high (Quantity, optional)
-            + value: `27,5` (number, required)
-            + comparator: `<` (string, required)
-        + type (Codeable_Concept, optional)
-            +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/reference_range_types` (string)
-                    + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
-                        
-        + `applies_to`(Codeable_Concept, optional)
-            +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/reference_range_applications` (string)
-                    + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
-                     
-        + age (Range, optional)
-            + low (Quantity, optional)
-                + value : `18` (number, required)
-                + comparator : `>` (string, optional)
-                + unit : `years` (string, optinal)
-                - system  (string, optional)
-                - code (string, optional)
-            + high (Quantity, optional)
-                + value : `35` (number, required)
-                + comparator : `<` (string, optional)
-                + unit : `years` (string, optinal)
-                - system (string, optional)
-                - code (string, optional)
-        + text: `Some text` (string, optional)
-+ `reaction_on` (Reference_request, optional)
-    + identifier (Identifier)
+### `Observation_Request_2` (`Observation_Request_Base`)
++ `context` (Reference_request, optional)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `immunization` (string)
-    
-+ components (array, optional, fixed-type)
-    + (object)
-        + code (Codeable_Concept, required)
-        - One Of
-            + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
-            + value_quantity (Quantity, required)
-            + value_codeable_concept (Codeable_Concept, required)
-            + value_sampled_data (object, required)
-                + origin (number, optional) //SimpleQuantity Zero value and units
-                + period (number, optional) // decimal Number of milliseconds between samples
-                + factor (number, optional) // decimal Multiply data by this before adding to origin
-                + lowerLimit (number, optional)// decimal Lower limit of detection
-                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
-                + dimensions (number, optional) // positiveInt Number of sample points at each time point
-                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
-            
-            + value_boolean (boolean, required)
-            + value_range (object, required, fixed-type)
-                + low (Quantity, required)
-                + high (Quantity, required)
-            + value_ratio (object, required)//Need an example 
-                + numerator (Quantity, required)
-                + denominator (Quantity, required)
-            + value_time (string, required)
-            + value_date_time (string, required)
-            + value_period (Period, required)
-        + interpretation (Codeable_Concept, optional)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/observation_interpretations` (string)
-                    + code: `L` (string) `dictionary - eHealth/observation_interpretations`
-                    
-        + reference_ranges (array, optional, fixed-type)
-            + (object)
-                + low (Quantity, optional)
-                + high (Quantity, optional)
-                    + value: `27,5` (number, required)
-                    + comparator: `<` (string, required)
-                + type (Codeable_Concept, optional)
-                    +  coding (array, fixed-type)
-                        + (Coding)
-                            + system: `eHealth/reference_range_types` (string)
-                            + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
-                                
-                + `applies_to` (Codeable_Concept, optional)
-                    +  coding (array, fixed-type)
-                        + (Coding)
-                            + system: `eHealth/reference_range_applications` (string)
-                            + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
-                             
-                + age (Range, optional)
-                    + low (Quantity, optional)
-                        + value : `18` (number, required)
-                        + comparator : `>` (string, optional)
-                        + unit : `years` (string, optinal)
-                        - system  (string, optional)
-                        - code (string, optional)
-                    + high (Quantity, optional)
-                        + value : `35` (number, required)
-                        + comparator : `<` (string, optional)
-                        + unit : `years` (string, optinal)
-                        - system (string, optional)
-                        - code (string, optional)
-                
-                + text: `Some text` (string, optional)
-                
-    
-
+                    + code: `encounter` (string)
 
 ### `Observation_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -3708,9 +3523,6 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `encounter` (string)
                     
-
-                    
-
 + categories (array, required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -4407,7 +4219,7 @@ http code| processing method | Client recommendations
                             + code: `employee` (string)
         + text: `Опанасенко Олексій Володимирович` (object, optional)          
                     
-+ managing_organization (Reference_request, required)
++ `managing_organization` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -4551,7 +4363,7 @@ http code| processing method | Client recommendations
 ### `Submit_DR_Package`
 + `diagnostic_report` (Diagnostic_Report_Package_Request, required)
 + `observations` (array, optional, fixed-type)
-    + (Observation_Request_1)
+    + (Observation_Request_Base)
         + `diagnostic_report` (Reference_request, required)
             + identifier (Identifier, optional, fixed-type)
                 + type (Codeable_Concept, required)
@@ -4562,7 +4374,7 @@ http code| processing method | Client recommendations
 ### `Submit_DR_Package_Cancel`
 + `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
 + `observations` (array, optional, fixed-type)
-    + (Observation_Request_1)
+    + (Observation_Request_Base)
         + `diagnostic_report` (Reference_request, required)
             + identifier (Identifier, optional, fixed-type)
                 + type (Codeable_Concept, required)
