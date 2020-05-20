@@ -3632,9 +3632,38 @@ http code| processing method | Client recommendations
     + value_time (string, required)
     + value_date_time (string, required)
     + value_period (Period, required)
-
-                
-                
++ reference_ranges (array, optional, fixed-type)
+    + (object)
+        + low (Quantity, optional)
+        + high (Quantity, optional)
+            + value: `27,5` (number, required)
+            + comparator: `<` (string, required)
+        + type (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_types` (string)
+                    + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                        
+        + `applies_to`(Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_applications` (string)
+                    + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                     
+        + age (Range, optional)
+            + low (Quantity, optional)
+                + value : `18` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `years` (string, optinal)
+                - system  (string, optional)
+                - code (string, optional)
+            + high (Quantity, optional)
+                + value : `35` (number, required)
+                + comparator : `<` (string, optional)
+                + unit : `years` (string, optinal)
+                - system (string, optional)
+                - code (string, optional)
+        + text: `Some text` (string, optional)
 
 ## `Immunization`
 
