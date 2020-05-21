@@ -4598,6 +4598,12 @@ http code| processing method | Client recommendations
         + (Coding)
             + system: `eHealth/procedure_status_reasons` (string)
             + code: `default` (string)
++ `based_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)            
 + code (Reference_request, required) - code of procedure
     + identifier (Identifier)
         + type (Codeable_Concept)
