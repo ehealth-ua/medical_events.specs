@@ -1025,7 +1025,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + status: `completed` (string, optional) 
     + category_code: `409063005` (string, optional) - Type of medication usage
-    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) - unique identifier 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) - unique identifier
+    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `managing_organization_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `medication_request_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `performed_date_from`: `1990-01-01` (string, optional) 
@@ -4177,6 +4178,11 @@ http code| processing method | Client recommendations
 + effective_period(Period, optional)
 + issued: `2018-10-08T09:46:37.694Z` (string, required)
 + conclusion: `At risk of osteoporotic fracture` (string, optional)
++ `conclusion_code` (Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/ICD10_AM/condition_codes` (string)
+            + code: `H04.2` (string)
 + `recorded_by` (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -4209,6 +4215,11 @@ http code| processing method | Client recommendations
 + effective_period(Period, optional)
 + issued: `2018-10-08T09:46:37.694Z` (string, required)
 + conclusion: `At risk of osteoporotic fracture` (string, optional)
++ `conclusion_code` (Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/ICD10_AM/condition_codes` (string)
+            + code: `H04.2` (string)
 + recorded_by (Reference_response, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
