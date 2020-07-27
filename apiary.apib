@@ -1239,7 +1239,7 @@ This chapter describes the structure of a single procedure creation. This is not
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Get Procedures by search params [GET /api/patients/{patient_id}/procedures{?id,status,episode_id,code,based_on,recorded_by,managing_organization_id}]
+### Get Procedures by search params [GET /api/patients/{patient_id}/procedures{?id,status,episode_id,encounter_id,code,based_on,recorded_by,managing_organization_id}]
 **Scopes required:** `procedure:read`
 
 + Parameters
@@ -1249,7 +1249,7 @@ This chapter describes the structure of a single procedure creation. This is not
     + based_on: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique service request identifier
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
     + `managing_organization_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique legal entity identifier
-    + encounter_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique encounter identifier
+    + encounter_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique encounter identifier
     + `origin_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier, look into episode in procedures.origin_episode
 
 + Request (application/json)
