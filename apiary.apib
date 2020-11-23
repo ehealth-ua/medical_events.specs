@@ -4578,7 +4578,84 @@ http code| processing method | Client recommendations
 
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
-+ include (Procedure_Request)
++ `based_on` (Reference_response, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
++ `status` : `COMPLETED` (enum, required) - Status for provided procedure
+    - `COMPLETED`
+    - `ENTERED_EN_ERROR`
++ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_status_reasons` (string)
+            + code: `default` (string)
++ code (Reference_response, required) - code of procedure
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
++ `recorded_by` (Reference_response, required) - employee who submit procedure to e-Health
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+    + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
++ primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
+- One Of
+    + `performer` (Reference_response, required) - is filled in in case primary_source is true
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+    + `report_origin` (Codeable_Concept, optional) - is filled in in case primary_source is false
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+                
+        + text: `Галина Олександрівна` (string)
++ `division` (Reference_response, optional, fixed-type) - Division of legal_entity where procedure have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ `managing_organization` (Reference_response, required) - Organization where procedure have been performed. Reference to legal_entity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Перше відділення обласної лікарня №1` (string, optional) - This field is filled on creating and never updated after
+
++ `reason_reference` (array, optional) - The justification of why the procedure was performed.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
+                        
++ `outcome` (Codeable_Concept, optional) - The outcome of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_outcomes` (string)
+            + code: `default_outcome` (string)
+            
++ note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
++ `category` (Codeable_Concept, required) - Classification of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_categories` (string)
+            + code: `default` (string)
 + encounter (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
