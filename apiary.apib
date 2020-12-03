@@ -2310,7 +2310,7 @@ Service will store signed copy of Care Plan in Media Content Storage if all chec
 Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
 
 + Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
 
 + Request (application/json)
 
@@ -2328,10 +2328,10 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Care Plan [POST /dummy/patients/{id}/care_plans]
+### Dummy Care Plan [POST /dummy/patients/{patient_id}/care_plans]
 
 + Parameters
-    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - person's MPI identifier of the preperson. 
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person. 
 
 + Request (application/json)
 
@@ -2342,6 +2342,54 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
     
     
     + Attributes (Care_Plan_Create)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+        
+
+### Create Care Plan activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+This method adds activities to an existing patient's Care Plan.
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of each Care Plan activity in Media Content Storage if all checks is passed. 
+**Scopes required:** `care_plan:write`
+Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
+    + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+        
+### Dummy Care Plan activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
+    + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        
+    + Attributes (object)
+        + activity (array, required, fixed-type)
+            + (Care_Plan_activity_base)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -5550,7 +5598,6 @@ Returns care plan details by it's identifier in patient context
                             - procedure
                             - diagnostic report
 + note: `Some notes` (string, optional)
-+ requisition: `55A5-B111-2C22-7H77` (string, required)
 + intent: `order` (enum, required)
     - order
 + encounter (Reference_request, required)
@@ -5593,8 +5640,6 @@ Returns care plan details by it's identifier in patient context
                 - INPATIENT
                 - OUTPATIENT
             + system: `eHealth/PROVIDING_CONDITION` (string)
-+ activity (array, required, fixed-type)
-    + (Care_Plan_activity_base)
         
 
 ### `Care_Plan_activity_base`
