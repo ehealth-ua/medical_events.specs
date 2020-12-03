@@ -5692,7 +5692,8 @@ Returns care plan details by it's identifier in patient context
             + (Coding)
                 + code: `eHealth/care_plan_goals` (string)
                 + system: `diabetes_treatment` (string, required)
-+ quantity (Simple_Quantity)
++ quantity (object)
+    + value: 13.5 (number, required)
 - One of
     - `scheduled timing` (object)
         + event (array)
@@ -5757,7 +5758,8 @@ Returns care plan details by it's identifier in patient context
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ `daily_amount` (Simple_Quantity)
++ `daily_amount` (object)
+    + value: 13,5 (number, required)
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + `program` (Reference_request, optional)
@@ -5800,7 +5802,8 @@ Returns care plan details by it's identifier in patient context
                     + (Coding)
                         + code: `some code` (string)
                         + system: `eHealth/some_new_dictionary` (string, required)
-            + `remaining_quantity` (Simple_Quantity)
+            + `remaining_quantity` (object)
+                + value: 13,5 (number, required)
 + status: active (enum, required)
     - active
     - rejected
