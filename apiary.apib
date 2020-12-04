@@ -4140,7 +4140,7 @@ Returns care plan details by it's identifier in patient context
                 + (Coding)
                     + system: `eHealth/risk_assessment_reasons` (string)
                     + code: `default_reason` (string)
-    + reason_reference (array, fixed-type)
+    + reason_references (array, fixed-type)
         + object (Codeable_Concept, optional)
             + identifier (Identifier)
                 + type (Codeable_Concept)
@@ -4673,7 +4673,7 @@ Returns care plan details by it's identifier in patient context
                 + (Coding)
                     + code: `legal_entity` (string)
 
-+ `reason_reference` (array, optional) - The justification of why the procedure was performed.
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -4754,7 +4754,7 @@ Returns care plan details by it's identifier in patient context
                     + code: `legal_entity` (string)
     + display_value: `Перше відділення обласної лікарня №1` (string, optional) - This field is filled on creating and never updated after
 
-+ `reason_reference` (array, optional) - The justification of why the procedure was performed.
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -4857,7 +4857,7 @@ Returns care plan details by it's identifier in patient context
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-+ `reason_reference` (array, optional) - The justification of why the procedure was performed.
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -4922,7 +4922,7 @@ Returns care plan details by it's identifier in patient context
             + coding (array, fixed-type)
                 + (Coding)
                     + code: employee (string)
-+ `reason_reference` (array, optional) - Condition or observation that supports why the medication was administered
++ `reason_references` (array, optional) - Condition or observation that supports why the medication was administered
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5022,7 +5022,7 @@ Returns care plan details by it's identifier in patient context
                     + code: `legal_entity` (string)
     + display_value: `Київська обласна лікарня №1` (string, required) - This field is filled on creating and never updated after
 
-+ `reason_reference` (array, optional) - Condition or observation that supports why the medication was administered
++ `reason_references` (array, optional) - Condition or observation that supports why the medication was administered
     + (Reference_response)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5115,7 +5115,7 @@ Returns care plan details by it's identifier in patient context
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `reason_reference` (array, required)
++ `reason_references` (array, required)
     + (Reference_response)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5234,7 +5234,7 @@ Returns care plan details by it's identifier in patient context
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `reason_reference` (array, optional)
++ `reason_references` (array, optional)
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5321,7 +5321,7 @@ Returns care plan details by it's identifier in patient context
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `reason_reference` (array, optional)
++ `reason_references` (array, optional)
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5676,7 +5676,7 @@ Returns care plan details by it's identifier in patient context
             + (Coding)
                 + code: `X85` (string)
                 + system: `eHealth/ICD10_AM/condition_codes` (string, required)
-+ `reason_reference` (array, optional, fixed-type)
++ `reason_references` (array, optional, fixed-type)
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
