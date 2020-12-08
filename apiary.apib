@@ -2351,9 +2351,9 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
         
 
 ### Create Care Plan activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
-This method adds activities to an existing patient's Care Plan.
+This method adds activity to an existing patient's Care Plan.
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
-Service will store signed copy of each Care Plan activity in Media Content Storage if all checks is passed. 
+Service will store signed copy of Care Plan activity in Media Content Storage if all checks is passed. 
 **Scopes required:** `care_plan:write`
 Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
 
@@ -2388,8 +2388,7 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         api-key: aDGFDFGT46S5gFGD
         
     + Attributes (object)
-        + activity (array, required, fixed-type)
-            + (Care_Plan_activity_base)
+        + include `Care_Plan_activity_base`
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
