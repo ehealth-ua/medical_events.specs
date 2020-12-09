@@ -2388,7 +2388,8 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         api-key: aDGFDFGT46S5gFGD
         
     + Attributes (object)
-        + include `Care_Plan_activity_base`
+        + include (`Care_Plan_activity_base`)
+        + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2402,7 +2403,7 @@ Returns care plan details by it's identifier in patient context
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
-    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - Care Plan identifier. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier. 
 
 + Request (application/json)
 
@@ -2416,6 +2417,35 @@ Returns care plan details by it's identifier in patient context
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Care_Plan_Show`)     
+
+
+### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
+Returns care plan's activity details by it's identifier within care plan and patient context
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Care_plan_activity_show`)
+            + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+            + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
+            + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+            + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+            + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+            + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
 
 
 # Data Structures
@@ -5612,7 +5642,7 @@ Returns care plan details by it's identifier in patient context
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `condition` (string)
-+ author (Reference_request, required)
++ author (Reference_request, required) - `author of the Care plan`
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -5643,6 +5673,12 @@ Returns care plan details by it's identifier in patient context
 
 ### `Care_Plan_activity_base`
 + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - unique within the care plan
++ author (Reference_request, required) - `author of the activity`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 + `detail` (Care_Plan_activity_detail_base, required)
 
 
@@ -5767,42 +5803,46 @@ Returns care plan details by it's identifier in patient context
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `medical_program` (string)
+                    
+
+### `Care_plan_activity_show`
++ include `Care_Plan_activity_base`
++ `outcome_reference` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `encounter` (enum)
+                            - encounter
+                            - procedure
+                            - `diagnostic_report`
+                            - `medication_dispense`
++ `outcome_codeable_concept` (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `some code` (string)
+                + system: `eHealth/some_new_dictionary` (string, required)
++ `detail` (Care_Plan_activity_detail_base, required)
+    + status: scheduled (enum, required)
+        - scheduled
+        - `in_progress`
+        - completed
+        - cancelled
+    + `status_reason` (Codeable_Concept, optional, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `some code` (string)
+                + system: `eHealth/some_new_dictionary` (string, required)
+    + `remaining_quantity` (object)
+        + value: 13,5 (number, required)
 
 
 ### `Care_Plan_Show`
 + include `Care_Plan_Create`
 + activity (array, required)
-    + (`Care_Plan_activity_base`)
-        + `outcome_reference` (array, optional, fixed-type)
-            + (Reference_request)
-                + identifier (Identifier)
-                    + type (Codeable_Concept)
-                        + coding (array, fixed-type)
-                            + (Coding)
-                                + code: `encounter` (enum)
-                                    - encounter
-                                    - procedure
-                                    - `diagnostic_report`
-                                    - `medication_dispense`
-        + `outcome_codeable_concept` (array, optional, fixed-type)
-            + (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `some code` (string)
-                        + system: `eHealth/some_new_dictionary` (string, required)
-        + `detail` (Care_Plan_activity_detail_base, required)
-            + status: scheduled (enum, required)
-                - scheduled
-                - `in_progress`
-                - completed
-                - cancelled
-            + `status_reason` (Codeable_Concept, optional, fixed-type)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `some code` (string)
-                        + system: `eHealth/some_new_dictionary` (string, required)
-            + `remaining_quantity` (object)
-                + value: 13,5 (number, required)
+    + (`Care_plan_activity_show`)
 + status: active (enum, required)
     - active
     - rejected
