@@ -2306,7 +2306,9 @@ http code| processing method | Client recommendations
 This method allows to create Care Plan for a person in eHealth.
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Care Plan in Media Content Storage if all checks is passed. 
+
 **Scopes required:** `care_plan:write`
+
 Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
 
 + Parameters
@@ -2328,7 +2330,8 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Care Plan [POST /dummy/patients/{patient_id}/care_plans]
+
+### Dummy Care Plan [POST /api/patients/{patient_id}/care_plans]
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person. 
@@ -2353,8 +2356,10 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
 ### Create Care Plan activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
 This method adds activity to an existing patient's Care Plan.
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
-Service will store signed copy of Care Plan activity in Media Content Storage if all checks is passed. 
+Service will store signed copy of Care Plan activity in Media Content Storage if all checks is passed.
+
 **Scopes required:** `care_plan:write`
+
 Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
 
 + Parameters
@@ -2401,6 +2406,8 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
 ### Get Care Plan by ID [GET /api/patients/{patient_id}/care_plans/{id}]
 Returns care plan details by it's identifier in patient context
 
+**Scopes required:** `care_plan:read`
+
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
     + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier. 
@@ -2416,11 +2423,14 @@ Returns care plan details by it's identifier in patient context
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Care_Plan_Show`)     
+        + data (`Care_Plan_Show`)
+            + activity (array[`Care_plan_activity_show`], required)
 
 
 ### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
 Returns care plan's activity details by it's identifier within care plan and patient context
+
+**Scopes required:** `care_plan:read`
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -2447,6 +2457,134 @@ Returns care plan's activity details by it's identifier within care plan and pat
             + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 
+### Update Care Plan status [PUT /api/patients/{patient_id}/care_plans/{id}/status]
+
+This method must be used to change status of existing patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of care plan must be equal to care plan stored in DB. See *Get Care plan by ID* - use all fields except activity (array)
+2. Activity array should not be presented in signed content. 
+3. $.status, $.status_reason (required on reject) must be changed in signed content
+
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Update Care plan status* for more details
+
+
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Update Care Plan status [PUT /api/patients/{patient_id}/care_plans/{id}/status]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (`Care_Plan_Show`)
+        + status: completed (enum, required)
+            - rejected
+            - completed
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Update Care Plan activity status [PUT /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/status]
+
+This method must be used to change status of existing activity from patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by ID*
+2. $.detail.status, $.detail.status_reason (required on reject) or $.outcome_codeable_concept (required on complete) must be changed in signed content
+
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Update Care plan status* for more details
+
+
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Update Care Plan activity status [PUT /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/status]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (`Care_plan_activity_show`)
+        + `detail` (Care_Plan_activity_detail_base, fixed-type)
+            + status: completed (enum, required)
+                - `in_progress`
+                - completed
+                - cancelled
+        + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+        + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
+        + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+        + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+        + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+        + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+        
 
 # Data Structures
 
@@ -5841,8 +5979,6 @@ Returns care plan's activity details by it's identifier within care plan and pat
 
 ### `Care_Plan_Show`
 + include `Care_Plan_Create`
-+ activity (array, required)
-    + (`Care_plan_activity_show`)
 + status: active (enum, required)
     - active
     - rejected
