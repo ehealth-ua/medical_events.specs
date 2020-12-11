@@ -2458,6 +2458,31 @@ Returns care plan list filtered by submitted parameters withtin specified patien
         + data (array[`Care_Plan_Show`])
 
 
+### Get Care Plans by requisition [GET /api/care_plans{?requisition,status,page,page_size}]
+This service must be used to discover Care plans by requisition number. If nothing found by requisition number - it will return empty list
+
+**Scopes required:** `care_plan:read`
+
++ Parameters
+    + requisition: `0123-4567-89AB-CEIK` (string, required) - requisition number
+    + status: `active` (string, optional) - Care plan's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Care_Plan_Show`])
+
+
 ### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
 Returns care plan's activity details by it's identifier within care plan and patient context
 
