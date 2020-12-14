@@ -2429,7 +2429,6 @@ Returns care plan details by it's identifier in patient context
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Care_Plan_Show`)
-            + activity (array[`Care_plan_activity_show`], required)
 
 
 ### Get Care Plans by search params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,status,page,page_size}]
@@ -2495,8 +2494,8 @@ Returns care plan's activity details by it's identifier within care plan and pat
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
-    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier. 
-    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required)
+    + care_plan_id: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Care Plan identifier. 
+    + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
 
 + Request (application/json)
 
@@ -2510,12 +2509,56 @@ Returns care plan's activity details by it's identifier within care plan and pat
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Care_plan_activity_show`)
-            + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+            + `care_plan` (Reference_request, required) - reference on Care plan to which the activity belongs.
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `care_plan` (string)
             + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
             + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
             + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+
+### Get Care Plan activities [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities{?page,page_size}]
+Returns all the activities related to the care plan in patient context
+
+**Scopes required:** `care_plan:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Care Plan identifier. 
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array)
+            + (object)
+                + include `Care_plan_activity_show`
+                + `care_plan` (Reference_request, required) - reference on Care plan to which the activity belongs.
+                    + identifier (Identifier)
+                        + type (Codeable_Concept)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `care_plan` (string)
+                + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
+                + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+                + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+                + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+                + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
 
 
 ### Update Care Plan status [PUT /api/patients/{patient_id}/care_plans/{id}/status]
