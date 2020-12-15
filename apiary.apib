@@ -2392,14 +2392,7 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         Authorization: Bearer F3GF124Df565FDS234SDF34
         api-key: aDGFDFGT46S5gFGD
         
-    + Attributes (object)
-        + include (`Care_Plan_activity_base`)
-        + `care_plan` (Reference_request, required) - reference on Care plan to which the activity belongs.
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `care_plan` (string)
+    + Attributes (`Care_Plan_activity_base`)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2441,7 +2434,6 @@ Returns care plan list filtered by submitted parameters withtin specified patien
     + legal_entity_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - Legal entity where Care Plan was created. 
     + period_date: `2018-08-02` (date, optional) - date within Care plan's period incleuding start and end dates
     + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Care plan
-    + requisition: `0123-4567-89AB-CEIK` (string, optional) - requisition number
     + based_on: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - Care Plan identifier on which returned Care plans are based on.
     + part_of: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - parent Care Plan identifier which includes returned Care plans.
     + status: `active` (string, optional) - Care plan's status
@@ -2509,12 +2501,6 @@ Returns care plan's activity details by it's identifier within care plan and pat
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Care_plan_activity_show`)
-            + `care_plan` (Reference_request, required) - reference on Care plan to which the activity belongs.
-                + identifier (Identifier)
-                    + type (Codeable_Concept)
-                        + coding (array, fixed-type)
-                            + (Coding)
-                                + code: `care_plan` (string)
             + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
             + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
@@ -2522,14 +2508,18 @@ Returns care plan's activity details by it's identifier within care plan and pat
             + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 
-### Get Care Plan activities [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities{?page,page_size}]
+### Get Care Plan activities [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities{?author,kind,page,page_size}]
 Returns all the activities related to the care plan in patient context
 
 **Scopes required:** `care_plan:read`
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
-    + care_plan_id: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Care Plan identifier. 
+    + care_plan_id: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Care Plan identifier.
+    + author: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional) - author of the activity.
+    + kind: `service_request` (enum, optional) - kind of the activity.
+        - service_request
+        - medication_request
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -2547,12 +2537,6 @@ Returns all the activities related to the care plan in patient context
         + data (array)
             + (object)
                 + include `Care_plan_activity_show`
-                + `care_plan` (Reference_request, required) - reference on Care plan to which the activity belongs.
-                    + identifier (Identifier)
-                        + type (Codeable_Concept)
-                            + coding (array, fixed-type)
-                                + (Coding)
-                                    + code: `care_plan` (string)
                 + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
                 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
                 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
@@ -2561,16 +2545,16 @@ Returns all the activities related to the care plan in patient context
 
 
 
-### Update Care Plan status [PUT /api/patients/{patient_id}/care_plans/{id}/status]
+### Cancel Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/cancel]
 
-This method must be used to change status of existing patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+This method must be used to cancel of existing patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of care plan must be equal to care plan stored in DB. See *Get Care plan by ID* - use all fields except activity (array)
-2. Activity array should not be presented in signed content. 
-3. $.status, $.status_reason (required on reject) must be changed in signed content
+1. Signed content of care plan must be equal to care plan stored in DB. See *Get Care plan by ID*
+2. Activities should not be presented in signed content. 
+3. $.status_reason must be added to signed content
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Update Care plan status* for more details
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan* for more details
 
 
 **Scopes required:** `care_plan:write`
@@ -2596,7 +2580,7 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
         + data (`Job`)
 
 
-### Dummy Update Care Plan status [PUT /api/patients/{patient_id}/care_plans/{id}/status]
+### Dummy Cancel Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/cancel]
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -2610,9 +2594,11 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
             api-key: aFBLVTZ6Z2dON1V
     
     + Attributes (`Care_Plan_Show`)
-        + status: completed (enum, required)
-            - rejected
-            - completed
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/care_plan_status_reasons` (string)
+                    + code: `some code` (string)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2621,15 +2607,50 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
         + data (`Job`)
 
 
-### Update Care Plan activity status [PUT /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/status]
+### Complete Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/complete]
 
-This method must be used to change status of existing activity from patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+This method must be used to complete of existing patient's Care plan.
+
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model)
+
+
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/care_plan_status_reasons` (string)
+                    + code: `some code` (string)
+    
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+        
+
+### Cancel Care Plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
+
+This method must be used to cancel of existing activity from patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
 1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by ID*
-2. $.detail.status, $.detail.status_reason (required on reject) or $.outcome_codeable_concept (required on complete) must be changed in signed content
+2. $.detail.status_reason must be changed in signed content
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Update Care plan status* for more details
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan* for more details
 
 
 **Scopes required:** `care_plan:write`
@@ -2656,7 +2677,7 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
         + data (`Job`)
 
 
-### Dummy Update Care Plan activity status [PUT /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/status]
+### Dummy Cancel Care Plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -2672,11 +2693,14 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
     
     + Attributes (`Care_plan_activity_show`)
         + `detail` (Care_Plan_activity_detail_base, fixed-type)
-            + status: completed (enum, required)
+            + status: scheduled (enum, required)
                 - `in_progress`
-                - completed
-                - cancelled
-        + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+                - scheduled
+            + `status_reason` (Codeable_Concept, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/some_new_dictionary` (string, required)
         + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
@@ -2689,6 +2713,37 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
             + code: 202 (number)
         + data (`Job`)
         
+
+### Complete Care plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/complete]
+
+This method must be used to complete of existing activity from patient's Care plan.
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `outcome_codeable_concept` (array, required, fixed-type)
+            + (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/some_new_dictionary` (string, required)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 
 # Data Structures
 
@@ -5921,6 +5976,12 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ `care_plan` (Reference_request, required) - reference on Care plan to which the activity belongs.
+                    + identifier (Identifier)
+                        + type (Codeable_Concept)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `care_plan` (string)
 + `detail` (Care_Plan_activity_detail_base, required)
 
 
@@ -6087,11 +6148,6 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
     - active
     - completed
     - cencelled
-+ `status_reason` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/care_plan_status_reasons` (string)
-            + code: `some code` (string)
 + `status_history` (array, required, fixed-type)
     + (object)
         + status: `active` (string, required)
