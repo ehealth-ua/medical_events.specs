@@ -2650,7 +2650,7 @@ This method must be used to cancel of existing activity from patient's Care plan
 1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by ID*
 2. $.detail.status_reason must be changed in signed content
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan* for more details
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan activity* for more details
 
 
 **Scopes required:** `care_plan:write`
@@ -5976,12 +5976,12 @@ This method must be used to complete of existing activity from patient's Care pl
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ `care_plan` (Reference_request, required) - reference on Care plan to which the activity belongs.
-                    + identifier (Identifier)
-                        + type (Codeable_Concept)
-                            + coding (array, fixed-type)
-                                + (Coding)
-                                    + code: `care_plan` (string)
++ `care_plan` (Reference_request, required) - `Care plan to which the activity belongs`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
 + `detail` (Care_Plan_activity_detail_base, required)
 
 
