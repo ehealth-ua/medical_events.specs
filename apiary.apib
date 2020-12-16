@@ -5952,13 +5952,6 @@ This method must be used to complete of existing activity from patient's Care pl
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (string)
-+ subject (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `patient` (string)
-        + value: `87B0E1A2D106232D253ACB8627B` (string)
 + `terms_of_service` (Codeable_Concept,required)
     + coding (array, fixed-type)
         + (Coding)
@@ -6144,6 +6137,13 @@ This method must be used to complete of existing activity from patient's Care pl
 
 ### `Care_Plan_Show`
 + include `Care_Plan_Create`
++ subject (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+        + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
 + status: active (enum, required)
     - active
     - completed
