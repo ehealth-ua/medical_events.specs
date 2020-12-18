@@ -2451,7 +2451,7 @@ Returns care plan list filtered by submitted parameters withtin specified patien
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (array[`Care_Plan_Show`])
+        + data (array[`Care_plan_summary`])
 
 
 ### Get Care Plans by requisition [GET /api/care_plans{?requisition,status,page,page_size}]
@@ -2476,7 +2476,7 @@ This service must be used to discover Care plans by requisition number. If nothi
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (array[`Care_Plan_Show`])
+        + data (array[`Care_plan_summary`])
 
 
 ### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
@@ -6156,3 +6156,52 @@ This method must be used to complete of existing activity from patient's Care pl
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Care_plan_summary`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `based_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ requisition: `0123-4567-89AB-CEIK` (string, required)
++ `part_of` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ period (Period, required)
++ intent: `order` (enum, required)
+    - order
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ author (Reference_request, required) - `author of the Care plan`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ subject (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+        + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ status: active (enum, required)
+    - active
+    - completed
+    - cencelled
++ `terms_of_service` (Codeable_Concept,required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: INPATIENT (enum)
+                - INPATIENT
+                - OUTPATIENT
+            + system: `eHealth/PROVIDING_CONDITION` (string)
