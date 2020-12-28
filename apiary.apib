@@ -2597,7 +2597,7 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
         + `status_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
                 + (Coding)
-                    + system: `eHealth/care_plan_status_reasons` (string)
+                    + system: `eHealth/care_plan_cancel_reasons` (string)
                     + code: `some code` (string)
 
 + Response 202 (application/json)
@@ -2628,10 +2628,10 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
             api-key: aFBLVTZ6Z2dON1V
     
     + Attributes (object)
-        + `status_reason` (Codeable_Concept, optional)
+        + `status_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
                 + (Coding)
-                    + system: `eHealth/care_plan_status_reasons` (string)
+                    + system: `eHealth/care_plan_complete_reasons` (string)
                     + code: `some code` (string)
     
 
@@ -2700,7 +2700,7 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `some code` (string)
-                        + system: `eHealth/some_new_dictionary` (string, required)
+                        + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
         + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
@@ -2736,7 +2736,13 @@ This method must be used to complete of existing activity from patient's Care pl
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `some code` (string)
-                        + system: `eHealth/some_new_dictionary` (string, required)
+                        + system: `eHealth/care_plan_activity_outcomes` (string, required)
+        + `detail` (object, required, fixed-type)
+            + `status_reason` (Codeable_Concept, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/care_plan_activity_complete_reasons` (string, required)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -5908,7 +5914,7 @@ This method must be used to complete of existing activity from patient's Care pl
 + category (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/SNOMED/care_plan_categories` (string)
+            + system: `eHealth/care_plan_categories` (string)
             + code: `diabetics` (string)
 + title: `Diabetics health plan` (string, required)
 + description: `Some description of the care plan` (string, optional)
@@ -5958,7 +5964,7 @@ This method must be used to complete of existing activity from patient's Care pl
             + code: INPATIENT (enum)
                 - INPATIENT
                 - OUTPATIENT
-            + system: `eHealth/PROVIDING_CONDITION` (string)
+            + system: `PROVIDING_CONDITION` (string)
 + status: active (string, required)
         
 
@@ -6006,7 +6012,7 @@ This method must be used to complete of existing activity from patient's Care pl
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports with diagnoses`
+                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports that approves diagnoses`
                             - condition
                             - oservation
                             - diagnostic_report
@@ -6014,8 +6020,8 @@ This method must be used to complete of existing activity from patient's Care pl
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + code: `eHealth/care_plan_goals` (string)
-                + system: `diabetes_treatment` (string, required)
+                + code: `diabetes_treatment` (string)
+                + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13.5 (number, required)
 - One of
@@ -6112,9 +6118,9 @@ This method must be used to complete of existing activity from patient's Care pl
         + coding (array, fixed-type)
             + (Coding)
                 + code: `some code` (string)
-                + system: `eHealth/some_new_dictionary` (string, required)
+                + system: `eHealth/care_plan_activity_outcomes` (string, required)
 + `detail` (Care_Plan_activity_detail_base, required)
-    + status: scheduled (enum, required)
+    + status: completed (enum, required)
         - scheduled
         - `in_progress`
         - completed
@@ -6123,7 +6129,9 @@ This method must be used to complete of existing activity from patient's Care pl
         + coding (array, fixed-type)
             + (Coding)
                 + code: `some code` (string)
-                + system: `eHealth/some_new_dictionary` (string, required)
+                + system: `eHealth/care_plan_activity_cancel_reasons` (enum, required)
+                    - `eHealth/care_plan_activity_complete_reasons`
+                    - `eHealth/care_plan_activity_cancel_reasons`
     + `remaining_quantity` (object)
         + value: 13,5 (number, required)
 
@@ -6147,7 +6155,9 @@ This method must be used to complete of existing activity from patient's Care pl
         + `status_reason` (Codeable_Concept, optional)
             + coding (array, fixed-type)
                 + (Coding)
-                    + system: `eHealth/care_plan_status_reasons` (string)
+                    + system: `eHealth/care_plan_cancel_reasons` (enum)
+                        - `eHealth/care_plan_cancel_reasons`
+                        - `eHealth/care_plan_complete_reasons`
                     + code: `some code` (string)
         + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
@@ -6205,4 +6215,4 @@ This method must be used to complete of existing activity from patient's Care pl
             + code: INPATIENT (enum)
                 - INPATIENT
                 - OUTPATIENT
-            + system: `eHealth/PROVIDING_CONDITION` (string)
+            + system: `PROVIDING_CONDITION` (string)
