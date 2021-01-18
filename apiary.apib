@@ -2501,14 +2501,13 @@ Returns care plan's activity details by it's identifier within care plan and pat
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Care_plan_activity_show`)
-            + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
             + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
             + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 
-### Get Care Plan activities [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities{?author,kind,page,page_size}]
+### Get Care Plan activities [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities{?author,kind,status,page,page_size}]
 Returns all the activities related to the care plan in patient context
 
 **Scopes required:** `care_plan:read`
@@ -2520,6 +2519,7 @@ Returns all the activities related to the care plan in patient context
     + kind: `service_request` (enum, optional) - kind of the activity.
         - service_request
         - medication_request
+    + status: `scheduled` (string, optional) - Care plan activity status
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -2537,7 +2537,6 @@ Returns all the activities related to the care plan in patient context
         + data (array)
             + (object)
                 + include `Care_plan_activity_show`
-                + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
                 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
                 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
                 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
@@ -2701,7 +2700,6 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
                     + (Coding)
                         + code: `some code` (string)
                         + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
-        + is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
         + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
@@ -6162,7 +6160,6 @@ This method must be used to complete of existing activity from patient's Care pl
         + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + requisition: `0123-4567-89AB-CEIK` (string, required)
-+ is_active: true (boolean, required) - Technical attribute. Indicates the availability of the record in the system
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
