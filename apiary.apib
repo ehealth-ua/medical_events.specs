@@ -3573,7 +3573,7 @@ This method must be used to complete of existing activity from patient's Care pl
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/body_sites` (string)
-                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
+                + code: `head` (string) - `dictionary - eHealth/body_sites`
                    
     
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)//Estimated or actual date,  date-time when condition starts
@@ -3652,7 +3652,7 @@ This method must be used to complete of existing activity from patient's Care pl
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/body_sites` (string)
-                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
+                + code: `head` (string) - `dictionary - eHealth/body_sites`
                    
     
 + onset_date: `2018-08-02T10:45:16.000Z` (string, required)
@@ -3737,7 +3737,7 @@ This method must be used to complete of existing activity from patient's Care pl
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/body_sites` (string)
-                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
+                + code: `head` (string) - `dictionary - eHealth/body_sites`
                 
     
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)
@@ -3834,8 +3834,8 @@ This method must be used to complete of existing activity from patient's Care pl
 + `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string) 
-            + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
+            + system: `eHealth/body_sites` (string) 
+            + code: `head` (string)- `dictionary -  eHealth/body_sites`
             
 
 + method (Codeable_Concept, optional)
@@ -4050,8 +4050,8 @@ This method must be used to complete of existing activity from patient's Care pl
 + `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string) 
-            + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
+            + system: `eHealth/body_sites` (string) 
+            + code: `head` (string)
             
 
 + method (Codeable_Concept, optional)
@@ -4139,12 +4139,15 @@ This method must be used to complete of existing activity from patient's Care pl
 
 + primary_source: `false` (boolean, required)
 - One Of
-    + `performer` (Reference_request, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
+    + performer (optional)
+        -One Of
+            + reference (Reference_request, optional)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `employee` (string)
+            + text: `Опанасенко Олексій Володимирович` (object, optional)
                         
     + `report_origin` (Codeable_Concept, optional)
         + coding (array, fixed-type)
@@ -4284,7 +4287,7 @@ This method must be used to complete of existing activity from patient's Care pl
 + dose_quantity: ( Quantity, optional), // Amount of vaccine administered
     + value : `18` (number, required)
     - comparator  (string, optional)
-    + unit : `mg` (string, optinal)
+    + unit : `mg` (string, required)
     + system: `eHealth/immunization_dosage_units` (string, optional)
     - code (string, optional)
 
