@@ -4137,24 +4137,22 @@ This method must be used to complete of existing activity from patient's Care pl
                     
 + date :  `2018-10-08T09:46:37.694Z` (string, required), // Vaccination administration date
 
-+ primary_source: `false` (boolean, required)
++ primary_source: `true` (boolean, required)
 - One Of
-    + performer (optional)
-        -One Of
-            + reference (Reference_request, optional)
-                + identifier (Identifier)
-                    + type (Codeable_Concept)
-                        + coding (array, fixed-type)
-                            + (Coding)
-                                + code: `employee` (string)
-            + text: `Опанасенко Олексій Володимирович` (object, optional)
-                        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `employee` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
         + text: `Галина Олександрівна` (string)
                     
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
@@ -4242,19 +4240,20 @@ This method must be used to complete of existing activity from patient's Care pl
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `false` (boolean, required)
 - One Of
-    + `performer` (Reference_response, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-        + display_value: `Шевченко Тетяна Вікторівна` (string, required) - This field is filled on creating and never updated after           
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
         + text: `Галина Олександрівна` (string)
                     
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
