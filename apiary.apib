@@ -4179,19 +4179,18 @@ This method must be used to complete of existing activity from patient's Care pl
 
 + `explanation`  (object , optional)// Administration/non-administration reasons
     - One Of
-        + `reasons`: (array, optional, fixed_type)
-            + (Codeable_Concept)
-                +  coding (array, fixed-type)
-                    + (Coding)
-                        + system: `eHealth/reason_explanations` (string)
-                        + code: `429060002` (string) - `dictionaries- eHealth/reason_explanations`
-                         
-        + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
-            + (Codeable_Concept)
-                +  coding (array, fixed-type)
-                    + (Coding)
-                        + system: `eHealth/reason_not_given_explanations` (string)
-                        + code: `429060002` (string) - `dictionaries- eHealth/reason_not_given_explanations`
+        - `reasons` (object, optional)
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/reason_explanations` (string, required)
+                    + code: `immunization_by_calendar` (string)
+            + text: `Планове за календарем щеплень` (string)
+        - `reasons_not_given` (object, optional) - Why immunization did not occurr
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/reason_not_given_explanations` (string, required)
+                    + code: `lack_of_injection_supply` (string)
+            + text: `відсутність ін'єкційних матеріалів` (string)
 
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
     + (object)
