@@ -214,13 +214,6 @@ This chapter describes the structure of a single unsigned observation that could
 #### Dummy Immunization [POST]
 This chapter describes the structure of a single unsigned immunization that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
-The `explanation` field can take one of the following values (array, optional, fixed_type):
-
-Object           |Coding system
------------------|-------------------------------------| 
-reasons          |eHealth/reasons_not_given            |
-reasons_not_given|eHealth/reason_not_given_explanations|
-
 + Request  (application/json)
 
     + Headers
@@ -1119,7 +1112,6 @@ To find out more about the process of diagnostic report package creation read [C
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
-
         + include `Submit_DR_Package_Cancel`
 
 ## Diagnostic Report [/api/patients/{patient_id}/diagnostic_reports]
@@ -1240,7 +1232,7 @@ This chapter describes the structure of a single procedure creation. This is not
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Get Procedures by search params [GET /api/patients/{patient_id}/procedures{?id,status,episode_id,code,based_on,recorded_by,managing_organization_id}]
+### Get Procedures by search params [GET /api/patients/{patient_id}/procedures{?id,status,episode_id,encounter_id,code,based_on,recorded_by,managing_organization_id}]
 **Scopes required:** `procedure:read`
 
 + Parameters
@@ -1250,7 +1242,7 @@ This chapter describes the structure of a single procedure creation. This is not
     + based_on: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique service request identifier
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
     + `managing_organization_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique legal entity identifier
-    + encounter_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique encounter identifier
+    + encounter_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique encounter identifier
     + `origin_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier, look into episode in procedures.origin_episode
 
 + Request (application/json)
@@ -2404,9 +2396,9 @@ http code| processing method | Client recommendations
 ### `Quantity`
 + value : `13,5` (number, required)
 + comparator : `>` (string, optional)
-+ unit : `mg` (string, optional) - for future use
-+ system : `eHealth/units` (string, required)
-+ code: `mg` (string, required)
++ unit : `kg` (string, optional) - for future use
++ system : `eHealth/ucum/units` (string, required)
++ code: `kg` (string, required)
 
 ### `Range`
 + low (Quantity, required)
@@ -3075,7 +3067,7 @@ http code| processing method | Client recommendations
 + requester_legal_entity_name: `Some clinic` (string, optional) - Requester legal entity name
 + requester_legal_entity_edrpou: `12345678` (string, required) - Requester legal entity edrpou
 + requester_employee_name: `John` (string, required) - Requester employee name
-+ `service_request_date`: `2018-10-08T09:46:37.694Z` (string, required) - Service request date
++ `service_request_date`: `2018-10-08` (string, required) - Service request date
 + note: `Some notes` (string, optional) - Some notes
 
 
@@ -3126,7 +3118,7 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/body_sites` (string)
-                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
+                + code: `head` (string) - `dictionary - eHealth/body_sites`
                    
     
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)//Estimated or actual date,  date-time when condition starts
@@ -3205,7 +3197,7 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/body_sites` (string)
-                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
+                + code: `head` (string) - `dictionary - eHealth/body_sites`
                    
     
 + onset_date: `2018-08-02T10:45:16.000Z` (string, required)
@@ -3290,7 +3282,7 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/body_sites` (string)
-                + code: `181414000` (string) - `dictionary - eHealth/body_sites`
+                + code: `head` (string) - `dictionary - eHealth/body_sites`
                 
     
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)
@@ -3337,12 +3329,6 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `diagnostic_report` (string)
-
-
-
-
-
-
 + categories (array, required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -3393,8 +3379,8 @@ http code| processing method | Client recommendations
 + `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string) 
-            + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
+            + system: `eHealth/body_sites` (string) 
+            + code: `head` (string)- `dictionary -  eHealth/body_sites`
             
 
 + method (Codeable_Concept, optional)
@@ -3530,25 +3516,12 @@ http code| processing method | Client recommendations
                 + text: `Some text` (string, optional)
 
 ### `Observation_Request_1` (`Observation_Request_Base`)
-
-
-
-
-
-
-
-
-
-
-
 + `context` (Reference_request, optional)
      + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-
-
 
 ### `Observation_Request_2` (`Observation_Request_Base`)
 + `context` (Reference_request, optional)
@@ -3556,189 +3529,7 @@ http code| processing method | Client recommendations
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     + code: `encounter` (string)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ### `Observation_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -3755,9 +3546,6 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-
-
-
                     
 + categories (array, required)
     + (Codeable_Concept)
@@ -3807,8 +3595,8 @@ http code| processing method | Client recommendations
 + `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string) 
-            + code: `1341001:272741003=7771000` (string)- `dictionary -  eHealth/body_sites`
+            + system: `eHealth/body_sites` (string) 
+            + code: `head` (string)
             
 
 + method (Codeable_Concept, optional)
@@ -3856,7 +3644,6 @@ http code| processing method | Client recommendations
                     + system: `eHealth/reference_range_applications` (string)
                     + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
                      
-
         + age (Range, optional)
             + low (Quantity, optional)
                 + value : `18` (number, required)
@@ -3895,28 +3682,23 @@ http code| processing method | Client recommendations
                     
 + date :  `2018-10-08T09:46:37.694Z` (string, required), // Vaccination administration date
 
-+ primary_source: `false` (boolean, required)
++ primary_source: `true` (boolean, required)
 - One Of
-    + `performer` (Reference_request, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-                        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
         + text: `Галина Олександрівна` (string)
-+ `legal_entity` : (Reference_request, optional), // Where vaccination occurred
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
                     
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
@@ -3942,19 +3724,18 @@ http code| processing method | Client recommendations
 
 + `explanation`  (object , optional)// Administration/non-administration reasons
     - One Of
-        + `reasons`: (array, optional, fixed_type)
-            + (Codeable_Concept)
-                +  coding (array, fixed-type)
-                    + (Coding)
-                        + system: `eHealth/reason_explanations` (string)
-                        + code: `429060002` (string) - `dictionaries- eHealth/reason_explanations`
-                         
-        + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
-            + (Codeable_Concept)
-                +  coding (array, fixed-type)
-                    + (Coding)
-                        + system: `eHealth/reason_not_given_explanations` (string)
-                        + code: `429060002` (string) - `dictionaries- eHealth/reason_not_given_explanations`
+        - `reasons` (object, optional)
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/reason_explanations` (string, required)
+                    + code: `immunization_by_calendar` (string)
+            + text: `Планове за календарем щеплень` (string)
+        - `reasons_not_given` (object, optional) - Why immunization did not occurr
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/reason_not_given_explanations` (string, required)
+                    + code: `lack_of_injection_supply` (string)
+            + text: `відсутність ін'єкційних матеріалів` (string)
 
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
     + (object)
@@ -4003,26 +3784,21 @@ http code| processing method | Client recommendations
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `false` (boolean, required)
 - One Of
-    + `performer` (Reference_response, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-        + display_value: `Шевченко Тетяна Вікторівна` (string, required) - This field is filled on creating and never updated after           
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
         + text: `Галина Олександрівна` (string)
-+ legal_entity : (Reference_response, optional), // Where vaccination occurred
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
                     
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
@@ -4042,36 +3818,33 @@ http code| processing method | Client recommendations
 + dose_quantity: ( Quantity, optional), // Amount of vaccine administered
     + value : `18` (number, required)
     - comparator  (string, optional)
-    + unit : `mg` (string, optinal)
+    + unit : `mg` (string, required)
     + system: `eHealth/immunization_dosage_units` (string, optional)
     - code (string, optional)
 
 + `explanation`  (object , optional)// Administration/non-administration reasons
     - One Of
-        + `reasons`: (array, optional, fixed_type)
-            + (Codeable_Concept)
-                +  coding (array, fixed-type)
-                    + (Coding)
-                        + system: `eHealth/reason_explanations` (string)
-                        + code: `429060002` (string) - `dictionaries- eHealth/reason_explanations`
-                         
-        + `reasons_not_given` : (array, optional, fixed_type), // Why immunization did not occurr
-            + (Codeable_Concept)
-                +  coding (array, fixed-type)
-                    + (Coding)
-                        + system: `eHealth/reason_not_given_explanations` (string)
-                        + code: `429060002` (string) - `dictionaries- eHealth/reason_not_given_explanations`
+        - `reasons` (object, optional)
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/reason_explanations` (string, required)
+                    + code: `immunization_by_calendar` (string)
+            + text: `Планове за календарем щеплень` (string)
+        - `reasons_not_given` (object, optional) - Why immunization did not occurr
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/reason_not_given_explanations` (string, required)
+                    + code: `lack_of_injection_supply` (string)
+            + text: `відсутність ін'єкційних матеріалів` (string)
+            
 + reactions : (array, optional) // Details of a reaction that follows immunization
     + (object)
-        + date : `2018-10-08T09:46:37.694Z` (string, optional), // When reaction started
         + detail : (Reference_response, optional) , // Additional information on reaction Observation
             + identifier (Identifier)
                 + type (Codeable_Concept)
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `observation` (string)
-                           
-        + reported : `true` (boolean, optional) // Indicates self-reported reaction
 
 + `vaccination_protocols` : (array, optional, fixed_type)// What protocols was followed
     + (object)
@@ -4228,7 +4001,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + system: `eHealth/risk_assessment_reasons` (string)
                     + code: `default_reason` (string)
-    + reason_reference (array, fixed-type)
+    + reason_references (array, fixed-type)
         + object (Codeable_Concept, optional)
             + identifier (Identifier)
                 + type (Codeable_Concept)
@@ -4375,7 +4148,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ category (array, optional)
++ category (array, required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
              + (Coding)
@@ -4412,7 +4185,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ category (array, optional)
++ category (array, required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
              + (Coding)
@@ -4601,6 +4374,7 @@ http code| processing method | Client recommendations
                             + code: `employee` (string)
             + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after            
         + text: `Опанасенко Олексій Володимирович` (object, optional) 
++ primary_source: `true` (boolean, required)
 - One Of
     + performer (optional)
         -One Of
@@ -4647,10 +4421,6 @@ http code| processing method | Client recommendations
                         + (Coding)
                             + code: `diagnostic_report` (string)
 
-
-
-
-
 ### `Submit_DR_Package_Cancel`
 + `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
 + `observations` (array, optional, fixed-type)
@@ -4661,9 +4431,6 @@ http code| processing method | Client recommendations
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `diagnostic_report` (string)
-
-
-
 
 
 ### `Medication_Statement_Response`
@@ -4767,7 +4534,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `legal_entity` (string)
 
-+ `reason_reference` (array, optional) - The justification of why the procedure was performed.
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -4790,7 +4557,84 @@ http code| processing method | Client recommendations
 
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
-+ include (Procedure_Request)
++ `based_on` (Reference_response, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `paper_referral` (`Paper_referral`, optional, fixed-type)
++ `status` : `COMPLETED` (enum, required) - Status for provided procedure
+    - `COMPLETED`
+    - `ENTERED_EN_ERROR`
++ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_status_reasons` (string)
+            + code: `default` (string)
++ code (Reference_response, required) - code of procedure
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
++ `recorded_by` (Reference_response, required) - employee who submit procedure to e-Health
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+    + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
++ primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
+- One Of
+    + `performer` (Reference_response, required) - is filled in in case primary_source is true
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+    + `report_origin` (Codeable_Concept, optional) - is filled in in case primary_source is false
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+                
+        + text: `Галина Олександрівна` (string)
++ `division` (Reference_response, optional, fixed-type) - Division of legal_entity where procedure have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ `managing_organization` (Reference_response, required) - Organization where procedure have been performed. Reference to legal_entity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Перше відділення обласної лікарня №1` (string, optional) - This field is filled on creating and never updated after
+
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
+                        
++ `outcome` (Codeable_Concept, optional) - The outcome of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_outcomes` (string)
+            + code: `default_outcome` (string)
+            
++ note: `Додаткова інформація по процедурі` (string, optional) - Any other notes and comments about the procedure.
++ `category` (Codeable_Concept, required) - Classification of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_categories` (string)
+            + code: `default` (string)
 + encounter (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4874,7 +4718,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-+ `reason_reference` (array, optional) - The justification of why the procedure was performed.
++ `reason_references` (array, optional) - The justification of why the procedure was performed.
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -4939,7 +4783,7 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: employee (string)
-+ `reason_reference` (array, optional) - Condition or observation that supports why the medication was administered
++ `reason_references` (array, optional) - Condition or observation that supports why the medication was administered
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -4979,9 +4823,9 @@ http code| processing method | Client recommendations
     + `rate_quantity` (Simple_Quantity)
 
 ### `Simple_Quantity`
-+ value : `13,5` (number, required)
-+ unit : `mg` (string, required)
-+ system : `eHealth/ucum/units` (string, optional)
++ value: `13,5` (number, required)
++ unit: `mg` (string, optional)
++ system: `eHealth/ucum/units` (string, optional)
 + code: `mg` (string, optional)
 
 ### `Ratio`
@@ -5039,7 +4883,7 @@ http code| processing method | Client recommendations
                     + code: `legal_entity` (string)
     + display_value: `Київська обласна лікарня №1` (string, required) - This field is filled on creating and never updated after
 
-+ `reason_reference` (array, optional) - Condition or observation that supports why the medication was administered
++ `reason_references` (array, optional) - Condition or observation that supports why the medication was administered
     + (Reference_response)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5132,8 +4976,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-
-+ `reason_reference` (array, required)
++ `reason_references` (array, required)
     + (Reference_response)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5252,7 +5095,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `reason_reference` (array, optional)
++ `reason_references` (array, optional)
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5339,7 +5182,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `legal_entity` (string)
         + value: `75a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-+ `reason_reference` (array, optional)
++ `reason_references` (array, optional)
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
