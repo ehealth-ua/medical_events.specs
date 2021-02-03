@@ -2293,6 +2293,58 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
+### Get approvals [Get /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,status,reason,access_level,page,page_size}]
+Method for receiving a list of patient approvals.
+It is allowed only for the doctor who has active declaration with the patient from url.
+
+**Scopes required:** `aproval:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - identifier of the patient.
+    + granted_to: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - identifier of the employee or legal entity to whom access has been granted.
+    + granted_resources: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the entity for which the approval was created.
+    + granted_resource_type: `diagnostic_report` (string, optional) - entity type for which the approval was created.
+    + status: `active` (string, optional) - status of approval
+    + reason: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - type and identifier of entity based on which approval has been created
+    + access_level: `read` (string, optional) - access level to data
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Get_Approvals_List`)
+
+### Get approval details [Get /api/patients/{patient_id}/approvals{id}]
+Returns approval details by it's identifier in patient context
+It is allowed only for the doctor who has active declaration with the patient from url.
+
+**Scopes required:** `aproval:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - identifier of the patient.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - identifier of the approval.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Get_Approval_Details`)
 
 ## Group Care plan
 ### Create Care Plan [POST /api/patients/{patient_id}/care_plans]
@@ -5751,51 +5803,6 @@ This method must be used to complete of existing activity from patient's Care pl
     - read
 + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of patient's auth method
 
-### `Approval_Response_crud`
-+ `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
-+ `patient_id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - mpi_id hash
-+ `granted_resources` (array, required) - list of resources that are allowed by approval
-    + (Reference_response)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `episode_of_care` (string)
-            + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
-+ `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-+ expires_at: 1498749591 (number, required) - expiration date-time timestamp
-+ `granted_by` (Reference_response, required) - type and identifier of entity who has granted access - user_id
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `mpi-hash` (string)
-+ reason (Reference_response, optional) - type and identifier of entity based on which approval has been created
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-+ `status`: new (enum, required) - status of approval
-    - new
-    - active
-+ access_level: `read` (string, required) - only `read` is supported
-+ `authentication_method` (object, required)
-    + type: `OTP` (enum, required)
-        - OTP
-        - OFFLINE
-        - NA
-    + number: `+38093*****85` (string, optional)
-+ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
-+ `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
-+ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
-+ `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
-
 ### `Approval_Response`
 + `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
 + `granted_resources` (array, required)
@@ -5818,11 +5825,11 @@ This method must be used to complete of existing activity from patient's Care pl
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `employee` (string)
+                    + code: `service_request` (string)
 + `status`: new (enum, required) - status of approval
     - new
     - active
-+ access_level: `read` (string, required) - only `read` is supported
++ access_level: `read` (string, required)
 + `authentication_method_current` (object, required)
     + type: `OTP` (enum, required)
         - OTP
@@ -5830,7 +5837,66 @@ This method must be used to complete of existing activity from patient's Care pl
         - NA
     + number: `+38093*****85` (string, optional)
 
-    
+### `Get_Approvals_List`
++ `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
++ `granted_resources` (array, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
+            + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ reason (Reference_response, optional) - type and identifier of entity based on which approval has been created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `status`: new (enum, required) - status of approval
+    - new
+    - active
++ access_level: `read` (string, required)
+
+### `Get_Approval_Details`
++ `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
++ `granted_resources` (array, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
+            + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ expires_at: 1498749591 (number, required) - expiration date-time timestamp
++ reason (Reference_response, optional) - type and identifier of entity based on which approval has been created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `status`: new (enum, required) - status of approval
+    - new
+    - active
++ access_level: `read` (string, required)
++ `authentication_method_current` (object, required)
+    + type: `OTP` (enum, required)
+        - OTP
+        - OFFLINE
+        - NA
+    + number: `+38093*****85` (string, optional)
 
 ## `Service_dictionary`
 ### `Service`
