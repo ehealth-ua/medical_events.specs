@@ -5802,22 +5802,24 @@ This method must be used to complete of existing activity from patient's Care pl
 
 ### `Approval_Request`
 - One Of
-    + `resources` (array, optional) - list of resources that are requested access to be granted
-        + (Reference_request)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `episode_of_care` (string)
-                + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
-    + `service_request` (object, optional)
-        + (Reference_request)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `service_request` (string)
-                + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+    - `resources` (object, optional) - list of resources that are requested access to be granted
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `episode_of_care` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `service_request` (object, optional) - access to permitted_resources in service request
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `service_request` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
 + `granted_to` (Reference_request, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
     + identifier (Identifier)
         + type (Codeable_Concept)
