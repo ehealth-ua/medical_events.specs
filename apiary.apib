@@ -2293,7 +2293,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Get approvals [Get /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,status,reason,access_level,page,page_size}]
+### Get approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,status,reason,access_level,page,page_size}]
 Method for receiving a list of patient approvals.
 It is allowed only for the doctor who has active declaration with the patient from url.
 
@@ -2323,7 +2323,7 @@ It is allowed only for the doctor who has active declaration with the patient fr
             + code: 200 (number)
         + data (`Get_Approvals_List`)
 
-### Get approval details [Get /api/patients/{patient_id}/approvals{id}]
+### Get approval details [GET /api/patients/{patient_id}/approvals{id}]
 Returns approval details by it's identifier in patient context
 It is allowed only for the doctor who has active declaration with the patient from url.
 
@@ -2345,6 +2345,31 @@ It is allowed only for the doctor who has active declaration with the patient fr
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Get_Approval_Details`)
+
+### Cancel approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/cancel]
+
++ Parameters
+    + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - identifier of the patient.
+    + `id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - identifier of the approval.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Approval_Response`)
 
 ## Group Care plan
 ### Create Care Plan [POST /api/patients/{patient_id}/care_plans]
