@@ -3879,7 +3879,7 @@ This method must be used to complete of existing activity from patient's Care pl
     + effective_period (Period, optional, fixed-type)
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
 
-+ primary_source: `true` (boolean, required)
++ primary_source: `true` (boolean, required) - could NOT be false on DRP
 - One Of
     + `performer` (Reference_request, required)
         + identifier (Identifier)
@@ -3897,6 +3897,190 @@ This method must be used to complete of existing activity from patient's Care pl
                 
         + text: `Галина Олександрівна` (string)
 
+
++ interpretation (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/observation_interpretations` (string)
+            + code: `L` (string) `dictionary - eHealth/observation_interpretations`
+            
+    
++ comment: `Some comment` (string, optional)
++ `body_site` (Codeable_Concept, optional)
+     + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/body_sites` (string) 
+            + code: `head` (string)- `dictionary -  eHealth/body_sites`
+            
+
++ method (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `http://hl7.org/fhir/v2/0078` (string)
+            + code: `255459008` (string) - `dictionary - eHealth/observation_methods`
+            
+
+- One Of
+    + value_quantity (Quantity, required)
+    + value_codeable_concept (Codeable_Concept, required)
+    + value_sampled_data (object, required)
+        + origin (number, optional) //SimpleQuantity Zero value and units
+        + period (number, optional) // decimal Number of milliseconds between samples
+        + factor (number, optional) // decimal Multiply data by this before adding to origin
+        + lower_limit (number, optional)// decimal Lower limit of detection
+        + upper_limit (number, optional) // Σ 0..1 decimal Upper limit of detection
+        + dimensions (number, optional) // positiveInt Number of sample points at each time point
+        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+    + value_string (string, required)
+    + value_boolean (boolean, required)
+    + value_range (Range, required, fixed-type)
+    + value_ratio (object, required)//Need an example 
+        + numerator (Quantity, required)
+        + denominator (Quantity, required)
+    + value_time (string, required)
+    + value_date_time (string, required)
+    + value_period (Period, required)
++ reference_ranges (array, optional, fixed-type)
+    + (object)
+        + low (Quantity, optional)
+        + high (Quantity, optional)
+            + value: `27,5` (number, required)
+            + comparator: `<` (string, required)
+        + type (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_types` (string)
+                    + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                        
+        + `applies_to`(Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_applications` (string)
+                    + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                     
+        + age (Range, optional)
+            + low (Quantity, optional)
+                + value : `18` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `years` (string, optinal)
+                - system  (string, optional)
+                - code (string, optional)
+            + high (Quantity, optional)
+                + value : `35` (number, required)
+                + comparator : `<` (string, optional)
+                + unit : `years` (string, optinal)
+                - system (string, optional)
+                - code (string, optional)
+        + text: `Some text` (string, optional)
++ `reaction_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `immunization` (string)
+    
++ components (array, optional, fixed-type)
+    + (object)
+        + code (Codeable_Concept, required)
+        - One Of
+            + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
+            + value_quantity (Quantity, required)
+            + value_codeable_concept (Codeable_Concept, required)
+            + value_sampled_data (object, required)
+                + origin (number, optional) //SimpleQuantity Zero value and units
+                + period (number, optional) // decimal Number of milliseconds between samples
+                + factor (number, optional) // decimal Multiply data by this before adding to origin
+                + lowerLimit (number, optional)// decimal Lower limit of detection
+                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+                + dimensions (number, optional) // positiveInt Number of sample points at each time point
+                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+            
+            + value_boolean (boolean, required)
+            + value_range (object, required, fixed-type)
+                + low (Quantity, required)
+                + high (Quantity, required)
+            + value_ratio (object, required)//Need an example 
+                + numerator (Quantity, required)
+                + denominator (Quantity, required)
+            + value_time (string, required)
+            + value_date_time (string, required)
+            + value_period (Period, required)
+        + interpretation (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/observation_interpretations` (string)
+                    + code: `L` (string) `dictionary - eHealth/observation_interpretations`
+                    
+        + reference_ranges (array, optional, fixed-type)
+            + (object)
+                + low (Quantity, optional)
+                + high (Quantity, optional)
+                    + value: `27,5` (number, required)
+                    + comparator: `<` (string, required)
+                + type (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_types` (string)
+                            + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                                
+                + `applies_to` (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_applications` (string)
+                            + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                             
+                + age (Range, optional)
+                    + low (Quantity, optional)
+                        + value : `18` (number, required)
+                        + comparator : `>` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system  (string, optional)
+                        - code (string, optional)
+                    + high (Quantity, optional)
+                        + value : `35` (number, required)
+                        + comparator : `<` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system (string, optional)
+                        - code (string, optional)
+                
+                + text: `Some text` (string, optional)
+
+###  `Observation_Request_Base_DRP`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
++ `diagnostic_report` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
++ categories (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/observation_categories` (string)
+                + code: `vital_signs` (string) - `dictionary - eHealth/observation_categories`
+                
+
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/LOINC/observation_codes` (string)
+            + code: `10569-2` (string)- `dictionary - eHealth/LOINC/observation_codes`
+            
+
+- One Of
+    + effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    + effective_period (Period, optional, fixed-type)
++ issued: `2018-08-02T10:45:16.000Z` (string, required)
+
++ primary_source: `true` (boolean, required) - could NOT be false on DRP
++ `performer` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
@@ -4789,14 +4973,13 @@ This method must be used to complete of existing activity from patient's Care pl
 + include `Diagnostic_Report_Base_request`
 + primary_source: `true` (boolean, required) - could NOT be false
 + performer (required)
-    -One Of
-        + reference (Reference_request, optional)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-        + text: `Опанасенко Олексій Володимирович` (object, optional)          
+    + reference (Reference_request, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+    + text: `Опанасенко Олексій Володимирович` (object, optional)          
                     
 + `managing_organization` (Reference_request, required)
     + identifier (Identifier)
@@ -4943,7 +5126,7 @@ This method must be used to complete of existing activity from patient's Care pl
 ### `Submit_DR_Package`
 + `diagnostic_report` (Diagnostic_Report_Package_Request, required)
 + `observations` (array, optional, fixed-type)
-    + (Observation_Request_Base)
+    + (Observation_Request_Base_DRP)
         + `diagnostic_report` (Reference_request, required)
             + identifier (Identifier, optional, fixed-type)
                 + type (Codeable_Concept, required)
@@ -4954,7 +5137,7 @@ This method must be used to complete of existing activity from patient's Care pl
 ### `Submit_DR_Package_Cancel`
 + `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
 + `observations` (array, optional, fixed-type)
-    + (Observation_Request_Base)
+    + (Observation_Request_Base_DRP)
         + `diagnostic_report` (Reference_request, required)
             + identifier (Identifier, optional, fixed-type)
                 + type (Codeable_Concept, required)
@@ -6084,7 +6267,7 @@ This method must be used to complete of existing activity from patient's Care pl
                 - INPATIENT
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
-+ status: active (string, required)
++ status: new (string, required)
         
 
 ### `Care_Plan_activity_base`
@@ -6267,6 +6450,7 @@ This method must be used to complete of existing activity from patient's Care pl
                     + code: `patient` (string)
         + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
 + status: active (enum, required)
+    - new
     - active
     - completed
     - cencelled
@@ -6327,6 +6511,7 @@ This method must be used to complete of existing activity from patient's Care pl
                     + code: `patient` (string)
         + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
 + status: active (enum, required)
+    - new
     - active
     - completed
     - cencelled
