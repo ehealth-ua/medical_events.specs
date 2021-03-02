@@ -2551,7 +2551,9 @@ This service must be used to discover Care plans by requisition number. If nothi
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (array[`Care_plan_summary`])
+        + data (array, fixed-type)
+            + (`Care_plan_summary`)
+                + identity (`Person_service_request`, required)
 
 
 ### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
