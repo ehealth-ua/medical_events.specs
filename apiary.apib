@@ -2296,7 +2296,7 @@ http code| processing method | Client recommendations
 
 ### Get approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,status,reason,access_level,page,page_size}]
 Method for receiving a list of patient approvals.
-It is allowed only for the doctor who has active declaration with the patient from url.
+It is allowed only for the doctor who has an active declaration with a patient from url (can get all approvals) or approval is granted to user (can get own approval).
 
 **Scopes required:** `approval:read`
 
@@ -2326,7 +2326,7 @@ It is allowed only for the doctor who has active declaration with the patient fr
 
 ### Get approval details [GET /api/patients/{patient_id}/approvals/{id}]
 Returns approval details by it's identifier in patient context.
-It is allowed only for the doctor who has active declaration with the patient from url.
+It is allowed only for the doctor who has an active declaration with a patient from url (can get all approvals) or approval is granted to user (can get own approval).
 
 **Scopes required:** `approval:read`
 
@@ -2349,7 +2349,7 @@ It is allowed only for the doctor who has active declaration with the patient fr
 
 ### Cancel approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/cancel]
 Allows to cancel approval by it's identifier in patient context.
-It is allowed only for the doctor who has active declaration with the patient from url.
+It is allowed only for the doctor who has an active declaration with a patient from url (can cancel all approvals) or approval is granted to user (can cancel own approval).
 
 **Scopes required:** `approval:cancel`
 
