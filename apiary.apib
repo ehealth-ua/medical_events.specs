@@ -6293,7 +6293,7 @@ This method must be used to complete of existing activity from patient's Care pl
 + kind: `service_request` (enum, required)
     - service_request
     - medication_request
-+ `product_reference` (object, required) - `medication if kind is medication request, service if service request`
++ `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
      + identifier (object, optional)
         + type (object, optional)
             + coding (array, optional, fixed-type)
@@ -6301,6 +6301,7 @@ This method must be used to complete of existing activity from patient's Care pl
                     + system: `eHealth/resources` (string, required)
                     + code: `service` (enum)
                         - service
+                        - `service_group`
                         - medication
             + text (string)
         + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
