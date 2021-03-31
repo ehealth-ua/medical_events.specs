@@ -5,8 +5,6 @@ HOST: http://ehealth.com/
 
 Environment: **PREPROD,PROD**
 
-> In order to get specification for PREPROD/PROD environment please proceed [here](https://medicaleventsmisapi.docs.apiary.io/#)
-
 > Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
 
 All the medical data, stored in eHealth, belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
@@ -302,7 +300,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
-            + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
+        + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -1858,19 +1856,20 @@ This method returns all service requests related to specified episode of care.
             
             
 
-### Get Service Requests by search params [GET /api/patients/{patient_id/service_requests{?status,requester_legal_entity, used_by_legal_entity, episode_id}]
+### Get Service Requests by search params [GET /api/patients/{patient_id}/service_requests{?status,requester_legal_entity,used_by_legal_entity,episode_id,code,care_plan_id}]
 
 This method returns all service requests related to specified episode of care.
 
 **Scopes required:** `service_request:read`
 
 + Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier
-    + status: active (string, optional) 
-    + `requester_legal_entity` : `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) 
-    + `used_by_legal_entity`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
-    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
+    + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + `episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier
+    + `status`: active (string, optional) 
+    + `requester_legal_entity`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `used_by_legal_entity`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
+    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
+    + `care_plan_id`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - Unique care plan identifier
     
 
 + Request (application/json)
@@ -2293,6 +2292,537 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
+### Get approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,status,reason,access_level,page,page_size}]
+Method for receiving a list of patient approvals.
+It is allowed only for the doctor who has an active declaration with a patient from url (can get all approvals) or approval is granted to user (can get own approval).
+
+**Scopes required:** `approval:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - identifier of the patient.
+    + granted_to: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - identifier of the employee or legal entity to whom access has been granted.
+    + granted_resources: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the entity for which the approval was created.
+    + granted_resource_type: `diagnostic_report` (string, optional) - entity type for which the approval was created.
+    + status: `active` (string, optional) - status of approval
+    + reason: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - type and identifier of entity based on which approval has been created
+    + access_level: `read` (string, optional) - access level to data
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Get_Approvals_List`)
+
+### Get approval details [GET /api/patients/{patient_id}/approvals/{id}]
+Returns approval details by it's identifier in patient context.
+It is allowed only for the doctor who has an active declaration with a patient from url (can get all approvals) or approval is granted to user (can get own approval).
+
+**Scopes required:** `approval:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - identifier of the patient.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - identifier of the approval.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Get_Approval_Details`)
+
+### Cancel approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/cancel]
+Allows to cancel approval by it's identifier in patient context.
+It is allowed only for the doctor who has an active declaration with a patient from url (can cancel all approvals) or approval is granted to user (can cancel own approval).
+
+**Scopes required:** `approval:cancel`
+
++ Parameters
+    + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - identifier of the patient.
+    + `id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - identifier of the approval.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Approval_Response`)
+
+## Group Care plan
+### Create Care Plan [POST /api/patients/{patient_id}/care_plans]
+This method allows to create Care Plan for a person in eHealth.
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of Care Plan in Media Content Storage if all checks is passed. 
+
+**Scopes required:** `care_plan:write`
+
+Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Care Plan [POST /api/patients/{patient_id}/care_plans]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person. 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    
+    + Attributes (Care_Plan_Create)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+        
+
+### Create Care Plan activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+This method adds activity to an existing patient's Care Plan.
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of Care Plan activity in Media Content Storage if all checks is passed.
+
+**Scopes required:** `care_plan:write`
+
+Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
+    + `care_plan_id`: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+        
+### Dummy Care Plan activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
+    + `care_plan_id`: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Unique Care Plan identifier
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        
+    + Attributes (`Care_Plan_activity_base`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+        
+
+### Get Care Plan by ID [GET /api/patients/{patient_id}/care_plans/{id}]
+Returns care plan details by it's identifier in patient context
+
+**Scopes required:** `care_plan:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier. 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Care_Plan_Show`)
+
+
+### Get Care Plans by search params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,status,page,page_size}]
+Returns care plan list filtered by submitted parameters withtin specified patient.
+
+**Scopes required:** `care_plan:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + legal_entity_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - Legal entity where Care Plan was created. 
+    + period_date: `2018-08-02` (date, optional) - date within Care plan's period incleuding start and end dates
+    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Care plan
+    + based_on: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - Care Plan identifier on which returned Care plans are based on.
+    + part_of: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - parent Care Plan identifier which includes returned Care plans.
+    + status: `active` (string, optional) - Care plan's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Care_plan_summary`])
+
+
+### Get Care Plans by requisition [GET /api/care_plans{?requisition,status,page,page_size}]
+This service must be used to discover Care plans by requisition number. If nothing found by requisition number - it will return empty list
+
+**Scopes required:** `care_plan:read`
+
++ Parameters
+    + requisition: `0123-4567-89AB-CEIK` (string, required) - requisition number
+    + status: `active` (string, optional) - Care plan's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array, fixed-type)
+            + (`Care_plan_summary`)
+                + identity (`Person_service_request`, required)
+
+
+### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
+Returns care plan's activity details by it's identifier within care plan and patient context
+
+**Scopes required:** `care_plan:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Care Plan identifier. 
+    + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Care_plan_activity_show`)
+            + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+            + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+            + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+            + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+
+### Get Care Plan activities [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities{?author,kind,status,page,page_size}]
+Returns all the activities related to the care plan in patient context
+
+**Scopes required:** `care_plan:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required) - Care Plan identifier.
+    + author: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional) - author of the activity.
+    + kind: `service_request` (enum, optional) - kind of the activity.
+        - service_request
+        - medication_request
+    + status: `scheduled` (string, optional) - Care plan activity status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array)
+            + (object)
+                + include `Care_plan_activity_show`
+                + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+                + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+                + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+                + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+
+
+### Cancel Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/cancel]
+
+This method must be used to cancel of existing patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of care plan must be equal to care plan stored in DB. See *Get Care plan by ID*
+2. Activities should not be presented in signed content. 
+3. $.status_reason must be added to signed content
+
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan* for more details
+
+
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Cancel Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/cancel]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (`Care_Plan_Show`)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/care_plan_cancel_reasons` (string)
+                    + code: `some code` (string)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Complete Care Plan [PATCH /api/patients/{patient_id}/care_plans/{id}/actions/complete]
+
+This method must be used to complete of existing patient's Care plan.
+
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model)
+
+
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/care_plan_complete_reasons` (string)
+                    + code: `some code` (string)
+    
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+        
+
+### Cancel Care Plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
+
+This method must be used to cancel of existing activity from patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by ID*
+2. $.detail.status_reason must be changed in signed content
+
+Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan activity* for more details
+
+
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Cancel Care Plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (`Care_plan_activity_show`)
+        + `detail` (Care_Plan_activity_detail_base, fixed-type)
+            + status: scheduled (enum, required)
+                - `in_progress`
+                - scheduled
+            + `status_reason` (Codeable_Concept, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+        + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+        + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+        + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+        + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+        
+
+### Complete Care plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/complete]
+
+This method must be used to complete of existing activity from patient's Care plan.
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Care Plan identifier.
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - activity identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `outcome_codeable_concept` (array, required, fixed-type)
+            + (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/care_plan_activity_outcomes` (string, required)
+        + `detail` (object, required, fixed-type)
+            + `status_reason` (Codeable_Concept, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `some code` (string)
+                        + system: `eHealth/care_plan_activity_complete_reasons` (string, required)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 
 # Data Structures
 
@@ -2390,8 +2920,8 @@ http code| processing method | Client recommendations
 
 
 ### `Period`
-+ start : `2018-08-02T10:45:16.000Z`(string, required) - C? Starting time with inclusive boundary
-+ end : `2018-08-02T11:00:00.000Z`(string, optional) - C? End time with inclusive boundary, if not ongoing
++ start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
++ end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
 
 ### `Quantity`
 + value : `13,5` (number, required)
@@ -2841,7 +3371,6 @@ http code| processing method | Client recommendations
 + encounter (`Encounter_Base`, required, fixed-type)
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
-    + (`Condition_Request_2`)
 + observations (array, optional, fixed-type)
     + (`Observation_Request_1`)
         + `context` (Reference_request, required)
@@ -3022,9 +3551,7 @@ http code| processing method | Client recommendations
                     
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
-        + `verification_status`: `entered_in_error` (string) - `dictionary eHealth/condition_verification_statuses`  
-    + (`Condition_Request_2`)
-        + `verification_status`: `entered_in_error` (string)- `dictionary eHealth/condition_verification_statuses`
+        + `verification_status`: `entered_in_error` (string) - `dictionary eHealth/condition_verification_statuses`
 + observations (array, optional, fixed-type)
     + (`Observation_Request_1`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/observation_statuses`
@@ -3076,51 +3603,45 @@ http code| processing method | Client recommendations
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + primary_source: `false` (boolean, required)
 - One Of
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string) 
-                + code: `mother` (string) - `dictionary eHealth/report_origins`
-                
-        + text: `Галина Олександрівна` (string)
-    + asserter(Reference_request, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `patient` (string)
-                        
-        
+    - `asserter` (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `employee` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)                        
+    - `report_origin` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + `context` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-                    
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/ICD10/condition_codes` (string)
-            + code: `A89` (string) - `dictionary - eHealth/ICD10/condition_codes`
-            
+            + code: `A89` (string)
 + `clinical_status`: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
 + `verification_status`: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
 + severity(Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/condition_severities` (string)  
-            + code: `55604002` (string) -`dictionary - eHealth/condition_severities`
-            
-    
+            + code: `55604002` (string)
 + `body_sites` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/body_sites` (string)
-                + code: `head` (string) - `dictionary - eHealth/body_sites`
-                   
-    
+                + code: `head` (string)
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)//Estimated or actual date,  date-time when condition starts
 + asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
 + stage (object, optional)
@@ -3128,153 +3649,61 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/condition_stages` (string)
-                + code: `14803004` (string) - `dictionary - eHealth/condition_stages`
-                
+                + code: `14803004` (string)
 + evidences (array, optional, fixed-type)
     + (object)
-        + code (array, optional, fixed-type)
+        + codes (array, optional, fixed-type)
             + (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + system: `eHealth/ICPC2/reasons` (string)
-                        + code: `169068008` (string) - `dictionary - eHealth/ICPC2/reasons`
+                        + code: `169068008` (string)
                         
-        + detail (array, optional, fixed-type)
+        + details (array, optional, fixed-type)
             + (Reference_request)
                 + identifier (Identifier)
                     + type (Codeable_Concept)
                         + coding (array, fixed-type)
                             + (Coding)
                                 + code: `observation` (string)
-                                
-        
-
-
-### `Condition_Request_2`
-+ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ primary_source: `true` (boolean, required)
-- One Of
-    + asserter(Reference_request, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `patient` (string)
-                            
-
-        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string) 
-                + code: `mother` (string) - `dictionary eHealth/report_origins`
-                
-        + text: `Галина Олександрівна` (string)
-+ `context` (Reference_request, required)
-     + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)
-                    
-+ code (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/ICD10/condition_codes` (string)
-            + code: `K87` (string) - `dictionary - eHealth/ICD10/condition_codes`
-            
-+ `clinical_status`: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
-+ `verification_status`: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
-+ severity(Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/condition_severities` (string)  
-            + code: `55604002` (string) -`dictionary - eHealth/condition_severities`
-            
-    
-+ `body_sites` (array, optional, fixed-type)
-    + (Codeable_Concept)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/body_sites` (string)
-                + code: `head` (string) - `dictionary - eHealth/body_sites`
-                   
-    
-+ onset_date: `2018-08-02T10:45:16.000Z` (string, required)
-+ asserted_date: `2018-10-08T09:46:37.694Z` (string, requierd)//Date record was believed accurate last time
-
-+ stage (object, optional)
-    + summary (Codeable_Concept, required)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/condition_stages` (string)
-                + code: `14803004` (string) - `dictionary - eHealth/condition_stages`
-                
-                
-+ evidences (array, optional, fixed-type)
-    + (object)
-        + code (array, optional, fixed-type)
-            + (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + system: `eHealth/ICPC2/reasons` (string)
-                        + code: `169068008` (string) - `dictionary - eHealth/ICPC2/reasons`
-                        
-                        
-        + detail (array, optional, fixed-type)
-            + (Reference_request)
-                + identifier (Identifier)
-                    + type (Codeable_Concept)
-                        + coding (array, fixed-type)
-                            + (Coding)
-                                + code: `observation` (string)
-                                
-                            
-        
-
 
 ### `Condition_Response`
 + id: `6fe6d880-f100-4e39-a278-1d14eb8472ef` (string, required)
 + primary_source: `true` (boolean, required)
 - One Of
-    
-    + `asserter` (Reference_response, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `patient` (string)
-                        
-        + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string) 
-                + code: `mother` (string) - `dictionary eHealth/report_origins`
-                
-        + text: `Галина Олександрівна` (string)
-
-                    
+    - `asserter` (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `employee` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)                        
+    - `report_origin` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + `context` (Reference_response, required)
      + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-                    
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/ICD10/condition_codes` (string)
-            + code: `K87` (string) - `dictionary - eHealth/ICD10/condition_codes`
-            
+            + code: `K87` (string)
 + `clinical_status`: `active` (string, required) - `dictionary - eHealth/condition_clinical_statuses`
 + `verification_status`: `provisional` (string, required) - `dictionary - eHealth/condition_verification_statuses`
 + severity(Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/condition_severities` (string)  
-            + code: `55604002` (string) -`dictionary - eHealth/condition_severities`
+            + code: `55604002` (string)
             
     
 + `body_sites` (array, optional, fixed-type)
@@ -3282,7 +3711,7 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/body_sites` (string)
-                + code: `head` (string) - `dictionary - eHealth/body_sites`
+                + code: `head` (string)
                 
     
 + onset_date: `2018-10-08T09:46:37.694Z` (string, required)
@@ -3294,7 +3723,7 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/condition_stages` (string)
-                + code: `14803004` (string) - `dictionary - eHealth/condition_stages`
+                + code: `14803004` (string)
                 
 + evidences (array, optional, fixed-type)
     + (object)
@@ -3303,7 +3732,7 @@ http code| processing method | Client recommendations
                 + coding (array, fixed-type)
                     + (Coding)
                         + system: `eHealth/ICPC2/reasons` (string)
-                        + code: `169068008` (string) - `dictionary - eHealth/ICPC2/reasons`
+                        + code: `169068008` (string)
                         
         + details (array, optional, fixed-type)
             + (Reference_response)
@@ -3334,60 +3763,53 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/observation_categories` (string)
-                + code: `vital_signs` (string) - `dictionary - eHealth/observation_categories`
-                
-
+                + code: `vital_signs` (string)
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/LOINC/observation_codes` (string)
-            + code: `10569-2` (string)- `dictionary - eHealth/LOINC/observation_codes`
-            
-
+            + code: `10569-2` (string)
 - One Of
-    + effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
-    + effective_period (Period, optional, fixed-type)
+    - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    - effective_period (object, optional, fixed-type)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
-
-+ primary_source: `true` (boolean, required)
++ primary_source: `true` (boolean, required) - could NOT be false on DRP
 - One Of
-    + `performer` (Reference_request, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-                        
-        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
-        + text: `Галина Олександрівна` (string)
-
-
+        + text: `зі слів пацієнта` (string)
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/observation_interpretations` (string)
-            + code: `L` (string) `dictionary - eHealth/observation_interpretations`
-            
-    
+            + code: `L` (string)
 + comment: `Some comment` (string, optional)
 + `body_site` (Codeable_Concept, optional)
      + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/body_sites` (string) 
-            + code: `head` (string)- `dictionary -  eHealth/body_sites`
+            + code: `head` (string)
             
 
 + method (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string)
-            + code: `255459008` (string) - `dictionary - eHealth/observation_methods`
+            + system: `eHealth/observation_methods` (string)
+            + code: `anamnesis` (string)
             
 
 - One Of
@@ -3479,7 +3901,191 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + system: `eHealth/observation_interpretations` (string)
-                    + code: `L` (string) `dictionary - eHealth/observation_interpretations`
+                    + code: `L` (string)
+                    
+        + reference_ranges (array, optional, fixed-type)
+            + (object)
+                + low (Quantity, optional)
+                + high (Quantity, optional)
+                    + value: `27,5` (number, required)
+                    + comparator: `<` (string, required)
+                + type (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_types` (string)
+                            + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                                
+                + `applies_to` (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_applications` (string)
+                            + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                             
+                + age (Range, optional)
+                    + low (Quantity, optional)
+                        + value : `18` (number, required)
+                        + comparator : `>` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system  (string, optional)
+                        - code (string, optional)
+                    + high (Quantity, optional)
+                        + value : `35` (number, required)
+                        + comparator : `<` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system (string, optional)
+                        - code (string, optional)
+                
+                + text: `Some text` (string, optional)
+
+###  `Observation_Request_Base_DRP`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
++ `diagnostic_report` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
++ categories (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/observation_categories` (string)
+                + code: `vital_signs` (string)
+                
+
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/LOINC/observation_codes` (string)
+            + code: `10569-2` (string)
+            
+
+- One Of
+    + effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    + effective_period (Period, optional, fixed-type)
++ issued: `2018-08-02T10:45:16.000Z` (string, required)
+
++ primary_source: `true` (boolean, required) - could NOT be false on DRP
++ `performer` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+
++ interpretation (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/observation_interpretations` (string)
+            + code: `L` (string)
+            
+    
++ comment: `Some comment` (string, optional)
++ `body_site` (Codeable_Concept, optional)
+     + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/body_sites` (string) 
+            + code: `head` (string)
+            
+
++ method (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/observation_methods` (string)
+            + code: `anamnesis` (string)
+            
+
+- One Of
+    + value_quantity (Quantity, required)
+    + value_codeable_concept (Codeable_Concept, required)
+    + value_sampled_data (object, required)
+        + origin (number, optional) //SimpleQuantity Zero value and units
+        + period (number, optional) // decimal Number of milliseconds between samples
+        + factor (number, optional) // decimal Multiply data by this before adding to origin
+        + lower_limit (number, optional)// decimal Lower limit of detection
+        + upper_limit (number, optional) // Σ 0..1 decimal Upper limit of detection
+        + dimensions (number, optional) // positiveInt Number of sample points at each time point
+        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+    + value_string (string, required)
+    + value_boolean (boolean, required)
+    + value_range (Range, required, fixed-type)
+    + value_ratio (object, required)//Need an example 
+        + numerator (Quantity, required)
+        + denominator (Quantity, required)
+    + value_time (string, required)
+    + value_date_time (string, required)
+    + value_period (Period, required)
++ reference_ranges (array, optional, fixed-type)
+    + (object)
+        + low (Quantity, optional)
+        + high (Quantity, optional)
+            + value: `27,5` (number, required)
+            + comparator: `<` (string, required)
+        + type (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_types` (string)
+                    + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                        
+        + `applies_to`(Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_applications` (string)
+                    + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                     
+        + age (Range, optional)
+            + low (Quantity, optional)
+                + value : `18` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `years` (string, optinal)
+                - system  (string, optional)
+                - code (string, optional)
+            + high (Quantity, optional)
+                + value : `35` (number, required)
+                + comparator : `<` (string, optional)
+                + unit : `years` (string, optinal)
+                - system (string, optional)
+                - code (string, optional)
+        + text: `Some text` (string, optional)
++ `reaction_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `immunization` (string)
+    
++ components (array, optional, fixed-type)
+    + (object)
+        + code (Codeable_Concept, required)
+        - One Of
+            + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
+            + value_quantity (Quantity, required)
+            + value_codeable_concept (Codeable_Concept, required)
+            + value_sampled_data (object, required)
+                + origin (number, optional) //SimpleQuantity Zero value and units
+                + period (number, optional) // decimal Number of milliseconds between samples
+                + factor (number, optional) // decimal Multiply data by this before adding to origin
+                + lowerLimit (number, optional)// decimal Lower limit of detection
+                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+                + dimensions (number, optional) // positiveInt Number of sample points at each time point
+                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+            
+            + value_boolean (boolean, required)
+            + value_range (object, required, fixed-type)
+                + low (Quantity, required)
+                + high (Quantity, required)
+            + value_ratio (object, required)//Need an example 
+                + numerator (Quantity, required)
+                + denominator (Quantity, required)
+            + value_time (string, required)
+            + value_date_time (string, required)
+            + value_period (Period, required)
+        + interpretation (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/observation_interpretations` (string)
+                    + code: `L` (string)
                     
         + reference_ranges (array, optional, fixed-type)
             + (object)
@@ -3552,13 +4158,13 @@ http code| processing method | Client recommendations
         + coding (array, fixed-type)
             + (Coding)
                 + system: `eHealth/observation_categories` (string)
-                + code: `vital_signs` (string) - `dictionary - eHealth/observation_categories`
+                + code: `vital_signs` (string)
 
 + code (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/LOINC/observation_codes` (string)
-            + code: `10569-2` (string)- `dictionary - eHealth/LOINC/observation_codes`
+            + code: `10569-2` (string)
             
 
 - One Of
@@ -3581,14 +4187,13 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
-                
-        + text: `Галина Олександрівна` (string)
+        + text: `зі слів пацієнта` (string)
 
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/observation_interpretations` (string)
-            + code: `L` (string) `dictionary - eHealth/observation_interpretations`
+            + code: `L` (string)
             
     
 + comment: `Some comment` (string, optional)
@@ -3602,8 +4207,8 @@ http code| processing method | Client recommendations
 + method (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `http://hl7.org/fhir/v2/0078` (string)
-            + code: `255459008` (string) - `dictionary - eHealth/observation_methods`
+            + system: `eHealth/observation_methods` (string)
+            + code: `anamnesis` (string)
             
 
 - One Of
@@ -3698,7 +4303,7 @@ http code| processing method | Client recommendations
             + object
                 + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-        + text: `Галина Олександрівна` (string)
+        + text: `зі слів пацієнта` (string)
                     
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
@@ -3798,7 +4403,7 @@ http code| processing method | Client recommendations
             + object
                 + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-        + text: `Галина Олександрівна` (string)
+        + text: `зі слів пацієнта` (string)
                     
 + manufacturer : `VacinePro Manufacturer` (string, optional), // Vaccine manufacturer
 + lot_number : `AAJN11K` (string, optional), // Vaccine lot number
@@ -3894,20 +4499,21 @@ http code| processing method | Client recommendations
 
 + primary_source: `true` (boolean, required)
 - One Of
-    + asserter (Reference_request, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - `asserter` (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-                        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
-                
-        + text: `Галина Олександрівна` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)                        
+    - `report_origin` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + last_occurrence : `2017-10-08T00:00:00.000Z` (string, optional) , // Date(/time) of last known occurrence of a reaction
 
 
@@ -3938,21 +4544,21 @@ http code| processing method | Client recommendations
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `true` (boolean, required)
 - One Of
-    + asserter (Reference_response, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - `asserter` (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-                        
-        + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
-            
-        + text: `Галина Олександрівна` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)                        
+    - `report_origin` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + last_occurrence : `2018-07-02T00:00:00.000Z` (string, optional) , // Date(/time) of last known occurrence of a reaction
 
 
@@ -3977,37 +4583,24 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `encounter` (string)
 + asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
-
 + primary_source: `true` (boolean, required)
 - One Of
-    + performer (Reference_request, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-                        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
-        + text: `Галина Олександрівна` (string)
-- One Of
-    + reason_codes (array, fixed-type)
-        + object (Codeable_Concept, optional)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/risk_assessment_reasons` (string)
-                    + code: `default_reason` (string)
-    + reason_references (array, fixed-type)
-        + object (Codeable_Concept, optional)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `condition` (string)
+        + text: `зі слів пацієнта` (string)
++ mitigation: `some text` (string, optional)
 + basis (Ext_Reference, optional)
     + references (array, fixed-type)
         + (object)
@@ -4016,6 +4609,22 @@ http code| processing method | Client recommendations
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `observation` (string)
+- One Of
+    - reason_references (array, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `condition` (string)
+                + text (string, optional)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `reason_codes` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/risk_assessment_reasons` (string, required)
+                + code: `default_risk_assessment_reason` (string)
+        + text: `причина хвороби` (string)        
 + predictions (array, optional, fixed-type)
     + (object)
         + outcome (Codeable_Concept, optional)
@@ -4065,18 +4674,21 @@ http code| processing method | Client recommendations
                     + code: `encounter` (string)
 + primary_source: `true` (boolean, required)
 - One Of
-    + asserter (Reference_request, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - `asserter` (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-                        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)                        
+    - `report_origin` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + type (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
@@ -4109,25 +4721,28 @@ http code| processing method | Client recommendations
                     + code: `encounter` (string)
 + primary_source: `true` (boolean, required)
 - One Of
-    + asserter (Reference_request, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - `asserter` (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-                        
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)                        
+    - `report_origin` (object, optional)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + effective_period: `Вживає з 2017-го року регулярно` (string, optional) 
 
 + `medication_code` (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/medical_statement_medications` (string) 
-            + code: `Spine_board` (string)- `dictionary -  eHealth/medication_statement_medications`
+            + code: `Spine_board` (string)
 + note: `Some text` (string, optional)
 + dosage: `5 ml/day` (string, optional)
 
@@ -4244,7 +4859,6 @@ http code| processing method | Client recommendations
             + (Coding)
                 + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
-                
 + results_interpreter (optional)
     - One Of
         + reference (Reference_request,optional)
@@ -4259,14 +4873,13 @@ http code| processing method | Client recommendations
 + include `Diagnostic_Report_Base_request`
 + primary_source: `true` (boolean, required) - could NOT be false
 + performer (required)
-    -One Of
-        + reference (Reference_request, optional)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-        + text: `Опанасенко Олексій Володимирович` (object, optional)          
+    + reference (Reference_request, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+    + text: `Опанасенко Олексій Володимирович` (object, optional)          
                     
 + `managing_organization` (Reference_request, required)
     + identifier (Identifier)
@@ -4413,7 +5026,7 @@ http code| processing method | Client recommendations
 ### `Submit_DR_Package`
 + `diagnostic_report` (Diagnostic_Report_Package_Request, required)
 + `observations` (array, optional, fixed-type)
-    + (Observation_Request_Base)
+    + (Observation_Request_Base_DRP)
         + `diagnostic_report` (Reference_request, required)
             + identifier (Identifier, optional, fixed-type)
                 + type (Codeable_Concept, required)
@@ -4424,7 +5037,7 @@ http code| processing method | Client recommendations
 ### `Submit_DR_Package_Cancel`
 + `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
 + `observations` (array, optional, fixed-type)
-    + (Observation_Request_Base)
+    + (Observation_Request_Base_DRP)
         + `diagnostic_report` (Reference_request, required)
             + identifier (Identifier, optional, fixed-type)
                 + type (Codeable_Concept, required)
@@ -4508,19 +5121,21 @@ http code| processing method | Client recommendations
                     + code: `employee` (string)
 + primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
 - One Of
-    + `performer` (Reference_request, required) - is filled in in case primary_source is true
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-    + `report_origin` (Codeable_Concept, optional) - is filled in in case primary_source is false
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
-        + text: `Галина Олександрівна` (string)
+        + text: `зі слів пацієнта` (string)
 + `division` (Reference_request, optional, fixed-type) - Division of legal_entity where procedure have been performed.
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4588,19 +5203,21 @@ http code| processing method | Client recommendations
     + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
 + primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
 - One Of
-    + `performer` (Reference_response, required) - is filled in in case primary_source is true
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-    + `report_origin` (Codeable_Concept, optional) - is filled in in case primary_source is false
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
-        + text: `Галина Олександрівна` (string)
+        + text: `зі слів пацієнта` (string)
 + `division` (Reference_response, optional, fixed-type) - Division of legal_entity where procedure have been performed.
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4693,19 +5310,21 @@ http code| processing method | Client recommendations
                     + code: `employee` (string)
 + primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
 - One Of
-    + `performer` (Reference_request, required) - is filled in in case primary_source is true
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - performer (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (string)
-    + `report_origin` (Codeable_Concept, optional) - is filled in in case primary_source is false
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                + text: `Галина Олександрівна` (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
-        + text: `Галина Олександрівна` (string)
+        + text: `зі слів пацієнта` (string)
 + `division` (Reference_request, optional, fixed-type) - Division of legal_entity where procedure have been performed.
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4938,6 +5557,19 @@ http code| processing method | Client recommendations
                     + code: `program_service` (string) 
 + intent: `order` (string, required)
 + priority: `routine` (string, optional)
++ based_on (array,optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string, required)
 + category (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
@@ -4960,9 +5592,11 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-- One Of
+- One of
+    - `occurrence_period` (object)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
     - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
-    - `occurrence_period` (`Period`, optional)
 + `requester_employee` (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -5062,6 +5696,19 @@ http code| processing method | Client recommendations
 + status: `active` (string, required)
 + intent: `order` (string, required)
 + priority: `routine` (string, required)
++ based_on (array,optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string, required)
 + category (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
@@ -5079,9 +5726,11 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-- One Of
+- One of
+    - `occurrence_period` (object)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
     - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
-    - `occurrence_period` (`Period`, optional)
 + `requester_employee` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -5143,6 +5792,19 @@ http code| processing method | Client recommendations
 + status: `active` (string, required)
 + intent: `order` (string, required)
 + priority: `routine` (string, required)
++ based_on (array,optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string, required)
 + category (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
@@ -5166,9 +5828,11 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-- One Of
+- One of
+    - `occurrence_period` (object)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
     - `occurrence_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
-    - `occurrence_period` (`Period`, optional)
 + `requester_employee` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -5277,22 +5941,34 @@ http code| processing method | Client recommendations
 
 ### `Approval_Request`
 - One Of
-    + `resources` (array, optional) - list of resources that are requested access to be granted
-        + (Reference_request)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
+    - `resources` (array, optional) - list of resources that are requested access to be granted
+        - (object)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
                             + code: `episode_of_care` (string)
-                + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
-    + `service_request` (object, optional)
-        + (Reference_request)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `service_request` (string)
-                + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+                    + text (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `service_request` (object, optional) - access to permitted_resources in service request
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `service_request` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+    - `forbidden_group` (object, optional) - access to medical events that fall under the restrictions specified in the forbidden group
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `forbidden_group` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
 + `granted_to` (Reference_request, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -5302,51 +5978,6 @@ http code| processing method | Client recommendations
 + access_level: `read` (enum, required) - only `read` is supported
     - read
 + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of patient's auth method
-
-### `Approval_Response_crud`
-+ `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
-+ `patient_id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - mpi_id hash
-+ `granted_resources` (array, required) - list of resources that are allowed by approval
-    + (Reference_response)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `episode_of_care` (string)
-            + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
-+ `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-+ expires_at: 1498749591 (number, required) - expiration date-time timestamp
-+ `granted_by` (Reference_response, required) - type and identifier of entity who has granted access - user_id
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `mpi-hash` (string)
-+ reason (Reference_response, optional) - type and identifier of entity based on which approval has been created
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-+ `status`: new (enum, required) - status of approval
-    - new
-    - active
-+ access_level: `read` (string, required) - only `read` is supported
-+ `authentication_method` (object, required)
-    + type: `OTP` (enum, required)
-        - OTP
-        - OFFLINE
-        - NA
-    + number: `+38093*****85` (string, optional)
-+ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
-+ `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
-+ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
-+ `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
 
 ### `Approval_Response`
 + `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
@@ -5370,11 +6001,11 @@ http code| processing method | Client recommendations
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `employee` (string)
+                    + code: `service_request` (string)
 + `status`: new (enum, required) - status of approval
     - new
     - active
-+ access_level: `read` (string, required) - only `read` is supported
++ access_level: `read` (string, required)
 + `authentication_method_current` (object, required)
     + type: `OTP` (enum, required)
         - OTP
@@ -5382,7 +6013,66 @@ http code| processing method | Client recommendations
         - NA
     + number: `+38093*****85` (string, optional)
 
-    
+### `Get_Approvals_List`
++ `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
++ `granted_resources` (array, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
+            + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ reason (Reference_response, optional) - type and identifier of entity based on which approval has been created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `status`: new (enum, required) - status of approval
+    - new
+    - active
++ access_level: `read` (string, required)
+
+### `Get_Approval_Details`
++ `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
++ `granted_resources` (array, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (string)
+            + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ expires_at: 1498749591 (number, required) - expiration date-time timestamp
++ reason (Reference_response, optional) - type and identifier of entity based on which approval has been created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service_request` (string)
++ `status`: new (enum, required) - status of approval
+    - new
+    - active
++ access_level: `read` (string, required)
++ `authentication_method_current` (object, required)
+    + type: `OTP` (enum, required)
+        - OTP
+        - OFFLINE
+        - NA
+    + number: `+38093*****85` (string, optional)
 
 ## `Service_dictionary`
 ### `Service`
@@ -5423,4 +6113,330 @@ http code| processing method | Client recommendations
 ## `Person_details`
 ### `Person_service_request`
 + short_name: Петро І. І. (string, required)
-+ age: 35 (number, required) - full years between medication request date and birth date
++ age: 35 (number, required) - full years between current date and birth date
+
+## Care plan
+### `Care_Plan_Create`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `based_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ `part_of` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ category (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/care_plan_categories` (string)
+            + code: `diabetics` (string)
++ title: `Diabetics health plan` (string, required)
++ description: `Some description of the care plan` (string, optional)
++ period (Period, required)
++ `supporting_info` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode` (enum)
+                            - episode
+                            - procedure
+                            - diagnostic report
++ note: `Some notes` (string, optional)
++ intent: `order` (enum, required)
+    - order
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ addresses (array, required, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `E11.9` (string)
+                + system: `eHealth/ICD10_AM/condition_codes` (string, required)
++ author (Reference_request, required) - `author of the Care plan`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ contributor (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
++ `terms_of_service` (Codeable_Concept,required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: INPATIENT (enum)
+                - INPATIENT
+                - OUTPATIENT
+            + system: `PROVIDING_CONDITION` (string)
++ status: new (string, required)
+        
+
+### `Care_Plan_activity_base`
++ id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - unique within the care plan
++ author (Reference_request, required) - `author of the activity`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `care_plan` (Reference_request, required) - `Care plan to which the activity belongs`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ `detail` (Care_Plan_activity_detail_base, required)
+
+
+### `Care_Plan_activity_detail_base`
++ kind: `service_request` (enum, required)
+    - service_request
+    - medication_request
++ `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
+     + identifier (object, optional)
+        + type (object, optional)
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/resources` (string, required)
+                    + code: `service` (enum)
+                        - service
+                        - `service_group`
+                        - medication
+            + text (string)
+        + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
++ `reason_code` (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `X85` (string)
+                + system: `eHealth/ICD10_AM/condition_codes` (string, required)
++ `reason_reference` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports that approves diagnoses`
+                            - condition
+                            - oservation
+                            - diagnostic_report
++ goal (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `diabetes_treatment` (string)
+                + system: `eHealth/care_plan_activity_goals` (string, required)
++ quantity (object)
+    + value: 13 (number, required)
+- One of
+    - `scheduled_timing` (object)
+        + event (array)
+            - `2018-08-02T10:45:16Z` ([string])
+        + repeat (object)
+            - One Of
+                - `bounds_duration` (object, optional)
+                    + value: 10 (number, required)
+                    + comparator: `>` (string, optional)
+                    + unit: `доба` (string, optional)
+                    + system: `eHealth/ucum/units` (string, required)
+                    + code: `day` (string, required)
+                - bounds_range (object, optional)
+                    + low (object, required)
+                        + value: `13` (number, required)
+                        + unit: `доба` (string, optional) 
+                        + system: `eHealth/ucum/units` (string, required)
+                        + code: `day` (string, required)
+                    + high (object, required)
+                        + value: `23` (number, required)
+                        + unit: `доба` (string, optional) 
+                        + system: `eHealth/ucum/units` (string, required)
+                        + code: `day` (string, required)
+                - bounds_period (object, optional)
+                    + start: `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+                    + end: `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
+            + count: 10 (number, optional) - Number of times to repeat
+            + `count_max`: 20 (number, optional) - Maximum number of times to repeat
+            + duration: 15 (number, optional) - How long when it happens
+            + `duration_max`: 25 (number, optional) - How long when it happens
+            + `duration_unit`: `day` (string, optional) - unit of time dictionary
+            + frequency: 1 (number, optional) - Event occurs frequency times per period
+            + `frequency_max`: 4 (number, optinal) - Event occurs up to requency max times per period
+            + `period`: 1 (number, optinal) - Event occurs frequency times per period
+            + `period_max`: 3 (number, optional) - Upper limit of period, 3-4 hours
+            + `period_unit`: `day` (string, optional) - unit of time dictionary
+            + `day_of_week` (array, optinal) - DAYS OF WEEK dictionary
+                - mon ([string])
+            + `time_of_day` (array, optinal) - Time of day for action
+                - `16:00:00` ([string])
+            + when: (array, optional) - Code for time period of occurrence from EVENT_TIMING dictionary
+                - WAKE ([string])
+            + offset: 20 (number, optinal) - Minutes from event, before or after
+        + code (object)
+            + `coding` (array, required, fixed-type)
+                + (object)
+                    + system: `TIMING_ABBREVIATION` (string, required)
+                    + code: `Q4H` (string, required) - Symbol in syntax defined by the system
+            + text (string, optional)
+    - `scheduled_period` (object)
+        + start: `2018-08-02T10:45:16.000Z`(string, required) -  Starting time with inclusive boundary
+        + end: `2018-08-02T11:00:00.000Z`(string, optional) -  End time with inclusive boundary, if not ongoing
+    - `scheduled_string`: `2018-08-02T10:45:16.000Z` (string)
++ location (Reference_request)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ performer (Reference_request)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `daily_amount` (object)
+    + value: 13 (number, required)
++ description: `Some activity description` (string)
++ `do_not_perform`: false (boolean, required)
++ `program` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
++ status: scheduled (string, required)
+                    
+
+### `Care_plan_activity_show`
++ include `Care_Plan_activity_base`
++ `outcome_reference` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `encounter` (enum)
+                            - encounter
+                            - procedure
+                            - `diagnostic_report`
+                            - `medication_dispense`
++ `outcome_codeable_concept` (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `some code` (string)
+                + system: `eHealth/care_plan_activity_outcomes` (string, required)
++ `detail` (Care_Plan_activity_detail_base, required)
+    + status: completed (enum, required)
+        - scheduled
+        - `in_progress`
+        - completed
+        - cancelled
+    + `status_reason` (Codeable_Concept, optional, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `some code` (string)
+                + system: `eHealth/care_plan_activity_cancel_reasons` (enum, required)
+                    - `eHealth/care_plan_activity_complete_reasons`
+                    - `eHealth/care_plan_activity_cancel_reasons`
+    + `remaining_quantity` (object)
+        + value: 12 (number, required)
+
+
+### `Care_Plan_Show`
++ include `Care_Plan_Create`
++ subject (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+        + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ status: active (enum, required)
+    - new
+    - active
+    - completed
+    - cencelled
+    - terminated
++ `status_history` (array, required, fixed-type)
+    + (object)
+        + status: `active` (string, required)
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/care_plan_cancel_reasons` (enum)
+                        - `eHealth/care_plan_cancel_reasons`
+                        - `eHealth/care_plan_complete_reasons`
+                    + code: `some code` (string)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ requisition: `0123-4567-89AB-CEIK` (string, required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Care_plan_summary`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `based_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ requisition: `0123-4567-89AB-CEIK` (string, required)
++ `part_of` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ period (Period, required)
++ intent: `order` (enum, required)
+    - order
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ author (Reference_request, required) - `author of the Care plan`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ subject (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+        + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ status: active (enum, required)
+    - new
+    - active
+    - completed
+    - cencelled
+    - terminated
++ `terms_of_service` (Codeable_Concept,required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: INPATIENT (enum)
+                - INPATIENT
+                - OUTPATIENT
+            + system: `PROVIDING_CONDITION` (string)
