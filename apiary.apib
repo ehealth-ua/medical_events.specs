@@ -4338,12 +4338,13 @@ This method must be used to complete of existing activity from patient's Care pl
 
 + `explanation`  (object , optional)// Administration/non-administration reasons
     - One Of
-        - `reasons` (object, optional)
-            + coding (array, optional, fixed-type)
-                + object
-                    + system: `eHealth/reason_explanations` (string, required)
-                    + code: `immunization_by_calendar` (string)
-            + text: `Планове за календарем щеплень` (string)
+        - `reasons` (array, optional)
+            + (object)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/reason_explanations` (string, required)
+                        + code: `immunization_by_calendar` (string)
+                + text: `Планове за календарем щеплень` (string)
         - `reasons_not_given` (object, optional) - Why immunization did not occurr
             + coding (array, optional, fixed-type)
                 + object
