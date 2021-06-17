@@ -2233,7 +2233,7 @@ http code| processing method | Client recommendations
 201 | sync | use payload from response
 202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
-
+**Scopes required:** `approval:create`
 
 + Parameters
     + `patient_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
@@ -2261,6 +2261,8 @@ http code| processing method | Client recommendations
 
 ### Verify approval [PATCH /api/patients/{patiend_id}/approvals/{id}]
 
+**Scopes required:** `approval:create`
+
 + Parameters
     + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
     + `id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - approval_id
@@ -2277,6 +2279,8 @@ http code| processing method | Client recommendations
 + Response 200 (application/json)
 
 ### Resend SMS on approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/resend]
+
+**Scopes required:** `approval:create`
 
 + Parameters
     + `patiend_id`: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - mpi_id
