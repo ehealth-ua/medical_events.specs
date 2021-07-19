@@ -2502,6 +2502,10 @@ Returns care plan details by it's identifier in patient context
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Care_Plan_Show`)
+        + urgent (object, required)
+            + `informing_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                + number: `+38093*****85` (string, required)
 
 
 ### Get Care Plans by search params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,status,page,page_size}]
@@ -2531,6 +2535,10 @@ Returns care plan list filtered by submitted parameters withtin specified patien
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[`Care_plan_summary`])
+        + urgent (object, required)
+            + `informing_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                + number: `+38093*****85` (string, required)
 
 
 ### Get Care Plans by requisition [GET /api/care_plans{?requisition,status,page,page_size}]
@@ -2558,6 +2566,10 @@ This service must be used to discover Care plans by requisition number. If nothi
         + data (array, fixed-type)
             + (`Care_plan_summary`)
                 + identity (`Person_service_request`, required)
+        + urgent (object, required)
+            + `informing_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                + number: `+38093*****85` (string, required)
 
 
 ### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
@@ -6195,6 +6207,8 @@ This method must be used to complete of existing activity from patient's Care pl
                 - INPATIENT
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method 
 + status: new (string, required)
         
 
