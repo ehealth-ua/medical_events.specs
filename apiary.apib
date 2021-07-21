@@ -2202,6 +2202,13 @@ This service must be used to discover service requests by requisition number. If
         + data (`Job`)
 
 ### Complete Service Request [PATCH /api/service_requests/{service_request_id}/actions/complete]
+Method to resend sms on service request.
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `service_request:complete`
 
