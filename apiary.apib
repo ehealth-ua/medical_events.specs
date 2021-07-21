@@ -2505,7 +2505,10 @@ Returns care plan details by it's identifier in patient context
         + urgent (object, required)
             + `informing_method_current` (object, required)
                 + type: `OTP` (enum, required)
-                + number: `+38093*****85` (string, required)
+                    - OTP
+                    - OFFLINE
+                    - THIRD_PERSON
+                + phone_number: `+38093*****85` (string, optional)
 
 
 ### Get Care Plans by search params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,status,page,page_size}]
@@ -2538,7 +2541,10 @@ Returns care plan list filtered by submitted parameters withtin specified patien
         + urgent (object, required)
             + `informing_method_current` (object, required)
                 + type: `OTP` (enum, required)
-                + number: `+38093*****85` (string, required)
+                    - OTP
+                    - OFFLINE
+                    - THIRD_PERSON
+                + phone_number: `+38093*****85` (string, optional)
 
 
 ### Get Care Plans by requisition [GET /api/care_plans{?requisition,status,page,page_size}]
@@ -2569,7 +2575,10 @@ This service must be used to discover Care plans by requisition number. If nothi
         + urgent (object, required)
             + `informing_method_current` (object, required)
                 + type: `OTP` (enum, required)
-                + number: `+38093*****85` (string, required)
+                    - OTP
+                    - OFFLINE
+                    - THIRD_PERSON
+                + phone_number: `+38093*****85` (string, optional)
 
 
 ### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
