@@ -1764,7 +1764,7 @@ This method is used to pre-qualify service request in order to define whether th
                 + type: `OTP` (enum, required)
                     - OTP
                     - OFFLINE
-                    - NA
+                    - THIRD_PERSON
                 + number: `+38093*****85` (string, optional)
         + meta (Response__Meta)
         +  data (array[`Qualify_Service_Request_Responce`]))
@@ -2514,6 +2514,7 @@ Returns care plan details by it's identifier in patient context
                 + type: `OTP` (enum, required)
                     - OTP
                     - OFFLINE
+                    - THIRD_PERSON
                 + phone_number: `+38093*****85` (string, optional)
 
 
@@ -6036,8 +6037,9 @@ This method must be used to complete of existing activity from patient's Care pl
     + type: `OTP` (enum, required)
         - OTP
         - OFFLINE
-        - NA
+        - THIRD_PERSON
     + number: `+38093*****85` (string, optional)
+
 
 ### `Get_Approvals_List`
 + `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
@@ -6097,8 +6099,9 @@ This method must be used to complete of existing activity from patient's Care pl
     + type: `OTP` (enum, required)
         - OTP
         - OFFLINE
-        - NA
+        - THIRD_PERSON
     + number: `+38093*****85` (string, optional)
+
 
 ## `Service_dictionary`
 ### `Service`
