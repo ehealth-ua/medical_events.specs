@@ -2394,6 +2394,13 @@ This method allows to create Care Plan for a person in eHealth.
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Care Plan in Media Content Storage if all checks is passed. 
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 **Scopes required:** `care_plan:write`
 
 Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
@@ -2410,6 +2417,13 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2433,6 +2447,13 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
     
     + Attributes (Care_Plan_Create)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2444,6 +2465,13 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
 This method adds activity to an existing patient's Care Plan.
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Care Plan activity in Media Content Storage if all checks is passed.
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
@@ -2460,6 +2488,13 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2480,6 +2515,13 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         api-key: aDGFDFGT46S5gFGD
         
     + Attributes (`Care_Plan_activity_base`)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2650,6 +2692,13 @@ This method must be used to cancel of existing patient's Care plan. Method recei
 
 Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan* for more details
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 
 **Scopes required:** `care_plan:write`
 
@@ -2666,6 +2715,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2694,6 +2750,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
                     + system: `eHealth/care_plan_cancel_reasons` (string)
                     + code: `some code` (string)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2706,6 +2769,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
 This method must be used to complete of existing patient's Care plan.
 
 Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model)
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `care_plan:write`
@@ -2729,6 +2799,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
                     + code: `some code` (string)
     
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2746,6 +2823,12 @@ This method must be used to cancel of existing activity from patient's Care plan
 
 Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan activity* for more details
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
@@ -2763,6 +2846,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2800,6 +2890,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
         + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2810,6 +2907,14 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
 ### Complete Care plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/complete]
 
 This method must be used to complete of existing activity from patient's Care plan.
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -2837,12 +2942,18 @@ This method must be used to complete of existing activity from patient's Care pl
                         + code: `some code` (string)
                         + system: `eHealth/care_plan_activity_complete_reasons` (string, required)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
-
 
 # Data Structures
 
