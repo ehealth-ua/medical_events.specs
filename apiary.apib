@@ -2422,8 +2422,7 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 201 (number)
-        + data(`Care_Plan_Show`)
-
+        + data (`Care_Plan_Show`)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -5197,9 +5196,7 @@ http code| processing method | Client recommendations
 ### Job
 + status: `pending` (string, required) - status of request processing.
 + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
-- one of
-    - links (array[Link], optional) - links to resources that has been impactedas a job processing result
-    - response_data (object, optional) - response data payload of the request that has initiated this job. It's Structure depends on the request.
++ links (array[Link], optional) - links to resources that has been impactedas a job processing result
 
 ### Job_Error
 + status: `failed` (string, required) - status of request processing
