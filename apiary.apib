@@ -1786,6 +1786,13 @@ Service will store signed copy of Service Request in Media Content Storage if al
 
 Signed content consists of JSON object with Service Request data.
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 **Scopes required:** `service_request:write`
 
 + Parameters
@@ -1800,7 +1807,13 @@ Signed content consists of JSON object with Service Request data.
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
-
+        
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
+        
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -1817,6 +1830,12 @@ Signed content consists of JSON object with Service Request data.
             api-key: aFBLVTZ6Z2dON1V
 
     + Attributes (Service_Request_Create)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)    
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2078,6 +2097,11 @@ http code| processing method | Client recommendations
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
 
 + Response 200 (application/json)
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2223,7 +2247,13 @@ http code| processing method | Client recommendations
             api-key: aFBLVTZ6Z2dON1V
 
     + Attributes (Complete_Service_Request)
-    
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
+            
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
