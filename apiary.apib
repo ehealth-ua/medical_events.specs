@@ -5846,7 +5846,7 @@ http code| processing method | Client recommendations
 
 ### `Service_Request_List`
 + include `Service_Request_Base`
-+ identity (`Person_service_request`, required)
++ identity (`Person_service_request`, required) - all parametres can have value NULL
 
 ### `Qualify_Service_Request_Responce`
 + `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
@@ -6280,7 +6280,12 @@ http code| processing method | Client recommendations
 
 ## `Person_details`
 ### `Person_service_request`
-+ short_name: Петро І. І. (string, required)
++ last_name: Іванов (string, required) - full surname of the patient
++ first_name: І. (string, required) - short format of the patient's first name with the dot
++ second_name: І. (string, required) - short format of the patient's second name with the dot
++ gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
+    - MALE
+    - FEMALE
 + age: 35 (number, required) - full years between current date and birth date
 
 ## Care plan
