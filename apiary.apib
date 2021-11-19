@@ -1985,6 +1985,13 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
 
 **Scopes required:** `service_request:cancel`
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 + Request (application/json)
 
     + Headers
@@ -1995,6 +2002,12 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
+        
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2317,6 +2330,13 @@ http code| processing method | Client recommendations
 
 ### Resend SMS on approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/resend]
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 **Scopes required:** `approval:create`
 
 + Parameters
@@ -2329,7 +2349,12 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Approval_Response`)
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2392,6 +2417,13 @@ It is allowed only for the doctor who has an active declaration with a patient f
 ### Cancel approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/cancel]
 Allows to cancel approval by it's identifier in patient context.
 It is allowed only for the doctor who has an active declaration with a patient from url (can cancel all approvals) or approval is granted to user (can cancel own approval).
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `approval:cancel`
 
