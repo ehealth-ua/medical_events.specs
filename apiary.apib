@@ -2283,6 +2283,13 @@ http code| processing method | Client recommendations
 201 | sync | use payload from response
 202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
+Block resources may consist next entities:
+Object| Access level
+-------|---------
+episode_of_care| read
+diagnostic_report|read
+care_plan|read, write
+
 **Scopes required:** `approval:create`
 
 + Parameters
