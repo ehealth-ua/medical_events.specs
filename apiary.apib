@@ -1334,6 +1334,7 @@ Device                      | All patient`s devices
 Medication Statment         | All patient`s medication statments
 Diagnostic Report           | Only specific *Diagnostic Reports* are available for Patient Summary
 Procedure                   | Only specific *Procedures* are available for Patient Summary
+Encounter                   | All patient's encounters with reduced info
 
 
 ### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
@@ -1719,6 +1720,51 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 + Response 200 (application/json)
     + Attributes (Response_Collection)
         + data (array[`Procedure_Response`])
+
+### Get Encounters by search params [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
+The endpoint returns a list of short Encounter info filtered by search params.
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + `date_from`:`1990-01-01`(string, optional)
+    + `date_to`: `2000-01-01`(string, optional)
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
+    + status: finished (string, optional)
+    + type: discharge (string, optional)
+    + class: INPATIENT (string, optional)
+    + `performer_speciality`: VIROLOGY (string, optional)
+    + `page`: `2` (number, optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Encounter_Short`])
+
+### Get Encounter by id [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
+The endpoint returns single short Encounter info.
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + encounter_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique encounter identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (`Encounter_Short`)
 
 # Group Service Requests
 
@@ -3804,6 +3850,30 @@ http code| processing method | Client recommendations
 + requester_employee_name: `John` (string, required) - Requester employee name
 + `service_request_date`: `2018-10-08` (string, required) - Service request date
 + note: `Some notes` (string, optional) - Some notes
+
+### `Encounter_Short`
++ id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
++ `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `episode` (Reference_request, required, fixed-type)   
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
++ class  (Coding, required)
+    + system : `eHealth/encounter_classes` (string)
+    + code: `inpatient` (string) - `dictionary eHealth/encounter_classes`
++ type (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/encounter_types` (string)
+            + code: `discharge` (string) - `dictionary eHealth/encounter_types`
++ `performer_speciality` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `SPECIALITY_TYPE` (string) - dictionary
+            + code: `VIROLOGY` (string) - `code from dictionary SPECIALITY_TYPE`
 
 
 ## Condition
