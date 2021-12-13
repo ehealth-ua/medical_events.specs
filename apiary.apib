@@ -1660,7 +1660,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Response_Collection`)
+    + Attributes (`Response_OK`)
         + data (`Diagnostic_Report_Response`)
 
 ### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
@@ -1696,7 +1696,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Response_Collection`)
+    + Attributes (`Response_OK`)
         + data (`Procedure_Response`)
 
 ### Get Procedures by search params [GET /api/patients/{patient_id}/summary/procedures{?status,episode_id,code,service_request_id,recorded_by,managing_organization_id}]
@@ -1721,7 +1721,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (Response_Collection)
         + data (array[`Procedure_Response`])
 
-### Get Encounters by search params [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
+### Get Short Encounters by search params [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
 The endpoint returns a list of short Encounter info filtered by search params.
 **Scopes required:** `patient_summary:read`
 
@@ -1748,7 +1748,7 @@ The endpoint returns a list of short Encounter info filtered by search params.
     + Attributes (Response_Collection)
         + data (array[`Encounter_Short`])
 
-### Get Encounter by id [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
+### Get Short Encounter by id [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
 The endpoint returns single short Encounter info.
 **Scopes required:** `patient_summary:read`
 
@@ -1763,7 +1763,7 @@ The endpoint returns single short Encounter info.
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Response_Collection`)
+    + Attributes (`Response_OK`)
         + data (`Encounter_Short`)
 
 # Group Service Requests
