@@ -3261,19 +3261,16 @@ http code| processing method | Client recommendations
     + system : `eHealth/episode_types` (string)
     + code: `primary_care` (string) - `dictionary eHealth/episode_types`
 + `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
-+ name: `Діабет 2018` (string, required)
-            
-+ managing_organization (Reference_request, required)
-    + identifier (Identifier)
++ `name`: `Діабет 2018` (string, required)
++ `managing_organization` (Reference_request, required)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-                    
-            
 + period (object , required)
     + start: `2018-08-02T10:45:16.000Z` (string, required)
-+ care_manager (Reference_request, required)
++ `care_manager` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3324,7 +3321,7 @@ http code| processing method | Client recommendations
                     + system: `eHealth/episode_closing_reasons` (string)
                     + code: `cured` (string) \\ wrong_patient, misspelling
         + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)            
-+ managing_organization (Reference_response, required)
++ `managing_organization` (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3332,10 +3329,10 @@ http code| processing method | Client recommendations
                     + code: `legal_entity` (string)
     + display_value: `Медікал Солюшнc` (string, required) - This field is filled on creating and never updated after
             
-+ period (Period, required)
++ `period` (Period, required)
     - end (string, optional)
     + start: `2018-08-02` (string, required) 
-+ care_manager (Reference_response, required)
++ `care_manager` (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3353,8 +3350,7 @@ http code| processing method | Client recommendations
 
 ### `Update_Episode`
 + name: `Інсулінонезалежний діабет` (string, optional)
-
-+ care_manager (Reference_request, optional)
++ `care_manager` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3413,7 +3409,7 @@ http code| processing method | Client recommendations
 ## Diagnosis
 
 ### `Diagnosis_Request`
-+ `condition` (Reference_request, required) 
++ `condition` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
