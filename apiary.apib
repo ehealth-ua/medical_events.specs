@@ -3297,7 +3297,7 @@ http code| processing method | Client recommendations
                     + code: `cured` (string)
         + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
 + `current_diagnoses` (array, optional, fixed-type)
-    + (Diagnosis)
+    + (Diagnosis_Referrence_Condition_2)
 + `diagnoses_history` (array, optional, fixed-type)
     + (object)
         + date: `2018-08-02T10:45:16.000Z` (string, required)
@@ -3535,7 +3535,7 @@ http code| processing method | Client recommendations
                 + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons`
                 
         
-+ diagnoses (array, required, fixed-type)
++ diagnoses (array, optional, fixed-type)
     + (`Diagnosis_Request`)
         
         
@@ -3705,7 +3705,7 @@ http code| processing method | Client recommendations
                 + code: `T90` (string) - `dictionary eHealth/ICPC2/reasons`
 
         
-+ diagnoses (array, required, fixed-type)
++ diagnoses (array, optional, fixed-type)
     + (`Diagnosis_Referrence_Condition`)
         
         
