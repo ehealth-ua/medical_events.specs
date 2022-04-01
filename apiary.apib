@@ -155,22 +155,30 @@ This resource should be used to get the processing status of the async job.
                     + entity: `procedure` (string, required)
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/procedure/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
                 
-+ Response 200 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (`Job_Error`)
 
 + Response 403 (application/json)
-    + Attributes (`Response___Error_Job_403`)
+    + Attributes (Response_OK)
+        + data (`Job_Error_403`)
+        + meta (Response__Meta)
+            + code: 200 (number)
 
 + Response 404 (application/json)
-    + Attributes (`Response___Error_Job_404`)
+    + Attributes (Response_OK)
+        + data (`Job_Error_404`)
+        + meta (Response__Meta)
+            + code: 200 (number)
 
 + Response 409 (application/json)
-    + Attributes (`Response___Error_Job_409`)
+    + Attributes (Response_OK)
+        + data (`Job_Error_409`)
+        + meta (Response__Meta)
+            + code: 200 (number)
 
-
++ Response 422 (application/json)
+    + Attributes (Response_OK)
+        + data (`Job_Error_422`)
+        + meta (Response__Meta)
+            + code: 200 (number)
 
 ### Dummy Encounter Package [POST]
 - If `encounter.class.code:"INPATIENT"`, **priority** for encounter is required 
@@ -3088,8 +3096,8 @@ http code| processing method | Client recommendations
 + data (array[], fixed-type)
 
 ### `Response_OK`
-+ meta (Response__Meta, fixed-type)
 + data (object, fixed-type)
++ meta (Response__Meta, fixed-type)
 
 ### `Response__Process_OK`
 + meta (Response__Meta, fixed-type)
@@ -3111,46 +3119,6 @@ http code| processing method | Client recommendations
     - object (string) - `data` attribute is a JSON object.
     - list (string) - `data` attribute is a list.
 + `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
-
-
-### `Response___Error_Job_403`
-+ data (object, fixed-type)
-    + error: Error description (string) - Human-readable error message.
-    + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
-    + status: `failed` (string, required) - status of request processing
-    + status_code: `403` (string, required) - processing result
-+ meta (object, fixed-type) 
-    + code: 200 (number) - HTTP response code.
-    + url: http://example.com/resource (string) - URL to requested resource.
-    + type: error_type (string) - Atom that represents error type.
-    + `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
-
-### `Response___Error_Job_404`
-+ data (object, fixed-type)
-    + error: Error description (string) - Human-readable error message.
-    + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
-    + status: `failed` (string, required) - status of request processing
-    + status_code: `404` (string, required) - processing result
-+ meta (object, fixed-type) 
-    + code: 200 (number) - HTTP response code.
-    + url: http://example.com/resource (string) - URL to requested resource.
-    + type: error_type (string) - Atom that represents error type.
-    + `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
-
-### `Response___Error_Job_409`
-+ data (object, fixed-type)
-    + error: Error description (object, fixed-type)
-        + message: Error description (string) - Human-readable error message.
-        + type: Error_type (string) - Atom that represents error type.
-    + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
-    + status: `failed` (string, required) - status of request processing
-    + status_code: `409` (string, required) - processing result
-+ meta (object, fixed-type) 
-    + code: 200 (number) - HTTP response code.
-    + url: http://example.com/resource (string) - URL to requested resource.
-    + type: error_type (string) - Atom that represents error type.
-    + `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
-
 
 ### `Response__Error`
 + type: error_type (string) - Atom that represents error type.
@@ -5379,12 +5347,31 @@ http code| processing method | Client recommendations
 + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
 + links (array[Link], optional) - links to resources that has been impactedas a job processing result
 
-### Job_Error
+### Job_Error_403
++ error: Error description (string) - Human-readable error message.
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
++ status: `failed` (string, required) - status of request processing
++ status_code: `403` (string, required) - processing result
+
+### Job_Error_404
++ error: Error description (string) - Human-readable error message.
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
++ status: `failed` (string, required) - status of request processing
++ status_code: `404` (string, required) - processing result
+
+### Job_Error_409
++ error: Error description (object, fixed-type)
+    + message: Error description (string) - Human-readable error message.
+    + type: Error_type (string) - Atom that represents error type.
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
++ status: `failed` (string, required) - status of request processing
++ status_code: `409` (string, required) - processing result
+
+### Job_Error_422
 + status: `failed` (string, required) - status of request processing
 + status_code: `422` (string, required) - processing result
 + error (`Response__Error_ValidationFailed`, required)
 + eta: `2019-04-26T09:16:15.936` (string, required) 
-        
 
 ### Error
 + type: type_atom (string, required) - Atom that represents error type.
