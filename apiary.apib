@@ -2450,7 +2450,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2473,7 +2473,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2503,7 +2503,7 @@ http code| processing method | Client recommendations
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2672,7 +2672,7 @@ Returns care plan details by it's identifier in patient context
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2708,7 +2708,7 @@ Returns care plan list filtered by submitted parameters withtin specified patien
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2733,7 +2733,7 @@ This service must be used to discover Care plans by requisition number. If nothi
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2759,7 +2759,7 @@ Returns care plan's activity details by it's identifier within care plan and pat
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2793,7 +2793,7 @@ Returns all the activities related to the care plan in patient context
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3075,6 +3075,206 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 201 (number)
         + data(`Care_plan_activity_show`)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+## Group Clinical impression
+### Create Clinical impression [POST /api/patients/{patient_id}/clinical_impressions]
+This method allows to create Clinical impression for a person in eHealth.
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of Clinical impression in Media Content Storage if all checks is passed.
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `clinical_impression:create`
+
+Look at Dummy Clinical impression for more details.
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Clinical_Impression_Show`)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Create Clinical impression [POST /api/patients/{patient_id}/clinical_impressions]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person. 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+    
+    
+    + Attributes (`Clinical_Impression_Create`)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Clinical_Impression_Show`)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Get Clinical impression by ID [GET /api/patients/{patient_id}/clinical_impressions/{id}]
+Returns Clinical impression details by it's identifier in patient context
+
+**Scopes required:** `clinical_impression:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Clinical impression identifier. 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Clinical_Impression_Show`)
+
+### Get Clinical impression by search params [GET /api/patients/{patient_id}/clinical_impressions{?effective_period,encounter_id,code,status,page,page_size}]
+Returns Clinical impression list filtered by submitted parameters withtin specified patient.
+
+**Scopes required:** `clinical_impression:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + effective_period: `2018-08-02` (date, optional) - date within Clinical impression's period incleuding start and end dates
+    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Clinical impression
+    + code: `insulin_1` (string, optional) - Clinical impression's code
+    + status: `completed` (string, optional) - Clinical impression's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Clinical_Impression_List`])
+
+### Cancel Clinical impression [PATCH /api/patients/{patient_id}/clinical_impressions/{id}/actions/cancel]
+
+This method must be used to cancel of existing patient's Clinical impression. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of Clinical impression must be equal to Clinical impression stored in DB. See *Get Clinical impression by ID*
+3. $.status_reason must be added to signed content
+
+Please see [Clinical impression status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3266084953/Clinical+impression+status+model) and *Dummy Cancel Clinical impression* for more details
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
+**Scopes required:** `clinical_impression:cancel`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Clinical impression identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Clinical_Impression_Show`)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Cancel Clinical impression [PATCH /api/patients/{patient_id}/clinical_impressions/{id}/actions/cancel]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Clinical impression identifier.
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+    
+    + Attributes (`Clinical_Impression_Show`)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/clinical_impression_status_reasons` (string)
+                    + code: `some code` (string)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Clinical_Impression_Show`)
 
 
 + Response 202 (application/json)
@@ -6752,3 +6952,106 @@ http code| processing method | Client recommendations
                 - INPATIENT
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
+
+## Clinical impression
+### `Clinical_Impression_Create`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: completed (string, required)
++ description: `Some description of the clinical impression` (string, optional)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/investigation_type` (string)
+            + code: `insulin_1` (string)
++ description: `Diabetics clinical impression` (string, optional)
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ effective_period (Period, required)
++ date: `2021-08-02T10:45:16.000Z` (string, required)
++ assessor (Reference_request, required) - `author of the Clinical impression`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ problem (Reference_request, required) - `relevant impressions of patient state`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `condition` (string)
++ summary: `Some summary` (string, optional)
++ supporting_info (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (enum)
+                            - procedure
+                            - diagnostic_report
+                            - observation
+                            - condition
+                            - encounter
++ note: `Some note` (string, optional)
+
+### `Clinical_Impression_Show`
++ include `Clinical_Impression_Create`
++ subject (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+        + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ status: completed (enum, required)
+    - completed
+    - cencelled
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Clinical_Impression_List`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: completed (enum, required)
+    - completed
+    - cencelled
++ description: `Some description of the clinical impression` (string, optional)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/investigation_type` (string)
+            + code: `insulin_1` (string)
++ description: `Diabetics clinical impression` (string, optional)
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ effective_period (Period, required)
++ date: `2021-08-02T10:45:16.000Z` (string, required)
++ assessor (Reference_request, required) - `author of the Clinical impression`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ subject (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `patient` (string)
+        + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ problem (Reference_request, required) - `relevant impressions of patient state`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `condition` (string)
