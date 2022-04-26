@@ -1059,8 +1059,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Administration_Response`], fixed-type)
 
-## Clinical impression [/api/patients/{patient_id}/clinical_impressions]
-### Get Clinical impression by id  [GET /api/patients/{patient_id}/clinical_impressions/{clinical_impression_id}]
+## Clinical Impression [/api/patients/{patient_id}/clinical_impressions]
+### Get Clinical Impression by id  [GET /api/patients/{patient_id}/clinical_impressions/{clinical_impression_id}]
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
     + clinical_impression_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique clinical impression identifier
@@ -1074,13 +1074,13 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Clinical_Impression_Show`)
 
-### Get Clinical impression by search params [GET /api/patients/{patient_id}/clinical_impressions{?encounter_id,episode_id,code,status,date_from,date_to,page,page_size}]
+### Get Clinical Impression by search params [GET /api/patients/{patient_id}/clinical_impressions{?encounter_id,episode_id,code,status,date_from,date_to,page,page_size}]
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
-    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Clinical impression
+    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in clinical impression
     + episode_id: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)    
-    + code: `insulin_1` (string, optional) - Clinical impression's code
-    + status: `completed` (string, optional) - Clinical impression's status
+    + code: `insulin_1` (string, optional) - clinical impression's code
+    + status: `completed` (string, optional) - clinical impression's status
     + date_from: `1990-01-01` (string, optional) 
     + date_to: `2000-01-01` (string, optional) 
     + page: 2 (number, optional) - Page number
@@ -1394,7 +1394,7 @@ Medication Statment         | All patient`s medication statments
 Diagnostic Report           | Only specific *Diagnostic Reports* are available for Patient Summary
 Procedure                   | Only specific *Procedures* are available for Patient Summary
 Encounter                   | All patient's encounters with reduced info
-Clinical impression         | Only specific *Clinical Impressions* are available for Patient Summary
+Clinical Impression         | Only specific *Clinical Impressions* are available for Patient Summary
 
 ### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
 
@@ -1824,11 +1824,11 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (Response_Collection)
         + data (array[`Procedure_Response`])
 
-### Get Clinical impression by id  [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
+### Get Clinical Impression by id  [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
 **Scopes required:** `patient_summary:read`
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
-    + clinical_impression_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique clinical impression identifier
+    + clinical_impression_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique Clinical impression identifier
 
 + Request (application/json)
     + Headers
@@ -5420,7 +5420,7 @@ http code| processing method | Client recommendations
         + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
         + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
 + date: `2021-08-02T10:45:16.000Z` (string, required)
-+ assessor (Reference_request, required) - `author of the Clinical impression`
++ assessor (Reference_request, required) - `author of the clinical impression`
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
