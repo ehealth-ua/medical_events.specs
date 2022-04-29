@@ -183,6 +183,7 @@ This resource should be used to get the processing status of the async job.
 ### Dummy Encounter Package [POST]
 - If `encounter.class.code:"INPATIENT"`, **priority** for encounter is required 
 - `hospitalization` may be present only with `encounter.class.code:"INPATIENT"`
+- Fields `encounter.hospitalization.admitSource`, `encounter.hospitalization.dischargeDisposition` and `encounter.hospitalization.dischargeDepartment` should be required if parameter `encounter.type.coding.code = discharge`.
 
 + Request Encounter with new Condition (application/json)
 
@@ -3736,7 +3737,7 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `condition` (string)
 + hospitalization (object,optional)
-    + admit_source - From where patient was admitted (physician referral, transfer)
+    + admit_source - From where patient was admitted (physician referral, transfer). Field is required if parameter `encounter.type.coding.code = discharge`, in other cases field is optional.
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_admit_source` (string) 
@@ -3754,12 +3755,12 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: division/legal_entity (string)
 
-    + discharge_disposition - Category or kind of location after discharge
+    + discharge_disposition - Category or kind of location after discharge. Field is required if parameter `encounter.type.coding.code = discharge`, in other cases field is optional.
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_discharge_disposition` (string) 
                 + code: `default` (string)- `dictionary eHealth/encounter_discharge_disposition`
-    + discharge_department - `Department from which patient has been discharged. It is not division`
+    + discharge_department - Department from which patient has been discharged. It is not division. Field is required if parameter `encounter.type.coding.code = discharge`, in other cases field is optional.
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_discharge_department` (string) 
