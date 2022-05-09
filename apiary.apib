@@ -180,10 +180,10 @@ This resource should be used to get the processing status of the async job.
         + meta (Response__Meta)
             + code: 200 (number)
 
-### Dummy Encounter Package [POST]
+### Dummy Encounter Packageh [POST]
 - If `encounter.class.code:"INPATIENT"`, **priority** for encounter is required 
 - `hospitalization` may be present only with `encounter.class.code:"INPATIENT"`
-- Fields `encounter.hospitalization.admitSource`, `encounter.hospitalization.dischargeDisposition` and `encounter.hospitalization.dischargeDepartment` should be required if parameter `encounter.type.coding.code = discharge`.
+- Fields `encounter.hospitalization.admit_source`, `encounter.hospitalization.discharge_disposition` and `encounter.hospitalization.discharge_department` should be required if parameter `encounter.type.coding.code = discharge`.
 
 + Request Encounter with new Condition (application/json)
 
