@@ -6763,10 +6763,11 @@ http code| processing method | Client recommendations
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports that approves diagnoses`
+                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports/clinical_impressions that approves diagnoses`
                             - condition
                             - oservation
                             - diagnostic_report
+                            - clinical_impression
 + goal (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -6845,12 +6846,6 @@ http code| processing method | Client recommendations
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + status: scheduled (string, required)
-+ identifier (Reference_request)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `clinical_impression` (string)
 
 ### `Care_Plan_activity_detail_base`
 + kind: `service_request` (enum, required)
@@ -6880,10 +6875,11 @@ http code| processing method | Client recommendations
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports that approves diagnoses`
+                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports/clinical_impressions that approves diagnoses`
                             - condition
                             - oservation
                             - diagnostic_report
+                            - clinical_impression
 + goal (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -6968,13 +6964,6 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + code: `medical_program` (string)
 + status: scheduled (string, required)
-+ identifier (Reference_request)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `clinical_impression` (string)
-                    
 
 ### `Care_plan_activity_show`
 + include `Care_Plan_activity_base`
