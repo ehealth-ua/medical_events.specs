@@ -5480,14 +5480,35 @@ http code| processing method | Client recommendations
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ problem (array, required, fixed-type)
++ previous (Reference_request, optional) - `reference to last clinical impression`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `clinical_impression` (string)
++ problem (array, optional, fixed-type)
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `condition` (enum)                    
+                        + code: `condition` (enum)
 + summary: `Some summary` (string, optional)
++ finding (array, optional, fixed-type)
+    + (object)
+        + itemCodeableConcept (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/ICD10/condition_codes` (string)
+                    + code: `A20` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`
+        + itemReference (Reference_request, optional)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `condition` (enum)
+                                - observaton
+        + basis: `Some basis` (string, optional)                    
 + supporting_info (array, optional, fixed-type)
     + (Reference_request)
         + identifier (Identifier)
@@ -5497,8 +5518,6 @@ http code| processing method | Client recommendations
                         + code: `episode_of_care` (enum)
                             - procedure
                             - diagnostic_report
-                            - observation
-                            - condition
                             - encounter
 + note: `Some note` (string, optional)
 
