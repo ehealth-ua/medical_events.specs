@@ -59,6 +59,7 @@ Medication statement|0-*|true
 Medication administration|0-*|true
 Diagnostic report|0-*| true
 Procedure|0-*| true
+Clinical impression|0-*| true
 
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
@@ -5471,7 +5472,7 @@ http code| processing method | Client recommendations
     - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
     - effective_period (object, optional, fixed-type)
         + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
-        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
+        + end : `2018-08-02T11:00:00.000Z`(string, required) - End time with inclusive boundary
 + date: `2021-08-02T10:45:16.000Z` (string, required)
 + assessor (Reference_request, required) - `author of the clinical impression`
     + identifier (Identifier)
