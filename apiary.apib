@@ -5461,7 +5461,6 @@ http code| processing method | Client recommendations
         + (Coding)
             + system: `eHealth/clinical_impression_patient_categories` (string)
             + code: `insulin_1` (string)
-+ description: `Diabetics clinical impression` (string, optional)
 + encounter (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -5473,20 +5472,19 @@ http code| processing method | Client recommendations
     - effective_period (object, optional, fixed-type)
         + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
         + end : `2018-08-02T11:00:00.000Z`(string, required) - End time with inclusive boundary
-+ date: `2021-08-02T10:45:16.000Z` (string, required)
 + assessor (Reference_request, required) - `author of the clinical impression`
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ previous (Reference_request, optional) - `reference to last clinical impression`
++ previous (Reference_request, optional) - `reference to one of previous clinical impression`
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `clinical_impression` (string)
-+ problems (array, optional, fixed-type)
++ problems (array, optional, fixed-type) - `relevant impressions of patient state`
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
@@ -5496,12 +5494,7 @@ http code| processing method | Client recommendations
 + summary: `Some summary` (string, optional)
 + findings (array, optional, fixed-type)
     + (object)
-        + `item_codeable_concept` (Codeable_Concept, optional)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/ICD10/condition_codes` (string)
-                    + code: `A20` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`
-        + `item_reference` (Reference_request, optional)
+        + `item_reference` (Reference_request, required)
             + identifier (Identifier)
                 + type (Codeable_Concept)
                     + coding (array, fixed-type)
