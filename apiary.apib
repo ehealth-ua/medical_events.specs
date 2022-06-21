@@ -3222,6 +3222,54 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+        
+
+## Group Rule engine rules
+There are public methods presented to work with a rule engine rules data. 
+
+### Get Rule engine rule list [GET /api/rule_engine_rules{?name,is_active,system,code,page,page_size}]
+This web service returns a catalog of all active rule engine rules in eHealth.
+
++ Parameters
+    + `name`: `Some name` (string, optional) - Rule engine rule name
+    + `is_active`: true (boolean, optional) - Rule engine rule status
+    + `system`: `eHealth/clinical_impression_patient_categories` (string, optional) - Code of rule engine rule system from dictionary `eHealth/rule_engine_dictionaries`
+    + `code`: `insulin_1` (string, optional) - Code of rule engine rule from dictionary specified in the system
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (array)
+            + (object)
+                + id: `1f8444a0-e48b-440b-a082-c4703233efa2` (string, required) - Rule engine rule identifier
+                + name: `Some name` (string, required) - Rule engine rule name
+                + code
+                    + system: `eHealth/clinical_impression_patient_categories` (string, required) - Code of rule engine rule system from dictionary `eHealth/rule_engine_dictionaries`
+                    + code: `insulin_1` (string, required) - Code of rule engine rule from dictionary specified in the system
+
+### Get Rule engine rule details [GET /api/rule_engine_rules/{id}]
+This web service returns rule engine rule details filtered by ID with active rules in eHealth.
+
++ Parameters
+    + id: `1f8444a0-e48b-440b-a082-c4703233efa2` (string, required)
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + id: `1f8444a0-e48b-440b-a082-c4703233efa2` (string, required) - Rule engine rule identifier
+            + name: `Some name` (string, required) - Rule engine rule name
+            + code
+                + system: `eHealth/clinical_impression_patient_categories` (string, required) - Code of rule engine rule system from dictionary `eHealth/rule_engine_dictionaries`
+                + code: `insulin_1` (string, required) - Code of rule engine rule from dictionary specified in the system
+            + description: `Some text` (string, optional) - Rule engine rule description
+            + deactivation_reason: `Some text` (string, optional) - Rule engine rule deactivation reason
+            + is_active: true (boolean, required) - Rule engine rule status
+            + value: `Patient.Age < 18` (string, required) - Rule engine rule value in Human readable format
 
 # Data Structures
 
