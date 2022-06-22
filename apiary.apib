@@ -749,7 +749,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Encounter_Response`])
 
-### Get encounter contexts[GET /api/patients/{patient_id}/encounters/{encounter_id}/context]
+### Get Encounter contexts[GET /api/patients/{patient_id}/encounters/{encounter_id}/context]
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
@@ -762,8 +762,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data (array[`Medical_Event_Context_Episode`])
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
 
 
 ## Conditions [/api/patients/{patient_id}/conditions]
@@ -802,6 +802,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Condition_Response`])
+
+
+### Get Condition contexts[GET /api/patients/{patient_id}/conditions/{condition_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `condition_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Condition identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
     
 
 ## Observation [/api/patients/{patient_id}/observation/{id}]
@@ -821,7 +838,6 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Observation_Response`)
-    
 
 ### Get Observations by searсh params[GET /api/patients/{patient_id}/observations{?encounter_id,diagnostic_report_id,episode_id,code,issued_from,issued_to,page,page_size}]
 + Parameters
@@ -844,6 +860,22 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (array[`Observation_Response`])
 
 
+### Get Observation contexts[GET /api/patients/{patient_id}/observations/{observation_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `observation_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Observation identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Diagnostic_Report_Response`)
+    
 
 ## Allergy Intolerance [/api/patients/{patient_id}/allergy_intolerances/{id}]
 
@@ -1078,6 +1110,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Administration_Response`], fixed-type)
 
+
+### Get Medication Administration contexts[GET /api/patients/{patient_id}/medication_administrations/{medication_administration_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `medication_administration_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Medication Administration identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
 ## Clinical Impression [/api/patients/{patient_id}/clinical_impressions]
 ### Get Clinical Impression by id  [GET /api/patients/{patient_id}/clinical_impressions/{clinical_impression_id}]
 + Parameters
@@ -1115,6 +1164,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Clinical_Impression_Show`], fixed-type)
+
+
+### Get Clinical Impression contexts[GET /api/patients/{patient_id}/clinical_impressions/{clinical_impression_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `clinical_impression_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Clinical Impression identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
 
 ## Diagnostic Report Data Package [/api/patients/{id}/diagnostic_report_package]
 
@@ -1255,6 +1321,22 @@ This web service allows to get a list of diagnostic reports that were allowed to
     + Attributes (`Response_Collection`)
         + data (array[`Diagnostic_Report_Response`], fixed-type)
 
+### Get Diagnostic Report contexts[GET /api/patients/{patient_id}/diagnostic_reports/{diagnostic_report_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `diagnostic_report_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Diagnostic Report identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Origin_Episode_Response`)
+
 ## Procedures [/api/patients/{patient_id}/procedures]
 
 ### Create procedure [POST]
@@ -1335,6 +1417,23 @@ This chapter describes the structure of a single procedure creation. This is not
 + Response 200 (application/json)
     + Attributes (Response_Collection)
         + data (array[`Procedure_Response`])
+
+
+### Get Procedure contexts[GET /api/patients/{patient_id}/procedures/{procedure_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `procedure_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Procedure identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Origin_Episode_Response`)
 
 
 ### Cancel Procedure [PATCH /api/patients/{person_id}/procedures/{id}/actions/cancel]
@@ -2132,7 +2231,22 @@ This method returns all service requests related to specified episode of care.
         + error (Response__Error)
             + type: NOT_FOUND (string)
             + message: `Service request not found` (string)
-            
+
+### Get Service Request contexts[GET /api/patients/{patient_id}/service_requests/{service_request_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `service_request_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Service Request identifier OR requisition
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
 
 ### Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel]
 
@@ -7162,11 +7276,31 @@ This web service returns rule engine rule details filtered by ID with active rul
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
 
+### `Medical_Event_Context_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
+
+### `Medical_Event_Context_Episode_with_Diagnostic_Report_Response`
++ `episode` (`Medical_Event_Context_Episode`)
++ `diagnostic_report` (`Medical_Event_Context_Diagnostic_Report`)
+
+### `Medical_Event_Context_Episode_with_Origin_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
++ `origin_episode` (`Medical_Event_Context_Episode`)
+
 ### `Medical_Event_Context_Episode`
 + identifier (Identifier)
     + type (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
                 + code: `episode` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ display_value: `null` (string, required) - This field is filled on creating and never updated after
+
+### `Medical_Event_Context_Diagnostic_Report`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `diagnostic_report` (string)
     + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
 + display_value: `null` (string, required) - This field is filled on creating and never updated after
