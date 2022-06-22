@@ -749,6 +749,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Encounter_Response`])
 
+### Get encounter contexts[GET /api/patients/{patient_id}/encounters/{encounter_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `encounter_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Encounter identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Medical_Event_Context_Episode`])
+
+
 ## Conditions [/api/patients/{patient_id}/conditions]
 
 ### Get Condition by id [GET /api/patients/{patient_id}/conditions/{condition_id}]
@@ -7144,3 +7161,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                 - INPATIENT
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
+
+### `Medical_Event_Context_Episode`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `episode` (string)
