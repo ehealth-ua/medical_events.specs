@@ -914,7 +914,21 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Allergy_Intolerance_Response`])
 
+### Get Allergy Intolerance contexts[GET /api/patients/{patient_id}/allergy_intolerances/{allergy_intolerance_id}/context]
 
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `allergy_intolerance_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Allergy Intolerance identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
 
 ## Immunization [/api/patients/{patient_id}/immunizations]
 
@@ -955,6 +969,24 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Immunization_Response`], fixed-type)
 
+    
+### Get Immunization contexts[GET /api/patients/{patient_id}/immunizations/{immunization_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `immunization_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Immunization identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+
 ## Risk Assessment [/api/patients/{patient_id}/risk_assessments]
 
 ### Get Risk Assessment by id [GET /api/patients/{patient_id}/risk_assessments/{risk_assessment_id}]
@@ -994,7 +1026,24 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Risk_Assessment_Response`], fixed-type)
 
+    
+### Get Risk Assessment contexts[GET /api/patients/{patient_id}/risk_assessments/{risk_assessment_id}/context]
 
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `risk_assessment_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Risk Assessment identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+    
 ## Device [/api/patients/{patient_id}/devices]
 
 ### Get Device by id [GET /api/patients/{patient_id}/devices/{device_id}]
@@ -1035,6 +1084,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (array[`Device_Response`], fixed-type)
 
 
+### Get Device contexts[GET /api/patients/{patient_id}/devices/{device_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `device_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Device identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+ 
 ## Medication Statement [/api/patients/{patient_id}/medication_statements]
 ### Get Medication Statement by id  [GET /api/patients/{patient_id}/medication_statements/{medication_statement_id}]
 + Parameters
@@ -1071,6 +1137,24 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
 
+
+### Get Medication Statement contexts[GET /api/patients/{patient_id}/medication_statements/{medication_statement_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `medication_statement_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Medication Statement identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+ 
 ## Medication Administration [/api/patients/{patient_id}/medication_administrations]
 ### Get Medication Administration by id  [GET /api/patients/{patient_id}/medication_administrations/{medication_administration_id}]
 + Parameters
