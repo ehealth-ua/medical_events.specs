@@ -3447,7 +3447,6 @@ This web service returns a catalog of all active rule engine rules in eHealth.
 
 + Parameters
     + `name`: `Some name` (string, optional) - Rule engine rule name
-    + `is_active`: true (boolean, optional) - Rule engine rule status
     + `system`: `eHealth/clinical_impression_patient_categories` (string, optional) - Code of rule engine rule system from dictionary `eHealth/rule_engine_dictionaries`
     + `code`: `insulin_1` (string, optional) - Code of rule engine rule from dictionary specified in the system
     + `page`: 2 (number, optional) - Page number
@@ -3482,7 +3481,6 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/clinical_impression_patient_categories` (string, required) - Code of rule engine rule system from dictionary `eHealth/rule_engine_dictionaries`
                 + code: `insulin_1` (string, required) - Code of rule engine rule from dictionary specified in the system
             + description: `Some text` (string, optional) - Rule engine rule description
-            + deactivation_reason: `Some text` (string, optional) - Rule engine rule deactivation reason
             + is_active: true (boolean, required) - Rule engine rule status
             + value: `Patient.Age < 18` (string, required) - Rule engine rule value in Human readable format
 
