@@ -2958,7 +2958,7 @@ http code| processing method | Client recommendations
 
 **Scopes required:** `care_plan:write`
 
-Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
+Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
@@ -2986,7 +2986,7 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         + data (`Job`)
 
         
-### Dummy Care Plan Activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+### Dummy Create Care Plan Activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
@@ -2998,6 +2998,13 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         api-key: aDGFDFGT46S5gFGD
         
     + Attributes (`Care_Plan_activity_base`)
+        + detail (object)
+            + quantity (object)
+                + `system_QUA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                + `code_QUA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+            + `daily_amount` (object)
+                + `system_DA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                + `code_DA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
 
 + Response 201 (application/json)
     + Attributes (Response_OK)
@@ -3359,7 +3366,7 @@ http code| processing method | Client recommendations
             api-key: aFBLVTZ6Z2dON1V
     
     + Attributes (`Care_plan_activity_show`)
-        + `detail` (Care_Plan_activity_detail_base, fixed-type)
+        + `detail` (`Care_Plan_activity_detail_base`, fixed-type)
             + status: scheduled (enum, required)
                 - `in_progress`
                 - scheduled
@@ -7006,7 +7013,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `care_plan` (string)
-+ `detail` (Care_Plan_activity_detail_base, required)
++ `detail` (`Care_Plan_activity_detail_base`, required)
 
 ### `Prequslify_Care_Plan_activity_detail_base`
 + kind: `service_request` (enum, required)
