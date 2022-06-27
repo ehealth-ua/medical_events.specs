@@ -1226,15 +1226,13 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Clinical_Impression_Show`)
 
-### Get Clinical Impression by search params [GET /api/patients/{patient_id}/clinical_impressions{?encounter_id,episode_id,code,status,date_from,date_to,page,page_size}]
+### Get Clinical Impression by search params [GET /api/patients/{patient_id}/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
     + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in clinical impression
     + episode_id: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)    
     + code: `insulin_1` (string, optional) - clinical impression's code
     + status: `completed` (string, optional) - clinical impression's status
-    + date_from: `1990-01-01` (string, optional) 
-    + date_to: `2000-01-01` (string, optional) 
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     
@@ -2041,7 +2039,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_OK`)
         + data (`Clinical_Impression_Show`)
 
-### Get Clinical Impressions [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,date_from,date_to,page,page_size}]
+### Get Clinical Impressions [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
 **Scopes required:** `patient_summary:read`
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -2049,8 +2047,6 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + episode_id: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)    
     + code: `insulin_1` (string, optional) - Clinical impression's code
     + status: `completed` (string, optional) - Clinical impression's status
-    + date_from: `1990-01-01` (string, optional) 
-    + date_to: `2000-01-01` (string, optional) 
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
