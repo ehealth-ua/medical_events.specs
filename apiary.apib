@@ -7190,9 +7190,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, optional) - Can be present in Response only if Care Plan Activity is a kind = medication_request.
-    + `code`: `MG` (string, optional) - Can be present in Response only if Care Plan Activity is a kind = medication_request.
-    + `unit`: `мг` (string, optional) - Can be present in Response only if Care Plan Activity is a kind = medication_request.
+    + `system`: `MEDICATION_UNIT` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `code`: `MG` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `unit`: `мг` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request.`
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -7260,9 +7260,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + `daily_amount` (object)
     + value: 13.5 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, optional) - Can be present in Response only if Care Plan Activity is a kind = medication_request.
-    + `code`: `MG` (string, optional) - Can be present in Response only if Care Plan Activity is a kind = medication_request.
-    + `unit`: `мг` (string, optional) - Can be present in Response only if Care Plan Activity is a kind = medication_request.
+    + `system`: `MEDICATION_UNIT` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `code`: `MG` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `unit`: `мг` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request.`
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + `program` (Reference_request, optional)
