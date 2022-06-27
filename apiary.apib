@@ -3381,6 +3381,11 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `some code` (string)
                         + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+            + `quantity` (object)
+                + value: 13 (number, required)
+                + `system`: `MEDICATION_UNIT` (string, optional) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+                + `code`: `MG` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+                + `unit`: `мг` (string, optional) - Should not be present in Request if Care Plan Activity is a kind other than medication request. It is an optional field in Create Care Plan Activity.
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
         + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
