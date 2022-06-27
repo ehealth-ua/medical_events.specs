@@ -2998,13 +2998,14 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
         api-key: aDGFDFGT46S5gFGD
         
     + Attributes (`Care_Plan_activity_base`)
-        + `detail` (`Care_Plan_activity_detail_base`, fixed-type)
-            + quantity (object)
-                + `system_QUA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                + `code_QUA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-            + `daily_amount` (object)
-                + `system_DA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                + `code_DA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+        + `detail` (object, required)
+            + include `Care_Plan_activity_detail_base`
+                + quantity (object)
+                    + `system_QUA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                    + `code_QUA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                + `daily_amount` (object)
+                    + `system_DA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                    + `code_DA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
 
 + Response 201 (application/json)
     + Attributes (Response_OK)
