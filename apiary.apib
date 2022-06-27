@@ -3371,7 +3371,8 @@ http code| processing method | Client recommendations
             api-key: aFBLVTZ6Z2dON1V
     
     + Attributes (`Care_plan_activity_show`)
-        + `detail` (`Care_Plan_activity_detail_base`, fixed-type)
+        + `detail` (object, fixed-type)
+            + include `Care_Plan_activity_detail_base`
             + status: scheduled (enum, required)
                 - `in_progress`
                 - scheduled
