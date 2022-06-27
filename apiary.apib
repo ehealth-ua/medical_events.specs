@@ -7161,6 +7161,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
+    + `system_QUA_RSP`: `MEDICATION_UNIT` (string, optional) - Can be present only if CPA is a kind = medication_request.
+    + `code_QUA_RSP`: `MG` (string, optional) - Can be present only if CPA is a kind = medication_request.
+    + `unit_QUA_RSP`: `мг` (string, optional) - Can be present only if CPA is a kind = medication_request.
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -7228,6 +7231,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + `daily_amount` (object)
     + value: 13.5 (number, required)
+    + `system_DA_RSP`: `MEDICATION_UNIT` (string, optional) - Can be present only if CPA is a kind = medication_request.
+    + `code_DA_RSP`: `MG` (string, optional) - Can be present only if CPA is a kind = medication_request.
+    + `unit_DA_RSP`: `мг` (string, optional) - Can be present only if CPA is a kind = medication_request.
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + `program` (Reference_request, optional)
@@ -7272,7 +7278,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                     - `eHealth/care_plan_activity_cancel_reasons`
     + `remaining_quantity` (object)
         + value: 12 (number, required)
-
+        + `system_RSP`: `MEDICATION_UNIT` (string, optional) - Can be present only if CPA is a kind = medication_request.
+        + `code_RSP`: `MG` (string, optional) - Can be present only if CPA is a kind = medication_request.
+        + `unit_RSP`: `мг` (string, optional) - Can be present only if CPA is a kind = medication_request.
 
 ### `Care_Plan_Show`
 + include `Care_Plan_Create`
