@@ -3001,20 +3001,15 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
         + `detail` (object, required)
             + include `Care_Plan_activity_detail_base`
             + `quantity` (object)
-            - One of
-                + `quantity` (object)
-                    + `system_QUA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                    + `code_QUA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                    + `system_QUA_RSP_req`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                    + `code_QUA_RSP_req`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                + `quantity` (object)
-                    + value: 13 (number, required)
-                    + `system_QUA_RSP`: `MEDICATION_UNIT` (string, optional) - Can be present only if CPA is a kind = medication_request.
-                    + `code_QUA_RSP`: `MG` (string, optional) - Can be present only if CPA is a kind = medication_request.
-                    + `unit_QUA_RSP`: `мг` (string, optional) - Can be present only if CPA is a kind = medication_request.
+                + value: 13 (number, required)
+                + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `unit`: `мг` (string, optional) - May be present in Request, as optional, only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
             + `daily_amount` (object)
-                + `system_DA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                + `code_DA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                + value: 13.5 (number, required)
+                + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `unit`: `мг` (string, optional) - May be present in Request, as optional, only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
 
 + Response 201 (application/json)
     + Attributes (Response_OK)
