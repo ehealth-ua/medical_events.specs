@@ -3000,11 +3000,17 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
     + Attributes (`Care_Plan_activity_base`)
         + `detail` (object, required)
             + include `Care_Plan_activity_detail_base`
-            + quantity (object)
-                + `system_QUA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                + `code_QUA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                + `system_QUA_RSP_req`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
-                + `code_QUA_RSP_req`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+            - One of
+                + quantity (object)
+                    + `system_QUA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                    + `code_QUA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                    + `system_QUA_RSP_req`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                    + `code_QUA_RSP_req`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
+                + quantity (object)
+                    + value: 13 (number, required)
+                    + `system_QUA_RSP`: `MEDICATION_UNIT` (string, optional) - Can be present only if CPA is a kind = medication_request.
+                    + `code_QUA_RSP`: `MG` (string, optional) - Can be present only if CPA is a kind = medication_request.
+                    + `unit_QUA_RSP`: `мг` (string, optional) - Can be present only if CPA is a kind = medication_request.
             + `daily_amount` (object)
                 + `system_DA_RSP`: `MEDICATION_UNIT` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
                 + `code_DA_RSP`: `MG` (string, required) - !Resp Should be present only if CPA is a kind = medication_request.
