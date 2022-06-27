@@ -7072,6 +7072,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
+    + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `unit`: `мг` (string, optional) - May be present in Request, as optional, only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -7139,6 +7142,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + `daily_amount` (object)
     + value: 13.5 (number, required)
+    + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `unit`: `мг` (string, optional) - May be present in Request, as optional, only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.    
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + status: scheduled (string, required)
