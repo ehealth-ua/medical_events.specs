@@ -57,6 +57,7 @@ Medication statement|0-*|true
 Medication administration|0-*|true
 Diagnostic report|0-*| true
 Procedure|0-*| true
+Clinical impression|0-*| true
 
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
@@ -153,22 +154,35 @@ This resource should be used to get the processing status of the async job.
                     + entity: `procedure` (string, required)
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/procedure/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
                 
-+ Response 200 (application/json)
+
++ Response 403 (application/json)
     + Attributes (Response_OK)
+        + data (`Job_Error_403`)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Job_Error`)
 
 + Response 404 (application/json)
-    + Attributes (Response_Error)
+    + Attributes (Response_OK)
+        + data (`Job_Error_404`)
         + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Object not found` (string)
+            + code: 200 (number)
+
++ Response 409 (application/json)
+    + Attributes (Response_OK)
+        + data (`Job_Error_409`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+
++ Response 422 (application/json)
+    + Attributes (Response_OK)
+        + data (`Job_Error_422`)
+        + meta (Response__Meta)
+            + code: 200 (number)
 
 ### Dummy Encounter Package [POST]
-If `encounter.class.code:"INPATIENT"`, **priority** for encounter is required 
+- If `encounter.class.code:"INPATIENT"`, **priority** for encounter is required 
+- `hospitalization` may be present only with `encounter.class.code:"INPATIENT"`
+- Fields `encounter.hospitalization.admit_source`, `encounter.hospitalization.discharge_disposition` and `encounter.hospitalization.discharge_department` should be required if parameter `encounter.type.coding.code = discharge`.
 
 + Request Encounter with new Condition (application/json)
 
@@ -292,6 +306,16 @@ This chapter describes the structure of a single unsigned medication that could 
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Medication_Administration_EncounterPCG_Request`) 
+
+#### Dummy Clinical Impression [POST]
+This chapter describes the structure of a single unsigned clinical impression that could be submitted as a part of Encounter Package. This is not an actual web-service.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Clinical_Impression_EncounterPCG_Request`)
 
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402534/Cancel+Encounter+Data+Package+WS)
@@ -723,6 +747,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Encounter_Response`])
 
+### Get Encounter context[GET /api/patients/{patient_id}/encounters/{encounter_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `encounter_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Encounter identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+
 ## Conditions [/api/patients/{patient_id}/conditions]
 
 ### Get Condition by id [GET /api/patients/{patient_id}/conditions/{condition_id}]
@@ -759,6 +800,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Condition_Response`])
+
+
+### Get Condition context[GET /api/patients/{patient_id}/conditions/{condition_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `condition_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Condition identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
     
 
 ## Observation [/api/patients/{patient_id}/observation/{id}]
@@ -778,7 +836,6 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Observation_Response`)
-    
 
 ### Get Observations by searсh params[GET /api/patients/{patient_id}/observations{?encounter_id,diagnostic_report_id,episode_id,code,issued_from,issued_to,page,page_size}]
 + Parameters
@@ -801,6 +858,22 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (array[`Observation_Response`])
 
 
+### Get Observation contexts[GET /api/patients/{patient_id}/observations/{observation_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `observation_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Observation identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Diagnostic_Report_Response`)
+    
 
 ## Allergy Intolerance [/api/patients/{patient_id}/allergy_intolerances/{id}]
 
@@ -839,7 +912,21 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Allergy_Intolerance_Response`])
 
+### Get Allergy Intolerance context[GET /api/patients/{patient_id}/allergy_intolerances/{allergy_intolerance_id}/context]
 
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `allergy_intolerance_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Allergy Intolerance identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
 
 ## Immunization [/api/patients/{patient_id}/immunizations]
 
@@ -880,6 +967,24 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Immunization_Response`], fixed-type)
 
+    
+### Get Immunization context[GET /api/patients/{patient_id}/immunizations/{immunization_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `immunization_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Immunization identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+
 ## Risk Assessment [/api/patients/{patient_id}/risk_assessments]
 
 ### Get Risk Assessment by id [GET /api/patients/{patient_id}/risk_assessments/{risk_assessment_id}]
@@ -919,7 +1024,24 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Risk_Assessment_Response`], fixed-type)
 
+    
+### Get Risk Assessment context[GET /api/patients/{patient_id}/risk_assessments/{risk_assessment_id}/context]
 
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `risk_assessment_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Risk Assessment identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+    
 ## Device [/api/patients/{patient_id}/devices]
 
 ### Get Device by id [GET /api/patients/{patient_id}/devices/{device_id}]
@@ -960,6 +1082,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (array[`Device_Response`], fixed-type)
 
 
+### Get Device context[GET /api/patients/{patient_id}/devices/{device_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `device_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Device identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+ 
 ## Medication Statement [/api/patients/{patient_id}/medication_statements]
 ### Get Medication Statement by id  [GET /api/patients/{patient_id}/medication_statements/{medication_statement_id}]
 + Parameters
@@ -996,6 +1135,24 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
 
+
+### Get Medication Statement context[GET /api/patients/{patient_id}/medication_statements/{medication_statement_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `medication_statement_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Medication Statement identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+ 
 ## Medication Administration [/api/patients/{patient_id}/medication_administrations]
 ### Get Medication Administration by id  [GET /api/patients/{patient_id}/medication_administrations/{medication_administration_id}]
 + Parameters
@@ -1034,6 +1191,76 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Administration_Response`], fixed-type)
+
+
+### Get Medication Administration context[GET /api/patients/{patient_id}/medication_administrations/{medication_administration_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `medication_administration_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Medication Administration identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+## Clinical Impression [/api/patients/{patient_id}/clinical_impressions]
+### Get Clinical Impression by id  [GET /api/patients/{patient_id}/clinical_impressions/{clinical_impression_id}]
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + clinical_impression_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique clinical impression identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Clinical_Impression_Show`)
+
+### Get Clinical Impression by search params [GET /api/patients/{patient_id}/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in clinical impression
+    + episode_id: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)    
+    + code: `insulin_1` (string, optional) - clinical impression's code
+    + status: `completed` (string, optional) - clinical impression's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Clinical_Impression_Show`], fixed-type)
+
+
+### Get Clinical Impression context[GET /api/patients/{patient_id}/clinical_impressions/{clinical_impression_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `clinical_impression_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Clinical Impression identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
 
 ## Diagnostic Report Data Package [/api/patients/{id}/diagnostic_report_package]
 
@@ -1174,6 +1401,22 @@ This web service allows to get a list of diagnostic reports that were allowed to
     + Attributes (`Response_Collection`)
         + data (array[`Diagnostic_Report_Response`], fixed-type)
 
+### Get Diagnostic Report contexts[GET /api/patients/{patient_id}/diagnostic_reports/{diagnostic_report_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `diagnostic_report_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Diagnostic Report identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Origin_Episode_Response`)
+
 ## Procedures [/api/patients/{patient_id}/procedures]
 
 ### Create procedure [POST]
@@ -1256,6 +1499,23 @@ This chapter describes the structure of a single procedure creation. This is not
         + data (array[`Procedure_Response`])
 
 
+### Get Procedure contexts[GET /api/patients/{patient_id}/procedures/{procedure_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `procedure_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Procedure identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_with_Origin_Episode_Response`)
+
+
 ### Cancel Procedure [PATCH /api/patients/{person_id}/procedures/{id}/actions/cancel]
 
 This WS allows to cancel existing procedure and change its status to `entered_in_error` in case of any mistake. The new correct procedure could be created instead.
@@ -1331,7 +1591,8 @@ Device                      | All patient`s devices
 Medication Statment         | All patient`s medication statments
 Diagnostic Report           | Only specific *Diagnostic Reports* are available for Patient Summary
 Procedure                   | Only specific *Procedures* are available for Patient Summary
-
+Encounter                   | All patient's encounters with reduced info
+Clinical Impression         | Only specific *Clinical Impressions* are available for Patient Summary
 
 ### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
 
@@ -1355,7 +1616,51 @@ If you have an approval - you can obtain episode details and nested entities thr
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data(array[`Episode_Of_Care_Short`])
-        
+
+### Get Short Encounters by search params [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
+The endpoint returns a list of short Encounter info filtered by search params.
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + `date_from`:`1990-01-01`(string, optional)
+    + `date_to`: `2000-01-01`(string, optional)
+    + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
+    + status: finished (string, optional)
+    + type: discharge (string, optional)
+    + class: INPATIENT (string, optional)
+    + `performer_speciality`: VIROLOGY (string, optional)
+    + `page`: `2` (number, optional) - Page number.    
+    + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Encounter_Short`])
+
+### Get Short Encounter by id [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
+The endpoint returns single short Encounter info.
+**Scopes required:** `patient_summary:read`
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + encounter_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique encounter identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Encounter_Short`)
 
 ### Get Immunizations [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,date_from,date_to}]
 
@@ -1656,7 +1961,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Response_Collection`)
+    + Attributes (`Response_OK`)
         + data (`Diagnostic_Report_Response`)
 
 ### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
@@ -1692,7 +1997,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (`Response_Collection`)
+    + Attributes (`Response_OK`)
         + data (`Procedure_Response`)
 
 ### Get Procedures by search params [GET /api/patients/{patient_id}/summary/procedures{?status,episode_id,code,service_request_id,recorded_by,managing_organization_id}]
@@ -1717,13 +2022,49 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (Response_Collection)
         + data (array[`Procedure_Response`])
 
+### Get Clinical Impression by id  [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
+**Scopes required:** `patient_summary:read`
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + clinical_impression_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique Clinical impression identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Clinical_Impression_Show`)
+
+### Get Clinical Impressions [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
+**Scopes required:** `patient_summary:read`
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
+    + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Clinical impression
+    + episode_id: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)    
+    + code: `insulin_1` (string, optional) - Clinical impression's code
+    + status: `completed` (string, optional) - Clinical impression's status
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Clinical_Impression_Show`], fixed-type)
+
 # Group Service Requests
 
 ## Manage Service Requests in patient context [/api/patients/{patient_id}/service_requests]
 
 Use [GET Service Catalog](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-programs/medical-program/get-services-dictionary) to receive current catalog of services. 
 
-### PreQualify Service Request [POST /api/patients/patient_id/service_requests/prequalify]
+### PreQualify Service Request [POST /api/patients/{patient_id}/service_requests/prequalify]
 
 This method is used to pre-qualify service request in order to define whether the medical program could be applied in this particular case or not.
 **Scopes required:** `service_request:write`
@@ -1762,7 +2103,7 @@ This method is used to pre-qualify service request in order to define whether th
                 + type: `OTP` (enum, required)
                     - OTP
                     - OFFLINE
-                    - NA
+                    - THIRD_PERSON
                 + number: `+38093*****85` (string, optional)
         + meta (Response__Meta)
         +  data (array[`Qualify_Service_Request_Responce`]))
@@ -1784,6 +2125,13 @@ Service will store signed copy of Service Request in Media Content Storage if al
 
 Signed content consists of JSON object with Service Request data.
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 **Scopes required:** `service_request:write`
 
 + Parameters
@@ -1798,7 +2146,13 @@ Signed content consists of JSON object with Service Request data.
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
-
+        
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
+        
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -1815,6 +2169,12 @@ Signed content consists of JSON object with Service Request data.
             api-key: aFBLVTZ6Z2dON1V
 
     + Attributes (Service_Request_Create)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)    
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -1949,7 +2309,7 @@ This method returns all service requests related to specified episode of care.
         + error (Response__Error)
             + type: NOT_FOUND (string)
             + message: `Service request not found` (string)
-            
+
 
 ### Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel]
 
@@ -1964,6 +2324,13 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
 
 **Scopes required:** `service_request:cancel`
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 + Request (application/json)
 
     + Headers
@@ -1974,6 +2341,12 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
+        
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2076,6 +2449,11 @@ http code| processing method | Client recommendations
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
 
 + Response 200 (application/json)
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2221,7 +2599,13 @@ http code| processing method | Client recommendations
             api-key: aFBLVTZ6Z2dON1V
 
     + Attributes (Complete_Service_Request)
-    
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Service_Request_Show`)
+            
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2239,13 +2623,13 @@ http code| processing method | Client recommendations
 202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 Block resources may consist next entities:
-
 Object| Access level
 -------|---------
 episode_of_care| read
-diagnostic_report|read
+diagnostic_report|read, write
 care_plan|read, write
-
+encounter|write
+procedure|write
 
 **Scopes required:** `approval:create`
 
@@ -2294,6 +2678,13 @@ care_plan|read, write
 
 ### Resend SMS on approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/resend]
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 **Scopes required:** `approval:create`
 
 + Parameters
@@ -2306,7 +2697,12 @@ care_plan|read, write
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Approval_Response`)
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2335,7 +2731,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2358,7 +2754,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2369,6 +2765,13 @@ It is allowed only for the doctor who has an active declaration with a patient f
 ### Cancel approval [PATCH /api/patients/{patiend_id}/approvals/{id}/actions/cancel]
 Allows to cancel approval by it's identifier in patient context.
 It is allowed only for the doctor who has an active declaration with a patient from url (can cancel all approvals) or approval is granted to user (can cancel own approval).
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `approval:cancel`
 
@@ -2381,7 +2784,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2401,6 +2804,13 @@ This method allows to create Care Plan for a person in eHealth.
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Care Plan in Media Content Storage if all checks is passed. 
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 **Scopes required:** `care_plan:write`
 
 Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
@@ -2417,6 +2827,12 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Care_Plan_Show`)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2440,6 +2856,13 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
     
     + Attributes (Care_Plan_Create)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2447,14 +2870,74 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
         + data (`Job`)
         
 
-### Create Care Plan activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+### PreQualify Care Plan Activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/prequalify]
+
+This method is used to pre-qualify care plan activity in order to define whether the medical program could be applied in this particular case or not.
+**Scopes required:** `care_plan:write`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + care_plan_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - Unique Care Plan identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + `activity` (object, required)
+            + include `Prequalify_Care_Plan_Activity_base`
+                + `context` (Reference_request, optional)
+                    + identifier (Identifier)
+                        + type (Codeable_Concept)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `encounter` (string)
+        + `programs` (array, required) - Medical programs list for qualify
+            + (Reference_request)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: medical_program (string)
+                
+        
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - THIRD_PERSON
+                + number: `+38093*****85` (string, optional)
+        + meta (Response__Meta)
+        +  data (array[`Prequalify_Care_Plan_Activity_Responce`]))
+
++ Response 422 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: unverified (string, required)
+            + message: `Patient is not active` (string, required)
+
+### Create Care Plan Activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
 This method adds activity to an existing patient's Care Plan.
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Care Plan activity in Media Content Storage if all checks is passed.
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 **Scopes required:** `care_plan:write`
 
-Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
+Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
@@ -2468,6 +2951,13 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2475,7 +2965,7 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         + data (`Job`)
 
         
-### Dummy Care Plan activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
+### Dummy Create Care Plan Activity [POST /api/patients/{patient_id}/care_plans/{care_plan_id}/activities]
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
@@ -2487,6 +2977,23 @@ Look at [Dummy Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.i
         api-key: aDGFDFGT46S5gFGD
         
     + Attributes (`Care_Plan_activity_base`)
+        + `detail` (object, required)
+            + include `Care_Plan_activity_detail_base`
+            + `quantity` (object)
+                + value: 13 (number, required)
+                + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+            + `daily_amount` (object)
+                + value: 13.5 (number, required)
+                + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2509,7 +3016,7 @@ Returns care plan details by it's identifier in patient context
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2545,20 +3052,13 @@ Returns care plan list filtered by submitted parameters withtin specified patien
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[`Care_plan_summary`])
-        + urgent (object, required)
-            + `informing_method_current` (object, required)
-                + type: `OTP` (enum, required)
-                    - OTP
-                    - OFFLINE
-                    - THIRD_PERSON
-                + phone_number: `+38093*****85` (string, optional)
 
 
 ### Get Care Plans by requisition [GET /api/care_plans{?requisition,status,page,page_size}]
@@ -2577,7 +3077,7 @@ This service must be used to discover Care plans by requisition number. If nothi
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2586,16 +3086,9 @@ This service must be used to discover Care plans by requisition number. If nothi
         + data (array, fixed-type)
             + (`Care_plan_summary`)
                 + identity (`Person_service_request`, required)
-        + urgent (object, required)
-            + `informing_method_current` (object, required)
-                + type: `OTP` (enum, required)
-                    - OTP
-                    - OFFLINE
-                    - THIRD_PERSON
-                + phone_number: `+38093*****85` (string, optional)
 
 
-### Get Care Plan activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
+### Get Care Plan Activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
 Returns care plan's activity details by it's identifier within care plan and patient context
 
 **Scopes required:** `care_plan:read`
@@ -2610,7 +3103,7 @@ Returns care plan's activity details by it's identifier within care plan and pat
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2644,7 +3137,7 @@ Returns all the activities related to the care plan in patient context
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -2671,6 +3164,13 @@ This method must be used to cancel of existing patient's Care plan. Method recei
 
 Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan* for more details
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 
 **Scopes required:** `care_plan:write`
 
@@ -2687,6 +3187,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2715,6 +3222,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
                     + system: `eHealth/care_plan_cancel_reasons` (string)
                     + code: `some code` (string)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2727,6 +3241,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
 This method must be used to complete of existing patient's Care plan.
 
 Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model)
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `care_plan:write`
@@ -2750,6 +3271,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
                     + code: `some code` (string)
     
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_Plan_Show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2757,7 +3285,7 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
         + data (`Job`)
         
 
-### Cancel Care Plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
+### Cancel Care Plan Activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
 
 This method must be used to cancel of existing activity from patient's Care plan. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
@@ -2767,6 +3295,12 @@ This method must be used to cancel of existing activity from patient's Care plan
 
 Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan activity* for more details
 
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
@@ -2785,6 +3319,13 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2792,7 +3333,7 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
         + data (`Job`)
 
 
-### Dummy Cancel Care Plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
+### Dummy Cancel Care Plan Activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/cancel]
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -2807,7 +3348,8 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
             api-key: aFBLVTZ6Z2dON1V
     
     + Attributes (`Care_plan_activity_show`)
-        + `detail` (Care_Plan_activity_detail_base, fixed-type)
+        + `detail` (object, fixed-type)
+            + include `Care_Plan_activity_detail_base`
             + status: scheduled (enum, required)
                 - `in_progress`
                 - scheduled
@@ -2816,10 +3358,27 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
                     + (Coding)
                         + code: `some code` (string)
                         + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+            + `quantity` (object)
+                + value: 13 (number, required)
+                + `system`: `MEDICATION_UNIT` (string, optional) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+                + `code`: `MG` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+                + `unit`: `мг` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+            + `daily_amount` (object)
+                + value: 13.5 (number, required)
+                + `system`: `MEDICATION_UNIT` (string, optional) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+                + `code`: `MG` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+                + `unit`: `мг` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
         + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2828,9 +3387,17 @@ Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH
         + data (`Job`)
         
 
-### Complete Care plan activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/complete]
+### Complete Care Plan Activity [PATCH /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}/actions/complete]
 
 This method must be used to complete of existing activity from patient's Care plan.
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -2858,12 +3425,64 @@ This method must be used to complete of existing activity from patient's Care pl
                         + code: `some code` (string)
                         + system: `eHealth/care_plan_activity_complete_reasons` (string, required)
 
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data(`Care_plan_activity_show`)
+
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+        
 
+## Group Rule engine rules
+There are public methods presented to work with a rule engine rules data. 
+
+### Get Rule engine rule list [GET /api/rule_engine_rules{?name,is_active,system,code,page,page_size}]
+This web service returns a catalog of all active rule engine rules in eHealth.
+
++ Parameters
+    + `name`: `Some name` (string, optional) - Rule engine rule name
+    + `system`: `eHealth/clinical_impression_patient_categories` (string, optional) - Code of rule engine rule system from dictionary `eHealth/rule_engine_dictionaries`
+    + `code`: `insulin_1` (string, optional) - Code of rule engine rule from dictionary specified in the system
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (array)
+            + (object)
+                + id: `1f8444a0-e48b-440b-a082-c4703233efa2` (string, required) - Rule engine rule identifier
+                + name: `Some name` (string, required) - Rule engine rule name
+                + code
+                    + system: `eHealth/clinical_impression_patient_categories` (string, required) - Code of rule engine rule system from dictionary `eHealth/rule_engine_dictionaries`
+                    + code: `insulin_1` (string, required) - Code of rule engine rule from dictionary specified in the system
+
+### Get Rule engine rule details [GET /api/rule_engine_rules/{id}]
+This web service returns rule engine rule details filtered by ID with active rules in eHealth.
+
++ Parameters
+    + id: `1f8444a0-e48b-440b-a082-c4703233efa2` (string, required)
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + id: `1f8444a0-e48b-440b-a082-c4703233efa2` (string, required) - Rule engine rule identifier
+            + name: `Some name` (string, required) - Rule engine rule name
+            + code
+                + system: `eHealth/clinical_impression_patient_categories` (string, required) - Code of rule engine rule system from dictionary `eHealth/rule_engine_dictionaries`
+                + code: `insulin_1` (string, required) - Code of rule engine rule from dictionary specified in the system
+            + description: `Some text` (string, optional) - Rule engine rule description
+            + is_active: true (boolean, required) - Rule engine rule status
+            + value: `Patient.Age < 18` (string, required) - Rule engine rule value in Human readable format
 
 # Data Structures
 
@@ -2878,8 +3497,8 @@ This method must be used to complete of existing activity from patient's Care pl
 + data (array[], fixed-type)
 
 ### `Response_OK`
-+ meta (Response__Meta, fixed-type)
 + data (object, fixed-type)
++ meta (Response__Meta, fixed-type)
 
 ### `Response__Process_OK`
 + meta (Response__Meta, fixed-type)
@@ -3054,19 +3673,16 @@ This method must be used to complete of existing activity from patient's Care pl
     + system : `eHealth/episode_types` (string)
     + code: `primary_care` (string) - `dictionary eHealth/episode_types`
 + `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
-+ name: `Діабет 2018` (string, required)
-            
-+ managing_organization (Reference_request, required)
-    + identifier (Identifier)
++ `name`: `Діабет 2018` (string, required)
++ `managing_organization` (Reference_request, required)
+     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-                    
-            
 + period (object , required)
-    + start: `2018-08-02` (string, required)
-+ care_manager (Reference_request, required)
+    + start: `2018-08-02T10:45:16.000Z` (string, required)
++ `care_manager` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3093,7 +3709,7 @@ This method must be used to complete of existing activity from patient's Care pl
                     + code: `cured` (string)
         + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
 + `current_diagnoses` (array, optional, fixed-type)
-    + (Diagnosis)
+    + (Diagnosis_Referrence_Condition_2)
 + `diagnoses_history` (array, optional, fixed-type)
     + (object)
         + date: `2018-08-02T10:45:16.000Z` (string, required)
@@ -3117,7 +3733,7 @@ This method must be used to complete of existing activity from patient's Care pl
                     + system: `eHealth/episode_closing_reasons` (string)
                     + code: `cured` (string) \\ wrong_patient, misspelling
         + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)            
-+ managing_organization (Reference_response, required)
++ `managing_organization` (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3125,10 +3741,10 @@ This method must be used to complete of existing activity from patient's Care pl
                     + code: `legal_entity` (string)
     + display_value: `Медікал Солюшнc` (string, required) - This field is filled on creating and never updated after
             
-+ period (Period, required)
-    - end (string, optional)
-    + start: `2018-08-02` (string, required) 
-+ care_manager (Reference_response, required)
++ `period` (Period, required)
+    + end: `2018-08-03T10:45:16.000Z` (string, optional)
+    + start: `2018-08-02T10:45:16.000Z` (string, required)
++ `care_manager` (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3146,8 +3762,7 @@ This method must be used to complete of existing activity from patient's Care pl
 
 ### `Update_Episode`
 + name: `Інсулінонезалежний діабет` (string, optional)
-
-+ care_manager (Reference_request, optional)
++ `care_manager` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3168,7 +3783,7 @@ This method must be used to complete of existing activity from patient's Care pl
 
 ### `Close_Episode`
 + `period` (object, required)
-    + `end`: `2018-09-10` (string, required)
+    + `end`: `2018-08-02T10:45:16.000Z` (string, required)
 + `closing_summary`: `Носові шляхи вільні, горло рожеве, температура в нормі` (string, optional)    
 + `status_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
@@ -3182,8 +3797,8 @@ This method must be used to complete of existing activity from patient's Care pl
 + name: `Діабет 2018` (string, required)
 + `status`: `active` (string, required)
 + period (Period, required)
-    - end (string, optional)
-    + start: `2018-08-02` (string, required)
+    + end: `2018-08-03T10:45:16.000Z` (string, optional)
+    + start: `2018-08-02T10:45:16.000Z` (string, required)
 + inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 
@@ -3206,7 +3821,7 @@ This method must be used to complete of existing activity from patient's Care pl
 ## Diagnosis
 
 ### `Diagnosis_Request`
-+ `condition` (Reference_request, required) 
++ `condition` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -3332,7 +3947,7 @@ This method must be used to complete of existing activity from patient's Care pl
                 + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons`
                 
         
-+ diagnoses (array, required, fixed-type)
++ diagnoses (array, optional, fixed-type)
     + (`Diagnosis_Request`)
         
         
@@ -3384,7 +3999,7 @@ This method must be used to complete of existing activity from patient's Care pl
                     + (Coding)
                         + code: `condition` (string)
 + hospitalization (object,optional)
-    + admit_source - From where patient was admitted (physician referral, transfer)
+    + admit_source - From where patient was admitted (physician referral, transfer). Field is required if parameter `encounter.type.coding.code = discharge`.
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_admit_source` (string) 
@@ -3402,12 +4017,12 @@ This method must be used to complete of existing activity from patient's Care pl
                     + (Coding)
                         + code: division/legal_entity (string)
 
-    + discharge_disposition - Category or kind of location after discharge
+    + discharge_disposition - Category or kind of location after discharge. Field is required if parameter `encounter.type.coding.code = discharge`.
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_discharge_disposition` (string) 
                 + code: `default` (string)- `dictionary eHealth/encounter_discharge_disposition`
-    + discharge_department - `Department from which patient has been discharged. It is not division`
+    + discharge_department - Department from which patient has been discharged. It is not division. Field is required if parameter `encounter.type.coding.code = discharge`.
         + coding (array, fixed-type)
             + (Coding)
                 + system: `Health/encounter_discharge_department` (string) 
@@ -3434,6 +4049,7 @@ This method must be used to complete of existing activity from patient's Care pl
 + `medication_administrations` (array[`Medication_Administration_EncounterPCG_Request`], optional, fixed-type)
 + `diagnostic_reports` (array[`Diagnostic_Report_EncounterPCG_Request`], optional, fixed-type)
 + procedures (array[`Procedure_EncounterPCG_Request`], optional, fixed-type)
++ `clinical_impressions` (array[`Clinical_Impression_EncounterPCG_Request`], optional, fixed-type)
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -3502,7 +4118,7 @@ This method must be used to complete of existing activity from patient's Care pl
                 + code: `T90` (string) - `dictionary eHealth/ICPC2/reasons`
 
         
-+ diagnoses (array, required, fixed-type)
++ diagnoses (array, optional, fixed-type)
     + (`Diagnosis_Referrence_Condition`)
         
         
@@ -3635,6 +4251,9 @@ This method must be used to complete of existing activity from patient's Care pl
     + (`Procedure_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/diagnostic_reports_statuses`
         + `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional)
++ `clinical_impressions` (array, optional, fixed-type)
+    + (`Clinical_Impression_EncounterPCG_Request`)
+        + `status`: `entered_in_error` (string)- `dictionary eHealth/clinical_impression_statuses`
       
 ### `Paper_referral`
 + requisition: `1111-2222-3333-4444` (string, optional) - `Service request number`
@@ -3643,6 +4262,30 @@ This method must be used to complete of existing activity from patient's Care pl
 + requester_employee_name: `John` (string, required) - Requester employee name
 + `service_request_date`: `2018-10-08` (string, required) - Service request date
 + note: `Some notes` (string, optional) - Some notes
+
+### `Encounter_Short`
++ id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
++ `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `episode` (Reference_request, required, fixed-type)   
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode` (string)
++ class  (Coding, required)
+    + system : `eHealth/encounter_classes` (string)
+    + code: `inpatient` (string) - `dictionary eHealth/encounter_classes`
++ type (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/encounter_types` (string)
+            + code: `discharge` (string) - `dictionary eHealth/encounter_types`
++ `performer_speciality` (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `SPECIALITY_TYPE` (string) - dictionary
+            + code: `VIROLOGY` (string) - `code from dictionary SPECIALITY_TYPE`
 
 
 ## Condition
@@ -4348,7 +4991,7 @@ This method must be used to complete of existing activity from patient's Care pl
     - `report_origin` (object, optional) - if primary_source=false
         + coding (array, optional, fixed-type)
             + object
-                + system: `eHealth/report_origins` (string, required)
+                + system: `eHealth/immunization_report_origins` (string, required)
                 + code: `mother` (string)
         + text: `зі слів пацієнта` (string)
                     
@@ -4449,7 +5092,7 @@ This method must be used to complete of existing activity from patient's Care pl
     - `report_origin` (object, optional) - if primary_source=false
         + coding (array, optional, fixed-type)
             + object
-                + system: `eHealth/report_origins` (string, required)
+                + system: `eHealth/immunization_report_origins` (string, required)
                 + code: `mother` (string)
         + text: `зі слів пацієнта` (string)
                     
@@ -5069,6 +5712,68 @@ This method must be used to complete of existing activity from patient's Care pl
             + code: `misspelling` (string) \\ wrong_patient, misspelling
     - text (string)
 
+## `Clinical Impression`
+### `Clinical_Impression_EncounterPCG_Request`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: completed (string, required)
++ description: `Some description of the clinical impression` (string, optional)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/clinical_impression_patient_categories` (string)
+            + code: `insulin_1` (string)
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+- One Of
+    - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    - effective_period (object, optional, fixed-type)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, required) - End time with inclusive boundary
++ assessor (Reference_request, required) - `author of the clinical impression`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ previous (Reference_request, optional) - `reference to one of previous clinical impression`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `clinical_impression` (string)
++ problems (array, optional, fixed-type) - `relevant impressions of patient state`
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum)
++ summary: `Some summary` (string, optional)
++ findings (array, optional, fixed-type)
+    + (object)
+        + `item_reference` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `condition` (enum)
+                                - observaton
+        + basis: `Some basis` (string, optional)                    
++ supporting_info (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `episode_of_care` (enum)
+                            - procedure
+                            - diagnostic_report
+                            - encounter
++ note: `Some note` (string, optional)
 
 ## `Diagnostic Report Package`
 ### `Submit_DR_Package`
@@ -5104,19 +5809,41 @@ This method must be used to complete of existing activity from patient's Care pl
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
+### `Clinical_Impression_Show`
++ include `Clinical_Impression_EncounterPCG_Request`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
+
 ### Job
 + status: `pending` (string, required) - status of request processing.
 + eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
-- one of
-    - links (array[Link], optional) - links to resources that has been impactedas a job processing result
-    - response_data (object, optional) - response data payload of the request that has initiated this job. It's Structure depends on the request.
++ links (array[Link], optional) - links to resources that has been impactedas a job processing result
 
-### Job_Error
+### Job_Error_403
++ error: Error description (string) - Human-readable error message.
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
++ status: `failed` (string, required) - status of request processing
++ status_code: `403` (string, required) - processing result
+
+### Job_Error_404
++ error: Error description (string) - Human-readable error message.
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
++ status: `failed` (string, required) - status of request processing
++ status_code: `404` (string, required) - processing result
+
+### Job_Error_409
++ error: Error description (object, fixed-type)
+    + message: Error description (string) - Human-readable error message.
+    + type: Error_type (string) - Atom that represents error type.
++ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
++ status: `failed` (string, required) - status of request processing
++ status_code: `409` (string, required) - processing result
+
+### Job_Error_422
 + status: `failed` (string, required) - status of request processing
 + status_code: `422` (string, required) - processing result
 + error (`Response__Error_ValidationFailed`, required)
 + eta: `2019-04-26T09:16:15.936` (string, required) 
-        
 
 ### Error
 + type: type_atom (string, required) - Atom that represents error type.
@@ -5729,7 +6456,7 @@ This method must be used to complete of existing activity from patient's Care pl
 
 ### `Service_Request_List`
 + include `Service_Request_Base`
-+ identity (`Person_service_request`, required)
++ identity (`Person_service_request`, required) - parametres - last name, first name, second name - can have value NULL
 
 ### `Qualify_Service_Request_Responce`
 + `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
@@ -6023,8 +6750,9 @@ This method must be used to complete of existing activity from patient's Care pl
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ access_level: `read` (enum, required) - only `read` is supported
++ access_level: `read` (enum, required) - access rights type
     - read
+    - write
 + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of patient's auth method
 
 ### `Approval_Response`
@@ -6058,8 +6786,9 @@ This method must be used to complete of existing activity from patient's Care pl
     + type: `OTP` (enum, required)
         - OTP
         - OFFLINE
-        - NA
+        - THIRD_PERSON
     + number: `+38093*****85` (string, optional)
+
 
 ### `Get_Approvals_List`
 + `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
@@ -6119,8 +6848,9 @@ This method must be used to complete of existing activity from patient's Care pl
     + type: `OTP` (enum, required)
         - OTP
         - OFFLINE
-        - NA
+        - THIRD_PERSON
     + number: `+38093*****85` (string, optional)
+
 
 ## `Service_dictionary`
 ### `Service`
@@ -6160,7 +6890,12 @@ This method must be used to complete of existing activity from patient's Care pl
 
 ## `Person_details`
 ### `Person_service_request`
-+ short_name: Петро І. І. (string, required)
++ last_name: Іванов (string, required) - full surname of the patient
++ first_name: І. (string, required) - short format of the patient's first name with the dot
++ second_name: І. (string, required) - short format of the patient's second name with the dot
++ gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
+    - MALE
+    - FEMALE
 + age: 35 (number, required) - full years between current date and birth date
 
 ## Care plan
@@ -6233,7 +6968,29 @@ This method must be used to complete of existing activity from patient's Care pl
 + inform_with (object, optional)
     + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method 
 + status: new (string, required)
-        
+
+### `Prequalify_Care_Plan_Activity_base`
++ author (Reference_request, required) - `author of the activity`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `care_plan` (Reference_request, required) - `Care plan to which the activity belongs`
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_plan` (string)
++ `detail` (Prequslify_Care_Plan_activity_detail_base, required)
+
+### `Prequalify_Care_Plan_Activity_Responce`
++ `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program identifier`
++ `program_name` : `Fee-For-Service`(string, required)
++ `status` : `INVALID` (enum, required) - Status for ability use program for this activity
+    - VALID
+    - INVALID
++ `rejection_reason` : `Service is not included in the program` (string) - Reason to fetch invalid status
 
 ### `Care_Plan_activity_base`
 + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - unique within the care plan
@@ -6249,10 +7006,9 @@ This method must be used to complete of existing activity from patient's Care pl
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `care_plan` (string)
-+ `detail` (Care_Plan_activity_detail_base, required)
++ `detail` (`Care_Plan_activity_detail_base`, required)
 
-
-### `Care_Plan_activity_detail_base`
+### `Prequslify_Care_Plan_activity_detail_base`
 + kind: `service_request` (enum, required)
     - service_request
     - medication_request
@@ -6280,10 +7036,11 @@ This method must be used to complete of existing activity from patient's Care pl
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports that approves diagnoses`
+                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports/clinical_impressions that approves diagnoses`
                             - condition
                             - oservation
                             - diagnostic_report
+                            - clinical_impression
 + goal (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -6292,6 +7049,8 @@ This method must be used to complete of existing activity from patient's Care pl
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
+    + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -6359,6 +7118,126 @@ This method must be used to complete of existing activity from patient's Care pl
                     + code: `employee` (string)
 + `daily_amount` (object)
     + value: 13.5 (number, required)
+    + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
++ description: `Some activity description` (string)
++ `do_not_perform`: false (boolean, required)
++ status: scheduled (string, required)
+
+### `Care_Plan_activity_detail_base`
++ kind: `service_request` (enum, required)
+    - service_request
+    - medication_request
++ `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
+     + identifier (object, optional)
+        + type (object, optional)
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/resources` (string, required)
+                    + code: `service` (enum)
+                        - service
+                        - `service_group`
+                        - medication
+            + text (string)
+        + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
++ `reason_code` (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `X85` (string)
+                + system: `eHealth/ICD10_AM/condition_codes` (string, required)
++ `reason_reference` (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum) - `conditions/oservations/diagnostic_reports/clinical_impressions that approves diagnoses`
+                            - condition
+                            - oservation
+                            - diagnostic_report
+                            - clinical_impression
++ goal (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `diabetes_treatment` (string)
+                + system: `eHealth/care_plan_activity_goals` (string, required)
++ quantity (object)
+    + value: 13 (number, required)
+    + `system`: `MEDICATION_UNIT` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `code`: `MG` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `unit`: `мг` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+- One of
+    - `scheduled_timing` (object)
+        + event (array)
+            - `2018-08-02T10:45:16Z` ([string])
+        + repeat (object)
+            - One Of
+                - `bounds_duration` (object, optional)
+                    + value: 10 (number, required)
+                    + comparator: `>` (string, optional)
+                    + unit: `доба` (string, optional)
+                    + system: `eHealth/ucum/units` (string, required)
+                    + code: `day` (string, required)
+                - bounds_range (object, optional)
+                    + low (object, required)
+                        + value: `13` (number, required)
+                        + unit: `доба` (string, optional) 
+                        + system: `eHealth/ucum/units` (string, required)
+                        + code: `day` (string, required)
+                    + high (object, required)
+                        + value: `23` (number, required)
+                        + unit: `доба` (string, optional) 
+                        + system: `eHealth/ucum/units` (string, required)
+                        + code: `day` (string, required)
+                - bounds_period (object, optional)
+                    + start: `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+                    + end: `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
+            + count: 10 (number, optional) - Number of times to repeat
+            + `count_max`: 20 (number, optional) - Maximum number of times to repeat
+            + duration: 15 (number, optional) - How long when it happens
+            + `duration_max`: 25 (number, optional) - How long when it happens
+            + `duration_unit`: `day` (string, optional) - unit of time dictionary
+            + frequency: 1 (number, optional) - Event occurs frequency times per period
+            + `frequency_max`: 4 (number, optinal) - Event occurs up to requency max times per period
+            + `period`: 1 (number, optinal) - Event occurs frequency times per period
+            + `period_max`: 3 (number, optional) - Upper limit of period, 3-4 hours
+            + `period_unit`: `day` (string, optional) - unit of time dictionary
+            + `day_of_week` (array, optinal) - DAYS OF WEEK dictionary
+                - mon ([string])
+            + `time_of_day` (array, optinal) - Time of day for action
+                - `16:00:00` ([string])
+            + when: (array, optional) - Code for time period of occurrence from EVENT_TIMING dictionary
+                - WAKE ([string])
+            + offset: 20 (number, optinal) - Minutes from event, before or after
+        + code (object)
+            + `coding` (array, required, fixed-type)
+                + (object)
+                    + system: `TIMING_ABBREVIATION` (string, required)
+                    + code: `Q4H` (string, required) - Symbol in syntax defined by the system
+            + text (string, optional)
+    - `scheduled_period` (object)
+        + start: `2018-08-02T10:45:16.000Z`(string, required) -  Starting time with inclusive boundary
+        + end: `2018-08-02T11:00:00.000Z`(string, optional) -  End time with inclusive boundary, if not ongoing
+    - `scheduled_string`: `2018-08-02T10:45:16.000Z` (string)
++ location (Reference_request)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ performer (Reference_request)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `daily_amount` (object)
+    + value: 13.5 (number, required)
+    + `system`: `MEDICATION_UNIT` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `code`: `MG` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `unit`: `мг` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + `program` (Reference_request, optional)
@@ -6368,7 +7247,6 @@ This method must be used to complete of existing activity from patient's Care pl
                 + (Coding)
                     + code: `medical_program` (string)
 + status: scheduled (string, required)
-                    
 
 ### `Care_plan_activity_show`
 + include `Care_Plan_activity_base`
@@ -6404,7 +7282,9 @@ This method must be used to complete of existing activity from patient's Care pl
                     - `eHealth/care_plan_activity_cancel_reasons`
     + `remaining_quantity` (object)
         + value: 12 (number, required)
-
+        + `system`: `MEDICATION_UNIT` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
+        + `code`: `MG` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
+        + `unit`: `мг` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
 
 ### `Care_Plan_Show`
 + include `Care_Plan_Create`
@@ -6489,3 +7369,32 @@ This method must be used to complete of existing activity from patient's Care pl
                 - INPATIENT
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
+
+### `Medical_Event_Context_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
+
+### `Medical_Event_Context_Episode_with_Diagnostic_Report_Response`
++ `episode` (`Medical_Event_Context_Episode`)
++ `diagnostic_report` (`Medical_Event_Context_Diagnostic_Report`)
+
+### `Medical_Event_Context_Episode_with_Origin_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
++ `origin_episode` (`Medical_Event_Context_Episode`)
+
+### `Medical_Event_Context_Episode`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `episode` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ display_value: `null` (string, required) - This field is filled on creating and never updated after
+
+### `Medical_Event_Context_Diagnostic_Report`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `diagnostic_report` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
++ display_value: `null` (string, required) - This field is filled on creating and never updated after
