@@ -2640,9 +2640,15 @@ Object| Access level
 diagnostic_report|read
 encounter|read
 procedure|read
-service_request|read
+observation|read
 condition|read
 activity|read
+clinical_impression|read
+allergy_intolerance|read
+immunization|read
+device|read
+risk_assessment|read
+
 
 **Scopes required:** `approval:create`
 
@@ -6730,23 +6736,13 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Approval_Request`
 - One Of
     - `resources` (array, optional) - list of resources that are requested access to be granted
-        - (object)
+        + resources (object, optional) 
             + identifier (object, optional)
                 + type (object, optional)
                     + coding (array, optional, fixed-type)
                         + object
                             + system: `eHealth/resources` (string, required)
                             + code: `episode_of_care` (string)
-                    + text (string)
-                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
-    - `child_resource` (object, optional) - access to child_resource and it's context from resources block
-        - (object)
-            + identifier (object, optional)
-                + type (object, optional)
-                    + coding (object, optional, fixed-type)
-                        + object
-                            + system: `eHealth/resources` (string, required)
-                            + code: `procedure` (string)
                     + text (string)
                 + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
     - `service_request` (object, optional) - access to permitted_resources in service request
@@ -6785,6 +6781,15 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `person` (string)
                 + text (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
++ `child_resources` (object, optional) - should be submitted with resources field only. Describes medical event included in the resource
+    + identifier (object, optional)
+        + type (object, optional)
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/resources` (string, required)
+                    + code: `procedure` (string)
+            + text (string)
+        + value: `21e227f9-3afc-4938-80d6-8594814fbe1a` (string, required)
 + `granted_to` (Reference_request, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
     + identifier (Identifier)
         + type (Codeable_Concept)
