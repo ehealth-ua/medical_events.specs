@@ -6765,13 +6765,22 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `forbidden_group` (string)
                 + text (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
-    - `diagnoses_group` (object, optional) - access to episodes of care that contains in history of diagnoses at least one diagnosis code specified in the Group of Diagnoses
+    - `diagnoses_group` (object, optional) - access to episodes of care that contains in current diagnoses at least one diagnosis code specified in the Group of Diagnoses
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
                     + object
                         + system: `eHealth/resources` (string, required)
                         + code: `diagnoses_group` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - `` (object, optional) - access to diagnostic reports and procedures that contains service code specified in the Group of Services
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `services_group` (string)
                 + text (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
     - `patient` (object, optional) - access to medical events that fall under the restrictions specified for the person
