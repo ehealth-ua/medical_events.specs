@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://ehealth.com/
+HOST: http://api.ehealth.gov.ua
 
 # eHealth MIS Medical Events API
 
@@ -14,6 +14,13 @@ List of scopes available for the specific user role can be recieved using [/role
 2. Access to Patient Medical Data is driven by Attribute-based access control(ABAC). Rules [https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17049388207/ABAC+rules+EN]
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
 4. Post methods are async
+
+The table below indicates actual API endpoints for all the eHealth environments:
+Env     | Host
+--------|-----
+DEMO    | https://api-demo.ehealth.gov.ua
+PREPROD | https://api-preprod.ehealth.gov.ua
+PROD    | https://api.ehealth.gov.ua
 
 ![Access policy](https://image.ibb.co/fOPoTV/Referrals-Medical-events-usage.png)
 
