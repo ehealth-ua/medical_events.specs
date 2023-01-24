@@ -403,21 +403,21 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data(`Episode_Of_Care_Response`)
     
 
-### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size,status}]
+### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,status,page,page_size}]
 Use period_from period_to to find episodes that were active in a certain period of time
 
 
-**Scopes required:** `TBD`
+**Scopes required:** `episode:read`
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `page`: 2 (number, optional) - Page number
-    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `period_from`: `2017-01-01` (string, optional)
     + `period_to`: `2018-01-01` (string, optional)
     + `code`: `R80` (string, optional)
     + `status`: `active` (string, optional)
-    + `managing_organization_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
+    + `managing_organization_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)    
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
     + Headers
@@ -434,7 +434,7 @@ Use period_from period_to to find episodes that were active in a certain period 
 ### Get Approved Episodes [GET /api/patients/{patient_id}/episodes/approved]
 
 This web service returns episodes, that patient gave approvals to read by a current employee.
-**Scopes required:** `TBD`
+**Scopes required:** `episode:read`
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
@@ -453,7 +453,7 @@ This web service returns episodes, that patient gave approvals to read by a curr
         + data(array[`Episode_Of_Care_Response`])
 
   
-### Get Short Episodes by Diagnoses Groups [GET /api/patients/{patient_id}/diagnoses_groups/episodes{?period_from,period_to,page,page_size,diagnoses_group_id,managing_organization_id}]
+### Get Short Episodes by Diagnoses Groups [GET /api/patients/{patient_id}/diagnoses_groups/episodes{?period_from,period_to,diagnoses_group_id,managing_organization_id,page,page_size}]
 
 This web service returns brief information of episodes grouped by Groups of Diagnoses, for which patient gave approvals to read by a current employee.
 Access to full episode data is restricted by patient's approval.
@@ -462,12 +462,12 @@ If you have an approval - you can obtain episode details and nested entities thr
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `page`: 2 (number, optional) - Page number
-    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `period_from`: `2022-01-01` (string, optional)
     + `period_to`: `2023-01-01` (string, optional)
     + `diagnoses_group_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
     + `managing_organization_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
     + Headers
@@ -6811,7 +6811,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `forbidden_group` (string)
                 + text (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
-    - `diagnoses_group` (object, optional) - access to episodes of care that contains in current diagnoses at least one diagnosis code specified in the Group of Diagnoses
+    - `diagnoses_group` (object, optional) - access to list of short episodes of care that contain in diagnoses history at least one diagnosis code specified in the Group of Diagnoses
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
