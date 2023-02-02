@@ -3954,10 +3954,12 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## Encouner
 ### `Encounter_Base` (object)
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
-+ `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                
-+ period (object , required)
-    + start: `2018-08-02T10:45:16.000Z` (string, required)
-    + end: `2018-08-12T10:45:16.000Z` (string, required)
++ `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`
+- One Of
+    - period (object , required)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required)                       
+    - date: `2018-08-02T10:45:16.000Z` (string, required)
 + `incoming_referral`(Reference_request, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4130,9 +4132,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `episode` (string)
 + `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                   
-+ period (object , required)
-    + start: `2018-08-02T10:45:16.000Z` (string, required)
-    + end: `2018-08-12T10:45:16.000Z` (string, required)
+- One Of
+    - period (object , required)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required)                       
+    - date: `2018-08-02T10:45:16.000Z` (string, required)
 + `incoming_referral`(Reference_response, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4338,9 +4342,11 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Encounter_Short`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
 + `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                
-+ period (object , required)
-    + start: `2018-08-02T10:45:16.000Z` (string, required)
-    + end: `2018-08-12T10:45:16.000Z` (string, required)
+- One Of
+    - period (object , required)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required)                       
+    - date: `2018-08-02T10:45:16.000Z` (string, required)
 + `episode` (Reference_request, required, fixed-type)   
     + identifier (Identifier)
         + type (Codeable_Concept)
