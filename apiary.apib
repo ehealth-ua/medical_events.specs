@@ -3086,7 +3086,7 @@ Returns care plan details by it's identifier in patient context
                 + phone_number: `+38093*****85` (string, optional)
 
 
-### Get Care Plans by search params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,status,page,page_size}]
+### Get Care Plans by search params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,managing_organization_id,status,page,page_size}]
 Returns care plan list filtered by submitted parameters withtin specified patient.
 
 **Scopes required:** `care_plan:read`
@@ -3097,6 +3097,7 @@ Returns care plan list filtered by submitted parameters withtin specified patien
     + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Care plan
     + based_on: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - Care Plan identifier on which returned Care plans are based on.
     + part_of: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - parent Care Plan identifier which includes returned Care plans.
+    + managing_organization_id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)   
     + status: `active` (string, optional) - Care plan's status
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
