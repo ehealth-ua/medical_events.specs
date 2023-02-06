@@ -4006,20 +4006,27 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: employee (string)
                     
-+ reasons (array,required)
-    + (Codeable_Concept)
-        + coding (array, fixed-type)
-            + (Coding)
-             + system: `eHealth/ICPC2/reasons` (string) 
-             + code: `A02` (string) - `dictionary eHealth/ICPC2/reasons`
+- One Of
+    - `reasons` (array, optional)
+        + (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                 + system: `eHealth/ICPC2/reasons` (string) 
+                 + code: `A02` (string) - `dictionary eHealth/ICPC2/reasons`
              
-    + (Codeable_Concept)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/ICPC2/reasons` (string)
-                + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons`
-                
-        
+        + (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                 + system: `eHealth/ICPC2/reasons` (string)
+                 + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons` 
+    - `reason_references` (array, Reference_request, optional)
+        + (Reference_request)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `observation` (string)
+
 + diagnoses (array, optional, fixed-type)
     + (`Diagnosis_Request`)
         
@@ -7450,6 +7457,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `care_plan` (string)
++ managing_organization (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
 + period (Period, required)
 + intent: `order` (enum, required)
     - order
@@ -7514,3 +7527,23 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + code: `diagnostic_report` (string)
     + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
 + display_value: `null` (string, required) - This field is filled on creating and never updated after
+
+### `Encounter_Reasons`
++ (Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+         + system: `eHealth/ICPC2/reasons` (string) 
+         + code: `A02` (string) - `dictionary eHealth/ICPC2/reasons`
+             
++ (Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+         + system: `eHealth/ICPC2/reasons` (string)
+         + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons`
+
+### `Encounter_Reason_Reference`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `observation` (string)
