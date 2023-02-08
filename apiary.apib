@@ -2101,7 +2101,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 Use [GET Service Catalog](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-programs/medical-program/get-services-dictionary) to receive current catalog of services. 
 
-### PreQualify Service Request [POST /api/patients/{patient_id}/service_requests/prequalify]
+### PreQualify Service request [POST /api/patients/{patient_id}/service_requests/prequalify]
 
 This method is used to pre-qualify service request in order to define whether the medical program could be applied in this particular case or not.
 **Scopes required:** `service_request:write`
@@ -2154,7 +2154,7 @@ This method is used to pre-qualify service request in order to define whether th
             + message: `Patient is not active` (string, required)
 
 
-### Create Service Request [POST]
+### Create Service request [POST]
 
 This method must be used to register new Service Request in the eHealth. 
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
@@ -2196,7 +2196,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Service Request [POST /dummy/patients/{id}/service_requests]
+### Dummy Service request [POST /dummy/patients/{id}/service_requests]
 
 + Request (application/json)
 
@@ -2219,7 +2219,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Get Service Requests list Episode Context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests{?status}]
+### Get Service requests by search params in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests{?status}]
 
 This method returns all service requests related to specified episode of care.
 
@@ -2254,7 +2254,7 @@ This method returns all service requests related to specified episode of care.
             
             
 
-### Get Service Requests by search params [GET /api/patients/{patient_id}/service_requests{?status,requester_legal_entity,used_by_legal_entity,episode_id,code,care_plan_id}]
+### Get Service requests by search params [GET /api/patients/{patient_id}/service_requests{?status,requester_legal_entity,used_by_legal_entity,episode_id,code,care_plan_id}]
 
 This method returns all service requests related to specified episode of care.
 
@@ -2289,7 +2289,7 @@ This method returns all service requests related to specified episode of care.
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Get Service Request details with episode [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests/{service_request_id}]
+### Get Service request details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests/{service_request_id}]
 
 **Scopes required:** `service_request:read`
 
@@ -2319,7 +2319,7 @@ This method returns all service requests related to specified episode of care.
             + message: `Service request not found` (string)
             
 
-### Get Service Request details w/o episode [GET /api/patients/{patient_id}/service_requests/{service_request_id}]
+### Get Service request details [GET /api/patients/{patient_id}/service_requests/{service_request_id}]
 
 **Scopes required:** `service_request:read`
 
@@ -2348,7 +2348,7 @@ This method returns all service requests related to specified episode of care.
             + message: `Service request not found` (string)
 
 
-### Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel]
+### Cancel Service request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel]
 
 This method must be used to cancel existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
@@ -2390,7 +2390,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel/dummy]
+### Dummy Cancel Service request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel/dummy]
 + Request (application/json)
 
     + Headers
@@ -2413,7 +2413,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Recall Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall]
+### Recall Service request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall]
 
 This method must be used to recall existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
@@ -2441,7 +2441,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Recall Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall/dummy]
+### Dummy Recall Service request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall/dummy]
 + Request (application/json)
 
     + Headers
@@ -2464,7 +2464,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
             + code: 202 (number)
         + data (`Job`)
 
-### Resend SMS on Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/resend]
+### Resend SMS on Service request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/resend]
 Method to resend sms on service request
 It can be processed in both sync and async methods depends on Server decision
 Depends on processing method Server might answer with:
@@ -2499,7 +2499,7 @@ http code| processing method | Client recommendations
 
 ## Manage Service Requests [/api/service_requests]
 
-### Search for a service requests [GET /api/service_requests{?requisition,status,page,page_size}]
+### Search for a Service requests [GET /api/service_requests{?requisition,status,page,page_size}]
 
 This service must be used to discover service requests by requisition number. If nothing found by requisition number - it will return empty list
 
@@ -2550,7 +2550,7 @@ This service must be used to discover service requests by requisition number. If
         + meta (Response__Meta)
         +  data (array[`Qualify_Service_Request_Responce`]))
 
-### Use Service Request [PATCH /api/service_requests/{service_request_id}/actions/use]
+### Use Service request [PATCH /api/service_requests/{service_request_id}/actions/use]
 
 **Scopes required:** `service_request:use`
 
@@ -2573,7 +2573,7 @@ This service must be used to discover service requests by requisition number. If
         + data (`Job`)
 
 
-### Change service request status to In progress [PATCH /api/service_requests/{service_request_id}/actions/process]
+### Change Service request status to In progress [PATCH /api/service_requests/{service_request_id}/actions/process]
 
 **Scopes required:** `service_request:makeinprogress`
 
@@ -2594,7 +2594,7 @@ This service must be used to discover service requests by requisition number. If
             + code: 202 (number)
         + data (`Job`)
 
-### Release Service Request [PATCH /api/service_requests/{service_request_id}/actions/release]
+### Release Service request [PATCH /api/service_requests/{service_request_id}/actions/release]
 
 **Scopes required:** `service_request:use`
 
@@ -2614,7 +2614,7 @@ This service must be used to discover service requests by requisition number. If
             + code: 202 (number)
         + data (`Job`)
 
-### Complete Service Request [PATCH /api/service_requests/{service_request_id}/actions/complete]
+### Complete Service request [PATCH /api/service_requests/{service_request_id}/actions/complete]
 Method to resend sms on service request.
 It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
