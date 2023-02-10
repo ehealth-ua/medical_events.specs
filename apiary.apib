@@ -5965,7 +5965,11 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + period_start: `2018-08-02T10:45:16.000Z` (string, required)
+        + period_end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -6054,7 +6058,11 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + period_start: `2018-08-02T10:45:16.000Z` (string, required)
+        + period_end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_response, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -6169,7 +6177,11 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + period_start: `2018-08-02T10:45:16.000Z` (string, required)
+        + period_end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
