@@ -3683,7 +3683,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + type  (Coding, required)
     + system : `eHealth/episode_types` (string)
-    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
+    + code: `primary_care` (string)
 + `status`: `active` (string, required)- `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
                     
@@ -3728,7 +3728,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + type  (Coding, required)
     + system : `eHealth/episode_types` (string)
-    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
+    + code: `primary_care` (string)
 + `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
 + `name`: `Діабет 2018` (string, required)
 + `managing_organization` (Reference_request, required)
@@ -3753,7 +3753,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + type  (Coding, required)
     + system : `eHealth/episode_types` (string)
-    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
+    + code: `primary_care` (string) 
 + `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
 +  `status_history`  (array, optional, fixed-type)
@@ -5968,8 +5968,8 @@ This web service returns rule engine rule details filtered by ID with active rul
 - One Of
     - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
     - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
-        + period_start: `2018-08-02T10:45:16.000Z` (string, required)
-        + period_end: `2018-08-12T10:45:16.000Z` (string, required) 
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -6032,7 +6032,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + coding (array, fixed-type)
             + (Coding)
              + system: `eHealth/ISO_9999` (string) 
-             + code: `03 05 38` (string) - `dictionary eHealth/ISO_9999`
+             + code: `03 05 38` (string)
 
 
 ### Procedure_Response
@@ -6061,8 +6061,8 @@ This web service returns rule engine rule details filtered by ID with active rul
 - One Of
     - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
     - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
-        + period_start: `2018-08-02T10:45:16.000Z` (string, required)
-        + period_end: `2018-08-12T10:45:16.000Z` (string, required) 
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_response, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -6147,7 +6147,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + coding (array, fixed-type)
             + (Coding)
              + system: `eHealth/ISO_9999` (string) 
-             + code: `03 05 38` (string) - `dictionary eHealth/ISO_9999`
+             + code: `03 05 38` (string)
 
 ### Procedure_EncounterPCG_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
@@ -6180,8 +6180,8 @@ This web service returns rule engine rule details filtered by ID with active rul
 - One Of
     - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
     - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
-        + period_start: `2018-08-02T10:45:16.000Z` (string, required)
-        + period_end: `2018-08-12T10:45:16.000Z` (string, required) 
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -6250,7 +6250,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + coding (array, fixed-type)
             + (Coding)
              + system: `eHealth/ISO_9999` (string) 
-             + code: `03 05 38` (string) - `dictionary eHealth/ISO_9999`
+             + code: `03 05 38` (string)
 
 ### `Medication_Administration_EncounterPCG_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique medication admnistration identifier
