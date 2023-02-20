@@ -3035,12 +3035,17 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
             + include `Care_Plan_activity_detail_base`
             + `quantity` (object)
                 + value: 13 (number, required)
-                + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
-                + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                + `code`: `MG` (string, required) - Can be absent in old version of CPA.
             + `daily_amount` (object)
                 + value: 13.5 (number, required)
-                + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
-                + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. 
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+
 
 + Response 201 (application/json)
     + Attributes (Response_OK)
@@ -3379,6 +3384,21 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 201 (number)
         + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: cancelled (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
 
 
 + Response 202 (application/json)
@@ -3413,16 +3433,13 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `some code` (string)
                         + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
-            + `quantity` (object)
-                + value: 13 (number, required)
-                + `system`: `MEDICATION_UNIT` (string, optional) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-                + `code`: `MG` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-                + `unit`: `мг` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-            + `daily_amount` (object)
-                + value: 13.5 (number, required)
-                + `system`: `MEDICATION_UNIT` (string, optional) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-                + `code`: `MG` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-                + `unit`: `мг` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+            + `remaining_quantity` (object)
+                + value: 12 (number, required)
+                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
         + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
@@ -3433,6 +3450,21 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 201 (number)
         + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: cancelled (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
 
 
 + Response 202 (application/json)
@@ -3485,6 +3517,21 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 201 (number)
         + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: completed (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_complete_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
 
 
 + Response 202 (application/json)
@@ -7156,7 +7203,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `detail` (`Care_Plan_activity_detail_base`, required)
 
 ### `Prequslify_Care_Plan_activity_detail_base`
-+ kind: `service_request` (enum, required)
++ kind: `medication_request` (enum, required)
     - service_request
     - medication_request
 + `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
@@ -7196,8 +7243,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
-    + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -7265,14 +7314,17 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + `daily_amount` (object)
     + value: 13.5 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
-    + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA.
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + status: scheduled (string, required)
 
+
 ### `Care_Plan_activity_detail_base`
-+ kind: `service_request` (enum, required)
++ kind: `medication_request` (enum, required)
     - service_request
     - medication_request
 + `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
@@ -7281,7 +7333,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, optional, fixed-type)
                 + object
                     + system: `eHealth/resources` (string, required)
-                    + code: `service` (enum)
+                    + code: `medication` (enum)
                         - service
                         - `service_group`
                         - medication
@@ -7312,9 +7364,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
-    + `code`: `MG` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
-    + `unit`: `мг` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -7381,10 +7435,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `employee` (string)
 + `daily_amount` (object)
-    + value: 13.5 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
-    + `code`: `MG` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
-    + `unit`: `мг` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + value: 6.5 (number, required)
+    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA.
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+    + `code`: `MG` (string, required) - Can be absent in old version of CPA. 
+    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + `program` (Reference_request, optional)
@@ -7394,6 +7450,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `medical_program` (string)
 + status: scheduled (string, required)
+
 
 ### `Care_plan_activity_show`
 + include `Care_Plan_activity_base`
@@ -7415,7 +7472,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + code: `some code` (string)
                 + system: `eHealth/care_plan_activity_outcomes` (string, required)
 + `detail` (Care_Plan_activity_detail_base, required)
-    + status: completed (enum, required)
+    + status: scheduled (enum, required)
         - scheduled
         - `in_progress`
         - completed
@@ -7429,9 +7486,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                     - `eHealth/care_plan_activity_cancel_reasons`
     + `remaining_quantity` (object)
         + value: 12 (number, required)
-        + `system`: `MEDICATION_UNIT` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
-        + `code`: `MG` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
-        + `unit`: `мг` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
+        + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+            - `MEDICATION_UNIT`
+            - `SERVICE_UNIT`
+        + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+        + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
 
 ### `Care_Plan_Show`
 + include `Care_Plan_Create`
