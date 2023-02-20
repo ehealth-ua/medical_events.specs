@@ -2575,6 +2575,8 @@ This service must be used to discover service requests by requisition number. If
 
 ### Change Service request status to In progress [PATCH /api/service_requests/{service_request_id}/actions/process]
 
+Will be deprecated!
+
 **Scopes required:** `service_request:makeinprogress`
 
 + Parameters
@@ -2595,6 +2597,8 @@ This service must be used to discover service requests by requisition number. If
         + data (`Job`)
 
 ### Release Service request [PATCH /api/service_requests/{service_request_id}/actions/release]
+
+Will be deprecated!
 
 **Scopes required:** `service_request:use`
 
@@ -6572,7 +6576,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `legal_entity` (string)
+                    + code: `employee` (string)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `completed_with` (Reference_response, optional)
@@ -6608,6 +6612,43 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `SPECIALITY_TYPE` (string)
             + code: `DIETETICS` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
+    + unit: шт (string)
++ `remaining_quantity` (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
+    + unit: шт (string)
++ `used_by_legal_entity_history`  (array, optional, fixed-type)
+    + (object)
+        + `used_by_legal_entity`: (Reference_response, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `legal_entity` (string)
+                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
++ `used_by_employee_history`  (array, optional, fixed-type)
+    + (object)
+        + `used_by_employee`: (Reference_response, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/service_request_recall_reasons` (string)
+            + code: `cured` (string)
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -6719,6 +6760,10 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `SPECIALITY_TYPE` (string)
             + code: `DIETETICS` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + `system`: `SERVICE_UNIT` (string, required)
+    + `code`: `PIECE` (string, required)
 
 ### `Service_Request_Create`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -6821,6 +6866,10 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `SPECIALITY_TYPE` (string)
             + code: `DIETETICS` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
 
 ### `Use_Service_Request_Request`
 + `used_by_employee` (Reference_request, optional)
@@ -6854,19 +6903,25 @@ This web service returns rule engine rule details filtered by ID with active rul
         
 
 ### `Complete_Service_Request`
-+ `completed_with` (Reference_request, required)
++ `completed_with` (Reference_request, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `diagnostic_report` (string) 
                     
-+ `program_service` (Reference_request, required)
++ `program_service` (Reference_request, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `program_service` (string) 
+
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/service_request_complete_reasons` (string)
+            + code: `default` (string)
                 
 
 
