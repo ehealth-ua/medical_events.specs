@@ -189,6 +189,7 @@ This resource should be used to get the processing status of the async job.
 
 ### Dummy Encounter Package [POST]
 - If `encounter.class.code:"INPATIENT"`, **priority** for encounter is required 
+- If `encounter.class.code:"PHC"`, **reasons** for encounter is required
 - `hospitalization` may be present only with `encounter.class.code:"INPATIENT"`
 - Fields `encounter.hospitalization.admit_source`, `encounter.hospitalization.discharge_disposition` and `encounter.hospitalization.discharge_department` should be required if parameter `encounter.type.coding.code = discharge`.
 
@@ -4057,7 +4058,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: employee (string)
                     
-+ reasons (array,required)
++ reasons (array, optional)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
