@@ -163,8 +163,10 @@ This resource should be used to get the processing status of the async job.
         + data (`Job_Error_422`)
         + meta (Response__Meta)
             + code: 200 (number)
+
 ### Dummy Encounter Package [POST]
 - If `encounter.class.code:"INPATIENT"`, **priority** for encounter is required 
+- If `encounter.class.code:"PHC"`, **reasons** for encounter is required
 - `hospitalization` may be present only with `encounter.class.code:"INPATIENT"`
 - Fields `encounter.hospitalization.admit_source`, `encounter.hospitalization.discharge_disposition` and `encounter.hospitalization.discharge_department` should be required if parameter `encounter.type.coding.code = discharge`.
 
