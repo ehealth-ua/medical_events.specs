@@ -2775,12 +2775,12 @@ It is allowed only for the doctor who has an active declaration with a patient f
 **Scopes required:** `approval:read`
 
 + Parameters
-    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - identifier of the patient.
-    + granted_to: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - identifier of the employee or legal entity to whom access has been granted.
-    + granted_resources: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the entity for which the approval was created.
-    + granted_resource_type: `diagnostic_report` (string, optional) - entity type for which the approval was created.
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - identifier of the patient
+    + granted_to: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - identifier of the employee or legal entity to whom access has been granted
+    + granted_resources: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the entity for which the approval was created
+    + granted_resource_type: `diagnostic_report` (string, optional) - entity type for which the approval was created
     + is_verified: `true` (boolean, optional) - state of verification of approval
-    + is_expired: `true` (boolean, optional) - if true - expiration date-time expired_at less than now, if false - greater now
+    + is_expired: `true` (boolean, optional) - true if expiration date-time less than now, false if expiration date-time greater now
     + reason: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - type and identifier of entity based on which approval has been created
     + access_level: `read` (string, optional) - access level to data
     + page: 2 (number, optional) - Page number
