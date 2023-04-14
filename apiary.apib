@@ -2768,8 +2768,8 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Get approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,status,reason,access_level,page,page_size}]
-Method for receiving a list of patient approvals.
+### Get approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,is_verified,reason,access_level,page,page_size}]
+Method for receiving a list of actual patient approvals.
 It is allowed only for the doctor who has an active declaration with a patient from url (can get all approvals) or approval is granted to user (can get own approval).
 
 **Scopes required:** `approval:read`
@@ -2779,7 +2779,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
     + granted_to: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - identifier of the employee or legal entity to whom access has been granted.
     + granted_resources: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the entity for which the approval was created.
     + granted_resource_type: `diagnostic_report` (string, optional) - entity type for which the approval was created.
-    + status: `active` (string, optional) - status of approval
+    + is_verified: `true` (boolean, optional) - state of verification of approval
     + reason: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - type and identifier of entity based on which approval has been created
     + access_level: `read` (string, optional) - access level to data
     + page: 2 (number, optional) - Page number
@@ -3193,7 +3193,7 @@ Returns all the activities related to the care plan in patient context
     + kind: `service_request` (enum, optional) - kind of the activity.
         - service_request
         - medication_request
-    + `managing_organization_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
+    + managing_organization_id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional) - legal entity id
     + status: `scheduled` (string, optional) - Care plan activity status
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -7028,9 +7028,9 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
-+ `status`: new (enum, required) - status of approval
-    - new
-    - active
++ `is_verified`: false (boolean, required) - state of verification of approval
+    - false
+    - true
 + access_level: `read` (string, required)
 + `authentication_method_current` (object, required)
     + type: `OTP` (enum, required)
@@ -7062,9 +7062,10 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
-+ `status`: new (enum, required) - status of approval
-    - new
-    - active
++ `is_verified`: true (boolean, required) - state of verification of approval
+    - true
+    - false
++ expires_at: 1498749591 (number, required) - expiration date-time timestamp
 + access_level: `read` (string, required)
 
 ### `Get_Approval_Details`
@@ -7093,6 +7094,9 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `status`: new (enum, required) - status of approval
     - new
     - active
++ `is_verified`: true (boolean, required) - state of verification of approval
+    - true
+    - false
 + access_level: `read` (string, required)
 + `authentication_method_current` (object, required)
     + type: `OTP` (enum, required)
@@ -7569,6 +7573,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
+     + display_value: `Медікал Солюшнc` (string, required)
 + `status_history` (array, required, fixed-type)
     + (object)
         + status: `active` (string, required)
@@ -7636,6 +7641,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
+     + display_value: `Медікал Солюшнc` (string, required)
 + `terms_of_service` (Codeable_Concept,required)
     + coding (array, fixed-type)
         + (Coding)
