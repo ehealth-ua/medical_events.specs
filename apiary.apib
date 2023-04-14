@@ -2769,7 +2769,7 @@ http code| processing method | Client recommendations
         + data (`Job`)
 
 ### Get approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,is_verified,reason,access_level,page,page_size}]
-Method for receiving a list of actual patient approvals.
+Method for receiving a list of actual patient's approvals.
 It is allowed only for the doctor who has an active declaration with a patient from url (can get all approvals) or approval is granted to user (can get own approval).
 
 **Scopes required:** `approval:read`
@@ -2797,6 +2797,36 @@ It is allowed only for the doctor who has an active declaration with a patient f
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Get_Approvals_List`)
+
+### Get deprecated approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,status,reason,access_level,page,page_size}]
+Method for receiving a list of not actual patient's approvals.
+It is allowed only for the doctor who has an active declaration with a patient from url (can get all approvals) or approval is granted to user (can get own approval).
+
+**Scopes required:** `approval:read`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - identifier of the patient.
+    + granted_to: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - identifier of the employee or legal entity to whom access has been granted.
+    + granted_resources: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the entity for which the approval was created.
+    + granted_resource_type: `diagnostic_report` (string, optional) - entity type for which the approval was created.
+    + status: `cancelled` (string, optional) - status of approval
+    + reason: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - type and identifier of entity based on which approval has been created
+    + access_level: `read` (string, optional) - access level to data
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Get_Approval_Details`)
 
 ### Get approval details [GET /api/patients/{patient_id}/approvals/{id}]
 Returns approval details by it's identifier in patient context.
@@ -2855,7 +2885,7 @@ http code| processing method | Client recommendations
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 201 (number)
-        + data(`Approval_Response`)
+        + data(`Get_Approval_Details`)
 
 ## Group Care plan
 ### Create Care Plan [POST /api/patients/{patient_id}/care_plans]
@@ -7573,7 +7603,6 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-     + display_value: `Медікал Солюшнc` (string, required)
 + `status_history` (array, required, fixed-type)
     + (object)
         + status: `active` (string, required)
@@ -7641,7 +7670,6 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)
-     + display_value: `Медікал Солюшнc` (string, required)
 + `terms_of_service` (Codeable_Concept,required)
     + coding (array, fixed-type)
         + (Coding)
