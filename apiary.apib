@@ -2768,7 +2768,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Get approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,is_verified,reason,expires_at,access_level,page,page_size}]
+### Get approvals [GET /api/patients/{patient_id}/approvals{?granted_to,granted_resources,granted_resource_type,is_verified,reason,is_expired,access_level,page,page_size}]
 Method for receiving a list of patient's approvals.
 It is allowed only for the doctor who has an active declaration with a patient from url (can get all approvals) or approval is granted to user (can get own approval).
 
@@ -2780,7 +2780,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
     + granted_resources: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the entity for which the approval was created.
     + granted_resource_type: `diagnostic_report` (string, optional) - entity type for which the approval was created.
     + is_verified: `true` (boolean, optional) - state of verification of approval
-    + expires_at: `true` (boolean, optional) - if true - expiration date-time less than now, if false - greater now
+    + is_expired: `true` (boolean, optional) - if true - expiration date-time expired_at less than now, if false - greater now
     + reason: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - type and identifier of entity based on which approval has been created
     + access_level: `read` (string, optional) - access level to data
     + page: 2 (number, optional) - Page number
