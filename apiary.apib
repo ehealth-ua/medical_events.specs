@@ -1518,7 +1518,7 @@ This chapter describes the structure of a single procedure creation. This is not
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
     + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier, look into episode in encounter
-    + status: COMPLETED (enum, optional) - status of procedure
+    + status: completed (enum, optional) - status of procedure
     + based_on: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique service request identifier
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
     + `managing_organization_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique legal entity identifier
@@ -2043,7 +2043,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + status: COMPLETED (enum, optional) - status of procedure
+    + status: completed (enum, optional) - status of procedure
     + `code`: `12345` (string, optional) 
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -6011,9 +6011,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `service_request` (string)
 + `paper_referral` (`Paper_referral`, optional, fixed-type)
-+ `status` : `COMPLETED` (enum, required) - Status for provided procedure
-    - `COMPLETED`
-    - `ENTERED_EN_ERROR`
++ `status` : `completed` (enum, required) - Status for provided procedure
+    - `completed`
+    - `entered_in_error`
 + `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
     + coding (array, fixed-type)
         + (Coding)
@@ -6104,9 +6104,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `service_request` (string)
 + `paper_referral` (`Paper_referral`, optional, fixed-type)
-+ `status` : `COMPLETED` (enum, required) - Status for provided procedure
-    - `COMPLETED`
-    - `ENTERED_EN_ERROR`
++ `status` : `completed` (enum, required) - Status for provided procedure
+    - `completed`
+    - `entered_in_error`
 + `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
     + coding (array, fixed-type)
         + (Coding)
