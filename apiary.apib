@@ -3041,16 +3041,16 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
             + include `Care_Plan_activity_detail_base`
             + `quantity` (object)
                 + value: 13 (number, required)
-                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+                + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, is required if kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
                     - `MEDICATION_UNIT`
                     - `SERVICE_UNIT`
-                + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+                + `code`: `MG` (string, optional) - Can be absent in old version of CPA, is required if kind `medication_request`.
             + `daily_amount` (object)
                 + value: 13.5 (number, required)
-                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. 
+                + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA. 
                     - `MEDICATION_UNIT`
                     - `SERVICE_UNIT`
-                + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+                + `code`: `MG` (string, optional) - Can be absent in old version of CPA.
 
 
 + Response 201 (application/json)
@@ -7301,10 +7301,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
-    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+    + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, is required for kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
         - `MEDICATION_UNIT`
         - `SERVICE_UNIT`
-    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+    + `code`: `MG` (string, optional) - Can be absent in old version of CPA, is required for kind `medication_request`.
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -7372,10 +7372,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + `daily_amount` (object)
     + value: 13.5 (number, required)
-    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA.
+    + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA.
         - `MEDICATION_UNIT`
         - `SERVICE_UNIT`
-    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+    + `code`: `MG` (string, optional) - Can be absent in old version of CPA.
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + status: scheduled (string, required)
@@ -7422,10 +7422,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
-    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+    + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, required if kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
         - `MEDICATION_UNIT`
         - `SERVICE_UNIT`
-    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+    + `code`: `MG` (string, optional) - Can be absent in old version of CPA, required if kind `medication_request`.
     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
 - One of
     - `scheduled_timing` (object)
@@ -7494,10 +7494,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + `daily_amount` (object)
     + value: 6.5 (number, required)
-    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA.
+    + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, required if kind `medication_request`.
         - `MEDICATION_UNIT`
         - `SERVICE_UNIT`
-    + `code`: `MG` (string, required) - Can be absent in old version of CPA. 
+    + `code`: `MG` (string, optional) - Can be absent in old version of CPA, required if kind `medication_request`. 
     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
@@ -7544,7 +7544,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                     - `eHealth/care_plan_activity_cancel_reasons`
     + `remaining_quantity` (object)
         + value: 12 (number, required)
-        + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+        + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
             - `MEDICATION_UNIT`
             - `SERVICE_UNIT`
         + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
