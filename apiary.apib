@@ -3406,7 +3406,7 @@ http code| processing method | Client recommendations
                         - `SERVICE_UNIT`
                     + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
                     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
-
+                + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -3447,6 +3447,7 @@ http code| processing method | Client recommendations
                     - `SERVICE_UNIT`
                 + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
                 + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+            + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
         + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
@@ -3472,6 +3473,7 @@ http code| processing method | Client recommendations
                         - `SERVICE_UNIT`
                     + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
                     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+                + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
 
 
 + Response 202 (application/json)
@@ -3539,6 +3541,7 @@ http code| processing method | Client recommendations
                         - `SERVICE_UNIT`
                     + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
                     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+                + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
 
 
 + Response 202 (application/json)
@@ -7549,6 +7552,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             - `SERVICE_UNIT`
         + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
         + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+    + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
 
 ### `Care_Plan_Show`
 + include `Care_Plan_Create`
