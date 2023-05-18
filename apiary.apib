@@ -3594,9 +3594,9 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + code: `insulin_1` (string, required) - Code of rule engine rule from dictionary specified in the system
             + description: `Some text` (string, optional) - Rule engine rule description
             + is_active: true (boolean, required) - Rule engine rule status
-            + rules_list (array)
+            + items (array)
                 + (object)
-                    + json: `Rule engine rule value in Json Logic format` (string, required) - Rule value in Json Logic format
+                    + value: `Rule engine rule value in Json Logic format` (string, required) - Rule value in Json Logic format
                     + description: `Description of Rule engine rule` (string, required) - Rule  description
                     + number: 1
                 + (object)
