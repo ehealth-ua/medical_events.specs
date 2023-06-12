@@ -2739,6 +2739,39 @@ This service must be used to discover device requests by requisition number. If 
     + Attributes (Response_Collection)
         + data (array[`Device_Request_Base`])
 
+### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
+Method to resend sms on Device request
+It can be processed in both sync and async methods depends on Server decision
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `device_request:resend`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + device_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+
++ Response 200 (application/json)
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Device_Request_Base`)
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 ### Revoke Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/revoke]
 
 This method must be used to revoke existing Device Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
@@ -2797,39 +2830,6 @@ http code| processing method | Client recommendations
                     + code: `default` (string)
         
 
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
-### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
-Method to resend sms on Device request
-It can be processed in both sync and async methods depends on Server decision
-Depends on processing method Server might answer with:
-http code| processing method | Client recommendations
---|--|--
-201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
-
-**Scopes required:** `device_request:resend`
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + device_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
-
-+ Response 200 (application/json)
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Device_Request_Base`)
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
