@@ -2654,6 +2654,188 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
+## Group Device requests
+
+### Get Device requests by search params [GET /api/patients/{patient_id}/device_requests{?status,code,requester_legal_entity_id,requester_id,encounter_id,program_id,context_episode_id}]
+
+This method returns all device requests related to specified patient.
+
+**Scopes required:** `device_request:read`
+
++ Parameters
+    + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + `status`: active (string, optional)
+    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
+    + `requester_legal_entity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `requester_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `program_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `context_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Device_Request_Base`])
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Patient not found` (string)            
+
+### Get Device request details [GET /api/patients/{patient_id}/device_requests/{device_request_id}]
+
+**Scopes required:** `device_request:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + device_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device request identifier
+  
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + data (`Device_Request_Base`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Device request not found` (string)
+
+### Search for a Device requests [GET /api/device_requests{?requisition}]
+
+This service must be used to discover device requests by requisition number. If nothing found by requisition number - it will return empty list
+
+**Scopes required:** `device_request:read`
+
++ Parameters
+    + requisition: `AX64-654T-X654-AX65` (string, required) - Device request requisition number
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Device_Request_Base`])
+
+### Revoke Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/revoke]
+
+This method must be used to revoke existing Device Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of Device request must be equal to Device request stored in DB. See Get Device Request details
+2. status_reason must be added to signed content
+
+Please see [Device request status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3765535052/Device+request+status+model) and Dummy Revoke Device request for more details
+
+
+**Scopes required:** `device_request:revoke`
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Device_Request_Base`)
+        
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Revoke Device request [PATCH /api/patients/{patient_id}/device_requests/{id}/actions/revoke/dummy]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (Device_Request_Base)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `device_request_revoke_reasons` (string)
+                    + code: `default` (string)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
+Method to resend sms on Device request
+It can be processed in both sync and async methods depends on Server decision
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `device_request:resend`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + device_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+
++ Response 200 (application/json)
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Device_Request_Base`)
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 ## Group Approvals
 ### Create approval [POST /api/patients/{patient_id}/approvals]
 Method to create approval: time-limited access to user's resources.
@@ -7687,3 +7869,80 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + code: `diagnostic_report` (string)
     + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
 + display_value: `null` (string, required) - This field is filled on creating and never updated after
+
+### `Device_Request_Base`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ `status`: `active` (string, required)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_request_revoke_reasons` (string)
+            + code: `incorrect_patient` (string)
++ `program` (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
++ intent: `order` (string, required)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_definition_classification_type` (string)
+            + code: `30221` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+    + unit: шт (string)            
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `performer` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after
++ `encounter` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `reason` (array, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
++ autored_on: `2018-08-02T10:45:16.000Z` (string, required)
++ note: `Some notes` (string, required)
++ `requester_legal_entity` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after    
++ requisition: `AX65-4654-TІВ1-ТВТ1` (string, required)
++ dispense_valid_to: `2018-08-02T10:45:16.000Z` (string, required)
++ occurrence_period (object, optional, fixed-type)
+    + start : `2000-01-01T00:00:00.000Z`(string, required) 
+    + end : `2018-08-02T11:00:00.000Z`(string, optional)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
