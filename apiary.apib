@@ -3005,8 +3005,8 @@ This method returns all device dispenses related to legal entity.
     + `location`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
     + `performer`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)    
     + `status`: completed (string, optional)
-    + `when_handed_over_from`: `2022-09-01` (string, optional) - date of dispense
-    + `when_handed_over_to`: `2023-10-01` (string, optional) - date of dispense
+    + `when_handed_over_from`: `2023-08-02T10:45:16.000Z` (string, optional) - date of dispense
+    + `when_handed_over_to`: `2023-08-02T10:45:16.000Z` (string, optional) - date of dispense
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
 
@@ -8269,14 +8269,14 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 ### `Device_Dispense_Detail_Response`
-+ `device` (Reference_response, required) - Device request
++ `device` (Reference_response, required) - Device definition
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `device_definition` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-+ `program_device` (Reference_response, required) - Device request
++ `program_device` (Reference_response, required) - Program device
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
