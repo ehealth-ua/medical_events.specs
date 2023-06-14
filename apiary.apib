@@ -2991,6 +2991,75 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
+## Group Device dispenses
+
+### Get Device dispenses by search params [GET /api/device_dispenses{?based_on,performer_legal_entity,location,performer,status,when_handed_over_from,when_handed_over_to,page,page_size}]
+
+This method returns all device dispenses related to legal entity.
+
+**Scopes required:** `device_dispense:read`
+
++ Parameters
+    + `based_on`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
+    + `performer_legal_entity`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
+    + `location`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
+    + `performer`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)    
+    + `status`: completed (string, optional)
+    + `when_handed_over_from`: `2022-09-01` (string, optional) - date of dispense
+    + `when_handed_over_to`: `2023-10-01` (string, optional) - date of dispense
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 300. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Device_Dispense_Response`])
+
+### Get Device dispense details [GET /api/patients/device_dispenses/{device_dispense_id}]
+
+**Scopes required:** `device_dispense:read`
+
++ Parameters
+    + device_dispense_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device dispense identifier
+  
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + data (`Device_Dispense_Response`)
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 404 (number)
+        + error (Response__Error)
+            + type: NOT_FOUND (string)
+            + message: `Device dispense not found` (string)
+
+
+### Stop Device Dispense [PATCH /api/device_dispenses/{device_dispense_id}/actions/stop]
+
+This method is used to stop Device dispense.
+
+**Scopes required:** `device_dispense:stop`
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + include `Device_Dispense_Response`
+
 ## Group Approvals
 ### Create approval [POST /api/patients/{patient_id}/approvals]
 Method to create approval: time-limited access to user's resources.
@@ -8141,3 +8210,85 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `participants` (array, required)
     + (object)
         + include `Program_device`
+
+### Device_Dispense_Response
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: completed (string, required) - Device Dispense status
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, required)
++ `note`: `Some notes` (string, optionnal)
++ `performer_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
++ `payment_amount`: 50 (number, optional) - receipt amount which was paid by patient (UAH)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Device_Dispense_Detail_Response`
++ `device` (Reference_response, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_definition` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `program_device` (Reference_response, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `program_device` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+    + unit: шт (string, required)
++ `sell_price`: 18.65 (number, optional) - pharmacy's price for one device
++ `sell_amount`: 186.5 (number, optional) - total pharmacy's price for the requested device quantity
++ `discount_amount`: 150 (number, optional) - pharmacy's expected price of dicsount for the requested device quantity
++ `reimbursement_amount`: 450 (number, required) - Amount to reimburse for device by medical_program
