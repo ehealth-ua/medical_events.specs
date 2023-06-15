@@ -2715,7 +2715,7 @@ http code| processing method | Client recommendations
 
 **Scopes required:** `device_request:write`
 
-Look at [Dummy Device request]() for more details
+Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/create-device-request/dummy-device-request) for more details
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
@@ -2734,7 +2734,7 @@ Look at [Dummy Device request]() for more details
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 201 (number)
-        + data (`Device_Request_Response`)
+        + data (`Device_Request_Response_Base`)
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2811,7 +2811,7 @@ This method is used to qualify (possibility to use device definition for the pro
 
 
 
-### Get Device requests by search params [GET /api/patients/{patient_id}/device_requests{?status,code,requester_legal_entity_id,requester_id,encounter_id,program_id,context_episode_id}]
+### Get Device requests by search params [GET /api/patients/{patient_id}/device_requests{?status,code,requester_legal_entity,requester,encounter,program,context_episode_id}]
 
 This method returns all device requests related to specified patient.
 
@@ -2821,10 +2821,10 @@ This method returns all device requests related to specified patient.
     + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
     + `status`: active (string, optional)
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
-    + `requester_legal_entity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `requester_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `program_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `requester_legal_entity`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `requester`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `encounter`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `program`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `context_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier    
 
 + Request (application/json)
@@ -2836,7 +2836,7 @@ This method returns all device requests related to specified patient.
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
-        + data (array[`Device_Request_Response`])
+        + data (array[`Device_Request_Response_List`])
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -2864,7 +2864,7 @@ This method returns all device requests related to specified patient.
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
-        + data (`Device_Request_Response`)
+        + data (`Device_Request_Response_Base`)
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -2891,8 +2891,12 @@ This service must be used to discover device requests by requisition number. If 
             api-key: aFBLVTZ6Z2dON1V
 
 + Response 200 (application/json)
-    + Attributes (Response_Collection)
-        + data (array[`Device_Request_Response`])
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array, fixed-type)
+            + (`Device_Request_Response_List`)
+                + identity (`Person_identity`, required)            
 
 ### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
 Method to resend sms on Device request
@@ -2920,7 +2924,7 @@ http code| processing method | Client recommendations
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 201 (number)
-        + data (`Device_Request_Response`)
+        + data (`Device_Request_Response_Base`)
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -2961,7 +2965,7 @@ http code| processing method | Client recommendations
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 201 (number)
-        + data (`Device_Request_Response`)
+        + data (`Device_Request_Response_Base`)
         
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2977,7 +2981,7 @@ http code| processing method | Client recommendations
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
     
-    + Attributes (Device_Request_Response)
+    + Attributes (Device_Request_Response_Base)
         + `status_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
                 + (Coding)
@@ -3557,7 +3561,7 @@ This service must be used to discover Care plans by requisition number. If nothi
             + code: 200 (number)
         + data (array, fixed-type)
             + (`Care_plan_summary`)
-                + identity (`Person_service_request`, required)
+                + identity (`Person_identity`, required)
 
 
 ### Get Care Plan Activity by ID [GET /api/patients/{patient_id}/care_plans/{care_plan_id}/activities/{id}]
@@ -7073,7 +7077,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Service_Request_List`
 + include `Service_Request_Base`
-+ identity (`Person_service_request`, required) - parametres - last name, first name, second name - can have value NULL
++ identity (`Person_identity`, required) - parametres - last name, first name, second name - can have value NULL
 
 ### `Qualify_Service_Request_Responce`
 + `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
@@ -7557,7 +7561,7 @@ This web service returns rule engine rule details filtered by ID with active rul
              + (`Service`)
 
 ## `Person_details`
-### `Person_service_request`
+### `Person_identity`
 + last_name: Іванов (string, required) - full surname of the patient
 + first_name: І. (string, required) - short format of the patient's first name with the dot
 + second_name: І. (string, required) - short format of the patient's second name with the dot
@@ -8131,7 +8135,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + end : `2018-08-02T11:00:00.000Z`(string, required)
 
 
-### `Device_Request_Response`
+### `Device_Request_Response_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + include `Device_Request_Base`
 + quantity (object)
@@ -8179,6 +8183,53 @@ This web service returns rule engine rule details filtered by ID with active rul
 + note: `Some notes` (string, optionnal)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
+
+### `Device_Request_Response_List`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ include `Device_Request_Base`
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+    + unit: шт (string, required)   
++ `status`: `active` (string, required)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_request_revoke_reasons` (string)
+            + code: `incorrect_patient` (string)
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `requester` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `requester_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after    
++ requisition: `AX65-4654-TІВ1-ТВТ1` (string, required)
++ dispense_valid_to: `2018-08-02T10:45:16.000Z` (string, required)
++ note: `Some notes` (string, optionnal)
 
 
 ### `Qualify_Device_Request_Base`
