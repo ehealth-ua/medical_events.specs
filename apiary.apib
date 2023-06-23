@@ -2997,6 +2997,110 @@ http code| processing method | Client recommendations
 
 ## Group Device dispenses
 
+### Create Device dispense [POST /api/patients/{patient_id}/device_dispenses]
+
+Method to create device dispense
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `device_dispense:write`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (Device_Dispense_Create_Request)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Device_Dispense_Response`)
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Complete Device dispense [PATCH /api/patients/{patient_id}/device_dispenses/{device_dispense_id}/actions/complete]
+
+Method to complete device dispense
+
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of Device Dispense in Media Content Storage if all checks are passed. 
+
+It can be processed in both sync and async methods depends on Server decision.
+Depends on processing method Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+201 | sync | use payload from response
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `device_dispense:complete`
+
+Look at [Dummy Complete Device dispense](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-dispenses/complete-device-dispense/dummy-complete-device-dispense) for more details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + device_dispense_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device dispense identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Device_Dispense_Response`)
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy Complete Device Dispense [PATCH /api/patients/{patient_id}/device_dispenses/{device_dispense_id}/actions/complete]
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + device_dispense_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device dispense identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (Device_Dispense_Complete_Request)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Device_Dispense_Response`)
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 ### Get Device dispenses by search params [GET /api/device_dispenses{?based_on,performer_legal_entity,location,performer,status,when_handed_over_from,when_handed_over_to,page,page_size}]
 
 This method returns all device dispenses related to legal entity.
@@ -3025,11 +3129,12 @@ This method returns all device dispenses related to legal entity.
     + Attributes (Response_Collection)
         + data (array[`Device_Dispense_Response`])
 
-### Get Device dispense details [GET /api/patients/device_dispenses/{device_dispense_id}]
+### Get Device dispense details [GET /api/patients/{patient_id}/device_dispenses/{device_dispense_id}]
 
 **Scopes required:** `device_dispense:read`
 
 + Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
     + device_dispense_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device dispense identifier
   
 
@@ -3053,11 +3158,14 @@ This method returns all device dispenses related to legal entity.
             + message: `Device dispense not found` (string)
 
 
-### Stop Device Dispense [PATCH /api/device_dispenses/{device_dispense_id}/actions/stop]
+### Stop Device Dispense [PATCH /api/patients/{patient_id}/device_dispenses/{device_dispense_id}/actions/stop]
 
 This method is used to stop Device dispense.
 
 **Scopes required:** `device_dispense:stop`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -8261,6 +8369,84 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `participants` (array, required)
     + (object)
         + include `Program_device`
+
+### Device_Dispense_Create_Request
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: in_progress (string, required) - Device Dispense status
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, required)
++ `note`: `Some notes` (string, optionnal)
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
+
+### Device_Dispense_Complete_Request
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: in_progress (string, required) - Device Dispense status
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, required)
++ `note`: `Some notes` (string, optionnal)
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
++ `payment_amount`: 50 (number, optional) - receipt amount which was paid by patient (UAH)
 
 ### Device_Dispense_Response
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
