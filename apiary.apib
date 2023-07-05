@@ -6525,13 +6525,13 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## Procedures
 ### Procedure_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
++ `based_on` (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
-+ `paper_referral` (`Paper_referral`, optional, fixed-type)
++ `paper_referral` (`Paper_referral`, optional, fixed-type) - One of (based_on OR paper_referral) is required
 + `status` : `completed` (enum, required) - Status for provided procedure
     - `completed`
     - `entered_in_error`
