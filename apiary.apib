@@ -11,7 +11,7 @@ Environment: **DEVELOPMENT**
 
 All the medical data, stored in eHealth, belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
-1. Only authenticated user with appropriate scope can access medical data
+1. Only authenticated user with appropriate scope can access medical dataverifi
 List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles) [wiki: Scopes data model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583404101/Scopes+model)
 2. Access to Patient Medical Data is driven by Attribute-based access control(ABAC). Rules [https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature]
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
@@ -2742,7 +2742,7 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
                     - OFFLINE
                     - THIRD_PERSON
                 + number: `+38093*****85` (string, optional) - returns if type is OTP
-            + `verification_code`: 1234 (number, optional) - returns if type of current authentication method is OFFLINE
+            + `verification_code`: `1234` (string, optional) - returns if type of current authentication method is OFFLINE
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2885,7 +2885,7 @@ This method returns all device requests related to specified patient.
                     - OFFLINE
                     - THIRD_PERSON
                 + number: `+38093*****85` (string, optional) - returns if type is OTP
-            + `verification_code`: 1234 (number, optional) - returns if type of current authentication method is OFFLINE
+            + `verification_code`: `1234` (string, optional) - returns if type of current authentication method is OFFLINE
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -3040,6 +3040,7 @@ http code| processing method | Client recommendations
             api-key: aFBLVTZ6Z2dON1V
     
     + Attributes (Device_Dispense_Create_Request)
+        + verification_code: `102364` (string, optional) - Verification code obtained from patient
 
 + Response 201 (application/json)
     + Attributes (Response_OK)
