@@ -2735,6 +2735,14 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
         + meta (Response__Meta)
             + code: 201 (number)
         + data (`Device_Request_Response_Base`)
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - THIRD_PERSON
+                + number: `+38093*****85` (string, optional) - returns if type is OTP
+            + `verification_code`: 1234 (number, optional) - returns if type of current authentication method is OFFLINE
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2870,6 +2878,14 @@ This method returns all device requests related to specified patient.
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + data (`Device_Request_Response_Base`)
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - THIRD_PERSON
+                + number: `+38093*****85` (string, optional) - returns if type is OTP
+            + `verification_code`: 1234 (number, optional) - returns if type of current authentication method is OFFLINE
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -2899,9 +2915,8 @@ This service must be used to discover device requests by requisition number. If 
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (array, fixed-type)
-            + (`Device_Request_Response_List`)
-                + identity (`Person_identity`, required)            
+        + data (`Device_Request_Response_List`)
+            + identity (`Person_identity`, required)            
 
 ### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
 Method to resend sms on Device request
