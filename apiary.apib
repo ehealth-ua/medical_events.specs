@@ -2763,6 +2763,7 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
     
 
     + Attributes (object)
+        + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
         + include `Device_Request_Base`
         + note: `Some notes` (string, optionnal)
         + `program` (Reference_response, optional)
@@ -8427,7 +8428,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `medical_program` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
     + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
-+ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `details` (array[`Device_Dispense_Detail_Request`], fixed, required)
 
 ### Device_Dispense_Complete_Request
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
@@ -8526,7 +8527,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
-### `Device_Dispense_Detail_Response`
+### `Device_Dispense_Detail_Request`
 + `device` (Reference_response, required) - Device definition
     + identifier (Identifier, required)
         + type (Codeable_Concept)
@@ -8549,4 +8550,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `sell_price`: 18.65 (number, optional) - pharmacy's price for one device
 + `sell_amount`: 186.5 (number, optional) - total pharmacy's price for the requested device quantity
 + `discount_amount`: 150 (number, optional) - pharmacy's expected price of dicsount for the requested device quantity
+
+### `Device_Dispense_Detail_Response`
++ include `Device_Dispense_Detail_Request`
 + `reimbursement_amount`: 450 (number, optional) - Amount to reimburse for device by medical_program
