@@ -2706,11 +2706,9 @@ This method allows to create Device Request for a person (or preperson) in eHeal
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Device Request in Media Content Storage if all checks is passed. 
 
-It can be processed in both sync and async methods depends on Server decision.
-Depends on processing method Server might answer with:
+It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-201 | sync | use payload from response
 202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_request:write`
@@ -2730,25 +2728,12 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
         
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Device_Request_Response_Base`)
-        + urgent (object, required)
-            + `authentication_method_current` (object, required)
-                + type: `OTP` (enum, required)
-                    - OTP
-                    - OFFLINE
-                    - THIRD_PERSON
-                + number: `+38093*****85` (string, optional) - returns if type is OTP
-            + `verification_code`: `1234` (string, optional) - returns if type of current authentication method is OFFLINE
-
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 
 ### Dummy Device request [POST /api/patients/{patient_id}/device_requests]
 + Parameters
@@ -2780,6 +2765,7 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 
 ### Qualify Device Request by ID [POST /api/device_requests/{device_request_id}/actions/qualify]
 
@@ -2921,11 +2907,9 @@ This service must be used to discover device request by requisition number. If n
 
 ### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
 Method to resend sms on Device request
-It can be processed in both sync and async methods depends on Server decision
-Depends on processing method Server might answer with:
+It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-201 | sync | use payload from response
 202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_request:resend`
@@ -2940,17 +2924,13 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
 
-+ Response 200 (application/json)
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Device_Request_Response_Base`)
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 
 ### Revoke Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/revoke]
 
@@ -2965,11 +2945,9 @@ Please see [Device request status model](https://edenlab.atlassian.net/wiki/spac
 
 **Scopes required:** `device_request:revoke`
 
-It can be processed in both sync and async methods depends on Server decision.
-Depends on processing method Server might answer with:
+It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-201 | sync | use payload from response
 202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Request (application/json)
@@ -2982,17 +2960,13 @@ http code| processing method | Client recommendations
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Device_Request_Response_Base`)
-        
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 
 ### Dummy Revoke Device request [PATCH /api/patients/{patient_id}/device_requests/{id}/actions/revoke/dummy]
 + Request (application/json)
@@ -3016,16 +2990,15 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
+
 ## Group Device dispenses
 
 ### Create Device dispense [POST /api/patients/{patient_id}/device_dispenses]
 
 Method to create device dispense
-It can be processed in both sync and async methods depends on Server decision.
-Depends on processing method Server might answer with:
+It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-201 | sync | use payload from response
 202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_dispense:write`
@@ -3043,16 +3016,13 @@ http code| processing method | Client recommendations
     + Attributes (Device_Dispense_Create_Request)
         + verification_code: `102364` (string, optional) - Verification code obtained from patient
 
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Device_Dispense_Response`)
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 
 ### Complete Device dispense [PATCH /api/patients/{patient_id}/device_dispenses/{device_dispense_id}/actions/complete]
 
@@ -3061,11 +3031,9 @@ Method to complete device dispense
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Device Dispense in Media Content Storage if all checks are passed. 
 
-It can be processed in both sync and async methods depends on Server decision.
-Depends on processing method Server might answer with:
+It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-201 | sync | use payload from response
 202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_dispense:complete`
@@ -3086,16 +3054,13 @@ Look at [Dummy Complete Device dispense](https://ehealthmedicaleventsapi.docs.ap
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
 
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Device_Dispense_Response`)
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 
 ### Dummy Complete Device Dispense [PATCH /api/patients/{patient_id}/device_dispenses/{device_dispense_id}/actions/complete]
 
@@ -3112,16 +3077,13 @@ Look at [Dummy Complete Device dispense](https://ehealthmedicaleventsapi.docs.ap
     
     + Attributes (Device_Dispense_Complete_Request)
 
-+ Response 201 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (`Device_Dispense_Response`)
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 
 ### Get Device dispenses by search params [GET /api/device_dispenses{?based_on,performer_legal_entity,location,performer,status,when_handed_over_from,when_handed_over_to,page,page_size}]
 
