@@ -3146,15 +3146,22 @@ This method returns all device dispenses related to legal entity.
 
 This method is used to stop Device dispense.
 
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
 **Scopes required:** `device_dispense:stop`
 
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
 
-+ Response 200 (application/json)
-    + Attributes (`Response_OK`)
-        + data (object)
-            + include `Device_Dispense_Response`
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
 
 ## Group Approvals
 ### Create approval [POST /api/patients/{patient_id}/approvals]
@@ -8334,7 +8341,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Program_device`
 + id: `0f2fbf93-3041-4c0d-a3cf-ff558c861df8` (string, required) - Program participant identifier
-+ `device_definition_id`: `59781de0-2e64-4359-b716-bcc05a32c10f`(string, required) -  Device definition Identifier
++ `device_definition`(`Device_Definition_base`, required) -  Device definition
 + reimbursement (object, required) - Information about reimbursement by the program
    + type: `FIXED` (string) - reimbursement type according to REIMBURSEMENT_TYPE dictionary
    + percentage_discount: 12.45 (number) - Percent of a discount. Applicable only if type PERCENTAGE
@@ -8347,6 +8354,30 @@ This web service returns rule engine rule details filtered by ID with active rul
 + registry_number: `REG-1111` (string, optional) - Registry number
 + `start_date`: `2019-01-01` (string, optional) - Active from date
 + `end_date`: `2019-06-30` (string, optional) - Active to date
+
+### `Device_Definition_base`
++ id: `3e34da3d-9b8c-4aaf-be8e-24a161279b6a` (string, required) - Unique identifier of Device definition
++ `device_names` (array [`device_name`], required)
++ `classification_type`: `30221` (string, required) - Classification type. Dictionary `device_definition_classification_type`
++ `manufacturer` (`Manufacturer`, optional)
++ model_number: `M23N76` (string, optional) - Model number
++ `packaging` (`Device_definition_package`, required)
+
+### `device_name`
++ `name`: `Тест-смужки Accu-Chek Active для глюкометра` (string, required) - Device name
++ `type`: `user_friendly` (enum, required) - Device name type. Dictionary `device_name_type`
+    - user_friendly
+    - registered
+    - patient_reported    
+
+### `Device_definition_package`
++ `packaging_type`: `undefined` (string, required) - Packaging type. Dictionary `device_definition_packaging_type`
++ packaging_count: 50 (number, required) - Number of devices in container
++ `packaging_unit`: `pcs` (string, required) - Packaging unit. Dictionary `device_unit`
+
+### `Manufacturer`
++ `name` : `ПАТ "Київський вітамінний завод"` (string, required)
++ `country` : `UA` (string, required) - `Dictionary COUNTRY`
 
 ### `Qualify_Device_Request_Responce`
 + include `Qualify_Device_Request_Base`
