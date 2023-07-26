@@ -8538,11 +8538,14 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
     + code: piece (string, required)
-    + unit: шт (string, required)
 + `sell_price`: 18.65 (number, optional) - pharmacy's price for one device
-+ `sell_amount`: 186.5 (number, optional) - total pharmacy's price for the requested device quantity
 + `discount_amount`: 150 (number, optional) - pharmacy's expected price of dicsount for the requested device quantity
 
 ### `Device_Dispense_Detail_Response`
 + include `Device_Dispense_Detail_Request`
++ quantity (object, required)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+    + unit: шт (string, required)
 + `reimbursement_amount`: 450 (number, optional) - Amount to reimburse for device by medical_program
