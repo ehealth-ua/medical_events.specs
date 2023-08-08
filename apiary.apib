@@ -2758,6 +2758,7 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
                         + (Coding)
                             + code: `medical_program` (string)
                 + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+        + `status`: `active` (string, required)
 
 
 + Response 202 (application/json)
@@ -2939,6 +2940,7 @@ This method must be used to revoke existing Device Request. Method receives sign
 **Important**
 1. Signed content of Device request must be equal to Device request stored in DB. See Get Device Request details
 2. status_reason must be added to signed content
+3. status must be changed to revoked for the purpose of displaying in the signed content
 
 Please see [Device request status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3765535052/Device+request+status+model) and Dummy Revoke Device request for more details
 
@@ -2982,6 +2984,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + system: `device_request_revoke_reasons` (string)
                     + code: `default` (string)
+        + `status`: `revoked` (string, required)
         
 
 + Response 202 (application/json)
@@ -3015,6 +3018,7 @@ http code| processing method | Client recommendations
     
     + Attributes (Device_Dispense_Create_Request)
         + verification_code: `102364` (string, required) - Verification code obtained from patient
+        + `status`: `in_progress` (string, required)
 
 
 + Response 202 (application/json)
@@ -3030,6 +3034,11 @@ Method to complete device dispense
 
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Device Dispense in Media Content Storage if all checks are passed. 
+
+**Important**
+1. Signed content of Device dispense must be equal to Device dispense stored in DB. See Get Device dispense details
+2. `what_handed_over`, `payment_amount` and `payment_id`  must be added to signed content
+3. status must be changed to completed for the purpose of displaying in the signed content
 
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
@@ -8430,7 +8439,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `device_request` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-+ `status`: in_progress (string, required) - Device Dispense status
++ `status`: completed (string, required) - Device Dispense status
 + `performer` (Reference_response, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
