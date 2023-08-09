@@ -2466,8 +2466,8 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
         + data (`Job`)
 
 ### Resend SMS on Service request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/resend]
-Method to resend sms on service request
-It can be processed in both sync and async methods depends on Server decision
+Method to resend sms on service request.
+It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
@@ -2620,8 +2620,7 @@ Will be deprecated!
         + data (`Job`)
 
 ### Complete Service request [PATCH /api/service_requests/{service_request_id}/actions/complete]
-Method to resend sms on service request.
-It can be processed in both sync and async methods depends on Server decision.
+This method is designed to use Service request after providing services.
 Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
