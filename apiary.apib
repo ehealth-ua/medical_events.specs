@@ -2899,11 +2899,11 @@ This service must be used to discover device request by requisition number. If n
             api-key: aFBLVTZ6Z2dON1V
 
 + Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (`Device_Request_Response_List`)
-            + identity (`Person_identity`, required)            
+    + Attributes (Response_Collection)
+        + data (array)
+            + (object)
+                + include `Device_Request_Response_List`
+                + identity (`Person_identity`, required)
 
 ### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
 Method to resend sms on Device request
