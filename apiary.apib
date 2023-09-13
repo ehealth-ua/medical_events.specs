@@ -2750,7 +2750,7 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
         + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
         + include `Device_Request_Base`
         + note: `Some notes` (string, optionnal)
-        + `program` (Reference_response, optional)
+        + `program` (Reference_request, optional)
             + identifier (Identifier, required)
                 + type (Codeable_Concept)
                     + coding (array, fixed-type)
@@ -2836,7 +2836,7 @@ This method returns all device requests related to specified patient.
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
-        + data (array[`Device_Request_Response_List`])
+        + data (array[`Device_Request_Response_Base`])
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -2902,7 +2902,7 @@ This service must be used to discover device request by requisition number. If n
     + Attributes (Response_Collection)
         + data (array)
             + (object)
-                + include `Device_Request_Response_List`
+                + include `Device_Request_Response_Base`
                 + identity (`Person_identity`, required)
 
 ### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
@@ -8215,20 +8215,20 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
     + code: piece (string, required)
-+ `encounter` (Reference_response, required)
++ `encounter` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
 + `reason` (array, optional)
-    + (Reference_response)
+    + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `condition` (string)
-+ `requester` (Reference_response, required)
++ `requester` (Reference_request, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8255,11 +8255,24 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `device_request_revoke_reasons` (string)
             + code: `incorrect_patient` (string)
++ `encounter` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
 + `subject` (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
++ `reason` (array, optional)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
 + `requester` (Reference_response, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
@@ -8289,53 +8302,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 + note: `Some notes` (string, optionnal)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
-
-### `Device_Request_Response_List`
-+ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ include `Device_Request_Base`
-+ quantity (object)
-    + value: 10 (number, required)
-    + system: `device_unit` (string, required)
-    + code: piece (string, required)
-    + unit: шт (string, required)   
-+ `status`: `active` (string, required)
-+ `status_reason` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `device_request_revoke_reasons` (string)
-            + code: `incorrect_patient` (string)
-+ `subject` (Reference_response, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-+ `requester` (Reference_response, required)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
-+ `requester_legal_entity` (Reference_response, required)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
-+ `program` (Reference_response, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `medical_program` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after    
-+ requisition: `AX65-4654-TІВ1-ТВТ1` (string, required)
-+ dispense_valid_to: `2018-08-02T10:45:16.000Z` (string, required)
-+ note: `Some notes` (string, optionnal)
 
 
 ### `Qualify_Device_Request_Base`
@@ -8394,38 +8360,35 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Device_Dispense_Create_Request
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
-+ `based_on` (Reference_response, required) - Device request
++ `based_on` (Reference_request, required) - Device request
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `device_request` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-+ `performer` (Reference_response, required)
++ `performer` (Reference_request, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
-+ `location` (Reference_response, required)
++ `location` (Reference_request, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `division` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
 + `note`: `Some notes` (string, optionnal)
-+ `program` (Reference_response, optional)
++ `program` (Reference_request, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `medical_program` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
 + `details` (array[`Device_Dispense_Detail_Request`], fixed, required)
 
 ### Device_Dispense_Complete_Request
@@ -8493,14 +8456,14 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 ### `Device_Dispense_Detail_Request`
-+ `device` (Reference_response, required) - Device definition
++ `device` (Reference_request, required) - Device definition
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `device_definition` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-+ `program_device` (Reference_response, optional) - Program device
++ `program_device` (Reference_request, optional) - Program device
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8516,6 +8479,20 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_Dispense_Detail_Response`
 + include `Device_Dispense_Detail_Request`
++ `device` (Reference_response, required) - Device definition
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_definition` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `program_device` (Reference_response, optional) - Program device
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `program_device` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
 + quantity (object, required)
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
