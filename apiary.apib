@@ -1694,10 +1694,10 @@ This chapter describes the structure of a single specimen creation. This is not 
 + Parameters
     + status: available (string, optional) - status of the specimen
     + type: ABP (string, optional) - kind of material that forms the specimen
-    + registered_by: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - identifier of employee who registered the specimen
-    + collected_date: `2023-12-28` (string, optional) - date when specimen was collected. Matches the date of collected_date_time field or date within collected_period field
-    + container_identifier: `1-ABC-4311` (string, optional) - identifier of the container in the specimen
-    + container_type: tube (string, optional) - type of the container in the specimen
+    + `registered_by`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - identifier of employee who registered the specimen
+    + `collected_date`: `2023-12-28` (string, optional) - date when specimen was collected. Matches the date of collected_date_time field or date within collected_period field
+    + `container_identifier`: `1-ABC-4311` (string, optional) - identifier of the container in the specimen
+    + `container_type`: tube (string, optional) - type of the container in the specimen
     + parent: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - parent specimen 
     + request: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - service request identifier linked to the specimen
     + page: 2 (number, optional) - Page number.    
@@ -5592,6 +5592,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
++ specimen (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `specimen` (string)
 
 ###  `Observation_Request_Base_DRP`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -5776,6 +5782,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
++ specimen (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `specimen` (string)
 
 ### `Observation_Request_1` (`Observation_Request_Base`)
 + `context` (Reference_request, optional)
@@ -5919,6 +5931,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                 - system (string, optional)
                 - code (string, optional)
         + text: `Some text` (string, optional)
++ specimen (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `specimen` (string)
 
 ## `Immunization`
 
@@ -6440,6 +6458,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ specimen (array, optional)
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 ### `Diagnostic_Report_Base_response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -6478,6 +6503,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `employee` (string)
     + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after
++ specimen (array, optional)
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 
 ### `Diagnostic_Report_EncounterPCG_Request`
