@@ -60,6 +60,7 @@ Medication administration|0-*|true
 Diagnostic report|0-*| true
 Procedure|0-*| true
 Clinical impression|0-*| true
+Specimen|0-*| true
 
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
@@ -155,6 +156,9 @@ This resource should be used to get the processing status of the async job.
                 + (object)
                     + entity: `procedure` (string, required)
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/procedure/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+                + (object)
+                    + entity: `specimen` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/specimens/42e5985d-2a79-452f-8bc4-ed3a02fdefc6` (string, required)
                 
 
 + Response 403 (application/json)
@@ -325,6 +329,27 @@ This chapter describes the structure of a single unsigned clinical impression th
 
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (`Clinical_Impression_EncounterPCG_Request`)
+
+#### Dummy Specimen [POST]
+This chapter describes the structure of a single unsigned specimen that could be submitted as a part of Encounter Package. This is not an actual web-service.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            
+    + Attributes (`Specimen_Request`)
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when specimen was received for processing
+        + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+            - available
+            - unavailable
 
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061314561/Cancel+Encounter+Package)
@@ -1610,6 +1635,274 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
+
+## Specimen [/api/patients/{patient_id}/specimens]
+
+### Create specimen [POST]
+This WS allows to register specimen by its own. Also specimen can be registered as a part of [encounter package](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
+**Scopes required:** `specimen:write`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy create specimen [POST]
+This chapter describes the structure of a single specimen creation. This is not an actual web-service.
+
++ Request (application/json)
+
+    + Headers
+            api-key: aFBLVTZ6Z2dON1V
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    + Attributes (`Specimen_Request`)
+
+### Get Specimen details [GET /api/patients/{patient_id}/specimens/{id}]
+**Scopes required:** `specimen:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique procedure identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Specimen_Response`)
+
+
+### Get Specimen by search params [GET /api/patients/{patient_id}/specimens{?type,status,registered_by,collected_date,container_identifier,container_type,parent,request,page,page_size}]
+**Scopes required:** `specimen:read`
+
++ Parameters
+    + status: available (string, optional) - status of the specimen
+    + type: ABP (string, optional) - kind of material that forms the specimen
+    + registered_by: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - identifier of employee who registered the specimen
+    + collected_date: `2023-12-28` (string, optional) - date when specimen was collected. Matches the date of collected_date_time field or date within collected_period field
+    + container_identifier: `1-ABC-4311` (string, optional) - identifier of the container in the specimen
+    + container_type: tube (string, optional) - type of the container in the specimen
+    + parent: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - parent specimen 
+    + request: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - service request identifier linked to the specimen
+    + page: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Specimen_Response`])
+
+### Search for a Specimen [GET /api/specimens{?accession_identifier,status,page,page_size}]
+**Scopes required:** `specimen:read`
+
++ Parameters
+    + accession_identifier: `1234-3224-2342-1233` (string, required) - human readable specimen number
+    + status: available (string, optional) - status of the specimen
+    + page: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array)
+            + (object)
+                + include `Specimen_Response`
+                + identity (`Person_identity`, required)
+
+### Process Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/process]
+
+This method is used to set a received_time for a specimen.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
+**Scopes required:** `specimen:process`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique specimen identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+    + Attributes (object)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, required) - The time when specimen was received for processing
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Invalidate Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/invalidate]
+
+This method is used to mark specimen as unavailable.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
+**Scopes required:** `specimen:invalidate`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique specimen identifier
+    
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+    + Attributes (object)    
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_invalidate_reasons` (string)
+                    + code: `default` (string)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Reject Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/reject]
+
+This method is used to mark specimen as unsatisfactory.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
+**Scopes required:** `specimen:reject`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique specimen identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+    + Attributes (object)    
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_reject_reasons` (string)
+                    + code: `default` (string)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Cancel Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/cancel]
+
+This method must be used to cancel existing Specimen. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of a specimen must be equal to the Specimen stored in DB. See Get Specimen details
+2. status_reason must be added to signed content
+3. status must be changed to `entered_in_error` for the purpose of displaying in the signed content
+
+Please see [Specimen status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3872260122/Specimen+status+model) and Dummy Cancel Specimen for more details
+
+
+**Scopes required:** `specimen:cancel`
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique specimen identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Cancel Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/cancel/dummy]
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique specimen identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+    
+    + Attributes (Specimen_Response)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_cancel_reasons` (string)
+                    + code: `default` (string)
+        + `status`: `entered_in_error` (string, required)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
@@ -4704,6 +4997,18 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `diagnostic_reports` (array[`Diagnostic_Report_EncounterPCG_Request`], optional, fixed-type)
 + procedures (array[`Procedure_EncounterPCG_Request`], optional, fixed-type)
 + `clinical_impressions` (array[`Clinical_Impression_EncounterPCG_Request`], optional, fixed-type)
++ specimens (array, optional, fixed-type)
+    + (`Specimen_Request`)
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when specimen was received for processing
+        + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+            - available
+            - unavailable
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -5886,7 +6191,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + code ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
     +  coding (array, fixed-type)
         + (Coding)
-            2+ system: `eHealth/allergy_intolerance_codes` (string)
+            + system: `eHealth/allergy_intolerance_codes` (string)
             + code: `227493005` (string)- `dictionary - eHealth/allergy_intolerance_codes`
                 
 
@@ -8504,3 +8809,206 @@ This web service returns rule engine rule details filtered by ID with active rul
     + code: piece (string, required)
     + unit: шт (string, required)
 + `reimbursement_amount`: 450 (number, optional) - Amount to reimburse for device by medical_program
+
+### `Specimen_Collection_Request`
++ collector (Reference_request, required) - Who collected the specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (enum, required)
+                        - employee
+                        - patient
+- One Of
+    + collected_date_time: `2023-04-20T19:14:13Z` (string, optional) - The time when specimen was collected. ISO 8601 date and time in UTC timezone.
+    + collected_period (object, optional) - The period of time during which the specimen was collected
+        + start : `2023-04-20T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2023-04-20T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
++ duration (object, optional) - How long it took to collect specimen
+    + value: 5 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: min (string, required)
++ quantity (object, required) - The quantity of specimen collected
+    + value: 20 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: g (string, required)
++ method (Codeable_Concept, required) - Technique used to perform collection
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `specimen_collection_methods` (string)
++ `body_site` (Codeable_Concept, optional) - Anatomical collection site
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `eHealth/body_sites` (string)
++ `fasting_status_codeable_concept` (Codeable_Concept, optional) - Whether or how long patient abstained from food and/or drink
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `fasting_statuses` (string)
++ procedure (Reference_request, optional) - Procedure that collects the specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `procedure` (string, required)
+
+### `Specimen_Container_Request`
++ identifier: `1-3244-ABC` (string, required) - Id for the container
++ description: `Some container description` (string, optional) - Textual description of the container
++ type (Codeable_Concept, required) - Kind of container directly associated with specimen.
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `specimen_container_types` (string)
++ capacity (object, required) - Container volume or size
+    + value: 30000 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: mg (string, required)
++ specimen_quantity (object, required) - Quantity of specimen within container
+    + value: 20 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: g (string, required)
++ `additive_codeable_concept` (Codeable_Concept, optional) - Additive associated with container.
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `specimen_container_additives` (string)
+
+### `Specimen_Request`
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Specimen Identifier
++ status: `available` (string, required) - status of the Specimen according to `specimen_statuses`
++ type (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `specimen_types` (string)
++ condition (Codeable_Concept, optional) - State of the specimen.
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `specimen_conditions` (string)
++ note: `Some notes` (string, optional) - Comments
++ `managing_organization` (Reference_request, required) - Legal entity where the specimen was created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ `registered_by` (Reference_request, required) - Who registered the specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string, required)
++ parent (array, optional) - Specimens from which this specimen originated
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: specimen (string)
++ request (array, optional) - Service requests on diagnostic, represents why the specimen was collected.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: service_request (string)
++ collection (`Specimen_Collection_Request`, required) - Collection details
++ container (array, required) - Direct container of specimen 
+    + (`Specimen_Container_Request`)
+
+### `Specimen_Response`
++ include `Specimen_Request`
++ status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+    - available
+    - unavailable
+    - unsatisfactory
+    - `entered_in_error`
++ `managing_organization` (Reference_response, required) - Legal entity where the specimen was created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `registered_by` (Reference_response, required) - Who registered the specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string, required)
+    + display_value: `Тарасенко Максим Петрович` (string, required) - This field is filled on creating and never updated after
++ context (Reference_response, optional) - Encounter if specimen created using EDP.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string, required)
++ `accession_identifier`: `AX64-654T-X654-AX65` (string, required) - Human readable requisition number
++ `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when specimen was received for processing. ISO 8601 date and time in UTC timezone.
++ parent (array, optional) - Specimens from which this specimen originated
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: specimen (string)
++ request (array, optional) - Service requests on diagnostic, represents why the specimen was collected.
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: service_request (string)
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `status_reason` (Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `specimen_invalidate_reasons` (enum, string)
+                - `specimen_reject_reasons`
+                - `specimen_invalidate_reasons`
+                - `specimen_cancel_reasons`
++ collection (`Specimen_Collection_Request`, required) - Collection details
+    + collector (Reference_response, required) - Who collected the specimen.
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (enum, required)
+                            - employee
+                            - patient
+        + display_value: `Василенко Олена Павлівна` (string, required) - This field is filled on creating and never updated after
+    + duration (object, optional) - How long it took to collect specimen
+        + value: 5 (number, required)
+        + system: `eHealth/ucum/units` (string, required)
+        + code: min (string, required)
+        + unit: хв (string, required)
+    + quantity (object, required) - The quantity of specimen collected
+        + value: 20 (number, required)
+        + system: `eHealth/ucum/units` (string, required)
+        + code: g (string, required)
+        + unit: грам (string, required)
+    + procedure (Reference_response, optional) - Procedure that collects the specimen.
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `procedure` (string, required)
++ container (array, required) - Direct container of specimen 
+    + (`Specimen_Container_Request`)
+        + capacity (object, required) - Container volume or size
+            + value: 30000 (number, required)
+            + system: `eHealth/ucum/units` (string, required)
+            + code: mg (string, required)
+            + unit: міліграм (string, required)
+        + specimen_quantity (object, required) - Quantity of specimen within container
+            + value: 20 (number, required)
+            + system: `eHealth/ucum/units` (string, required)
+            + code: g (string, required)
+            + unit: грам (string, required)
++ signed_content_links (array[string], required) - Reference on signed content in media storage 
+    - `b278663a-2714-4690-a21a-de05a93a42b7/create`
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
