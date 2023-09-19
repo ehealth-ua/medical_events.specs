@@ -6458,7 +6458,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ specimen (array, optional)
++ specimens (array, optional)
     + (Reference_request)
         + identifier (Identifier, optional, fixed-type)
             + type (Codeable_Concept, required)
@@ -6468,7 +6468,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Diagnostic_Report_Base_response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ based_on (Reference_response, optional)
++ `based_on` (Reference_response, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -6496,14 +6496,14 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `eHealth/ICD10_AM/condition_codes` (string)
             + code: `H04.2` (string)
-+ recorded_by (Reference_response, required)
++ `recorded_by` (Reference_response, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
     + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after
-+ specimen (array, optional)
++ specimens (array, optional)
     + (Reference_response)
         + identifier (Identifier, optional, fixed-type)
             + type (Codeable_Concept, required)
@@ -7519,6 +7519,13 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `eHealth/service_request_recall_reasons` (string)
             + code: `cured` (string)
++ specimens (array, optional)
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -7634,6 +7641,13 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 10 (number, required)
     + `system`: `SERVICE_UNIT` (string, required)
     + `code`: `PIECE` (string, required)
++ specimens (array, optional)
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 ### `Service_Request_Create`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -7740,6 +7754,13 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 10 (number, required)
     + system: `SERVICE_UNIT` (string, required)
     + code: PIECE (string, required)
++ specimens (array, optional)
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 ### `Use_Service_Request_Request`
 + `used_by_employee` (Reference_request, optional)
