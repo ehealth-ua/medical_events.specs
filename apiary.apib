@@ -2821,6 +2821,34 @@ This service must be used to discover service requests by requisition number. If
     + Attributes (Response_Collection)
         + data (array[`Service_Request_List`])
 
+### Get Service requests in specimen context [GET /api/service_requests{?status,page,page_size}]
+
+This service must be used to discover service requests relaated to specified specimen. If nothing found - it will return empty list
+
+**Scopes required:** `service_request:impersonal_read`
+
++ Parameters
+    + status: active (string, optional) - The status of the service request.
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array)
+            + (`Service_Request_List`)
+                + identity (object, required)
+                    + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
+                        - MALE
+                        - FEMALE
+                    + age: 35 (number, required) - full years between current date and birth date
+
 ### Qualify Service request by ID [POST /api/service_requests/{service_request_id}/actions/qualify]
 
 **Scopes required:** `service_request:use`
