@@ -1434,7 +1434,7 @@ To find out more about the process of diagnostic report package creation read [C
     + `issued_to`: `2000-01-01` (string, optional) 
     + `based_on`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `managing_organization_id`: `19dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
-    
+    + `specimen_id`: `90dc3ed7-2169-45d8-8fa3-d918c6839b21` (string, optional)
 
 + Request (application/json)
 
@@ -2821,13 +2821,14 @@ This service must be used to discover service requests by requisition number. If
     + Attributes (Response_Collection)
         + data (array[`Service_Request_List`])
 
-### Get Service requests in specimen context [GET /api/service_requests{?status,page,page_size}]
+### Get Service requests in specimen context [GET /api/specimens/{specimen_id}/service_requests{?status,page,page_size}]
 
 This service must be used to discover service requests relaated to specified specimen. If nothing found - it will return empty list
 
 **Scopes required:** `service_request:impersonal_read`
 
 + Parameters
+    + `specimen_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique specimen identifier
     + status: active (string, optional) - The status of the service request.
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
