@@ -1338,6 +1338,7 @@ Object| Required| Part of Signed content
 -------|---------|------
 Observation| 0-* |true
 Diagnostic report|1-1| true
+Specimen|0-1|true
 
 To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402843/Submit+Encounter+Data+Package).
 
@@ -6816,6 +6817,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `diagnostic_report` (string)
++ `specimen` (Specimen_Collection_Request, optional)
 
 ### `Submit_DR_Package_Cancel`
 + `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
