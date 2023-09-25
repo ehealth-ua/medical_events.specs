@@ -6818,7 +6818,17 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `diagnostic_report` (string)
-+ `specimen` (Specimen_Collection_Request, optional)
++ specimens (array, optional, fixed-type)
+    + (`Specimen_Request`)
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `diagnostic_report` (string)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when specimen was received for processing
+        + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+            - unavailable
 
 ### `Submit_DR_Package_Cancel`
 + `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
@@ -6830,7 +6840,17 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `diagnostic_report` (string)
-+ `specimen` (Specimen_Collection_Request, optional)
++ specimens (array, optional, fixed-type)
+    + (`Specimen_Request`)
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `diagnostic_report` (string)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when specimen was received for processing
+        + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+            - unavailable
 
 
 ### `Medication_Statement_Response`
