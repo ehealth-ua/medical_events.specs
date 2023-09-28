@@ -1677,7 +1677,7 @@ This chapter describes the structure of a single specimen creation. This is not 
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique procedure identifier
+    + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier
 
 + Request (application/json)
 
@@ -8951,15 +8951,18 @@ This web service returns rule engine rule details filtered by ID with active rul
 + method (Codeable_Concept, required) - Technique used to perform collection
     + coding (array, fixed-type)
         + (Coding)
-            + code: `specimen_collection_methods` (string)
+            + system: `specimen_collection_methods` (string)
+            + code: `default` (string)
 + `body_site` (Codeable_Concept, optional) - Anatomical collection site
     + coding (array, fixed-type)
         + (Coding)
-            + code: `eHealth/body_sites` (string)
+            + system: `eHealth/body_sites` (string)
+            + code: `head` (string)
 + `fasting_status_codeable_concept` (Codeable_Concept, optional) - Whether or how long patient abstained from food and/or drink
     + coding (array, fixed-type)
         + (Coding)
-            + code: `fasting_statuses` (string)
+            + system: `fasting_statuses` (string)
+            + code: `default` (string)
 + procedure (Reference_request, optional) - Procedure that collects the specimen.
     + identifier (Identifier, required)
         + type (Codeable_Concept)
@@ -8973,7 +8976,8 @@ This web service returns rule engine rule details filtered by ID with active rul
 + type (Codeable_Concept, required) - Kind of container directly associated with specimen.
     + coding (array, fixed-type)
         + (Coding)
-            + code: `specimen_container_types` (string)
+            + system: `specimen_container_types` (string)
+            + code: `default` (string)
 + capacity (object, required) - Container volume or size
     + value: 30000 (number, required)
     + system: `eHealth/ucum/units` (string, required)
@@ -8985,7 +8989,8 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `additive_codeable_concept` (Codeable_Concept, optional) - Additive associated with container.
     + coding (array, fixed-type)
         + (Coding)
-            + code: `specimen_container_additives` (string)
+            + system: `specimen_container_additives` (string)
+            + code: `default` (string)
 
 ### `Specimen_Request`
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Specimen Identifier
@@ -8993,11 +8998,13 @@ This web service returns rule engine rule details filtered by ID with active rul
 + type (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
-            + code: `specimen_types` (string)
+            + system: `specimen_types` (string)
+            + code: `default` (string)
 + condition (Codeable_Concept, optional) - State of the specimen.
     + coding (array, fixed-type)
         + (Coding)
-            + code: `specimen_conditions` (string)
+            + system: `specimen_conditions` (string)
+            + code: `default` (string)
 + note: `Some notes` (string, optional) - Comments
 + `managing_organization` (Reference_request, required) - Legal entity where the specimen was created
     + identifier (Identifier)
@@ -9080,10 +9087,11 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `status_reason` (Codeable_Concept)
     + coding (array, fixed-type)
         + (Coding)
-            + code: `specimen_invalidate_reasons` (enum, string)
+            + system: `specimen_invalidate_reasons` (enum, string)
                 - `specimen_reject_reasons`
                 - `specimen_invalidate_reasons`
                 - `specimen_cancel_reasons`
+            + code: `default` (string)
 + collection (`Specimen_Collection_Request`, required) - Collection details
     + collector (Reference_response, required) - Who collected the specimen.
         + identifier (Identifier, required)
