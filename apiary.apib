@@ -74,6 +74,8 @@ To find out more about the process of encounter package creation read [Confluenc
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Submit_Encounter_Package`
 
@@ -108,6 +110,7 @@ This resource should be used to get the processing status of the async job.
     + Headers
 
             Authorization: Bearer 342432fdsfdsgfdt24535422fgds
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -202,10 +205,13 @@ This resource should be used to get the processing status of the async job.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (Encounter_Request)
         
     
 #### Dummy Condition [POST]
+
 This chapter describes the structure of a single unsigned condition that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request (application/json)
@@ -213,10 +219,13 @@ This chapter describes the structure of a single unsigned condition that could b
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Condition_Request`)
     
     
 #### Dummy Observation [POST]
+
 This chapter describes the structure of a single unsigned observation that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request 1 (application/json)
@@ -224,6 +233,8 @@ This chapter describes the structure of a single unsigned observation that could
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Observation_Request_1`)
     
     
@@ -232,6 +243,8 @@ This chapter describes the structure of a single unsigned observation that could
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4 
+            
     + Attributes (`Observation_Request_2`)
 
         
@@ -245,6 +258,8 @@ This chapter describes the structure of a single unsigned immunization that coul
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Immunization_Request`) 
     
 #### Dummy Allergy_Intolerance [POST]
@@ -255,6 +270,8 @@ This chapter describes the structure of a single unsigned allergy_intolerance th
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Allergy_Intolerance_Request`)
 
 #### Dummy Risk_Assessment [POST]
@@ -265,6 +282,8 @@ This chapter describes the structure of a single unsigned risk_assessment that c
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Risk_Assessment_Request`)
 
 #### Dummy Device [POST]
@@ -275,6 +294,8 @@ This chapter describes the structure of a single unsigned device that could be s
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Device_Request`)
 
 
@@ -286,6 +307,8 @@ This chapter describes the structure of a single unsigned medication statement t
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Medication_Statement_Request`)
     
     
@@ -297,6 +320,8 @@ This chapter describes the structure of a single unsigned diagnostic report that
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Diagnostic_Report_EncounterPCG_Request`)
 
 
@@ -308,6 +333,8 @@ This chapter describes the structure of a single unsigned procedure that could b
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Procedure_EncounterPCG_Request`)  
 
 #### Dummy Medication Administration [POST]
@@ -318,6 +345,8 @@ This chapter describes the structure of a single unsigned medication that could 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Medication_Administration_EncounterPCG_Request`) 
 
 #### Dummy Clinical Impression [POST]
@@ -328,6 +357,8 @@ This chapter describes the structure of a single unsigned clinical impression th
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Clinical_Impression_EncounterPCG_Request`)
 
 #### Dummy Specimen [POST]
@@ -338,6 +369,7 @@ This chapter describes the structure of a single unsigned Specimen that could be
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
             
     + Attributes (`Specimen_Request`)
         + `context` (Reference_request, required)
@@ -358,6 +390,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
 
@@ -382,6 +416,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Cancel_Encounter`) 
 
 + Response 200 (application/json)
@@ -396,6 +432,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Episode_Of_Care_Request`
 
@@ -423,6 +461,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -450,6 +489,8 @@ Use period_from period_to to find episodes that were active in a certain period 
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -473,6 +514,7 @@ This web service returns episodes, that patient gave approvals to read by a curr
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -500,6 +542,7 @@ If you have an approval - you can obtain episode details and nested entities thr
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -515,6 +558,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + include `Update_Episode`
@@ -543,6 +587,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Close_Episode`
 
@@ -570,6 +616,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + include `Cancel_Episode`
@@ -605,6 +652,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -621,6 +669,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -641,6 +690,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -657,6 +707,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -677,6 +728,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -693,6 +745,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -713,6 +766,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -729,6 +783,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -749,6 +804,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -765,6 +821,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -783,6 +840,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -804,6 +862,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -820,6 +879,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -838,6 +898,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -859,6 +920,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -876,6 +938,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -895,6 +958,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -917,6 +981,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -934,6 +999,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -952,6 +1018,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -972,6 +1039,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -988,6 +1056,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1005,6 +1074,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1027,6 +1097,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1044,6 +1115,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1062,6 +1134,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1084,6 +1157,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1101,6 +1175,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1119,6 +1194,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1141,6 +1217,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1158,6 +1235,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1174,6 +1252,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1195,6 +1274,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1212,6 +1292,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1228,6 +1309,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1252,6 +1334,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1269,6 +1352,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1284,6 +1368,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1307,6 +1392,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1324,6 +1410,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1347,6 +1434,8 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + `signed_data` : 'ew0KICAicGVyaW9kIjogew0KIC...' (string, required, fixed-type)
 
@@ -1371,6 +1460,8 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Submit_DR_Package`
 
@@ -1380,6 +1471,8 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + `signed_data` : 'ew0KICAicGVyaW9kIjogew0KIC...' (string, required, fixed-type)
 
@@ -1404,6 +1497,8 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Submit_DR_Package_Cancel`
 
@@ -1418,6 +1513,7 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1442,6 +1538,7 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1463,6 +1560,7 @@ This web service allows to get a list of diagnostic reports that were allowed to
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1479,6 +1577,7 @@ This web service allows to get a list of diagnostic reports that were allowed to
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1497,6 +1596,7 @@ This WS allows to register procedure by its own. Also prosedure can be registere
     + Headers
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -1515,6 +1615,8 @@ This chapter describes the structure of a single procedure creation. This is not
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Procedure_Request`)
  
 ### Get Procedures by ID [GET /api/patients/{patient_id}/procedures/{id}]
@@ -1529,6 +1631,7 @@ This chapter describes the structure of a single procedure creation. This is not
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Procedure_Response`)
@@ -1560,6 +1663,7 @@ This chapter describes the structure of a single procedure creation. This is not
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -1577,6 +1681,7 @@ This chapter describes the structure of a single procedure creation. This is not
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1603,6 +1708,7 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -1620,6 +1726,7 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Procedure_Request)
         + `status_reason` (Codeable_Concept, required)
@@ -1651,6 +1758,7 @@ This WS allows to register Specimen by its own. Also Specimen can be registered 
     + Headers
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -1669,6 +1777,8 @@ This chapter describes the structure of a single Specimen creation. This is not 
     + Headers
             api-key: aFBLVTZ6Z2dON1V
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Specimen_Request`)
 
 ### Get Specimen details [GET /api/patients/{patient_id}/specimens/{id}]
@@ -1684,6 +1794,7 @@ This chapter describes the structure of a single Specimen creation. This is not 
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1711,6 +1822,7 @@ This chapter describes the structure of a single Specimen creation. This is not 
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -1728,6 +1840,7 @@ This chapter describes the structure of a single Specimen creation. This is not 
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1759,6 +1872,7 @@ http code| processing method | Client recommendations
     + Headers
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `received_time`: `2023-04-20T19:14:13Z` (string, required) - The time when Specimen was received for processing
@@ -1789,6 +1903,7 @@ http code| processing method | Client recommendations
     + Headers
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)    
         + `status_reason` (Codeable_Concept, required)
@@ -1823,6 +1938,7 @@ http code| processing method | Client recommendations
     + Headers
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)    
         + `status_reason` (Codeable_Concept, required)
@@ -1866,6 +1982,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -1889,6 +2006,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Specimen_Response)
         + `status_reason` (Codeable_Concept, required)
@@ -1950,6 +2068,7 @@ If you have an approval - you can obtain episode details and nested entities thr
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1977,6 +2096,7 @@ The endpoint returns a list of short Encounter info filtered by search params.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -1995,6 +2115,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2017,6 +2138,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2035,6 +2157,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2057,6 +2180,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2075,6 +2199,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2097,6 +2222,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2115,6 +2241,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2137,6 +2264,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2155,6 +2283,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2177,6 +2306,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2197,6 +2327,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2219,6 +2350,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2236,6 +2368,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2262,6 +2395,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2282,6 +2416,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2297,6 +2432,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2318,6 +2454,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2333,6 +2470,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2355,6 +2493,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2370,6 +2509,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2391,6 +2531,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2415,6 +2556,7 @@ This method is used to pre-qualify service request in order to define whether th
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `service_request` (object, required)
@@ -2481,6 +2623,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -2505,6 +2648,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (Service_Request_Create)
 
@@ -2538,6 +2682,7 @@ This method returns all service requests related to specified episode of care.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2577,6 +2722,7 @@ This method returns all service requests related to specified episode of care.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2606,6 +2752,7 @@ This method returns all service requests related to specified episode of care.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -2635,6 +2782,7 @@ This method returns all service requests related to specified episode of care.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -2675,6 +2823,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -2698,6 +2847,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Service_Request_Base)
         + `status_reason` (Codeable_Concept, required)
@@ -2732,6 +2882,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -2749,6 +2900,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Service_Request_Base)
         + `status_reason` (Codeable_Concept, required)
@@ -2785,6 +2937,7 @@ http code| processing method | Client recommendations
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
 + Response 201 (application/json)
@@ -2818,6 +2971,7 @@ This service must be used to discover service requests by requisition number. If
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2841,6 +2995,7 @@ This service must be used to discover service requests relaated to specified Spe
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2865,6 +3020,7 @@ This service must be used to discover service requests relaated to specified Spe
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes
         + `programs` (array, required) - Medical programs list for qualify
@@ -2893,6 +3049,7 @@ This service must be used to discover service requests relaated to specified Spe
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (Use_Service_Request_Request)
 
@@ -2918,6 +3075,7 @@ Will be deprecated!
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 
 + Response 202 (application/json)
@@ -2941,6 +3099,7 @@ Will be deprecated!
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2967,6 +3126,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (Complete_Service_Request)
 
@@ -2998,6 +3158,7 @@ This method is used to pre-qualify Device Request in order to define whether the
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `device_request` (object, required)
@@ -3052,6 +3213,7 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3073,6 +3235,7 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
 
     + Attributes (object)
@@ -3109,6 +3272,7 @@ This method is used to qualify (possibility to use device definition for the pro
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + location (Reference_request, required) - `Division where device will be dispensed`
@@ -3162,6 +3326,7 @@ This method returns all device requests related to specified patient.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -3190,6 +3355,7 @@ This method returns all device requests related to specified patient.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -3226,6 +3392,7 @@ This service must be used to discover device request by requisition number. If n
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -3252,6 +3419,7 @@ http code| processing method | Client recommendations
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 
 + Response 202 (application/json)
@@ -3286,6 +3454,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3305,6 +3474,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Device_Request_Response_Base)
         + `status_reason` (Codeable_Concept, required)
@@ -3343,6 +3513,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Device_Dispense_Create_Request)
         + verification_code: `102364` (string, required) - Verification code obtained from patient
@@ -3387,6 +3558,7 @@ Look at [Dummy Complete Device dispense](https://ehealthmedicaleventsapi.docs.ap
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3411,6 +3583,7 @@ Look at [Dummy Complete Device dispense](https://ehealthmedicaleventsapi.docs.ap
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Device_Dispense_Complete_Request)
 
@@ -3444,6 +3617,7 @@ This method returns all device dispenses related to legal entity.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -3464,6 +3638,7 @@ This method returns all device dispenses related to legal entity.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -3493,6 +3668,11 @@ http code| processing method | Client recommendations
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
 
++ Request
+
+    + Headers
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+        
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -3545,6 +3725,8 @@ risk_assessment|read
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Approval_Request`
 
@@ -3574,6 +3756,7 @@ risk_assessment|read
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `code`: 3782 (number)
@@ -3600,6 +3783,7 @@ http code| processing method | Client recommendations
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 201 (application/json)
     + Attributes (Response_OK)
@@ -3637,6 +3821,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -3660,6 +3845,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3690,6 +3876,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -3729,6 +3916,7 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3757,6 +3945,7 @@ Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#refere
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     
     + Attributes (Care_Plan_Create)
@@ -3789,6 +3978,7 @@ This method is used to pre-qualify care plan activity in order to define whether
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `activity` (object, required)
@@ -3852,6 +4042,7 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
     + Headers
         Authorization: Bearer F3GF124Df565FDS234SDF34
         api-key: aDGFDFGT46S5gFGD
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
         
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3880,6 +4071,7 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
     + Headers
         Authorization: Bearer F3GF124Df565FDS234SDF34
         api-key: aDGFDFGT46S5gFGD
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
         
     + Attributes (`Care_Plan_activity_base`)
         + `detail` (object, required)
@@ -3927,6 +4119,7 @@ Returns care plan details by it's identifier in patient context
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3964,6 +4157,7 @@ Returns care plan list filtered by submitted parameters withtin specified patien
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3989,6 +4183,7 @@ This service must be used to discover Care plans by requisition number. If nothi
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -4015,6 +4210,7 @@ Returns care plan's activity details by it's identifier within care plan and pat
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -4050,6 +4246,7 @@ Returns all the activities related to the care plan in patient context
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -4096,6 +4293,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -4126,6 +4324,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (`Care_Plan_Show`)
         + `status_reason` (Codeable_Concept, required)
@@ -4174,6 +4373,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `status_reason` (Codeable_Concept, required)
@@ -4227,6 +4427,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -4273,6 +4474,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (`Care_plan_activity_show`)
         + `detail` (object, fixed-type)
@@ -4351,6 +4553,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `outcome_codeable_concept` (array, required, fixed-type)
@@ -4411,6 +4614,9 @@ This web service returns a catalog of all active rule engine rules in eHealth.
 
 + Request (application/json)
 
+    + Headers
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+        
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (array)
@@ -4428,6 +4634,9 @@ This web service returns rule engine rule details filtered by ID with active rul
     + id: `1f8444a0-e48b-440b-a082-c4703233efa2` (string, required)
 
 + Request (application/json)
+
++ Headers
+    X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
