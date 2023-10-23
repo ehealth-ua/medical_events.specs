@@ -378,6 +378,13 @@ This chapter describes the structure of a single unsigned Specimen that could be
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `encounter` (string)
+        + collection (`Specimen_Collection_Request`, required) - Collection details
+            + procedure (Reference_request, optional) - Procedure that collects the specimen.
+                + identifier (Identifier, required)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `procedure` (string, required)
         + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
         + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
             - available
@@ -5245,6 +5252,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `encounter` (string)
+        + collection (`Specimen_Collection_Request`, required) - Collection details
+            + procedure (Reference_request, optional) - Procedure that collects the specimen.
+                + identifier (Identifier, required)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `procedure` (string, required)
         + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
         + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
             - available
@@ -5464,6 +5478,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `encounter` (string)
+        + collection (`Specimen_Collection_Request`, required) - Collection details
+            + procedure (Reference_request, optional) - Procedure that collects the specimen.
+                + identifier (Identifier, required)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `procedure` (string, required)
         + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
         + status: `entered_in_error` (enum, required) - status of the Specimen according to `specimen_statuses`
       
@@ -9151,12 +9172,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `fasting_statuses` (string)
             + code: `default` (string)
-+ procedure (Reference_request, optional) - Procedure that collects the specimen.
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `procedure` (string, required)
+
 
 ### `Specimen_Container_Request`
 + identifier: `1-3244-ABC` (string, required) - Id for the container
