@@ -8175,6 +8175,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ `created_by` (Reference_request, required) - author of the request for approval
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 + access_level: `read` (enum, required) - access rights type
     - read
     - write
@@ -8237,6 +8243,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
++ `created_by` (Reference_request, required) - author of the request for approval
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 + `is_verified`: true (boolean, required) - state of verification of approval
     - true
     - false
@@ -8266,6 +8278,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
++ `created_by` (Reference_request, required) - author of the request for approval
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 + `is_verified`: true (boolean, required) - state of verification of approval
     - true
     - false
