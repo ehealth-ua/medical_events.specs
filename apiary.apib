@@ -5493,7 +5493,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                                 + code: `procedure` (string, required)
         + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
         + status: `entered_in_error` (enum, required) - status of the Specimen according to `specimen_statuses`
-        + `status_reason` (Codeable_Concept)
+        + `status_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
                 + (Coding)
                     + system: `specimen_cancel_reasons` (enum, string)
