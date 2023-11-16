@@ -5493,6 +5493,14 @@ This web service returns rule engine rule details filtered by ID with active rul
                                 + code: `procedure` (string, required)
         + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
         + status: `entered_in_error` (enum, required) - status of the Specimen according to `specimen_statuses`
+        + `status_reason` (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_cancel_reasons` (enum, string)
+                        - `specimen_reject_reasons`
+                        - `specimen_invalidate_reasons`
+                        - `specimen_cancel_reasons`
+                    + code: `typo` (string)
       
 ### `Paper_referral`
 + requisition: `1111-2222-3333-4444` (string, optional) - `Service request number`
@@ -9163,7 +9171,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 20 (number, required)
     + system: `eHealth/ucum/units` (string, required)
     + code: g (string, required)
-+ method (Codeable_Concept, required) - Technique used to perform collection
++ method (Codeable_Concept, optional) - Technique used to perform collection
     + coding (array, fixed-type)
         + (Coding)
             + system: `specimen_collection_methods` (string)
