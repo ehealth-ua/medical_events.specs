@@ -8972,6 +8972,24 @@ This web service returns rule engine rule details filtered by ID with active rul
 + note: `Some notes` (string, optionnal)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
+- One Of 
+    + `based_on` (Reference_response, optional)
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `device_request` (enum, required)
+                                - device_request
+    + `based_on` (Reference_response, optional)
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (enum, required)
+                                - care_plan
+                        + code: `activity` (enum, required)
+                                - activity
+
 
 
 ### `Qualify_Device_Request_Base`
