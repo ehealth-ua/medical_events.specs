@@ -65,18 +65,28 @@ Medication administration|0-*|true
 Diagnostic report|0-*| true
 Procedure|0-*| true
 Clinical impression|0-*| true
+
+
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
-To find out more about the process of encounter package creation read [Confluence Submit Encounter Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061216257/Submit+Encounter+Package).
+
+To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402843/Submit+Encounter+Data+Package).
+
+
+
 + Request Package (application/json)
+
     + Headers
+
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
         + include `Submit_Encounter_Package`
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
 + Response 404 (application/json)
     + Attributes (Response_Error)
         + meta (Response__Meta)
@@ -84,23 +94,31 @@ To find out more about the process of encounter package creation read [Confluenc
         + error (Response__Error)
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
-            
-            
-            
+
+
+
 ### Get async Job processing details [GET /api/jobs/{id}]
 This resource should be used to get the processing status of the async job.
+
 >Read more about [job processing algorithms.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402225/Medical+events+Technical+Documentation)
+
+
 
 + Parameters
     + id: `NBXk9EyErUZv1RhXgyvgg` (string, required) - request identifier
+
 + Request (application/json)
+
     + Headers
+
             Authorization: Bearer 342432fdsfdsgfdt24535422fgds
+
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 200 (number)
         + data (`Job`)
+
 + Response 303 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -143,29 +161,39 @@ This resource should be used to get the processing status of the async job.
                     + entity: `procedure` (string, required)
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/procedure/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
                 
+
 + Response 403 (application/json)
     + Attributes (Response_OK)
         + data (`Job_Error_403`)
         + meta (Response__Meta)
             + code: 200 (number)
-+ Response 404 (application/json)
-    + Attributes (Response_OK)
-        + data (`Job_Error_404`)
-        + meta (Response__Meta)
-            + code: 200 (number)
+
 + Response 409 (application/json)
     + Attributes (Response_OK)
         + data (`Job_Error_409`)
         + meta (Response__Meta)
             + code: 200 (number)
+
 + Response 422 (application/json)
     + Attributes (Response_OK)
         + data (`Job_Error_422`)
         + meta (Response__Meta)
             + code: 200 (number)
+
++ Response 404 (application/json)
+    + Attributes (Response_OK)
+        + data (`Job_Error_404`)
+        + meta (Response__Meta)
+            + code: 404 (number)
+   
++ Response 500 (application/json)
+    + Attributes (Response_OK)
+        + data (`Job_Error_404`)
+        + meta (Response__Meta)
+            + code: 500 (number)
+
 ### Dummy Encounter Package [POST]
 - If `encounter.class.code:"INPATIENT"`, **priority** for encounter is required 
-- If `encounter.class.code:"PHC"`, **reasons** for encounter is required
 - `hospitalization` may be present only with `encounter.class.code:"INPATIENT"`
 - Fields `encounter.hospitalization.admit_source`, `encounter.hospitalization.discharge_disposition` and `encounter.hospitalization.discharge_department` should be required if parameter `encounter.type.coding.code = discharge`.
 
@@ -176,7 +204,7 @@ This resource should be used to get the processing status of the async job.
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (Encounter_Request)
         
-   
+    
 #### Dummy Condition [POST]
 This chapter describes the structure of a single unsigned condition that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
@@ -343,7 +371,9 @@ Episode of care is a resource that contains general information about a patient`
 ### Create Episode  [POST]
 Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402023/Create+Episode)
 + Request (application/json)
+
     + Headers
+
             Authorization: Bearer mF_9.B5f-4.1JqM
     + Attributes (object)
         + include `Episode_Of_Care_Request`
@@ -378,21 +408,21 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data(`Episode_Of_Care_Response`)
     
 
-### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,page,page_size,status}]
+### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,status,page,page_size}]
 Use period_from period_to to find episodes that were active in a certain period of time
 
 
-**Scopes required:** `TBD`
+**Scopes required:** `episode:read`
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
-    + `page`: 2 (number, optional) - Page number
-    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `period_from`: `2017-01-01` (string, optional)
     + `period_to`: `2018-01-01` (string, optional)
     + `code`: `R80` (string, optional)
     + `status`: `active` (string, optional)
-    + `managing_organization_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
+    + `managing_organization_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)    
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
     + Headers
@@ -409,7 +439,7 @@ Use period_from period_to to find episodes that were active in a certain period 
 ### Get Approved Episodes [GET /api/patients/{patient_id}/episodes/approved]
 
 This web service returns episodes, that patient gave approvals to read by a current employee.
-**Scopes required:** `TBD`
+**Scopes required:** `episode:read`
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
@@ -426,6 +456,33 @@ This web service returns episodes, that patient gave approvals to read by a curr
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
         + data(array[`Episode_Of_Care_Response`])
+
+  
+### Get Short Episodes by Diagnoses Groups [GET /api/patients/{patient_id}/diagnoses_groups/episodes{?period_from,period_to,diagnoses_group_id,managing_organization_id,page,page_size}]
+
+This web service returns brief information of episodes grouped by Groups of Diagnoses, for which patient gave approvals to read by a current employee.
+Access to full episode data is restricted by patient's approval.
+If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services.
+**Scopes required:** `episode:read`
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `period_from`: `2022-01-01` (string, optional)
+    + `period_to`: `2023-01-01` (string, optional)
+    + `diagnoses_group_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
+    + `managing_organization_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data(array[`Episode_Of_Care_Short_With_Diagnoses`])
 
 ### Update Episode [PATCH /api/patients/{patient_id}/episodes/{episode_id}]
 Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402015/Update+Episode)
@@ -1214,6 +1271,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + episode_id: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)    
     + code: `insulin_1` (string, optional) - clinical impression's code
     + status: `completed` (string, optional) - clinical impression's status
+    + effective_date_from: `2017-09-01` (string, optional) - date of clinical impression
+    + effective_date_to: `2017-09-02` (string, optional) - date of clinical impression
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     
@@ -2047,7 +2106,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 Use [GET Service Catalog](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-programs/medical-program/get-services-dictionary) to receive current catalog of services. 
 
-### PreQualify Service Request [POST /api/patients/{patient_id}/service_requests/prequalify]
+### PreQualify Service request [POST /api/patients/{patient_id}/service_requests/prequalify]
 
 This method is used to pre-qualify service request in order to define whether the medical program could be applied in this particular case or not.
 **Scopes required:** `service_request:write`
@@ -2100,7 +2159,7 @@ This method is used to pre-qualify service request in order to define whether th
             + message: `Patient is not active` (string, required)
 
 
-### Create Service Request [POST]
+### Create Service request [POST]
 
 This method must be used to register new Service Request in the eHealth. 
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
@@ -2142,7 +2201,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Service Request [POST /dummy/patients/{id}/service_requests]
+### Dummy Service request [POST /dummy/patients/{id}/service_requests]
 
 + Request (application/json)
 
@@ -2165,7 +2224,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Get Service Requests list Episode Context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests{?status}]
+### Get Service requests by search params in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests{?status}]
 
 This method returns all service requests related to specified episode of care.
 
@@ -2200,7 +2259,7 @@ This method returns all service requests related to specified episode of care.
             
             
 
-### Get Service Requests by search params [GET /api/patients/{patient_id}/service_requests{?status,requester_legal_entity,used_by_legal_entity,episode_id,code,care_plan_id}]
+### Get Service requests by search params [GET /api/patients/{patient_id}/service_requests{?status,requester_legal_entity,used_by_legal_entity,episode_id,code,care_plan_id}]
 
 This method returns all service requests related to specified episode of care.
 
@@ -2235,7 +2294,7 @@ This method returns all service requests related to specified episode of care.
             + type: NOT_FOUND (string)
             + message: `Patient not found` (string)
 
-### Get Service Request details with episode [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests/{service_request_id}]
+### Get Service request details in episode context [GET /api/patients/{patient_id}/episodes/{episode_id}/service_requests/{service_request_id}]
 
 **Scopes required:** `service_request:read`
 
@@ -2265,7 +2324,7 @@ This method returns all service requests related to specified episode of care.
             + message: `Service request not found` (string)
             
 
-### Get Service Request details w/o episode [GET /api/patients/{patient_id}/service_requests/{service_request_id}]
+### Get Service request details [GET /api/patients/{patient_id}/service_requests/{service_request_id}]
 
 **Scopes required:** `service_request:read`
 
@@ -2294,7 +2353,7 @@ This method returns all service requests related to specified episode of care.
             + message: `Service request not found` (string)
 
 
-### Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel]
+### Cancel Service request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel]
 
 This method must be used to cancel existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
@@ -2336,7 +2395,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Cancel Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel/dummy]
+### Dummy Cancel Service request [PATCH /api/patients/{id}/service_requests/{id}/actions/cancel/dummy]
 + Request (application/json)
 
     + Headers
@@ -2359,7 +2418,7 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
-### Recall Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall]
+### Recall Service request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall]
 
 This method must be used to recall existing Service Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
@@ -2387,7 +2446,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
             + code: 202 (number)
         + data (`Job`)
 
-### Dummy Recall Service Request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall/dummy]
+### Dummy Recall Service request [PATCH /api/patients/{id}/service_requests/{id}/actions/recall/dummy]
 + Request (application/json)
 
     + Headers
@@ -2410,7 +2469,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
             + code: 202 (number)
         + data (`Job`)
 
-### Resend SMS on Service Request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/resend]
+### Resend SMS on Service request [PATCH /api/patients/{patient_id}/service_requests/{service_request_id}/actions/resend]
 Method to resend sms on service request
 It can be processed in both sync and async methods depends on Server decision
 Depends on processing method Server might answer with:
@@ -2445,7 +2504,7 @@ http code| processing method | Client recommendations
 
 ## Manage Service Requests [/api/service_requests]
 
-### Search for a service requests [GET /api/service_requests{?requisition,status,page,page_size}]
+### Search for a Service requests [GET /api/service_requests{?requisition,status,page,page_size}]
 
 This service must be used to discover service requests by requisition number. If nothing found by requisition number - it will return empty list
 
@@ -2496,7 +2555,7 @@ This service must be used to discover service requests by requisition number. If
         + meta (Response__Meta)
         +  data (array[`Qualify_Service_Request_Responce`]))
 
-### Use Service Request [PATCH /api/service_requests/{service_request_id}/actions/use]
+### Use Service request [PATCH /api/service_requests/{service_request_id}/actions/use]
 
 **Scopes required:** `service_request:use`
 
@@ -2519,7 +2578,9 @@ This service must be used to discover service requests by requisition number. If
         + data (`Job`)
 
 
-### Change service request status to In progress [PATCH /api/service_requests/{service_request_id}/actions/process]
+### Change Service request status to In progress [PATCH /api/service_requests/{service_request_id}/actions/process]
+
+Will be deprecated!
 
 **Scopes required:** `service_request:makeinprogress`
 
@@ -2540,7 +2601,9 @@ This service must be used to discover service requests by requisition number. If
             + code: 202 (number)
         + data (`Job`)
 
-### Release Service Request [PATCH /api/service_requests/{service_request_id}/actions/release]
+### Release Service request [PATCH /api/service_requests/{service_request_id}/actions/release]
+
+Will be deprecated!
 
 **Scopes required:** `service_request:use`
 
@@ -2560,7 +2623,7 @@ This service must be used to discover service requests by requisition number. If
             + code: 202 (number)
         + data (`Job`)
 
-### Complete Service Request [PATCH /api/service_requests/{service_request_id}/actions/complete]
+### Complete Service request [PATCH /api/service_requests/{service_request_id}/actions/complete]
 Method to resend sms on service request.
 It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
@@ -2981,12 +3044,17 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
             + include `Care_Plan_activity_detail_base`
             + `quantity` (object)
                 + value: 13 (number, required)
-                + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
-                + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                + `code`: `MG` (string, required) - Can be absent in old version of CPA.
             + `daily_amount` (object)
                 + value: 13.5 (number, required)
-                + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
-                + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. 
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+
 
 + Response 201 (application/json)
     + Attributes (Response_OK)
@@ -3032,7 +3100,7 @@ Returns care plan details by it's identifier in patient context
                 + phone_number: `+38093*****85` (string, optional)
 
 
-### Get Care Plans by search params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,status,page,page_size}]
+### Get Care Plans by search params [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,managing_organization_id,status,page,page_size}]
 Returns care plan list filtered by submitted parameters withtin specified patient.
 
 **Scopes required:** `care_plan:read`
@@ -3043,6 +3111,7 @@ Returns care plan list filtered by submitted parameters withtin specified patien
     + encounter_id: `7c3da506-804d-4550-8993-bf17f9ee0400` (string, optional) - identifier of the encounter in Care plan
     + based_on: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - Care Plan identifier on which returned Care plans are based on.
     + part_of: `7c3da506-804d-4550-8993-bf17f9ee0401` (string, optional) - parent Care Plan identifier which includes returned Care plans.
+    + managing_organization_id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)   
     + status: `active` (string, optional) - Care plan's status
     + page: 2 (number, optional) - Page number
     + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
@@ -3324,6 +3393,21 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 201 (number)
         + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: cancelled (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
 
 
 + Response 202 (application/json)
@@ -3358,16 +3442,13 @@ http code| processing method | Client recommendations
                     + (Coding)
                         + code: `some code` (string)
                         + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
-            + `quantity` (object)
-                + value: 13 (number, required)
-                + `system`: `MEDICATION_UNIT` (string, optional) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-                + `code`: `MG` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-                + `unit`: `мг` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-            + `daily_amount` (object)
-                + value: 13.5 (number, required)
-                + `system`: `MEDICATION_UNIT` (string, optional) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-                + `code`: `MG` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
-                + `unit`: `мг` (string, required) - Should not be present in Request if Care Plan Activity is a kind other than medication request or CPA is an old version of kind of medication request.
+            + `remaining_quantity` (object)
+                + value: 12 (number, required)
+                + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    - `MEDICATION_UNIT`
+                    - `SERVICE_UNIT`
+                + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
         + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
@@ -3378,6 +3459,21 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 201 (number)
         + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: cancelled (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_cancel_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
 
 
 + Response 202 (application/json)
@@ -3430,6 +3526,21 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 201 (number)
         + data(`Care_plan_activity_show`)
+            + `detail` (object, fixed-type)
+                + include `Care_Plan_activity_detail_base`
+                + status: completed (string, required)
+                + `status_reason` (Codeable_Concept, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `some code` (string)
+                            + system: `eHealth/care_plan_activity_complete_reasons` (string, required)
+                + `remaining_quantity` (object)
+                    + value: 12 (number, required)
+                    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+                        - `MEDICATION_UNIT`
+                        - `SERVICE_UNIT`
+                    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+                    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
 
 
 + Response 202 (application/json)
@@ -3628,7 +3739,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + type  (Coding, required)
     + system : `eHealth/episode_types` (string)
-    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
+    + code: `primary_care` (string)
 + `status`: `active` (string, required)- `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
                     
@@ -3673,7 +3784,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + type  (Coding, required)
     + system : `eHealth/episode_types` (string)
-    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
+    + code: `primary_care` (string)
 + `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
 + `name`: `Діабет 2018` (string, required)
 + `managing_organization` (Reference_request, required)
@@ -3698,7 +3809,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + type  (Coding, required)
     + system : `eHealth/episode_types` (string)
-    + code: `primary_care` (string) - `dictionary eHealth/episode_types`
+    + code: `primary_care` (string) 
 + `status`: `active`  (string, required) - `dictionary - eHealth/episode_statuses`
 + name: `Діабет 2018` (string, required)
 +  `status_history`  (array, optional, fixed-type)
@@ -3804,6 +3915,18 @@ This web service returns rule engine rule details filtered by ID with active rul
 + inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 
+### `Episode_Of_Care_Short_With_Diagnoses`
++ include `Episode_Of_Care_Short`
++ `managing_organization` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Медікал Солюшнc` (string, required) - This field is filled on creating and never updated after
++ diagnoses (array, required, fixed-type)
+    + (Diagnosis_Referrence_Condition_2)  
+
 ##Visit
 
 ### `Visit_Body`
@@ -3888,8 +4011,12 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## Encouner
 ### `Encounter_Base` (object)
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
-+ `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                
-+ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`
+- One Of
+    - date: `2018-08-02T10:45:16.000Z` (string, optional)
+    - period (object , optional)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required)                       
 + `incoming_referral`(Reference_request, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -3935,7 +4062,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: employee (string)
                     
-+ reasons (array, optional)
++ reasons (array,required)
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
@@ -3947,9 +4074,8 @@ This web service returns rule engine rule details filtered by ID with active rul
             + (Coding)
                 + system: `eHealth/ICPC2/reasons` (string)
                 + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons`
-                
-        
-+ diagnoses (array, required, fixed-type)
+
++ diagnoses (array, optional, fixed-type)
     + (`Diagnosis_Request`)
         
         
@@ -4062,7 +4188,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `episode` (string)
 + `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                   
-+ `date`: `2018-08-02` (string, required)
+- One Of
+    - date: `2018-08-02T10:45:16.000Z` (string, optional)
+    - period (object , optional)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required)                       
 + `incoming_referral`(Reference_response, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -4110,15 +4240,14 @@ This web service returns rule engine rule details filtered by ID with active rul
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/ICPC2/reasons` (string) 
-                + code: `T01` (string) - `dictionary eHealth/ICPC2/reasons`
-
+             + system: `eHealth/ICPC2/reasons` (string) 
+             + code: `A02` (string) - `dictionary eHealth/ICPC2/reasons`
+             
     + (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
-                + system: `eHealth/ICPC2/reasons` (string) 
-                + code: `T90` (string) - `dictionary eHealth/ICPC2/reasons`
-
+                + system: `eHealth/ICPC2/reasons` (string)
+                + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons`
         
 + diagnoses (array, optional, fixed-type)
     + (`Diagnosis_Referrence_Condition`)
@@ -4268,7 +4397,11 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Encounter_Short`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
 + `status`: `finised`  (string, required) - `dictionary eHealth/encounter_statuses`                
-+ `date`: `2018-08-02T10:45:16.000Z` (string, required)
+- One Of
+    - date: `2018-08-02T10:45:16.000Z` (string, optional)
+    - period (object , optional)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required)                       
 + `episode` (Reference_request, required, fixed-type)   
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -5829,10 +5962,8 @@ This web service returns rule engine rule details filtered by ID with active rul
 + status_code: `403` (string, required) - processing result
 
 ### Job_Error_404
-+ error: Error description (string) - Human-readable error message.
-+ eta: `2018-08-02T10:45:16.000Z` (string, optional) - estimated time of arrivals
-+ status: `failed` (string, required) - status of request processing
-+ status_code: `404` (string, required) - processing result
++ error: Error description (object, fixed-type)
+    + type: Error_type (string) - Atom that represents error type.
 
 ### Job_Error_409
 + error: Error description (object, fixed-type)
@@ -5890,7 +6021,11 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -5948,6 +6083,14 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `eHealth/procedure_categories` (string)
             + code: `default` (string)
 
++ used_codes (array,optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `eHealth/ISO_9999` (string) 
+             + code: `03 05 38` (string)
+
+
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
 + `based_on` (Reference_response, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
@@ -5971,7 +6114,11 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_response, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -6050,6 +6197,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `condition` (string)
+                        
++ used_codes (array,optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `eHealth/ISO_9999` (string) 
+             + code: `03 05 38` (string)
 
 ### Procedure_EncounterPCG_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
@@ -6079,7 +6233,11 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ `performed_date_time`: `2018-08-02T10:55:00.000Z` (string, required) - date and time when the procedure have been performed
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
 + `recorded_by` (Reference_request, required) - employee who submit procedure to e-Health
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -6143,6 +6301,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `eHealth/procedure_categories` (string)
             + code: `default` (string)
 + `paper_referral` (`Paper_referral`, optional, fixed-type)
++ used_codes (array,optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `eHealth/ISO_9999` (string) 
+             + code: `03 05 38` (string)
 
 ### `Medication_Administration_EncounterPCG_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique medication admnistration identifier
@@ -6417,7 +6581,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `legal_entity` (string)
+                    + code: `employee` (string)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `completed_with` (Reference_response, optional)
@@ -6453,6 +6617,43 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `SPECIALITY_TYPE` (string)
             + code: `DIETETICS` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
+    + unit: шт (string)
++ `remaining_quantity` (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
+    + unit: шт (string)
++ `used_by_legal_entity_history`  (array, optional, fixed-type)
+    + (object)
+        + `used_by_legal_entity`: (Reference_response, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `legal_entity` (string)
+                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
++ `used_by_employee_history`  (array, optional, fixed-type)
+    + (object)
+        + `used_by_employee`: (Reference_response, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+        + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
+        + `inserted_by`: `f7bdce4c-9d6e-4b08-913c-97c4b972f9be` (string, required)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/service_request_recall_reasons` (string)
+            + code: `cured` (string)
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -6564,6 +6765,10 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `SPECIALITY_TYPE` (string)
             + code: `DIETETICS` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + `system`: `SERVICE_UNIT` (string, required)
+    + `code`: `PIECE` (string, required)
 
 ### `Service_Request_Create`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -6666,6 +6871,10 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `SPECIALITY_TYPE` (string)
             + code: `DIETETICS` (string)
++ quantity (object)
+    + value: 10 (number, required)
+    + system: `SERVICE_UNIT` (string, required)
+    + code: PIECE (string, required)
 
 ### `Use_Service_Request_Request`
 + `used_by_employee` (Reference_request, optional)
@@ -6699,19 +6908,25 @@ This web service returns rule engine rule details filtered by ID with active rul
         
 
 ### `Complete_Service_Request`
-+ `completed_with` (Reference_request, required)
++ `completed_with` (Reference_request, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `diagnostic_report` (string) 
                     
-+ `program_service` (Reference_request, required)
++ `program_service` (Reference_request, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `program_service` (string) 
+
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/service_request_complete_reasons` (string)
+            + code: `default` (string)
                 
 
 
@@ -6747,7 +6962,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `forbidden_group` (string)
                 + text (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
-    - `diagnoses_group` (object, optional) - access to episodes of care that contains in current diagnoses at least one diagnosis code specified in the Group of Diagnoses
+    - `diagnoses_group` (object, optional) - access to list of short episodes of care that contain in diagnoses history at least one diagnosis code specified in the Group of Diagnoses
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
@@ -7048,7 +7263,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `detail` (`Care_Plan_activity_detail_base`, required)
 
 ### `Prequslify_Care_Plan_activity_detail_base`
-+ kind: `service_request` (enum, required)
++ kind: `medication_request` (enum, required)
     - service_request
     - medication_request
 + `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
@@ -7088,8 +7303,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
-    + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -7157,14 +7374,17 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + `daily_amount` (object)
     + value: 13.5 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
-    + `code`: `MG` (string, required) - Should be present, as required, in Request only if Care Plan Activity is a kind = medication_request. And should be absent if other kind.
+    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA.
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + status: scheduled (string, required)
 
+
 ### `Care_Plan_activity_detail_base`
-+ kind: `service_request` (enum, required)
++ kind: `medication_request` (enum, required)
     - service_request
     - medication_request
 + `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
@@ -7173,7 +7393,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, optional, fixed-type)
                 + object
                     + system: `eHealth/resources` (string, required)
-                    + code: `service` (enum)
+                    + code: `medication` (enum)
                         - service
                         - `service_group`
                         - medication
@@ -7204,9 +7424,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/care_plan_activity_goals` (string, required)
 + quantity (object)
     + value: 13 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
-    + `code`: `MG` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
-    + `unit`: `мг` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+    + `code`: `MG` (string, required) - Can be absent in old version of CPA.
+    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
 - One of
     - `scheduled_timing` (object)
         + event (array)
@@ -7273,10 +7495,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `employee` (string)
 + `daily_amount` (object)
-    + value: 13.5 (number, required)
-    + `system`: `MEDICATION_UNIT` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
-    + `code`: `MG` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
-    + `unit`: `мг` (string, optional) - `Can be present in Response only if Care Plan Activity is a kind = medication_request. For old version of Care Plan Activity with kind = medication request this field might not be returned.`
+    + value: 6.5 (number, required)
+    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA.
+        - `MEDICATION_UNIT`
+        - `SERVICE_UNIT`
+    + `code`: `MG` (string, required) - Can be absent in old version of CPA. 
+    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
 + `program` (Reference_request, optional)
@@ -7286,6 +7510,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `medical_program` (string)
 + status: scheduled (string, required)
+
 
 ### `Care_plan_activity_show`
 + include `Care_Plan_activity_base`
@@ -7307,7 +7532,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + code: `some code` (string)
                 + system: `eHealth/care_plan_activity_outcomes` (string, required)
 + `detail` (Care_Plan_activity_detail_base, required)
-    + status: completed (enum, required)
+    + status: scheduled (enum, required)
         - scheduled
         - `in_progress`
         - completed
@@ -7321,9 +7546,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                     - `eHealth/care_plan_activity_cancel_reasons`
     + `remaining_quantity` (object)
         + value: 12 (number, required)
-        + `system`: `MEDICATION_UNIT` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
-        + `code`: `MG` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
-        + `unit`: `мг` (string, optional) - Can be present in Response only if Care Plan activity is a kind = medication_request and it is not an old version of CPA.
+        + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
+            - `MEDICATION_UNIT`
+            - `SERVICE_UNIT`
+        + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
+        + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
 
 ### `Care_Plan_Show`
 + include `Care_Plan_Create`
@@ -7340,6 +7567,12 @@ This web service returns rule engine rule details filtered by ID with active rul
     - completed
     - cencelled
     - terminated
++ `managing_organization` (Reference_request, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
 + `status_history` (array, required, fixed-type)
     + (object)
         + status: `active` (string, required)
@@ -7401,6 +7634,12 @@ This web service returns rule engine rule details filtered by ID with active rul
     - completed
     - cencelled
     - terminated
++ `managing_organization` (Reference_request, required)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
 + `terms_of_service` (Codeable_Concept,required)
     + coding (array, fixed-type)
         + (Coding)
