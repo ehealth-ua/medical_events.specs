@@ -3627,6 +3627,67 @@ http code| processing method | Client recommendations
             + code: 202 (number)
         + data (`Job`)
 
+### Cancel Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/cancel]
+
+This method must be used to cancel existing Device Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of Device request must be equal to Device request stored in DB. See Get Device Request details
+2. status_reason must be added to signed content
+3. status must be changed to entered-in-error for the purpose of displaying in the signed content
+
+Please see [Device request status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3765535052/Device+request+status+model) and Dummy Revoke Device request for more details
+
+
+**Scopes required:** `device_request:cancel`
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Cancel Device request [PATCH /api/patients/{patient_id}/device_requests/{id}/actions/cancel/dummy]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (Device_Request_Response_Base)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `device_request_cancel_reasons` (string)
+                    + code: `default` (string)
+        + `status`: `entered-in-error` (string, required)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
 
 ## Group Device dispenses
 
