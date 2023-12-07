@@ -2648,7 +2648,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         + data (array[`Clinical_Impression_Show`], fixed-type)
         
 
-### Get Short Device Requests list [GET /api/patients/{patient_id}/summary/device_requests{?page,page_size}]
+### Get Short Device Requests [GET /api/patients/{patient_id}/summary/device_requests{?page,page_size}]
 
 This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
 If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services.
