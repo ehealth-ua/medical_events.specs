@@ -9155,11 +9155,20 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `based_on` (array, optional) -  One of: device_requests or care_plan and activity should be filled
     + (Reference_response)
+    - One Of
         + identifier (Identifier, required)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `device_request` (enum, required)
+                            - device_request
+                            - care_plan
+                            - activity
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (enum, required)
                             - device_request
                             - care_plan
                             - activity
@@ -9176,7 +9185,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `device_request_priority` (string)
             + code: `low` (string)
 + `remaining_quantity` (object)
-     + value: 10 (number, required)
+    + value: 10 (number, required)
     + system: `device_unit` (string, required)
     + code: piece (string, required)
     + unit: шт (string, required) 
