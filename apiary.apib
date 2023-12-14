@@ -9176,12 +9176,10 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `device_request_priority` (string)
             + code: `low` (string)
 + `remaining_quantity` (object)
-    + value: 12 (number, required)
-    + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
-        - `MEDICATION_UNIT`
-        - `SERVICE_UNIT`
-    + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
-    + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
+     + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+    + unit: шт (string, required) 
 + `parameter` (array, optional)
     + (Device_parameter)
 + `performer` (Reference_request, optional)
