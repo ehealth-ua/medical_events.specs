@@ -9071,12 +9071,12 @@ This web service returns rule engine rule details filtered by ID with active rul
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + include `Device_Request_Base`
 - One Of
-    + `code_codeable_concept` (object, optional)
+    + `code_codeable_concept` (object, required)
         + coding (array, optional, fixed-type)
             + object
                 + system: `device_definition_classification_type` (string)
                 + code: `30221` (string)
-    + `code_reference`  (object, optional)
+    + `code_reference`  (object, required)
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
