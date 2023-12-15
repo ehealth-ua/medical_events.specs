@@ -9057,18 +9057,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_Request_Base`
 + intent: `order` (string, required)
-- One Of
-    - `code_codeable_concept` (Codeable_Concept)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `device_definition_classification_type` (string)
-                + code: `30221` (string)
-    - `code_reference`  (Reference_request)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `device_definition` (string)
 + quantity (object)
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
@@ -9101,6 +9089,18 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_Request_Response_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
+- One Of
+    - `code_codeable_concept` (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `device_definition_classification_type` (string)
+                + code: `30221` (string)
+    - `code_reference`  (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `device_definition` (string)
 + include `Device_Request_Base`
 + quantity (object)
     + value: 10 (number, required)
