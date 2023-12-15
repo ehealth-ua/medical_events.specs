@@ -9059,6 +9059,20 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Device_Request_Base`
 + intent: `order` (string, required)
 - One Of
+    + `performer` (Reference_response, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+        + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
+    + `report_origin` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/report_origins` (string)
+                + code: `mother` (string)
+        + text: `зі слів пацієнта` (string)
+- One Of
     + `code_codeable_concept` (Codeable_Concept, optional)
         + coding (array, fixed-type)
             + (Coding)
