@@ -9058,32 +9058,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_Request_Base`
 + intent: `order` (string, required)
-- One Of
-    + `performer` (Reference_response, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
-        + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
-        + text: `зі слів пацієнта` (string)
-- One Of
-    + `code_codeable_concept` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `device_definition_classification_type` (string)
-                + code: `30221` (string)
-    + `code_reference`  (Reference_request, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `device_definition` (string)
 + quantity (object)
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
@@ -9117,6 +9091,18 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Device_Request_Response_Base`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + include `Device_Request_Base`
+- One Of
+    + `code_codeable_concept` (Codeable_Concept, optional)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `device_definition_classification_type` (string)
+                + code: `30221` (string)
+    + `code_reference`  (Reference_response, optional)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `device_definition` (string)
 + quantity (object)
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
