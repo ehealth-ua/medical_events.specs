@@ -9057,11 +9057,18 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_Request_Base`
 + intent: `order` (string, required)
-+ code (Codeable_Concept, required)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `device_definition_classification_type` (string)
-            + code: `30221` (string)
+- One Of
+    + code_codeable_concept (Codeable_Concept, required)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `device_definition_classification_type` (string)
+                + code: `30221` (string)
+    + code_reference  (Reference_request, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `device_definition` (string)
 + quantity (object)
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
