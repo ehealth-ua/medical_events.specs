@@ -7813,7 +7813,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `care_plan` (string, required)
+                        + code: `episode_of_care` (enum)
+                            - episode_of_care
+                            - condition
+                            - observation
+                            - diagnostic report
+                            - device request
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
