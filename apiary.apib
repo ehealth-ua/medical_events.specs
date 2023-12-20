@@ -4252,12 +4252,14 @@ Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.a
                 + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, is required if kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
                     - `MEDICATION_UNIT`
                     - `SERVICE_UNIT`
+                    - `device_unit`
                 + `code`: `MG` (string, optional) - Can be absent in old version of CPA, is required if kind `medication_request`.
             + `daily_amount` (object)
                 + value: 13.5 (number, required)
                 + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA. 
                     - `MEDICATION_UNIT`
                     - `SERVICE_UNIT`
+                    - `device_unit`
                 + `code`: `MG` (string, optional) - Can be absent in old version of CPA.
 
 
@@ -4406,6 +4408,7 @@ Returns all the activities related to the care plan in patient context
     + kind: `service_request` (enum, optional) - kind of the activity.
         - service_request
         - medication_request
+        - device_request
     + managing_organization_id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional) - legal entity id
     + status: `scheduled` (string, optional) - Care plan activity status
     + page: 2 (number, optional) - Page number
@@ -4621,6 +4624,7 @@ http code| processing method | Client recommendations
                     + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
                         - `MEDICATION_UNIT`
                         - `SERVICE_UNIT`
+                        - `device_unit`
                     + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
                     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
                 + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
@@ -4663,6 +4667,7 @@ http code| processing method | Client recommendations
                 + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
                     - `MEDICATION_UNIT`
                     - `SERVICE_UNIT`
+                    - `device_unit`
                 + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
                 + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
             + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
@@ -4689,6 +4694,7 @@ http code| processing method | Client recommendations
                     + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
                         - `MEDICATION_UNIT`
                         - `SERVICE_UNIT`
+                        - `device_unit`
                     + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
                     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
                 + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
@@ -4758,6 +4764,7 @@ http code| processing method | Client recommendations
                     + `system`: `MEDICATION_UNIT` (enum, required) - Can be absent in old version of CPA. Same value as in quantity attribute
                         - `MEDICATION_UNIT`
                         - `SERVICE_UNIT`
+                        - `device_unit`
                     + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
                     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
                 + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
@@ -8629,18 +8636,26 @@ This web service returns rule engine rule details filtered by ID with active rul
 + kind: `medication_request` (enum, required)
     - service_request
     - medication_request
-+ `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
-     + identifier (object, optional)
-        + type (object, optional)
-            + coding (array, optional, fixed-type)
-                + object
-                    + system: `eHealth/resources` (string, required)
-                    + code: `service` (enum)
-                        - service
-                        - `service_group`
-                        - medication
-            + text (string)
-        + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - device_request
+- One of
+    - `product_reference` (object) - `medication if kind is medication request, service/service_group if service request, device_definition if device request`
+         + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `medication` (enum)
+                            - service
+                            - `service_group`
+                            - medication
+                            - `device_definition`
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - `product_codeable_concept` (object)
+        + coding (array, optional, fixed-type)
+            + object
+                + code: `30221` (string)
+                + system: `device_definition_classification_type` (string, required)
 + `reason_code` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -8669,6 +8684,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, is required for kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
         - `MEDICATION_UNIT`
         - `SERVICE_UNIT`
+        - `device_unit`
     + `code`: `MG` (string, optional) - Can be absent in old version of CPA, is required for kind `medication_request`.
 - One of
     - `scheduled_timing` (object)
@@ -8740,6 +8756,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA.
         - `MEDICATION_UNIT`
         - `SERVICE_UNIT`
+        - `device_unit`
     + `code`: `MG` (string, optional) - Can be absent in old version of CPA.
 + description: `Some activity description` (string)
 + `do_not_perform`: false (boolean, required)
@@ -8750,18 +8767,26 @@ This web service returns rule engine rule details filtered by ID with active rul
 + kind: `medication_request` (enum, required)
     - service_request
     - medication_request
-+ `product_reference` (object, required) - `medication if kind is medication request, service/service_group if service request`
-     + identifier (object, optional)
-        + type (object, optional)
-            + coding (array, optional, fixed-type)
-                + object
-                    + system: `eHealth/resources` (string, required)
-                    + code: `medication` (enum)
-                        - service
-                        - `service_group`
-                        - medication
-            + text (string)
-        + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - device_request
+- One of
+    - `product_reference` (object) - `medication if kind is medication request, service/service_group if service request, device_definition if device request`
+         + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `medication` (enum)
+                            - service
+                            - `service_group`
+                            - medication
+                            - `device_definition`
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - `product_codeable_concept` (object)
+        + coding (array, optional, fixed-type)
+            + object
+                + code: `30221` (string)
+                + system: `device_definition_classification_type` (string, required)
 + `reason_code` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -8790,6 +8815,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, required if kind `medication_request`. `MEDICATION_UNIT` used in activities with kind `medication_request`, `SERVICE_UNIT` - with kind `service_request`
         - `MEDICATION_UNIT`
         - `SERVICE_UNIT`
+        - `device_unit`
     + `code`: `MG` (string, optional) - Can be absent in old version of CPA, required if kind `medication_request`.
     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
 - One of
@@ -8862,6 +8888,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA, required if kind `medication_request`.
         - `MEDICATION_UNIT`
         - `SERVICE_UNIT`
+        - `device_unit`
     + `code`: `MG` (string, optional) - Can be absent in old version of CPA, required if kind `medication_request`. 
     + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA.
 + description: `Some activity description` (string)
@@ -8888,6 +8915,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                             - procedure
                             - `diagnostic_report`
                             - `medication_dispense`
+                            - `device_dispense`
 + `outcome_codeable_concept` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -8912,6 +8940,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + `system`: `MEDICATION_UNIT` (enum, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
             - `MEDICATION_UNIT`
             - `SERVICE_UNIT`
+            - `device_unit`
         + `code`: `MG` (string, optional) - Can be absent in old version of CPA. Same value as in quantity attribute
         + `unit`: `мг` (string, optional) - Can be absennt in old version of CPA. Sets automatically for corresponding code.
     + `remaining_quantity_type`: `for_request` (string, required) - Type of remaining_quantity
