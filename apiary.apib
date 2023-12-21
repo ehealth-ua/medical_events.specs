@@ -3612,7 +3612,7 @@ http code| processing method | Client recommendations
 
 ### Complete Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/complete]
 
-Method to complete device dispense
+Method to complete device request
 
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
 Service will store signed copy of Device Request in Media Content Storage if all checks are passed. 
