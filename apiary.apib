@@ -2156,7 +2156,7 @@ Diagnostic Report           | Only specific *Diagnostic Reports* are available f
 Procedure                   | Only specific *Procedures* are available for Patient Summary
 Encounter                   | All patient's encounters with reduced info
 Clinical Impression         | Only specific *Clinical Impressions* are available for Patient Summary
-Device Request              | Short list of device requests
+
 
 ### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
 
@@ -3603,6 +3603,72 @@ http code| processing method | Client recommendations
                     + code: `default` (string)
         + `status`: `revoked` (string, required)
         
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Complete Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/complete]
+
+Method to complete device dispense
+
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of Device Request in Media Content Storage if all checks are passed. 
+
+**Important**
+1. Signed content of Device request must be equal to Device request stored in DB. See Get Device request details
+2. status must be changed to completed for the purpose of displaying in the signed content
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `device_request:complete`
+
+Look at [Dummy Complete Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-dispenses/complete-device-dispense/dummy-complete-device-dispense) for more details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + device_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Complete Device Request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/complete]
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + device_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (Device_Request_Complete_Request)
+
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -9256,6 +9322,10 @@ This web service returns rule engine rule details filtered by ID with active rul
     - VALID
     - INVALID
 + `rejection_reason` : `No appropriate participants found for this medical program` (string) - Reason to fetch invalid status
+
+### Device_Request_Complete_Request
++ include `Device_Request_Response_Base`
++ `status`: completed (string, required) - Device Request status
 
 ### `Program_device`
 + id: `0f2fbf93-3041-4c0d-a3cf-ff558c861df8` (string, required) - Program participant identifier
