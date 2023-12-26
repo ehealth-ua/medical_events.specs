@@ -3520,6 +3520,25 @@ This service must be used to discover device request by requisition number. If n
                 + include `Device_Request_Response_Base`
                 + identity (`Person_identity`, required)
 
+### Get Device request context[GET /api/patients/{patient_id}/device_requests/{device_request_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `device_request_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) -  Device request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+
+
 ### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
 Method to resend sms on Device request
 It can be processed in async way only, so Server might answer with:
