@@ -3572,7 +3572,7 @@ http code| processing method | Client recommendations
 This method must be used to revoke existing Device Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of Device request must be equal to Device request stored in DB. See Get Device Request details
+1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
 2. status_reason must be added to signed content
 3. status must be changed to revoked for the purpose of displaying in the signed content
 
@@ -3637,7 +3637,7 @@ Method receives signed message (pkcs7) that consists of signed content, digital 
 Service will store signed copy of Device Request in Media Content Storage if all checks are passed. 
 
 **Important**
-1. Signed content of Device request must be equal to Device request stored in DB. See Get Device request details
+1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
 2. status must be changed to completed for the purpose of displaying in the signed content
 
 It can be processed in async way only, so Server might answer with:
@@ -3700,7 +3700,7 @@ Look at [Dummy Complete Device request](https://ehealthmedicaleventsapi.docs.api
 This method must be used to cancel existing Device Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of Device request must be equal to Device request stored in DB. See Get Device Request details
+1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
 2. status must be changed to entered-in-error for the purpose of displaying in the signed content
 
 Please see [Device request status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3765535052/Device+request+status+model) and Dummy Mark in error Device request for more details
@@ -3931,6 +3931,61 @@ http code| processing method | Client recommendations
     + Headers
         X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
         
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Mark in error Device dispense [PATCH /api/patients/{patient_id}/device_dispenses/{device_dispense_id}/actions/mark_in_error]
+
+This method must be used to cancel existing Device dispense. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of Device dispense must be equal to Device dispense stored in DB. See [Get Device dispense details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-dispenses/get-device-dispense-details/get-device-dispense-details)
+2. status must be changed to entered-in-error for the purpose of displaying in the signed content
+
+Please see [Device dispense status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3771760803/Device+dispense+status+model) and Dummy Mark in error Device dispense for more details
+
+
+**Scopes required:** `device_dispense:mark_in_error`
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Mark in error Device dispense [PATCH /api/patients/{patient_id}/device_dispenses/{id}/actions/mark_in_error/dummy]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (Device_Dispense_Response_Base)
+        
+
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -9488,6 +9543,59 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### Device_Dispense_Response_Base
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: completed (string, required) - Device Dispense status
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `note`: `Some notes` (string, optionnal)
++ `performer_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `program` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `medical_program` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
++ `payment_amount`: 50 (number, optional) - receipt amount which was paid by patient (UAH)
 
 ### `Device_Dispense_Detail_Request`
 + `device` (Reference_request, required) - Device definition
