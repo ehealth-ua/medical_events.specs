@@ -3633,47 +3633,6 @@ http code| processing method | Client recommendations
 
 Method to complete device request
 
-Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
-Service will store signed copy of Device Request in Media Content Storage if all checks are passed. 
-
-**Important**
-1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
-2. status must be changed to completed for the purpose of displaying in the signed content
-
-It can be processed in async way only, so Server might answer with:
-http code| processing method | Client recommendations
---|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
-
-**Scopes required:** `device_request:complete`
-
-Look at [Dummy Complete Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/complete-device-request/dummy-complete-device-request) for more details
-
-+ Parameters
-    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
-    + device_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-    
-    + Attributes (object)
-        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
-
-
-+ Response 202 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 202 (number)
-        + data (`Job`)
-
-
-### Dummy Complete Device Request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/complete]
-
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
     + device_request_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique device request identifier
@@ -3694,6 +3653,8 @@ Look at [Dummy Complete Device request](https://ehealthmedicaleventsapi.docs.api
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
+
 
 ### Mark in error Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/mark_in_error]
 
