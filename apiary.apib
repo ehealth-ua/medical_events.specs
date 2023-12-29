@@ -67,6 +67,7 @@ Diagnostic report|0-*| true
 Procedure|0-*| true
 Clinical impression|0-*| true
 Specimen|0-*| true
+Device dispense| 0-*| true
 
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
@@ -168,6 +169,9 @@ This resource should be used to get the processing status of the async job.
                 + (object)
                     + entity: `specimen` (string, required)
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/specimens/42e5985d-2a79-452f-8bc4-ed3a02fdefc6` (string, required)
+                + (object)
+                    + entity: `device_dispense` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/device_dispenses/42e5985d-2a79-452f-8bc4-ed3a02fdefc6` (string, required)
                 
 
 + Response 403 (application/json)
@@ -395,6 +399,20 @@ This chapter describes the structure of a single unsigned Specimen that could be
         + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
             - available
             - unavailable
+            
+
+
+#### Dummy Device Dispense [POST]
+This chapter describes the structure of a single unsigned Device Dispense that could be submitted as a part of Encounter Package. This is not an actual web-service.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (`Device_Dispense_EncounterPCG_Request`)
 
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061314561/Cancel+Encounter+Package)
@@ -9424,7 +9442,8 @@ This web service returns rule engine rule details filtered by ID with active rul
     + (object)
         + include `Program_device`
 
-### Device_Dispense_Create_Request
+
+### Device_Dispense_Base
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
 + `based_on` (Reference_request, required) - Device request
     + identifier (Identifier, required)
@@ -9448,6 +9467,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `division` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
 + `note`: `Some notes` (string, optionnal)
++ `when_handed_over`:`2019-06-30` (string, optional) 
+
+
+### Device_Dispense_Create_Request
++ include `Device_Dispense_Base`
 + `program` (Reference_request, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
@@ -9456,6 +9480,40 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `medical_program` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
 + `details` (array[`Device_Dispense_Detail_Request`], fixed, required)
+        
+
+### Device_Dispense_EncounterPCG_Request 
++ include `Device_Dispense_Base`
++ `part_of` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `procedure` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `encounter` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ supporting_info (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum)
+                            - condition
+                            - observation
+                            - diagnostic_report
+                            - procedure
+                            - encounter
+                            - episode 
+                            - device
+                            - device_association
++ `details` (array[`Device_Dispense_Detail_EncounterPCG_Request`], fixed, required)
 
 ### Device_Dispense_Complete_Request
 + include `Device_Dispense_Response`
@@ -9633,15 +9691,45 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `sell_price`: 18.65 (number, optional) - pharmacy's price for one device
 + `discount_amount`: 150 (number, optional) - pharmacy's expected price of dicsount for the requested device quantity
 
+
+### `Device_Dispense_Detail_EncounterPCG_Request`
+- One Of
+    + `device` (object, required)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, required, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `device_definition` (string)
+            + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + `device_code` (object, required)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `device_definition_classification_type` (string)
+                + code: `30221` (string)
++ quantity (object, required)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
++ `sell_price`: 18.65 (number, optional) - pharmacy's price for one device
+
+
 ### `Device_Dispense_Detail_Response`
 + include `Device_Dispense_Detail_Request`
-+ `device` (Reference_response, required) - Device definition
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `device_definition` (string)
-        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+- One Of
+    + `device` (object, required)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, required, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `device_definition` (string)
+            + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + `device_code` (object, required)
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `device_definition_classification_type` (string)
+                + code: `30221` (string)
 + `program_device` (Reference_response, optional) - Program device
     + identifier (Identifier, required)
         + type (Codeable_Concept)
