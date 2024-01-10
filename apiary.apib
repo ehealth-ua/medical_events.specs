@@ -8831,59 +8831,9 @@ This web service returns rule engine rule details filtered by ID with active rul
         - `SERVICE_UNIT`
         - `device_unit`
     + `code`: `MG` (string, optional) - Can be absent in old version of CPA, is required for kind `medication_request`.
-- One of
-    - `scheduled_timing` (object)
-        + event (array)
-            - `2018-08-02T10:45:16Z` ([string])
-        + repeat (object)
-            - One Of
-                - `bounds_duration` (object, optional)
-                    + value: 10 (number, required)
-                    + comparator: `>` (string, optional)
-                    + unit: `доба` (string, optional)
-                    + system: `eHealth/ucum/units` (string, required)
-                    + code: `day` (string, required)
-                - bounds_range (object, optional)
-                    + low (object, required)
-                        + value: `13` (number, required)
-                        + unit: `доба` (string, optional) 
-                        + system: `eHealth/ucum/units` (string, required)
-                        + code: `day` (string, required)
-                    + high (object, required)
-                        + value: `23` (number, required)
-                        + unit: `доба` (string, optional) 
-                        + system: `eHealth/ucum/units` (string, required)
-                        + code: `day` (string, required)
-                - bounds_period (object, optional)
-                    + start: `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
-                    + end: `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
-            + count: 10 (number, optional) - Number of times to repeat
-            + `count_max`: 20 (number, optional) - Maximum number of times to repeat
-            + duration: 15 (number, optional) - How long when it happens
-            + `duration_max`: 25 (number, optional) - How long when it happens
-            + `duration_unit`: `day` (string, optional) - unit of time dictionary
-            + frequency: 1 (number, optional) - Event occurs frequency times per period
-            + `frequency_max`: 4 (number, optinal) - Event occurs up to requency max times per period
-            + `period`: 1 (number, optinal) - Event occurs frequency times per period
-            + `period_max`: 3 (number, optional) - Upper limit of period, 3-4 hours
-            + `period_unit`: `day` (string, optional) - unit of time dictionary
-            + `day_of_week` (array, optinal) - DAYS OF WEEK dictionary
-                - mon ([string])
-            + `time_of_day` (array, optinal) - Time of day for action
-                - `16:00:00` ([string])
-            + when: (array, optional) - Code for time period of occurrence from EVENT_TIMING dictionary
-                - WAKE ([string])
-            + offset: 20 (number, optinal) - Minutes from event, before or after
-        + code (object)
-            + `coding` (array, required, fixed-type)
-                + (object)
-                    + system: `TIMING_ABBREVIATION` (string, required)
-                    + code: `Q4H` (string, required) - Symbol in syntax defined by the system
-            + text (string, optional)
-    - `scheduled_period` (object)
-        + start: `2018-08-02T10:45:16.000Z`(string, required) -  Starting time with inclusive boundary
-        + end: `2018-08-02T11:00:00.000Z`(string, optional) -  End time with inclusive boundary, if not ongoing
-    - `scheduled_string`: `2018-08-02T10:45:16.000Z` (string)
++ `scheduled_period` (object, required)
+    + start: `2018-08-02T10:45:16.000Z`(string, required) -  Starting time with inclusive boundary
+    + end: `2018-08-02T11:00:00.000Z`(string, required) -  End time with inclusive boundary, if not ongoing
 + location (Reference_request)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -9014,7 +8964,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + text (string, optional)
     - `scheduled_period` (object)
         + start: `2018-08-02T10:45:16.000Z`(string, required) -  Starting time with inclusive boundary
-        + end: `2018-08-02T11:00:00.000Z`(string, optional) -  End time with inclusive boundary, if not ongoing
+        + end: `2018-08-02T11:00:00.000Z`(string, required) -  End time with inclusive boundary, if not ongoing
     - `scheduled_string`: `2018-08-02T10:45:16.000Z` (string)
 + location (Reference_request)
     + identifier (Identifier)
