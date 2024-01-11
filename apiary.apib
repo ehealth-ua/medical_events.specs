@@ -9210,6 +9210,39 @@ This web service returns rule engine rule details filtered by ID with active rul
 + occurrence_period (object, required, fixed-type)
     + start : `2000-01-01T00:00:00.000Z`(string, required) 
     + end : `2018-08-02T11:00:00.000Z`(string, required)
++ based_on (array, optional, fixed-type)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (enum, required)
+                            - device_request
++ priority: `routine` (string, optional)
++ `parameter` (array, optional)
+    + (Device_parameter)
++ `performer` (Reference_request, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ supporting_info (array, optional, fixed-type)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum, required)
+                            - condition
+                            - observation
+                            - diagnostic_report
+                            - procedure
+                            - encounter
+                            - episode
+                            - device
+                            - device_association
 
 
 ### `Device_Request_Response_Base`
@@ -9273,35 +9306,15 @@ This web service returns rule engine rule details filtered by ID with active rul
 + note: `Some notes` (string, optionnal)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
-- One Of
-    + `based_on` (array, optional) -  One of: device_requests or care_plan and activity should be filled
-        + (object)
-            + identifier (object, optional)
-                + type (object, optional)
-                    + coding (array, optional, fixed-type)
-                        + object
-                            + system: `eHealth/resources` (string, required)
-                            + code: `care_plan` (string)
-        + (object)
-            + identifier (object, optional)
-                + type (object, optional)
-                    + coding (array, optional, fixed-type)
-                        + object
-                            + system: `eHealth/resources` (string, required)
-                            + code: `activity` (string)
-    + `based_on` (array, optional) -  One of: device_requests or care_plan and activity should be filled    
-        + (object)
-            + identifier (object, optional)
-                + type (object, optional)
-                    + coding (array, optional, fixed-type)
-                        + object
-                            + system: `eHealth/resources` (string, required)
-                            + code: `device_request` (string)
-+ `priority` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `device_request_priority` (string)
-            + code: `low` (string)
++ based_on (array, optional, fixed-type)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (enum, required)
+                            - device_request
++ priority: `routine` (string, optional)
 + `remaining_quantity` (object)
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
