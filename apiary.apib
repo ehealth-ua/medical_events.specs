@@ -9633,6 +9633,11 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
 + `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
 + `payment_amount`: 50 (number, optional) - receipt amount which was paid by patient (UAH)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_dispense_mark_in_error_reasons` (string)
+            + code: `incorrect_patient` (string)
 
 ### `Device_Dispense_Detail_Request`
 - One Of
