@@ -3432,7 +3432,7 @@ This method is used to qualify (possibility to use device definition for the pro
 
 
 
-### Get Device requests by search params [GET /api/patients/{patient_id}/device_requests{?status,code,code_reference,requester_legal_entity,requester,encounter,program,context_episode_id,care_plan_id,activity_id,priority,performer,authored_on_from,authored_on_to}]
+### Get Device requests by search params [GET /api/patients/{patient_id}/device_requests{?status,code,code_reference_id,requester_legal_entity_id,requester_id,encounter_id,program_id,context_episode_id,care_plan_id,activity_id,priority,performer_id,authored_on_from,authored_on_to}]
 
 This method returns all device requests related to specified patient.
 
@@ -3442,16 +3442,16 @@ This method returns all device requests related to specified patient.
     + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
     + `status`: active (string, optional)
     + `code`: `30222` (string, optional)
-    + `code_reference`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `requester_legal_entity`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `requester`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `encounter`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `program`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `code_reference_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `requester_legal_entity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `requester_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `program_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `context_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier    
     + `care_plan_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `activity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `priority`: `low` (string, optional)
-    + `performer`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `performer_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `authored_on_from`: `2020-01-01T00:00:00.000Z` (string, optional)
     + `authored_on_to`: `2021-01-01T00:00:00.000Z` (string, optional)
     
@@ -3834,28 +3834,28 @@ Look at [Dummy Complete Device dispense](https://ehealthmedicaleventsapi.docs.ap
         + data (`Job`)
 
 
-### Get Device dispenses by search params [GET /api/device_dispenses{?based_on,performer_legal_entity,location,performer,status,when_handed_over_from,when_handed_over_to,part_of, encounter, context_episode_id, origin_episode_id, device_code,device, program, performer_legal_entity,inserted_at_from,inserted_at_to,page,page_size}]
+### Get Device dispenses by search params [GET /api/device_dispenses{?based_on_id,performer_legal_entity_id,location_id,performer_id,status,when_handed_over_from,when_handed_over_to,part_of_id, encounter_id, context_episode_id, origin_episode_id, device_code,device_id, program_id, performer_legal_entity_id,inserted_at_from,inserted_at_to,page,page_size}]
 
 This method returns all device dispenses related to legal entity.
 
 **Scopes required:** `device_dispense:read`
 
 + Parameters
-    + `based_on`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
-    + `location`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
-    + `performer`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)    
+    + `based_on_id`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
+    + `location_id`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
+    + `performer_id`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)    
     + `status`: completed (string, optional)
     + `when_handed_over_from`: `2023-08-02T10:45:16.000Z` (string, optional) - date of dispense
     + `when_handed_over_to`: `2023-08-02T10:45:16.000Z` (string, optional) - date of dispense
-    + part_of: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - The Procedure that this dispense is a part of
-    + encounter: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)  - Encounter associated with the dispense
+    + part_of_id: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - The Procedure that this dispense is a part of
+    + encounter_id: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)  - Encounter associated with the dispense
     + context_episode_id: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - Reference to the episode in which related device request was created 
     + origin_episode_id: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - Reference to the episode in which device dispense was created 
     + `device_code`: `30201` (string, optional) - A code of the device type from `device_definition_classification_type` dictionary
-    + `device_reference`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - reference to the device entity
-    + `device`:9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - reference to the device device definition
-    + program: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
-    + performer_legal_entity: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
+    + `device_reference_id`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - reference to the device entity
+    + `device_id`:9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - reference to the device device definition
+    + program_id: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
+    + performer_legal_entity_id: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
     + inserted_at_from: `2023-08-02T10:45:16.000Z` (string, optional)
     + inserted_at_to: `2023-08-02T10:45:16.000Z` (string, optional)
     + page: 2 (number, optional) - Page number.
