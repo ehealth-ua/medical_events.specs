@@ -1754,6 +1754,10 @@ This chapter describes the structure of a single procedure creation. This is not
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
     + `performed_date_time_from`: `2000-01-01` (string, optional)
     + `performed_date_time_to`: `2000-01-01` (string, optional)
+    + `performed_period_start_from`: `2000-01-01` (string, optional)
+    + `performed_period_start_to`: `2000-01-01` (string, optional)
+    + `performed_period_end_from`: `2000-01-01` (string, optional)
+    + `performed_period_end_to`: `2000-01-01` (string, optional)
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -1767,7 +1771,7 @@ This chapter describes the structure of a single procedure creation. This is not
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
-        + data (array[`Procedure_Response`])
+        + data (array[`Procedure_Short_Response`])
 
 
 ### Cancel Procedure [PATCH /api/patients/{person_id}/procedures/{id}/actions/cancel]
@@ -7650,6 +7654,41 @@ This web service returns rule engine rule details filtered by ID with active rul
             + (Coding)
              + system: `eHealth/assistive_products` (string) 
              + code: `03_05_38` (string)
+
+### Procedure_Short_Response
++ id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier
++ `status` : `completed` (enum, required) - Status for provided procedure
+    - `completed`
+    - `entered_in_error`
++ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_status_reasons` (string)
+            + code: `default` (string)
++ code (Reference_response, required) - code of procedure
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
+- One Of
+    - `performed_date_time`: `2018-08-02T10:45:16.000Z` (string, optional) - date and time when the procedure have been performed
+    - `performed_period` (object , optional) - is required if procedure based on service request with quantity that has code=MINUTE (system=SERVICE_UNIT)
+        + start: `2018-08-02T10:45:16.000Z` (string, required)
+        + end: `2018-08-12T10:45:16.000Z` (string, required) 
++ primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
++ `managing_organization` (Reference_response, required) - Organization where procedure have been performed. Reference to legal_entity
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Перше відділення обласної лікарня №1` (string, optional) - This field is filled on creating and never updated after
++ `category` (Codeable_Concept, required) - Classification of the procedure
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/procedure_categories` (string)
+            + code: `default` (string)
 
 ### Procedure_EncounterPCG_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
