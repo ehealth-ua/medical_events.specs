@@ -671,9 +671,11 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `episode_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) - Episode identifier
-    + `date_from`:`1990-01-01`(string, optional)
     + `incoming_referral`: `f10aeafb-0df2-4091-bc83-f07e92a100ae` (string, optional)
-    + `date_to`: `2000-01-01`(string, optional)
+    + `period_start_from`: `2000-01-01`(string, optional) - Start date of the period of encounter initiation period. Format DATE '2017-08-16'. Example: 2017-08-16
+    + `period_start_to`: `2000-01-10`(string, optional) - End date of the period of encounter initiation period. Format DATE '2017-09-16'. Example: 2017-09-16.
+    + `period_end_from`: `2000-01-05`(string, optional) - Start date of the period of encounter ending period. Format DATE '2017-08-20'. Example: 2017-08-20.
+    + `period_end_to`: `2000-01-15`(string, optional) - End date of the period of treatment ending period. Format DATE '2017-09-20'. Example: 2017-09-20.
     + `page`: `2` (number, optional) - Page number
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `origin_episode_id`: `d11aeafb-0df2-4091-bc83-f07e92a100af` (string, optional)
@@ -882,8 +884,10 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Parameters
     + `page`: `2` (number, optional) - Page number.    
     + `page_size`: `50` (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `date_from`:`1990-01-01`(string, optional)
-    + `date_to`: `2000-01-01`(string, optional)
+    + `period_start_from`: `2000-01-01`(string, optional) - Start date of the period of encounter initiation period. Format DATE '2017-08-16'. Example: 2017-08-16
+    + `period_start_to`: `2000-01-10`(string, optional) - End date of the period of encounter initiation period. Format DATE '2017-09-16'. Example: 2017-09-16.
+    + `period_end_from`: `2000-01-05`(string, optional) - Start date of the period of encounter ending period. Format DATE '2017-08-20'. Example: 2017-08-20.
+    + `period_end_to`: `2000-01-15`(string, optional) - End date of the period of treatment ending period. Format DATE '2017-09-20'. Example: 2017-09-20.
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
     + `incoming_referral_id`: `f10aeafb-0df2-4091-bc83-f07e92a100ae` (string, optional)
     + `origin_episode_id`: `d11aeafb-0df2-4091-bc83-f07e92a100af` (string, optional)
@@ -2168,8 +2172,10 @@ The endpoint returns a list of short Encounter info filtered by search params.
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + `date_from`:`1990-01-01`(string, optional)
-    + `date_to`: `2000-01-01`(string, optional)
+    + `period_start_from`: `2000-01-01`(string, optional) - Start date of the period of encounter initiation period. Format DATE '2017-08-16'. Example: 2017-08-16
+    + `period_start_to`: `2000-01-10`(string, optional) - End date of the period of encounter initiation period. Format DATE '2017-09-16'. Example: 2017-09-16.
+    + `period_end_from`: `2000-01-05`(string, optional) - Start date of the period of encounter ending period. Format DATE '2017-08-20'. Example: 2017-08-20.
+    + `period_end_to`: `2000-01-15`(string, optional) - End date of the period of treatment ending period. Format DATE '2017-09-20'. Example: 2017-09-20.
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
     + status: finished (string, optional)
     + type: discharge (string, optional)
