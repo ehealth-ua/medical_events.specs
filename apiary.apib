@@ -1575,36 +1575,18 @@ To find out more about the process of diagnostic report package creation read [C
     + Attributes (`Response_Collection`)
         + data (array[`Diagnostic_Report_Response`], fixed-type)
 
-### Get Diagnostic Report by id in Service Group context [GET /api/patients/{patient_id}/service_groups/{service_group_id}/diagnostic_reports/{diagnostic_report_id}]
+### Get Short Diagnostic Reports by Service Groups [GET /api/patients/{patient_id}/service_groups/diagnostic_reports{?issued_from,issued_to,page,page_size,managing_organization_id,code,status,category,service_group_id}]
 + Parameters
-    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
-    + service_group_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique service_group identifier
-    + diagnostic_report_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique DR identifier
-    
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection`)
-        + data (`Diagnostic_Report_Response`)
-
-### Get Diagnostic Report by search params in Service Group context [GET /api/patients/{patient_id}/service_groups/{service_group_id}/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, origin_episode_id}]
-+ Parameters
+    + `patient_id`: `90dc3ed7-2169-45d8-8fa3-d918c6839b21` (string, optional)
+    + `service_group_id`: `90dc3ed7-2169-45d8-8fa3-d918c6839b21` (string, optional)
+    + `code`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) - service_id from code.identifier.value
+    + `managing_organization_id`: `19dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `status`: `final` (string, optional)
+    + `category`: `diagnostic_procedure` (string, optional)
+    + `issued_from`: `1990-01-01` (string, optional) 
+    + `issued_to`: `2000-01-01` (string, optional)
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `code`: `12345` (string, optional) 
-    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
-    + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
-    + `origin_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
-    + `issued_from`: `1990-01-01` (string, optional) 
-    + `issued_to`: `2000-01-01` (string, optional) 
-    + `based_on`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
-    + `managing_organization_id`: `19dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
-    + `specimen_id`: `90dc3ed7-2169-45d8-8fa3-d918c6839b21` (string, optional)
 
 + Request (application/json)
 
@@ -1615,7 +1597,7 @@ To find out more about the process of diagnostic report package creation read [C
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
-        + data (array[`Diagnostic_Report_Response`], fixed-type)
+        + data (array[`Diagnostic_Report_Short_Response`], fixed-type)
         
         
 
@@ -1759,47 +1741,21 @@ This chapter describes the structure of a single procedure creation. This is not
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_with_Origin_Episode_Response`)
- 
-### Get Procedures by ID in Service Group context [GET /api/patients/{patient_id}/service_groups/{service_group_id}/procedures/{id}]
+
+### Get Short Procedures by Service Groups [GET /api/patients/{patient_id}/service_groups/procedures{?performed_date_time_from,performed_date_time_to,page,page_size,managing_organization_id,code,status,category,service_group_id}]
 **Scopes required:** `procedure:read`
 
 + Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + service_group_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique service_group identifier
-    + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique procedure identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer mF_9.B5f-4.1JqM
-            api-key: aFBLVTZ6Z2dON1V
-            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
-
-+ Response 200 (application/json)
-    + Attributes (`Procedure_Response`)
-
-+ Response 404 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 404 (number)
-        + error (Response__Error)
-            + type: NOT_FOUND (string)
-            + message: `Patient not found` (string)
-
-### Get Procedures by search params in Service Group context [GET /api/patients/{patient_id}/service_groups/{service_group_id}/procedures{?id,status,episode_id,encounter_id,code,based_on,recorded_by,managing_organization_id}]
-**Scopes required:** `procedure:read`
-
-+ Parameters
-    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + service_group_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique service_group identifier
-    + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier, look into episode in encounter
-    + status: completed (enum, optional) - status of procedure
-    + based_on: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique service request identifier
-    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
+    + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + `service_group_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique service_group identifier
     + `managing_organization_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique legal entity identifier
-    + encounter_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique encounter identifier
-    + `origin_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier, look into episode in procedures.origin_episode
+    + `status`: `completed` (enum, optional) - status of procedure
+    + `category`: `diagnostic_procedure` (string, optional)
+    + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
+    + `performed_date_time_from`: `2000-01-01` (string, optional)
+    + `performed_date_time_to`: `2000-01-01` (string, optional)
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
 
@@ -7110,6 +7066,31 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
+
+
+### `Diagnostic_Report_Short_Response`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `final` (string, required)
++ code (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `service` (string)
++ category (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/diagnostic_report_categories` (string)
+                + code: `diagnostic_procedure` (string)
++ effective_period(Period, optional)
++ issued: `2018-10-08T09:46:37.694Z` (string, required)
++ `managing_organization` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
 
 
 ### `Diagnostic_Report_EncounterPCG_Request`
