@@ -3398,7 +3398,7 @@ This method is used to qualify (possibility to use device definition for the pro
 
 
 
-### Get Device requests by search params [GET /api/patients/{patient_id}/device_requests{?status,code,code_reference_id,requester_legal_entity_id,requester_id,encounter_id,program_id,context_episode_id,care_plan_id,activity_id,priority,performer_id,authored_on_from,authored_on_to}]
+### Get Device requests by search params [GET /api/patients/{patient_id}/device_requests{?status,code,code_reference_id,requester_legal_entity_id,requester_id,encounter_id,program_id,context_episode_id,context_care_plan_id,care_plan_id,activity_id,priority,performer_id,authored_on_from,authored_on_to}]
 
 This method returns all device requests related to specified patient.
 
@@ -3414,7 +3414,7 @@ This method returns all device requests related to specified patient.
     + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `program_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `context_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier    
-    + `care_plan_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `context_care_plan_id`:`ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional)- Unique care plan identifier 
     + `activity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `priority`: `low` (string, optional)
     + `performer_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
