@@ -3406,20 +3406,20 @@ This method returns all device requests related to specified patient.
 
 + Parameters
     + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
-    + `status`: active (string, optional)
-    + `code`: `30222` (string, optional)
-    + `code_reference_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `requester_legal_entity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `requester_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `program_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `context_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier    
-    + `context_care_plan_id`:`ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional)- Unique care plan identifier 
-    + `activity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `priority`: `low` (string, optional)
-    + `performer_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
-    + `authored_on_from`: `2020-01-01T00:00:00.000Z` (string, optional)
-    + `authored_on_to`: `2021-01-01T00:00:00.000Z` (string, optional)
+    + `status`: active (string, optional) - Status of the Device request
+    + `code`: `30222` (string, optional) - Code from device_definition_classification_type dictionary
+    + `code_reference_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Device definition identifier
+    + `requester_legal_entity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Legal entity identifier
+    + `requester_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Identifier of the Employee who requested the Device request
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Encounter identifier
+    + `program_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Medical program identifier
+    + `context_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Episode identifier related to the Encounter which is referenced by the Device request   
+    + `context_care_plan_id`:`ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional)- Care plan identifier related to the Activity on which Device request is based on
+    + `activity_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Activity identifier
+    + `priority`: `low` (string, optional) - Priority code
+    + `performer_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Identifier of the Employee who performed the Device request
+    + `authored_on_from`: `2020-01-01T00:00:00.000Z` (string, optional) - The start date of the period for search by authored_on
+    + `authored_on_to`: `2021-01-01T00:00:00.000Z` (string, optional) - The end date of the period for search by authored_on
     
 + Request (application/json)
 
