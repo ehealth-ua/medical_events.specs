@@ -3460,7 +3460,7 @@ This method returns all device requests related to specified patient.
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
-        + data (`Device_Request_Response_Base`)
+        + data (`Device_Request_Response_Details`)
         + urgent (object, required)
             + `authentication_method_current` (object, required)
                 + type: `OTP` (enum, required)
@@ -9378,11 +9378,6 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + (Coding)
                         + code: `activity` (string, required)
 + priority: `routine` (string, optional)
-+ `remaining_quantity` (object)
-    + value: 10 (number, required)
-    + system: `device_unit` (string, required)
-    + code: piece (string, required)
-    + unit: шт (string, required) 
 + `parameter` (array, optional)
     + (Device_parameter)
 + `performer` (Reference_request, optional)
@@ -9409,7 +9404,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                             - device_association
 
 
-
+### `Device_Request_Response_Details`
++ include `Device_Request_Response_Base`
++ `remaining_quantity` (object)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
+    + unit: шт (string, required) 
 
 ### `Qualify_Device_Request_Base`
 + `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
