@@ -3517,7 +3517,7 @@ This service must be used to discover device request by requisition number. If n
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
-        + data (`Medical_Event_Context_Episode_Response`)
+        + data (`Medical_Event_Context_Care_Plan_with_Episode_Response`)
 
 
 
@@ -9215,13 +9215,17 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `episode` (`Medical_Event_Context_Episode`)
 + `origin_episode` (`Medical_Event_Context_Episode`)
 
+### `Medical_Event_Context_Care_Plan_with_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
++ `care_plan` (`Medical_Event_Context_Care_Plan`) - Care plan identifier related to the Activity on which Device request is based on
+
 ### `Medical_Event_Context_Episode`
 + identifier (Identifier)
     + type (Codeable_Concept)
         + coding (array, fixed-type)
             + (Coding)
                 + code: `episode` (string)
-    + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0402` (string)
 + display_value: `null` (string, required) - This field is filled on creating and never updated after
 
 ### `Medical_Event_Context_Diagnostic_Report`
@@ -9232,6 +9236,16 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + code: `diagnostic_report` (string)
     + value: `7c3da506-804d-4550-8993-bf17f9ee0403` (string)
 + display_value: `null` (string, required) - This field is filled on creating and never updated after
+
+### `Medical_Event_Context_Care_Plan`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `care_plan` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0404` (string)
++ display_value: `null` (string, required) - This field is filled on creating and never updated after
+
 
 ### `Device_Request_Base`
 + intent: `order` (string, required)
