@@ -3687,6 +3687,12 @@ http code| processing method | Client recommendations
             X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Device_Request_Response_Base)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `device_request_mark_in_error_reasons` (string)
+                    + code: `incorrect_patient` (string)
+        + `status` : `entered_in_error` (required) 
         
 
 + Response 202 (application/json)
@@ -8064,7 +8070,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-+ `context` (Reference_response, required)
++ `context` (Reference_response, optional) - encounter on which the service request is based on, optional if focus is set
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8197,6 +8203,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
++ focus (array, optional) - what the service request is about, when it is not about the subject of record
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -8242,7 +8255,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ `context` (Reference_request, required)
++ `context` (Reference_request, optional) - encounter on which the service request is based on, optional if focus is set
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8324,6 +8337,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
++ focus (array, optional) - what the service request is about, when it is not about the subject of record
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 ### `Service_Request_Create`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -8360,7 +8380,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `medical_program` (string)
-+ `context` (Reference_request, required)
++ `context` (Reference_request, optional) - encounter on which service request is based on, optional if focus is set 
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8436,6 +8456,13 @@ This web service returns rule engine rule details filtered by ID with active rul
     + system: `SERVICE_UNIT` (string, required)
     + code: PIECE (string, required)
 + specimens (array, optional)
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ focus (array, optional) - what the service request is about, when it is not about the subject of record
     + (Reference_request)
         + identifier (Identifier, optional, fixed-type)
             + type (Codeable_Concept, required)
