@@ -5828,6 +5828,15 @@ This web service returns rule engine rule details filtered by ID with active rul
                         - `specimen_invalidate_reasons`
                         - `specimen_cancel_reasons`
                     + code: `typo` (string)
+
++ `device_dispenses`(array, optional, fixed-type)
+    + (Device_Dispense_EncounterPCG_Request)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `device_dispense_mark_in_error_reasons` (string)
+                    + code: `incorrect_patient` (string)
+        + `status` : `entered_in_error` (required)
       
 ### `Paper_referral`
 + requisition: `1111-2222-3333-4444` (string, optional) - `Service request number`
