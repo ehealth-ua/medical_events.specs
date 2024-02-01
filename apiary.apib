@@ -8356,6 +8356,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 ### `Service_Request_Create`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -8481,6 +8483,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method 
 
 ### `Use_Service_Request_Request`
 + `used_by_employee` (Reference_request, optional)
