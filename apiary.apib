@@ -3648,7 +3648,8 @@ This method must be used to cancel existing Device Request. Method receives sign
 
 **Important**
 1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
-2. status must be changed to entered-in-error for the purpose of displaying in the signed content
+2. `status_reason`  must be added to signed content
+2. status must be changed to entered_in_error for the purpose of displaying in the signed content
 
 Please see [Device request status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3765535052/Device+request+status+model) and Dummy Mark in error Device request for more details
 
@@ -3963,7 +3964,8 @@ This method must be used to cancel existing Device dispense. Method receives sig
 
 **Important**
 1. Signed content of Device dispense must be equal to Device dispense stored in DB. See [Get Device dispense details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-dispenses/get-device-dispense-details/get-device-dispense-details)
-2. status must be changed to entered-in-error for the purpose of displaying in the signed content
+2. `status_reason`  must be added to signed content
+3. status must be changed to entered_in_error for the purpose of displaying in the signed content
 
 Please see [Device dispense status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3771760803/Device+dispense+status+model) and Dummy Mark in error Device dispense for more details
 
