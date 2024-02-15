@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://api.ehealth.gov.ua
+HOST: http://api.ehealth.gov.ua/
 
 # eHealth Medical Events API
 
@@ -7,15 +7,13 @@ Version: ME 9.5.2 v.1
 
 Environment: **PROD**
 
-> In order to get specification for PREPROD/PROD environment please proceed [here](https://medicaleventsmisapi.docs.apiary.io/#)
-
 > Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
 
 All the medical data, stored in eHealth, belongs to the patient and must be properly protected. eHealth provides several mechanisms to secure patient's data and limitate access.
 
 1. Only authenticated user with appropriate scope can access medical dataverifi
 List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles) [wiki: Scopes data model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583404101/Scopes+model)
-2. Access to Patient Medical Data is driven by Attribute-based access control(ABAC). Rules [https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature]
+2. Access to Patient Medical Data is driven by Attribute-based access control(ABAC). Rules [https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17049388207/ABAC+rules+EN]
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
 4. Post methods are async
 
@@ -32,7 +30,7 @@ user should have approval on ALL patients medical data, otherwise the response w
 - But, by specifinig filters, user can access requested data, if one of the ABAC rules returns true:
  `/patient/{patient_id}/conditions?episode_context={episode_1}`
 
-Here you can find the list of current [rules](https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature).
+Here you can find the list of current [rules](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17049388207/ABAC+rules+EN).
 # Group Medical Events
 Medical events API is a set of web services designed to provide methods of communication between eHealth Medical Data Storage and medical information systems (MIS).
 Medical events API is based on the international framework for exchanging digital health records - FHIR( Release 3 (STU)). Most of  major resources, data types, data structures and their way of interpretation are inherited from FHIR. However, there are minor сhanges described in Apiary.
@@ -66,7 +64,7 @@ Clinical impression|0-*| true
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
 
-To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402843/Submit+Encounter+Data+Package).
+To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061216257/Submit+Encounter+Package).
 
 
 
@@ -1313,8 +1311,7 @@ Object| Required| Part of Signed content
 Observation| 0-* |true
 Diagnostic report|1-1| true
 
-To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402843/Submit+Encounter+Data+Package).
-
+To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061216257/Submit+Encounter+Package)
 + Request Package (application/json)
 
     + Headers
@@ -1460,7 +1457,7 @@ This web service allows to get a list of diagnostic reports that were allowed to
 ## Procedures [/api/patients/{patient_id}/procedures]
 
 ### Create procedure [POST]
-This WS allows to register procedure by its own. Also prosedure can be registered as a part of [encounter package](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
+This WS allows to register procedure by its own. Also prosedure can be registered as a part of [encounter package](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
 **Scopes required:** `procedure:write`
 
 + Parameters
@@ -1562,7 +1559,7 @@ This WS allows to cancel existing procedure and change its status to `entered_in
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of procedure must be equal to procedure stored in DB. See [Get Procedure by search params](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/procedures/get-procedure-by-search-params)
+1. Signed content of procedure must be equal to procedure stored in DB. See [Get Procedure by search params](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/procedures/get-procedure-by-search-params)
 2. `status_reason` and `explanatory_letter` (optional) must be added to signed content
 
 Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
@@ -1864,7 +1861,7 @@ The endpoint returns single short Encounter info.
 
 ### Get active Diagnoses [GET /api/patients/{patient_id}/summary/diagnoses]
 
-This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/patient-summary/get-condition-by-id)
+This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/patient-summary/get-condition-by-id)
 
 **Scopes required:** `patient_summary:read`
 
@@ -2102,7 +2099,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ## Manage Service Requests in patient context [/api/patients/{patient_id}/service_requests]
 
-Use [GET Service Catalog](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-programs/medical-program/get-services-dictionary) to receive current catalog of services. 
+Use [GET Service Catalog](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-programs/medical-program/get-services-dictionary) to receive current catalog of services. 
 
 ### PreQualify Service request [POST /api/patients/{patient_id}/service_requests/prequalify]
 
@@ -2170,7 +2167,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `service_request:write`
 
@@ -2359,7 +2356,7 @@ This method must be used to cancel existing Service Request. Method receives sig
 1. Signed content of service request must be equal to service request stored in DB. See Get Service Request details
 2. status_reason and explanatory_letter (optional) must be added to signed content
 
-Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402276/Referrals+State+Model+-+V1) and Dummy Cancel Service Request for more details
+Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583403541/Service+Requests+Status+State+Model) and Dummy Cancel Service Request for more details
 
 
 **Scopes required:** `service_request:cancel`
@@ -2369,7 +2366,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Request (application/json)
 
@@ -2424,7 +2421,7 @@ This method must be used to recall existing Service Request. Method receives sig
 1. Signed content of service request must be equal to service request stored in DB. See Get Service Request details
 2. status_reason and explanatory_letter (optional) must be added to signed content
 
-Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402276/Referrals+State+Model+-+V1) and Dummy Recall Service Request for more details
+Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583403541/Service+Requests+Status+State+Model) and Dummy Recall Service Request for more details
 
 **Scopes required:** `service_request:recall`
 
@@ -2474,7 +2471,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `service_request:use`
 
@@ -2627,7 +2624,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `service_request:complete`
 
@@ -2710,11 +2707,11 @@ Service will store signed copy of Device Request in Media Content Storage if all
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_request:write`
 
-Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/create-device-request/dummy-device-request) for more details
+Look at [Dummy Device request](https://medicaleventsmisapi.docs.apiary.io/#reference/device-requests/create-device-request/dummy-device-request) for more details
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
@@ -2912,7 +2909,7 @@ Method to resend sms on Device request
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_request:resend`
 
@@ -2943,7 +2940,7 @@ This method must be used to revoke existing Device Request. Method receives sign
 2. status_reason must be added to signed content
 3. status must be changed to revoked for the purpose of displaying in the signed content
 
-Please see [Device request status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3765535052/Device+request+status+model) and Dummy Revoke Device request for more details
+Please see [Device request status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17573085356/Device+request+status+model) and Dummy Revoke Device request for more details
 
 
 **Scopes required:** `device_request:revoke`
@@ -2951,7 +2948,7 @@ Please see [Device request status model](https://edenlab.atlassian.net/wiki/spac
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Request (application/json)
 
@@ -3003,7 +3000,7 @@ Method to create device dispense
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_dispense:write`
 
@@ -3044,11 +3041,11 @@ Service will store signed copy of Device Dispense in Media Content Storage if al
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_dispense:complete`
 
-Look at [Dummy Complete Device dispense](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-dispenses/complete-device-dispense/dummy-complete-device-dispense) for more details
+Look at [Dummy Complete Device dispense](https://medicaleventsmisapi.docs.apiary.io/#reference/device-dispenses/complete-device-dispense/dummy-complete-device-dispense) for more details
 
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
@@ -3158,7 +3155,7 @@ This method is used to stop Device dispense.
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `device_dispense:stop`
@@ -3180,7 +3177,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 Block resources may consist next entities:
 Object| Access level
@@ -3260,7 +3257,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `approval:create`
 
@@ -3349,7 +3346,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `approval:cancel`
 
@@ -3387,11 +3384,11 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
-Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
+Look at [Dummy Care Plan](https://medicaleventsmisapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
@@ -3511,11 +3508,11 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
-Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
+Look at [Dummy Create Care Plan activity](https://medicaleventsmisapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
@@ -3747,14 +3744,14 @@ This method must be used to cancel of existing patient's Care plan. Method recei
 2. Activities should not be presented in signed content. 
 3. $.status_reason must be added to signed content
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan* for more details
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN) and *Dummy Cancel Care plan* for more details
 
 It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `care_plan:write`
@@ -3825,14 +3822,14 @@ http code| processing method | Client recommendations
 
 This method must be used to complete of existing patient's Care plan.
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model)
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN)
 
 It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `care_plan:write`
@@ -3878,14 +3875,14 @@ This method must be used to cancel of existing activity from patient's Care plan
 1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by ID*
 2. $.detail.status_reason must be changed in signed content
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan activity* for more details
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN) and *Dummy Cancel Care plan activity* for more details
 
 It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
@@ -4010,7 +4007,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 + Parameters
@@ -6525,7 +6522,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## Procedures
 ### Procedure_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
++ `based_on` (Reference_request, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -6618,7 +6615,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_response, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
++ `based_on` (Reference_response, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
