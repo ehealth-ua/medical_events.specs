@@ -9304,12 +9304,12 @@ This web service returns rule engine rule details filtered by ID with active rul
     + system: `device_unit` (string, required)
     + code: piece (string, required)
 - One Of
-    + `code` (object, required)
+    + `code` (object, optional)
         + coding (array, optional, fixed-type)
             + object
                 + system: `device_definition_classification_type` (string)
                 + code: `30221` (string)
-    + `code_reference`  (object, required)
+    + `code_reference`  (object, optional)
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, required, fixed-type)
