@@ -6565,7 +6565,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `specimen` (string)
                     
-+ `device` (Reference_response, optional) - Item used during observation.
++ device (Reference_response, optional) - Item used during observation.
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7614,6 +7614,14 @@ This web service returns rule engine rule details filtered by ID with active rul
             + (Coding)
              + system: `eHealth/assistive_products` (string) 
              + code: `03_05_38` (string)
+             
++ used_reference (array, optional) - Items used during procedure.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string)                
 
 
 ### Procedure_Response
