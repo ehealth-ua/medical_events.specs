@@ -6226,6 +6226,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `specimen` (string)
 
++ device (Reference_response, optional) - Item used during observation.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `equipment` (string)                     
+
 ###  `Observation_Request_Base_DRP`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
@@ -7883,6 +7890,14 @@ This web service returns rule engine rule details filtered by ID with active rul
             + (Coding)
              + system: `eHealth/assistive_products` (string) 
              + code: `03_05_38` (string)
+             
++ used_references (array, optional) - Items used during procedure.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string)                
 
 ### `Medication_Administration_EncounterPCG_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique medication admnistration identifier
