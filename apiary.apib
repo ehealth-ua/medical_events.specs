@@ -9573,13 +9573,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### Device_Dispense_Base
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Identifier
 + `status`: `completed`  (string, required) 
-+ `based_on` (Reference_request, optional) - Device request
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `device_request` (string)
-        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
 + `performer` (Reference_request, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
@@ -9601,6 +9594,13 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Device_Dispense_Create_Request
 + include `Device_Dispense_Base`
++ `based_on` (Reference_request, required) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
 + `program` (Reference_request, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
@@ -9614,6 +9614,13 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Device_Dispense_EncounterPCG_Request
 + include `Device_Dispense_Base`
++ `based_on` (Reference_request, optional) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
 + `when_handed_over`:`2018-08-02T10:45:16.000Z` (string, required) 
 + `part_of` (Reference_response, optional)
     + identifier (Identifier, required)
@@ -9655,7 +9662,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Device_Dispense_Response
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
-+ `based_on` (Reference_response, required) - Device request
++ `based_on` (Reference_response, optional) - Device request
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -9747,7 +9754,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Device_Dispense_Response_Base
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
-+ `based_on` (Reference_response, optiona) - Device request
++ `based_on` (Reference_response, optional) - Device request
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
