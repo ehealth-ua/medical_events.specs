@@ -9850,7 +9850,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_Dispense_Detail_EncounterPCG_Request`
 - One Of
-    + `device` (object, required)
+    + `device` (object, optional)
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, required, fixed-type)
@@ -9860,7 +9860,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                             - device_definition
                             - device
             + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-    + `device_code` (object, required)
+    + `device_code` (object, optional)
         + coding (array, optional, fixed-type)
             + object
                 + system: `device_definition_classification_type` (string)
