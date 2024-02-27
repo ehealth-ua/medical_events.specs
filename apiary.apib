@@ -9760,6 +9760,84 @@ This web service returns rule engine rule details filtered by ID with active rul
             + code: `incorrect_patient` (string)
             
 
+
+### Device_Dispense_EncounterPCG_Response
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
++ `based_on` (Reference_response, optional) - Device request
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_request` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `status`: completed (string, required) - Device Dispense status
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `performer` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
++ `location` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
+    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
++ `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `note`: `Some notes` (string, optionnal)
++ `performer_legal_entity` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
++ `part_of` (Reference_response, optional)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `procedure` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ `encounter` (Reference_response, required)
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ supporting_info (array, optional, fixed-type)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (enum)
+                            - condition
+                            - observation
+                            - diagnostic_report
+                            - procedure
+                            - encounter
+                            - episode 
+                            - device
+                            - device_association
+            
+            
 ### Device_Dispense_Create_Response
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
 + `based_on` (Reference_response, required) - Device request
