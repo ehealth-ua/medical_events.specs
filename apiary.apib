@@ -1236,16 +1236,25 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Device_Response`)
 
-### Get Devices by search params [GET /api/patients/{patient_id}/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
+### Get Devices by search params [GET /api/patients/{patient_id}/devices{?inserted_at_from,inserted_at_to,page,page_size,type,encounter_id,episode_id,context_episode_id,definition,model_number,name,manufacturer,recorder,recorder_legal_entity_id,status,serial_number}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `type`: `spine_board` (string, optional) 
+    + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `patient_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
-    + `episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
-    + `asserted_date_from`: `1990-01-01` (string, optional) 
-    + `asserted_date_to`: `2000-01-01` (string, optional) 
+    + `definition`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `model_number`: `NSPX30` (string, optional)
+    + `manufacturer`: `GlobalMed, Inc` (string, optional)
+    + `name`: `name` (string, optional)
+    + `recorder`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `recorder_legal_entity_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `status`: `active` (string, optional)
+    + `serial_number`: `NSPX30` (string, optional)
+    + `inserted_at_from`: `1990-01-01` (string, optional) 
+    + `inserted_at_to`: `2000-01-01` (string, optional) 
     
 
 + Request (application/json)
