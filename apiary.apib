@@ -1585,7 +1585,7 @@ To find out more about the process of diagnostic report package creation read [C
     + `patient_id`: `90dc3ed7-2169-45d8-8fa3-d918c6839b21` (string, optional)
     + `service_group_id`: `90dc3ed7-2169-45d8-8fa3-d918c6839b21` (string, optional)
     + `code`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) - service_id from code.identifier.value
-    + `managing_organization_id`: `19dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `managing_organization`: `19dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `status`: `final` (string, optional)
     + `category`: `diagnostic_procedure` (string, optional)
     + `issued_from`: `1990-01-01` (string, optional) 
@@ -1754,7 +1754,7 @@ This chapter describes the structure of a single procedure creation. This is not
 + Parameters
     + `patient_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
     + `service_group_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique service_group identifier
-    + `managing_organization_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique legal entity identifier
+    + `managing_organization`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Unique legal entity identifier
     + `status`: `completed` (enum, optional) - status of procedure
     + `category`: `diagnostic_procedure` (string, optional)
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) 
@@ -6422,6 +6422,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `specimen` (string)
+                    
++ device (Reference_response, optional) - Item used during observation.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `equipment` (string)
 
 ### `Observation_Request_1` (`Observation_Request_Base`)
 + `context` (Reference_request, optional)
@@ -6976,8 +6983,26 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## `Device`
 ### `Device_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ identifier: (array, optional)
+   + (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device` (string)
++ `definition` (object, optional)
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, required, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `device_definition` (enum, required) 
++ name: (array, mandatory) 
+    + object
+        + type: `user-friendly-name` (string, required)
+        + value: `name` (string, required)
 + status:  `inactive` (string, required) - `dictionary - eHealth/device_statuses`
 + asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
++ serial_number: `NSPX30` (string, optional)
 + usage_period (Period, required)
     + start : `2000-01-01T00:00:00.000Z`(string, required) 
     + end : `2018-08-02T11:00:00.000Z`(string, optional)
@@ -7014,7 +7039,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + manufacturer: `GlobalMed, Inc` (string, optional)
 + manufacture_date: `1999-01-01T00:00:00.000Z` (string, optional)
 + expiration_date: `2020-01-01T00:00:00.000Z` (string, optional)
-+ model: `NSPX30` (string, optional)
++ model_number: `NSPX30` (string, optional)
 + version: `v1.0.1` (string, optional)
 + note: `Імплант був вилучений по причині заміни на новий` (string, optional)
 
