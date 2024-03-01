@@ -3461,7 +3461,7 @@ This method returns all device requests related to specified patient.
     + `encounter`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Encounter identifier
     + `program`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Medical program identifier
     + `context_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Episode identifier related to the Encounter which is referenced by the Device request   
-    + `context_care_plan_id`:`ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional)- Care plan identifier related to the Activity on which Device request is based on
+    + `care_plan`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional)- Care plan identifier related to the Activity on which Device request is based on
     + `activity`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Activity identifier
     + `priority`: `low` (string, optional) - Priority code
     + `performer`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - Identifier of the Employee who performed the Device request
@@ -3569,7 +3569,7 @@ This service must be used to discover device request by requisition number. If n
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
-        + data (`Medical_Event_Context_Care_Plan_with_Episode_Response`)
+        + data (`Medical_Event_Context_Episode_Response`)
 
 
 
@@ -9391,10 +9391,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `episode` (`Medical_Event_Context_Episode`)
 + `origin_episode` (`Medical_Event_Context_Episode`)
 
-### `Medical_Event_Context_Care_Plan_with_Episode_Response`
-+ `episode` (`Medical_Event_Context_Episode`)
-+ `care_plan` (`Medical_Event_Context_Care_Plan`) - Care plan identifier related to the Activity on which Device request is based on
-
 ### `Medical_Event_Context_Episode`
 + identifier (Identifier)
     + type (Codeable_Concept)
@@ -9467,7 +9463,13 @@ This web service returns rule engine rule details filtered by ID with active rul
     + start : `2000-01-01T00:00:00.000Z`(string, required) 
     + end : `2018-08-02T11:00:00.000Z`(string, required)
 + based_on (array, optional, fixed-type)
-    + (Reference_response)
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
@@ -9484,7 +9486,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `legal_entity` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
 + supporting_info (array, optional, fixed-type)
-    + (Reference_response)
+    + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
@@ -9566,11 +9568,17 @@ This web service returns rule engine rule details filtered by ID with active rul
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
+                        + code: `care_plan` (string, required)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
                         + code: `activity` (string, required)
 + priority: `routine` (string, optional)
 + `parameter` (array, optional)
     + (Device_parameter)
-+ `performer` (Reference_request, optional)
++ `performer` (Reference_response, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
