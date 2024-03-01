@@ -1285,6 +1285,40 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_Response`)
+        
+### Get Device Association context[GET /api/patients/{patient_id}/devices/{device_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `device_association_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) -  Device Association identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
+
+### Get Detected Issue context[GET /api/patients/{patient_id}/devices/{device_id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `detected_issue_id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) -  Detected Issue identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Episode_Response`)
 
  
 ## Medication Statement [/api/patients/{patient_id}/medication_statements]
