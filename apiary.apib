@@ -1241,7 +1241,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `type`: `1234567` (string, optional) 
+    + `type`: `1234` (string, optional) 
     + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `patient_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
@@ -7040,8 +7040,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `device_definition` (string)
 + name: (array, mandatory) 
     + object
-        + type: `user-friendly-name` (string, required)
-        + value: `name` (string, required)
+        + `type`: `user_friendly` (enum, required) - Device name type. Dictionary `device_name_type`
+            - user_friendly
+            - registered
+            - patient_reported    
+        + value: `Тест-смужки Accu-Chek Active для глюкометра` (string, required) - Device name
 + status:  `inactive` (string, required) - `dictionary - eHealth/device_statuses`
 + serial_number: `NSPX30` (string, optional)
 + parent: (Reference_request, optional)
