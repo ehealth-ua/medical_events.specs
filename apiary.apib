@@ -1241,7 +1241,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `type`: `spine_board` (string, optional) 
+    + `type`: `1234567` (string, optional) 
     + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `patient_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
@@ -7043,11 +7043,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type: `user-friendly-name` (string, required)
         + value: `name` (string, required)
 + status:  `inactive` (string, required) - `dictionary - eHealth/device_statuses`
-+ asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
 + serial_number: `NSPX30` (string, optional)
-+ usage_period (Period, required)
-    + start : `2000-01-01T00:00:00.000Z`(string, required) 
-    + end : `2018-08-02T11:00:00.000Z`(string, optional)
 + parent: (Reference_request, optional)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -7100,7 +7096,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/device_types` (string) 
-            + code: `Spine_board` (string)- `dictionary -  eHealth/device_types`
+            + code: `2345678` (string)- `dictionary -  eHealth/device_types`
 + lot_number: `RZ12345678` (string, optional)
 + manufacturer: `GlobalMed, Inc` (string, optional)
 + manufacture_date: `1999-01-01T00:00:00.000Z` (string, optional)
