@@ -7266,19 +7266,12 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Detected_issue_Request`                   
 + id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status:  `inactive` (string, required) - `dictionary - eHealth/detected_issue_statuses`
-+ category (array, optional)
-    + (Codeable_Concept)
-        + coding (array, fixed-type)
-             + (Coding)
-                + system: `eHealth/detected_issue_categories` (string)
-                + code: `detected_issue` (string)
 + code (Reference_request, optional) - code of procedure
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `detected_issue` (string)
-+ severity: `severity` (string, optional) 
 + subject: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
