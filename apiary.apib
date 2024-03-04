@@ -1286,7 +1286,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_Response`)
         
-### Get Device Association by id [GET /api/patients/{patient_id}/devices/{device_association_id}]
+### Get Device Association by id [GET /api/patients/{patient_id}/device_association_id/{device_association_id}]
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -1303,7 +1303,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (`Device_association_Response`)        
         
 
-### Get Devices Association by search params [GET /api/patients/{patient_id}/devices{?device_id,body_site,inserted_at_from,inserted_at_to,association_date_from,association_date_to,page,page_size,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status}]
+### Get Devices Association by search params [GET /api/patients/{patient_id}/device_associations{?device_id,body_site,inserted_at_from,inserted_at_to,association_date_from,association_date_to,page,page_size,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
@@ -1334,7 +1334,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (array[`Device_association_Response`], fixed-type)
         
         
-### Get Device Association context[GET /api/patients/{patient_id}/devices/{device_id}/context]
+### Get Device Association context[GET /api/patients/{patient_id}/device_associations/{device_association_id}/context]
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
@@ -1352,7 +1352,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (`Medical_Event_Context_Episode_Response`)
         
 
-### Get Detected Issue by id [GET /api/patients/{patient_id}/devices/{detected_issue_id}]
+### Get Detected Issue by id [GET /api/patients/{patient_id}/detected_issues/{detected_issue_id}]
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -1368,7 +1368,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Detected_issue_Response`)    
 
-### Get Detected Issue by search params [GET /api/patients/{patient_id}/devices{?device_id,inserted_at_from,inserted_at_to,page,page_size,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status}]
+### Get Detected Issue by search params [GET /api/patients/{patient_id}/detected_issues{?device_id,inserted_at_from,inserted_at_to,page,page_size,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
@@ -1395,7 +1395,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_Collection`)
         + data (array[`Detected_issue_Response`], fixed-type)        
 
-### Get Detected Issue context[GET /api/patients/{patient_id}/devices/{device_id}/context]
+### Get Detected Issue context[GET /api/patients/{patient_id}/detected_issues/{detected_issue_id}/context]
 
 + Parameters
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
