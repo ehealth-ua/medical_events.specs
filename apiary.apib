@@ -1350,6 +1350,23 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_Response`)
+        
+
+### Get Detected Issue by id [GET /api/patients/{patient_id}/devices/{detected_issue_id}]
+
++ Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
+    + detected_issue_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique device identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Detected_issue_Response`)        
 
 ### Get Detected Issue context[GET /api/patients/{patient_id}/devices/{device_id}/context]
 
@@ -4143,6 +4160,12 @@ immunization|read
 device|read
 risk_assessment|read
 
+Block resource_types may consist next entities:
+Object| Access level
+-------|---------
+device| read
+device_association|read
+detected_issue|read
 
 **Scopes required:** `approval:create`
 
@@ -7211,7 +7234,18 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `legal_entity` (string)  
-    
+                    
+
+### `Detected_issue_Request`                   
++ id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status:  `inactive` (string, required) - `dictionary - eHealth/detected_issue_statuses`
++ category (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `eHealth/detected_issue_categories` (string)
+                + code: `detected_issue` (string)
+                
 
 ## `Medication Statement`
 ### `Medication_Statement_Request`
@@ -8838,6 +8872,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `patient` (string)
                 + text (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - `resource_types` (array, optional, fixed-type) - list of resources that are requested access to be granted
+        + resource_types (object, optional) 
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/resources` (string, required)
+                    + code: `device` (string)
+            + text (string)
 + `child_resource` (object, optional) - should be submitted with resources field only. Describes medical event included in the resource
     + identifier (object, optional)
         + type (object, optional)
@@ -8874,6 +8915,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + (Coding)
                         + code: `episode_of_care` (string)
             + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_resource_types` (array, required)
+    + granted_resource_types (object, optional) 
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/resources` (string, required)
+                + code: `device` (string)
+        + text (string)
 + `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -8909,6 +8957,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + (Coding)
                         + code: `episode_of_care` (string)
             + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_resource_types` (array, required)
+    + granted_resource_types (object, optional) 
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/resources` (string, required)
+                + code: `device` (string)
+        + text (string)
 + `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -8943,6 +8998,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + (Coding)
                         + code: `episode_of_care` (string)
             + value: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ `granted_resource_types` (array, required)
+    + granted_resource_types (object, optional) 
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/resources` (string, required)
+                + code: `device` (string)
+        + text (string)
 + `granted_to` (Reference_response, required) - type and identifier of entity to whom access has been granted (employee or legal_entity)
     + identifier (Identifier)
         + type (Codeable_Concept)
