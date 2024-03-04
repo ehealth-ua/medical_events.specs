@@ -1303,7 +1303,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (`Device_association_Response`)        
         
 
-### Get Devices Association by search params [GET /api/patients/{patient_id}/devices{?device_id,body_site,inserted_at_from,inserted_at_to,association_date_from,association_date_to,page,page_size,type,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status,serial_number}]
+### Get Devices Association by search params [GET /api/patients/{patient_id}/devices{?device_id,body_site,inserted_at_from,inserted_at_to,association_date_from,association_date_to,page,page_size,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
@@ -1366,7 +1366,34 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
-        + data (`Detected_issue_Response`)        
+        + data (`Detected_issue_Response`)    
+
+### Get Detected Issue by search params [GET /api/patients/{patient_id}/devices{?device_id,inserted_at_from,inserted_at_to,page,page_size,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status}]
+
++ Parameters
+    + `page`: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+    + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `patient_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `status`: `active` (string, optional)
+    + `recorder`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `recorder_legal_entity_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
+    + `device_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
+    + `inserted_at_from`: `1990-01-01` (string, optional) 
+    + `inserted_at_to`: `2000-01-01` (string, optional) 
+    
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Detected_issue_Response`], fixed-type)        
 
 ### Get Detected Issue context[GET /api/patients/{patient_id}/devices/{device_id}/context]
 
@@ -7239,12 +7266,58 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Detected_issue_Request`                   
 + id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status:  `inactive` (string, required) - `dictionary - eHealth/detected_issue_statuses`
-+ category (array, required)
++ category (array, optional)
     + (Codeable_Concept)
         + coding (array, fixed-type)
              + (Coding)
                 + system: `eHealth/detected_issue_categories` (string)
                 + code: `detected_issue` (string)
++ code (Reference_request, optional) - code of procedure
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `detected_issue` (string)
++ severity: `severity` (string, optional) 
++ subject: (Reference_request, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `patient` (string) 
++ encounter (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ identifiedDateTime : `2013-05-08`,
++ recorder: (Reference_request, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ author: (Reference_request, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)  
++ implicated: (Reference_request, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `device` (string)   
++ detail: `some description` (string, optional)                     
++ recorder_legal_entity: (Reference_request, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, required)      
                 
 
 ## `Medication Statement`
@@ -7708,6 +7781,13 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_association_Response`
 + include `Device_assosiation_request`
++ inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
++ inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
++ updated_by: `2018-08-02T10:55:00.000Z` (string, optional)
+
+### `Detected_issue_Response`
++ include `Detected_issue_Request`
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
