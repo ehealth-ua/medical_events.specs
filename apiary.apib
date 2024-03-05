@@ -1285,8 +1285,11 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_Response`)
-        
-### Get Device Association by id [GET /api/patients/{patient_id}/device_association_id/{device_association_id}]
+ 
+
+## Device Association [/api/patients/{patient_id}/device_association] 
+
+### Get Device Association by id [GET /api/patients/{patient_id}/device_associations/{device_association_id}]
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -1351,6 +1354,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Medical_Event_Context_Episode_Response`)
         
+
+## Detected Issue [/api/patients/{patient_id}/detected_issues] 
 
 ### Get Detected Issue by id [GET /api/patients/{patient_id}/detected_issues/{detected_issue_id}]
 
@@ -2615,6 +2620,18 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + `type`: `spine_board` (string, optional) 
     + `asserted_date_from`: `1990-01-01` (string, optional) 
     + `asserted_date_to`: `2000-01-01` (string, optional) 
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection`)
+        + data (array[`Device_Response`], fixed-type)    
+    
 
 ### Get Medication Statement by id  [GET /api/patients/{patient_id}/summary/medication_statements/{medication_statement_id}]
 **Scopes required:** `patient_summary:read`
@@ -7129,7 +7146,8 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `device` (string)
+                    + system: `eHealth/external_system` (string) 
+                    + code: `prozoro` (string)
 + definition (Reference_request, optional)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
