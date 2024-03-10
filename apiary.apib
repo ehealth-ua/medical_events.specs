@@ -7176,12 +7176,6 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ recorder_legal_entity: (Reference_request, required)
-    + identifier (Identifier, optional, fixed-type)
-        + type (Codeable_Concept, required)
-            + coding (array, required,fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)  
 + subject: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -7222,7 +7216,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 + manufacture_date: `1999-01-01T00:00:00.000Z` (string, optional)
 + expiration_date: `2020-01-01T00:00:00.000Z` (string, optional)
 + model_number: `NSPX30` (string, optional)
-+ context_episode_id: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, required) 
 + note: `Імплант був вилучений по причині заміни на новий` (string, optional)
 
 ### `Device_assosiation_request`
@@ -7233,18 +7226,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `device` (string) 
-+ category (array, optional)
-    + (Codeable_Concept)
-        + coding (array, fixed-type)
-             + (Coding)
-                + system: `eHealth/device_association_categories` (string)
-                + code: `relationship` (string)        
-+ status:  `inactive` (string, required) - `dictionary - eHealth/device_association_statuses`
++ status:  `inactive` (string, required) - `dictionary - device_association_statuses`
 + status_reason (array, optional)
     + (Codeable_Concept)
         + coding (array, fixed-type)
              + (Coding)
-                + system: `eHealth/device_association_status_reasons` (string)
+                + system: `device_association_status_reasons` (string)
                 + code: `reasons` (string)        
 + subject: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
@@ -7257,35 +7244,25 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `eHealth/body_sites` (string)
             + code: `head` (string)
-+ `period` (Period, optional)
-    + end: `2018-08-03T10:45:16.000Z` (string, optional)
-    + start: `2018-08-02T10:45:16.000Z` (string, required) 
-+ association_date: `2018-08-02T10:45:16.000Z` (string, optional)     
++ association_date: `2018-08-02` (string, optional)     
 + `context` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, required)
 + recorder: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ recorder_legal_entity: (Reference_request, required)
-    + identifier (Identifier, optional, fixed-type)
-        + type (Codeable_Concept, required)
-            + coding (array, required,fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)  
                     
 
 ### `Detected_issue_Request`                   
 + id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ status:  `inactive` (string, required) - `dictionary - eHealth/detected_issue_statuses`
-+ code (Reference_request, optional) - code of procedure
++ status:  `inactive` (string, required) - `dictionary - detected_issue_statuses`
++ code (Reference_request, optional) - Specific type of detected issue
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7303,19 +7280,21 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ identified_date_time : `2013-05-08`,
-+ recorder: (Reference_request, required)
++ identified_date_time : `2018-08-02T10:45:16.000Z`,
++ recorder: (Reference_request, required) - The employee who registered the issue
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ author: (Reference_request, required)
++ author: (Reference_request, required) - The employee or person who identified the issue
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
-                    + code: `employee` (string)  
+                    + code: `employee` (string) 
+                        - employee
+                        - patient
 + implicated: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -7323,13 +7302,6 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `device` (string)   
 + detail: `some description` (string, optional)                     
-+ recorder_legal_entity: (Reference_request, required)
-    + identifier (Identifier, optional, fixed-type)
-        + type (Codeable_Concept, required)
-            + coding (array, required,fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-+ `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, required)      
                 
 
 ## `Medication Statement`
