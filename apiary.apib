@@ -1236,13 +1236,12 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Device_Response`)
 
-### Get Devices by search params [GET /api/patients/{patient_id}/devices{?inserted_at_from,inserted_at_to,page,page_size,type,encounter_id,episode_id,context_episode_id,definition,model_number,name,manufacturer,recorder,recorder_legal_entity_id,status,serial_number}]
+### Get Devices by search params [GET /api/patients/{patient_id}/devices{?inserted_at_from,inserted_at_to,page,page_size,type,encounter_id,episode_id,definition,model_number,name,manufacturer,recorder,recorder_legal_entity_id,status,serial_number}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `type`: `1234` (string, optional) 
-    + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `patient_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `definition`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
@@ -1306,12 +1305,11 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data (`Device_association_Response`)        
         
 
-### Get Devices Association by search params [GET /api/patients/{patient_id}/device_associations{?device_id,body_site,inserted_at_from,inserted_at_to,association_date_from,association_date_to,page,page_size,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status}]
+### Get Devices Association by search params [GET /api/patients/{patient_id}/device_associations{?device_id,body_site,inserted_at_from,inserted_at_to,association_date_from,association_date_to,page,page_size,encounter_id,episode_id,recorder,recorder_legal_entity_id,status}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `patient_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `recorder`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
@@ -1373,12 +1371,11 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Detected_issue_Response`)    
 
-### Get Detected Issue by search params [GET /api/patients/{patient_id}/detected_issues{?device_id,inserted_at_from,inserted_at_to,page,page_size,encounter_id,episode_id,context_episode_id,recorder,recorder_legal_entity_id,status}]
+### Get Detected Issue by search params [GET /api/patients/{patient_id}/detected_issues{?device_id,inserted_at_from,inserted_at_to,page,page_size,encounter_id,recorder,recorder_legal_entity_id,status}]
 
 + Parameters
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `context_episode_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `patient_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `encounter_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `status`: `active` (string, optional)
