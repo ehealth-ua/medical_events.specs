@@ -7820,12 +7820,11 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_association_Response`
 + include `Device_assosiation_request`
-+ status_reason (array, optional)
-    + (Codeable_Concept)
-        + coding (array, fixed-type)
-             + (Coding)
-                + system: `device_association_status_reasons` (string)
-                + code: `reasons` (string)  
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_association_status_reasons` (string)
+            + code: `default` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
