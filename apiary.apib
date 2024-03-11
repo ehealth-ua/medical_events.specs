@@ -68,6 +68,8 @@ Procedure|0-*| true
 Clinical impression|0-*| true
 Specimen|0-*| true
 Device dispense| 0-*| true
+Device association|0-*| true
+Detected issue|0-*| true
 
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
@@ -172,6 +174,12 @@ This resource should be used to get the processing status of the async job.
                 + (object)
                     + entity: `device_dispense` (string, required)
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/device_dispenses/42e5985d-2a79-452f-8bc4-ed3a02fdefc6` (string, required)
+                + (object)
+                    + entity: `device_association` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/device_associations/42e5985d-2a79-452f-8bc4-ed3a02fdefc6` (string, required)
+                + (object)
+                    + entity: `detected_issue` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/detected_issues/42e5985d-2a79-452f-8bc4-ed3a02fdefc6` (string, required)
                 
 
 + Response 403 (application/json)
@@ -413,6 +421,33 @@ This chapter describes the structure of a single unsigned Device Dispense that c
             X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
             
     + Attributes (`Device_Dispense_EncounterPCG_Request`)
+
+
+#### Dummy Device Association [POST]
+This chapter describes the structure of a single unsigned device association that could be submitted as a part of Encounter Package. This is not an actual web-service.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (`Device_assosiation_request`)
+
+
+#### Dummy Detected Issues [POST]
+This chapter describes the structure of a single unsigned detected issue that could be submitted as a part of Encounter Package. This is not an actual web-service.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (`Detected_issue_Request`)
+    
 
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061314561/Cancel+Encounter+Package)
@@ -5758,6 +5793,8 @@ This web service returns rule engine rule details filtered by ID with active rul
             - available
             - unavailable
 + `device_dispenses`(array[`Device_Dispense_EncounterPCG_Request`], optional, fixed-type)
++ `device_associations` (array[`Device_assosiation_request`], optional, fixed-type)
++ `detected_issues` (array[`Detected_issue_Request`], optional, fixed-type)
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -5999,6 +6036,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + system: `device_dispense_mark_in_error_reasons` (string)
                     + code: `incorrect_patient` (string)
         + `status` : `entered_in_error` (required)
++ `device_associations` (array, optional, fixed-type)
+    + (`Device_assosiation_request`)
+        + `status`: `entered_in_error` (string)- `dictionary device_association_statuses`
++ `detected_issues` (array, optional, fixed-type)
+    + (`Detected_issue_Request`)
+        + `status`: `entered_in_error` (string)- `dictionary detected_issue_statuses`
       
 ### `Paper_referral`
 + requisition: `1111-2222-3333-4444` (string, optional) - `Service request number`
@@ -7186,16 +7229,40 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + system: `device_properties` (string) 
                     + code: `default` (string) - `dictionary -  device_properties`
-        + `value_codeable_concept` (Codeable_Concept, required)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)
+        - One Of
+            - value_quantity (object, required)
+                + value : `13,5` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `kg` (string, optional)
+                + system : `eHealth/ucum/units` (string, required)
+                + code: `kg` (string, required)
+            - value_codeable_concept (object, required)
+                + `coding` (array, required, fixed-type)
+                    + (object)
+                        + system : `some_dictionary` (string, required)
+                        + code : `dictionary_value` (string, required) - Symbol in syntax defined by the system
+            - value_string: `some description` (string, required)
+            - value_boolean: true (boolean, required)
+            - value_range (object, required, fixed-type)
+                + low (object, required)
+                    + value : `13,5` (number, required)
+                    + comparator : `>` (string, optional)
+                    + unit : `kg` (string, optional)
+                    + system : `eHealth/ucum/units` (string, required)
+                    + code: `kg` (string, required)
+                + high (object, required)
+                    + value : `20,5` (number, required)
+                    + comparator : `<` (string, optional)
+                    + unit : `kg` (string, optional)
+                    + system : `eHealth/ucum/units` (string, required)
+                    + code: `kg` (string, required)
+            - value_integer: 10 (number, required)
 + primary_source: `true` (boolean, required)
 + `report_origin` (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-                + system: `eHealth/report_origins` (string)
-                + code: `mother` (string)
+            + system: `eHealth/report_origins` (string)
+            + code: `mother` (string)
         + text: `зі слів пацієнта` (string) 
 + type (Codeable_Concept, required)
     + coding (array, fixed-type)
@@ -7218,12 +7285,6 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `device` (string) 
 + status:  `inactive` (string, required) - `dictionary - device_association_statuses`
-+ status_reason (array, optional)
-    + (Codeable_Concept)
-        + coding (array, fixed-type)
-             + (Coding)
-                + system: `device_association_status_reasons` (string)
-                + code: `reasons` (string)        
 + `body_site` (Codeable_Concept, optional) - Anatomical collection site
     + coding (array, fixed-type)
         + (Coding)
@@ -7747,6 +7808,12 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_association_Response`
 + include `Device_assosiation_request`
++ status_reason (array, optional)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+             + (Coding)
+                + system: `device_association_status_reasons` (string)
+                + code: `reasons` (string)  
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
