@@ -2080,7 +2080,7 @@ This chapter describes the structure of a single Specimen creation. This is not 
                 + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
                     - MALE
                     - FEMALE
-                + age: 35 (number, required) - full years between current date and birth date
+                + age: 35 (number, required) - full years between inserted_at and birth date
     
 
 ### Process Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/process]
@@ -9126,7 +9126,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
     - MALE
     - FEMALE
-+ age: 35 (number, required) - full years between current date and birth date
++ age: 35 (number, required) - full years between inserted_at and birth date
 
 ## Care plan
 ### `Care_Plan_Create`
