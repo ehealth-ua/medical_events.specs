@@ -2000,6 +2000,18 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
                     + code: `default` (string)
         + `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional)
         + `status` : `ENTERED_IN_ERROR` (required) - Status for provided procedure
+        + `focal_device` (object, optional) - Manipulated, implanted, or removed device
+            + action (Codeable_Concept, optional) - Kind of change to Device
+                + coding (array, fixed-type)
+                    + (Coding)
+                     + system: `procedure_focal_device_actions` (string) 
+                     + code: `some_action` (string)
+            + manipulated (Reference_request, required) - Implanted Device used for this procedure
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `device` (string) 
         
 
 + Response 202 (application/json)
@@ -8101,6 +8113,19 @@ This web service returns rule engine rule details filtered by ID with active rul
             + (Coding)
              + system: `eHealth/assistive_products` (string) 
              + code: `03_05_38` (string)
++ `focal_device` (object, optional) - Manipulated, implanted, or removed device
+    + action (Codeable_Concept, optional) - Kind of change to Device
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `procedure_focal_device_actions` (string) 
+             + code: `some_action` (string)
+    + manipulated (Reference_request, required) - Implanted Device used for this procedure
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `device` (string)
+
 
 ### Procedure_Short_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier
@@ -8246,7 +8271,19 @@ This web service returns rule engine rule details filtered by ID with active rul
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `equipment` (string)                
+                        + code: `equipment` (string) 
++ `focal_device` (object, optional) - Manipulated, implanted, or removed device
+    + action (Codeable_Concept, optional) - Kind of change to Device
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `procedure_focal_device_actions` (string) 
+             + code: `some_action` (string)
+    + manipulated (Reference_request, required) - Implanted Device used for this procedure
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `device` (string) 
 
 ### `Medication_Administration_EncounterPCG_Request`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique medication admnistration identifier
