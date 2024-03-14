@@ -7269,13 +7269,6 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + system : `eHealth/ucum/units` (string, required)
                     + code: `kg` (string, required)
             - value_integer: 10 (number, required)
-+ primary_source: `true` (boolean, required)
-+ `report_origin` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/report_origins` (string)
-            + code: `mother` (string)
-        + text: `зі слів пацієнта` (string) 
 + type (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
@@ -7302,7 +7295,8 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `eHealth/body_sites` (string)
             + code: `head` (string)
-+ association_date: `2018-08-02` (string, optional)     
++ association_date: `2024-08-02` (string, optional) - when the status were found out
++ recorded: `2024-08-05T09:00:00.000Z` (string, required) - when the association has been created by recorder
 + `context` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -7325,7 +7319,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `detected_issue_categories` (string) 
             + code: `default` (string)- `dictionary -  detected_issue_categories`
-+ encounter (Reference_response, required)
++ encounter (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7346,13 +7340,19 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (enum, required)
                         - employee
                         - patient
-+ implicated: (Reference_request, required)
++ implicated: (Reference_request, optional) - device which caused an issue in the subject
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `device` (string)   
-+ detail: `some description` (string, optional)                     
++ detail: `some description` (string, optional)
++ subject (Reference_request, required) - device that has an issue
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device` (string)
                 
 
 ## `Medication Statement`
