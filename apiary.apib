@@ -7300,7 +7300,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_assosiation_request`
 + id: `80a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ device (Reference_response, required) - Item used during observation.
++ device (Reference_request, required) - Item used during observation.
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7832,6 +7832,30 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Device_Response`
 + include `Device_Request`
++ definition (Reference_response, optional)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `device_definition` (string)
++ parent: (Reference_response, optional)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `device` (string)
++ recorder: (Reference_response, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ context: (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
@@ -7842,6 +7866,24 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `device_association_status_reasons` (string)
             + code: `default` (string)
++ device (Reference_response, required) - Item used during observation.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device` (string)
++ `context` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ recorder: (Reference_response, required)
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
@@ -7849,6 +7891,38 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Detected_issue_Response`
 + include `Detected_issue_Request`
++ encounter (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ recorder: (Reference_response, required) - The employee who registered the issue
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ author: (Reference_response, required) - The employee or person who identified the issue
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (enum, required)
+                        - employee
+                        - patient
++ implicated: (Reference_response, optional) - device which caused an issue in the subject
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `device` (string)   
++ subject (Reference_response, required) - device that has an issue
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
