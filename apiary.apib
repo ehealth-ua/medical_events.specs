@@ -7364,6 +7364,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `device` (string)
++ `based_on`: (Reference_request, optional) - another Detected Issue on which this is based on
+    + identifier (Identifier, optional, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, required,fixed-type)
+                + (Coding)
+                    + code: `detected_issue` (string)
                 
 
 ## `Medication Statement`
