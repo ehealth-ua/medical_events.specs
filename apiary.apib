@@ -6007,6 +6007,10 @@ This web service returns rule engine rule details filtered by ID with active rul
 + devices (array, optional, fixed-type)
     + (`Device_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/device_statuses`
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `device_status_reasons` (string)
 + `risk_assessments` (array, optional, fixed-type)
     + (`Risk_Assessment_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/risk_assessment_statuses`
@@ -6064,9 +6068,19 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `device_associations` (array, optional, fixed-type)
     + (`Device_assosiation_request`)
         + `status`: `entered_in_error` (string)- `dictionary device_association_statuses`
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `device_association_status_reasons` (string)
+                    + code: `default` (string)
 + `detected_issues` (array, optional, fixed-type)
     + (`Detected_issue_Request`)
         + `status`: `entered_in_error` (string)- `dictionary detected_issue_statuses`
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `detected_issue_status_reasons` (string)
+                    + code: `default` (string)
       
 ### `Paper_referral`
 + requisition: `1111-2222-3333-4444` (string, optional) - `Service request number`
@@ -7856,6 +7870,11 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `device_status_reasons` (string)
+            + code: `default` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 
@@ -7923,6 +7942,11 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `device` (string)
++ `status_reason` (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `detected_issue_status_reasons` (string)
+            + code: `default` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
