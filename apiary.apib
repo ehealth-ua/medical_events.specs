@@ -1400,7 +1400,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Attributes (`Response_OK`)
         + data (`Detected_issue_Response`)    
 
-### Get Detected Issues by search params [GET /api/patients/{patient_id}/detected_issues{?device_id,inserted_at_from,inserted_at_to,page,page_size,encounter_id,episode_id,recorder,recorder_legal_entity_id,status}]
+### Get Detected Issues by search params [GET /api/patients/{patient_id}/detected_issues{?device_id,inserted_at_from,inserted_at_to,page,page_size,encounter_id,episode_id,recorder,recorder_legal_entity_id,status,identified_date_time_from,identified_date_time_to}]
 
 > Note that it is allowed to pass multiple comma-separated values for some query parameters:
 * status
@@ -1414,8 +1414,10 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + `recorder`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `recorder_legal_entity_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional)
     + `device_id`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
-    + `inserted_at_from`: `1990-01-01` (string, optional) 
-    + `inserted_at_to`: `2000-01-01` (string, optional) 
+    + `inserted_at_from`: `1990-01-01` (string, optional)
+    + `inserted_at_to`: `2000-01-01` (string, optional)
+    + `identified_date_time_from`: `2021-01-01T00:00:00.000Z` (string, optional) - The start date of the period for search by identified_date_time
+    + `identified_date_time_to`: `2021-01-01T00:00:00.000Z` (string, optional) - The end date of the period for search by identified_date_time
     
 
 + Request (application/json)
