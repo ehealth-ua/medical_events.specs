@@ -7268,10 +7268,10 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `body_site` (Codeable_Concept, optional) - Anatomical collection site
     + coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/body_sites` (string)
+            + system: `eHealth/body_structures` (string)
             + code: `head` (string)
-+ association_date: `2024-08-02` (string, optional) - when the status were found out
-+ recorded: `2024-08-05T09:00:00.000Z` (string, required) - when the association has been created by recorder
++ association_date: `2024-08-02` (string, optional) - The date of implantation\attachment or explantation\detachment of the device to the patient
++ recorded: `2024-08-05T09:00:00.000Z` (string, required) - The date of setting the direction of the relationship of the device to the patient
 + `context` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -7424,6 +7424,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
++ `used_references` (array, optional) - Items used in the report.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string) 
 
 ### `Diagnostic_Report_Base_response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -7469,6 +7476,13 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
++ `used_references` (array, optional) - Items used in the report.
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string) 
 
 
 ### `Diagnostic_Report_Short_Response`
@@ -7492,13 +7506,20 @@ This web service returns rule engine rule details filtered by ID with active rul
         + end : `2018-08-02T11:00:00.000Z`(string, required) - End time with inclusive boundary
     - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
 + issued: `2018-10-08T09:46:37.694Z` (string, required)
-+ `managing_organization` (Reference_request, optional)
++ `managing_organization` (Reference_response, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal_enity` (string)
-+ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)
++ `used_references` (array, optional) - Items used in the report.
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `equipment` (string) 
 
 
 ### `Diagnostic_Report_EncounterPCG_Request`
@@ -7523,8 +7544,80 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `division` (string)
 - One Of
-    - performer (object, optional) - required if primary_source=true
-        + reference (object, optional)
+    - performer (optional) - required if primary_source=true
+        - One Of
+            - reference (object, optional)
+                + identifier (object, optional)
+                    + type (object, optional)
+                        + coding (array, optional, fixed-type)
+                            + object
+                                + system: `eHealth/resources` (string, required)
+                                + code: `employee` (string)
+                        + text: `Галина Олександрівна` (string)
+                    + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+            - text: `Галина Олександрівна` (string)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `mother` (string)
+        + text: `зі слів пацієнта` (string)
++ `results_interpreter` (optional)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Опанасенко Олексій Володимирович` (string, optional)
+
+### `Diagnostic_Report_Package_Request`
++ include `Diagnostic_Report_Base_request`
++ primary_source: `true` (boolean, required) - could NOT be false
++ performer (required)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Галина Олександрівна` (string)          
++ `managing_organization` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
++ `division` (Reference_request, optional, fixed-type) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
++ `results_interpreter` (optional)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Опсенко Олексій Володимирович` (string, optional)
+
+### `Diagnostic_Report_Package_Request_Cancel`
++ include `Diagnostic_Report_Base_request`
++ `primary_source`: `true` (boolean, required) - could NOT be false
++ performer (required) - required if primary_source=true
+    - One Of
+        - reference (object, optional)
             + identifier (object, optional)
                 + type (object, optional)
                     + coding (array, optional, fixed-type)
@@ -7533,34 +7626,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                             + code: `employee` (string)
                     + text: `Галина Олександрівна` (string)
                 + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
-    - `report_origin` (object, optional) - if primary_source=false
-        + coding (array, optional, fixed-type)
-            + object
-                + system: `eHealth/report_origins` (string, required)
-                + code: `mother` (string)
-        + text: `зі слів пацієнта` (string)
-+ results_interpreter (optional)
-    - One Of
-        + reference (Reference_request,optional)
-            + identifier (Identifier, required)
-                + type (Codeable_Concept, required)
-                    + coding (array, required,fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-        + text: `Опанасенко Олексій Володимирович` (object, optional) 
-
-### `Diagnostic_Report_Package_Request`
-+ include `Diagnostic_Report_Base_request`
-+ primary_source: `true` (boolean, required) - could NOT be false
-+ performer (required)
-    + reference (Reference_request, optional)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `employee` (string)
-    + text: `Опанасенко Олексій Володимирович` (object, optional)          
-                    
+        - text: `Галина Олександрівна` (string)        
 + `managing_organization` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -7573,57 +7639,24 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `division` (string)
-+ results_interpreter (optional)
++ `results_interpreter` (optional)
     - One Of
-        + `reference` (Reference_request,optional)
-            + identifier (Identifier, required)
-                + type (Codeable_Concept, required)
-                    + coding (array, required,fixed-type)
-                        + (Coding)
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
                             + code: `employee` (string)
-        + text: `Опсенко Олексій Володимирович` (object, optional) 
-
-### `Diagnostic_Report_Package_Request_Cancel`
-+ include `Diagnostic_Report_Base_request`
-+ primary_source: `true` (boolean, required) - could NOT be false
-+ performer (required)
-    -One Of
-        + reference (Reference_request, optional)
-            + identifier (Identifier)
-                + type (Codeable_Concept)
-                    + coding (array, fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-        + text: `Опанасенко Олексій Володимирович` (object, optional)          
-                    
-+ `managing_organization` (Reference_request, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_enity` (string)
-+ `division` (Reference_request, optional, fixed-type) - Division of legal_entity where DR have been performed.
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `division` (string)
-+ results_interpreter (optional)
-    - One Of
-        + `reference` (Reference_request,optional)
-            + identifier (Identifier, required)
-                + type (Codeable_Concept, required)
-                    + coding (array, required,fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-        + text: `Опсенко Олексій Володимирович` (object, optional)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Опсенко Олексій Володимирович` (string, optional)
 + `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
 + `cancellation_reason` (Codeable_Concept, required)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/cancellation_reasons` (string)
             + code: `misspelling` (string) \\ wrong_patient, misspelling
-    - text (string)
+    + text (string)
 
 
 ### `Diagnostic_Report_Response`
@@ -7636,7 +7669,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ origin_episode (Reference_response, optional)
++ `origin_episode` (Reference_response, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7649,57 +7682,59 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `division` (string)
     + display_value: `Перше відділення обласної лікарня №1` (string, optional) - This field is filled on creating and never updated after
-+ managing_organization (Reference_response, optional)
++ `managing_organization` (Reference_response, optional)
     + identifier (Identifier)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
-                        + code: `legal_enity` (string)
-    + display_value: `Київська обласна лікарня №1` (string, required) - This field is filled on creating and never updated after          
-    
-+ results_interpreter (optional)
-    - One Of
-        + reference (Reference_response,optional)
-            + identifier (Identifier, required)
-                + type (Codeable_Concept, required)
-                    + coding (array, required,fixed-type)
-                        + (Coding)
-                            + code: `employee` (string)
-            + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after            
-        + text: `Опанасенко Олексій Володимирович` (object, optional) 
-+ primary_source: `true` (boolean, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
+    + `display_value`: `Київська обласна лікарня №1` (string, required) - This field is filled on creating and never updated after          
++ `primary_source`: `true` (boolean, required)
 - One Of
-    + performer (optional)
-        -One Of
-            + reference (Reference_response, optional)
-                + identifier (Identifier)
-                    + type (Codeable_Concept)
-                        + coding (array, fixed-type)
-                            + (Coding)
+    - performer (optional) - required if primary_source=true
+        - One Of
+            - reference (object, optional)
+                + identifier (object, optional)
+                    + type (object, optional)
+                        + coding (array, optional, fixed-type)
+                            + object
+                                + system: `eHealth/resources` (string, required)
                                 + code: `employee` (string)
-                + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after   
-            + text: `Опанасенко Олексій Володимирович` (object, optional)
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
-                + system: `eHealth/report_origins` (string)
+                    + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+                + `display_value`: `Галина Олександрівна` (string, required)
+            - text: `Галина Олександрівна` (string)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
                 + code: `mother` (string)
-                
-+ recorded_by (Reference_response, required)
+        + text: `зі слів пацієнта` (string)
++ `results_interpreter` (optional)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+            + `display_value`: `Опанасенко Олексій Володимирович` (string, required)
+        - text: `Опанасенко Олексій Володимирович` (string, optional)
++ `recorded_by` (Reference_response, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-    + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after                
-
+    + `display_value`: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after                
 + `explanatory_letter`: `Звіт був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
 + `cancellation_reason` (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
             + system: `eHealth/cancellation_reasons` (string)
             + code: `misspelling` (string) \\ wrong_patient, misspelling
-    - text (string)
+    + text (string)
 
 ## `Clinical Impression`
 ### `Clinical_Impression_EncounterPCG_Request`
