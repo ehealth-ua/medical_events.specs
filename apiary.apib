@@ -2302,6 +2302,53 @@ http code| processing method | Client recommendations
         + data (`Job`)
 
 
+## Composition [/api/patients/{patient_id}/composition]
+
+### Create Composition [POST]
+This WS allows to register Composition by its own.
+**Scopes required:** `composition:create`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer WUZKa1BnUTRkOWhYcTAxOHNmUTdUUT09
+            api-key: b1lPV3d3blRHRHdOYVYrYmNPU0tJdz09
+            X-Custom-PSK: a1aa07c96f3f4d91870f923a53cc9aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Create Composition [POST /api/patients/{patient_id}/compositions]
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
+    + custodian_id: `38fe57bc-cc8b-47a9-adaa-fa02866b5257` (string, required) - MPI identifier of the LE.
+    + encounter_id: `38fe57bc-cc8b-47a9-adaa-fa02866b5257` (string, required) - MPI identifier of the encounter.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (Composition_Create)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
 ----
@@ -5748,6 +5795,29 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `Health/encounter_discharge_department` (string) 
                 + code: `default` (string)- `dictionary eHealth/encounter_discharge_department`
     + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
+
+### `Composition_Create` 
++ `status`: `FINAL`  (string, required) - `dictionary eHealth/encounter_statuses`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, optional, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `custodian`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `legal_entity` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{custodian_id}} (string, required)
+
 
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
@@ -10554,7 +10624,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + end : `2023-04-20T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
 + duration (object, optional) - How long it took to collect Specimen
     + value: 5 (number, required)
-    + system: `eHealth/ucum/units` (string, required)
+    + system: `UNITS_OF_TIME` (string, required)
     + code: min (string, required)
     + comparator: `>` (string, optional)
 + quantity (object, required) - The quantity of specimen collected
@@ -10737,7 +10807,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + display_value: `Василенко Олена Павлівна` (string, required) - This field is filled on creating and never updated after
     + duration (object, optional) - How long it took to collect Specimen
         + value: 5 (number, required)
-        + system: `eHealth/ucum/units` (string, required)
+        + system: `UNITS_OF_TIME` (string, required)
         + code: min (string, required)
         + comparator: `>` (string, optional)
         + unit: хв (string, required)
