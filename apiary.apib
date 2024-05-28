@@ -2304,9 +2304,9 @@ http code| processing method | Client recommendations
 
 ## Composition [/api/patients/{patient_id}/composition]
 
-### Create Composition [POST]
+### Create Composition [POST /api/patients/{patient_id}/compositions]
 This WS allows to register Composition by its own.
-**Scopes required:** `composition:create`
+**Scopes required:** `composition:write`
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
@@ -2328,11 +2328,10 @@ This WS allows to register Composition by its own.
 
 
 ### Dummy Create Composition [POST /api/patients/{patient_id}/compositions]
+**Scopes required:** `composition:write`
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
-    + custodian_id: `38fe57bc-cc8b-47a9-adaa-fa02866b5257` (string, required) - MPI identifier of the LE.
-    + encounter_id: `38fe57bc-cc8b-47a9-adaa-fa02866b5257` (string, required) - MPI identifier of the encounter.
 
 + Request (application/json)
 
@@ -2348,6 +2347,288 @@ This WS allows to register Composition by its own.
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
+
+### Get Composition by search params [GET /api/patients/{patient_id}/compositions{?patient_id,encounter_id,type,date,page,page_size}]
+**Scopes required:** `composition:read`
+
++ Parameters
+    + encounter_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - encounter identifier linked to the Composition
+    + type: ABP (string, optional) - type of the Composition
+    + `date`: `2023-12-25` (string, optional) - sign date of the Composition
+    + page: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Composition_Short_Response`])
+
+
+### Get Composition by identifier  [GET /api/patients/{patient_id}/compositions/{id}]
+**Scopes required:** `composition:read`
+
++ Parameters
+    + id: `1234-3224-2342-1233` (string, required) - human readable Composition number
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Composition_Full_Response`])
+
+
+### Get Composition context [GET /api/patients/{patient_id}/compositions/{id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) -  Composition identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Composition_with_Episode_Response`)
+
+### Get Episode details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/episodes/{episode_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `episode_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Episode identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Episode_Of_Care_Response`)
+
+### Get Diagnostic Report details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/diagnostic_reports/{diagnostic_report_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `diagnostic_report_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Diagnostic Report identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Diagnostic_Report_Response`)
+
+### Get Encounter details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/encounters/{encounter_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `encounter_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Encounter identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Encounter_Response`)
+
+### Get Care Plan details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/care_plans/{care_plan_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `care_plan_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Care Plan identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Care_Plan_Show`)
+
+### Get Procedure details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/procedures/{procedure_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `procedure_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Procedure identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Procedure_Response`)
+
+### Get Condition details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/conditions/{condition_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `condition_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Condition identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Condition_Response`, fixed-type)
+
+### Get Observation details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/observations/{observation_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `observation_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Observation identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Observation_Response`, fixed-type)
+
+### Get Clinical Impression details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/clinical_impressions/{clinical_impression_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `clinical_impression_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Clinical Impression identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Clinical_Impression_Show`)
+
+### Get Immunization details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/immunizations/{immunization_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `immunization_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Immunization identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Immunization_Response`, fixed-type)
+
+### Get Service Request details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/service_requests/{service_request_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `service_request_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Service Request identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Service_Request_Show`)
+
+### Get Composition details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/compositions/{composition_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier: Main Composition
+    + `composition_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Composition identifier: Mentioned in section.entry
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Composition_Full_Response`)
+
+### Get Device Request details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/device_requests/{device_request_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `device_request_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Device Request identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Device_Request_Response_Details`)
+
+### Get Device Dispense details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/device_dispenses/{device_dispense_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `device_dispense_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Device Dispense identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Device_Dispense_Response`)
+
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
@@ -5328,6 +5609,60 @@ This web service returns rule engine rule details filtered by ID with active rul
         + include `Coding`
 + text (string, optional)
 
+### `Section`
++ title: `History of present illness` (string, required)
++ code (object, required, fixed-type)
+    + code (object, required, fixed-type)
+        + (Coding)
+            + code: `11348-0` (string)
+            + system: `http://loinc.org` (string)
+            + display: `History of present illness` (string)
++ author: (array, required, fixed-type)
+    + (object)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: {{section_author_id}} (string, required)
++ focus: (object, optional, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `person` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{section_person_id}} (string, required)
++ text: (object, optional, fixed-type)
+    + status: `generated` (string, required)
+    + div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">...` (string, required)
++ ordered_by: (object, optional, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `system` (string)
+                + system: `http://terminology.hl7.org/CodeSystem/list-order` (string)
+                + display: `Sorted by System` (string)
++ entry: (array, optional, fixed-type)
+    + (object)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `observation` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: {{section_observation_id}} (string, required)
++ empty_reason: (array, optional, fixed-type)
+    + (object)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `withheld` (string)
+                + system: `http://terminology.hl7.org/CodeSystem/list-empty-reason` (string)
+                + display: `Information Withheld` (string)
++ section: (array[Section], optional) - Nested Section
+
+
 ### `Coding`
 + system : `eHealth/resources` (string, required)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
@@ -5797,7 +6132,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
 
 ### `Composition_Create` 
-+ `status`: `FINAL`  (string, required) - `dictionary eHealth/encounter_statuses`
++ `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
 + `type`: (object, required, fixed-type)
     + coding (array, fixed-type)
         + (Coding)
@@ -5817,6 +6152,333 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/resources` (string)
         + text: `string` (string, required)
     + value: {{custodian_id}} (string, required)
++ `encounter`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `encounter` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{encounter_id}} (string, required)
++ `author`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `employee` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{author_id}} (string, required)
++ `section`: (array, required, fixed-type)
+    + (object)
+        + title: `History of present illness` (string, required)
+        + code (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `11348-0` (string)
+                    + system: `http://loinc.org` (string)
+                    + display: `History of present illness` (string)
+        + author: (array, required, fixed-type)
+            + (object)
+                + type (object, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: {{section_author_id}} (string, required)
+        + focus: (object, optional, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `person` (string)
+                        + system: `eHealth/resources` (string)
+                + text: `string` (string, required)
+            + value: {{section_person_id}} (string, required)
+        + text: (object, optional, fixed-type)
+            + status: `generated` (string, required)
+            + div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">...` (string, required)
+        + ordered_by: (object, optional, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `system` (string)
+                        + system: `http://terminology.hl7.org/CodeSystem/list-order` (string)
+                        + display: `Sorted by System` (string)
+        + entry: (array, optional, fixed-type)
+            + (object)
+                + type (object, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `observation` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: {{section_observation_id}} (string, required)
+        + empty_reason: (array, optional, fixed-type)
+            + (object)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `withheld` (string)
+                        + system: `http://terminology.hl7.org/CodeSystem/list-empty-reason` (string)
+                        + display: `Information Withheld` (string)
+        + section: (array[Section], optional) - Nested Section
++ `extension`: (array, optional, fixed-type)
+    + (object)
+        + valueCode: `IS_ACCIDENT` (string)
+        + valueCodeableConcept: (object, required, fixed-type)
+            + extension: (array, required, fixed-type)
+                + (object)
+                    + valueCode: `ЗНАЧЕННЯ ДО Codeable Concept` (string, required)
+                    + valueDecimal: `300` (number, required)
+                + (object)
+                    + valueCode: `БУКВА ДО обраного коду з постанови 340` (string, required)
+                    + valueCodeableConcept: (object, required, fixed-type)
+                        + code: (object, fixed-type)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `a` (string)
+                                    + system: `Довідник букв до 340` (string)
++ `relates_to`: (array, optional, fixed-type)
+    + (object)
+        + type: `replaces`
+        + resource_reference (object, required, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `composition` (string)
+                        + system: `eHealth/resources` (string)
+                + text: `string` (string, required)
+            + value: {{composition_id}} (string, required)
++ `attester`: (array, required, fixed-type)
+    + (object)
+        + mode: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal` (string)
+                    + system: `http://hl7.org/fhir/composition-attestation-mode` (string)
+                    + display: `Legal` (string)
+        + party: (object, required, fixed-type)
+            + type: (object, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        + system: `eHealth/resources` (string)
+                + text: `string` (string, required)
+            + value: {{attester_id}} (string, required)
++ `event`: (array, optional, fixed-type)
+    + (object)
+        + code: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `COMPOSITION_VALIDITY_PERIOD` (string)
+                    + system: `COMPOSITION_EVENTS` (string)
+        + period: (object, required, fixed-type)
+            + start: `2018-08-02T10:45:16.000Z` (string, required)
+            + end: `2018-08-12T10:45:16.000Z` (string, required)
+
+
+### `Composition_Short_Response` 
++ `id`: `1234-3224-2342-1233` (string, required) - `Identifier of composition`
++ `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, optional, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `title`: `AA-323-xx-1111` (string, required)
++ `encounter`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `encounter` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{encounter_id}} (string, required)
++ `custodian`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `legal_entity` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{custodian_id}} (string, required)
++ `author`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `employee` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{author_id}} (string, required)
++ `attester`: (array, optional, fixed-type)
+    + (object)
+        + mode: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal` (string)
+                    + system: `http://hl7.org/fhir/composition-attestation-mode` (string)
+                    + display: `Legal` (string)
+        + party: (object, required, fixed-type)
+            + type: (object, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        + system: `eHealth/resources` (string)
+                + text: `string` (string, required)
+            + value: {{attester_id}} (string, required)
++ `context_episode_id`: `DDD-23323-FDadc-32fd` (string, required)
+
+### `Composition_Full_Response`
++ `id`: `1234-3224-2342-1233` (string, required) - `Identifier of composition`
++ `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, optional, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `title`: `AA-323-xx-1111` (string, required)
++ `custodian`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `legal_entity` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{custodian_id}} (string, required)
++ `encounter`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `encounter` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{encounter_id}} (string, required)
++ `author`: (object, required, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `employee` (string)
+                + system: `eHealth/resources` (string)
+        + text: `string` (string, required)
+    + value: {{author_id}} (string, required)
++ `section`: (array, optional, fixed-type)
+    + (object)
+        + title: `History of present illness` (string, required)
+        + code (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `11348-0` (string)
+                    + system: `http://loinc.org` (string)
+                    + display: `History of present illness` (string)
+        + author: (array, required, fixed-type)
+            + (object)
+                + type (object, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: {{section_author_id}} (string, required)
+        + focus: (object, optional, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `person` (string)
+                        + system: `eHealth/resources` (string)
+                + text: `string` (string, required)
+            + value: {{section_person_id}} (string, required)
+        + text: (object, optional, fixed-type)
+            + status: `generated` (string, required)
+            + div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">...` (string, required)
+        + ordered_by: (object, optional, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `system` (string)
+                        + system: `http://terminology.hl7.org/CodeSystem/list-order` (string)
+                        + display: `Sorted by System` (string)
+        + entry: (array, optional, fixed-type)
+            + (object)
+                + type (object, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `observation` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: {{section_observation_id}} (string, required)
+        + empty_reason: (array, optional, fixed-type)
+            + (object)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `withheld` (string)
+                        + system: `http://terminology.hl7.org/CodeSystem/list-empty-reason` (string)
+                        + display: `Information Withheld` (string)
+        + section: (array[Section], optional) - Nested Section
++ `extension`: (array, optional, fixed-type)
+    + (object)
+        + valueCode: `IS_ACCIDENT` (string)
+        + valueCodeableConcept: (object, required, fixed-type)
+            + extension: (array, required, fixed-type)
+                + (object)
+                    + valueCode: `ЗНАЧЕННЯ ДО Codeable Concept` (string, required)
+                    + valueDecimal: `300` (number, required)
+                + (object)
+                    + valueCode: `БУКВА ДО обраного коду з постанови 340` (string, required)
+                    + valueCodeableConcept: (object, required, fixed-type)
+                        + code: (object, fixed-type)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `a` (string)
+                                    + system: `Довідник букв до 340` (string)
++ `relates_to`: (array, optional, fixed-type)
+    + (object)
+        + type: `replaces`
+        + resource_reference (object, required, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `composition` (string)
+                        + system: `eHealth/resources` (string)
+                + text: `string` (string, required)
+            + value: {{composition_id}} (string, required)
++ `attester`: (array, optional, fixed-type)
+    + (object)
+        + mode: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal` (string)
+                    + system: `http://hl7.org/fhir/composition-attestation-mode` (string)
+                    + display: `Legal` (string)
+        + party: (object, required, fixed-type)
+            + type: (object, required, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
+                        + system: `eHealth/resources` (string)
+                + text: `string` (string, required)
+            + value: {{attester_id}} (string, required)
++ `event`: (array, optional, fixed-type)
+    + (object)
+        + code: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `COMPOSITION_VALIDITY_PERIOD` (string)
+                    + system: `COMPOSITION_EVENTS` (string)
+        + period: (object, required, fixed-type)
+            + start: `2018-08-02T10:45:16.000Z` (string, required)
+            + end: `2018-08-12T10:45:16.000Z` (string, required)
++ `context_episode_id`: `DDD-23323-FDadc-32fd` (string, required)
 
 
 ### `Encounter_Request` 
@@ -9898,9 +10560,24 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: `7c3da506-804d-4550-8993-bf17f9ee0404` (string)
 + display_value: `null` (string, required) - This field is filled on creating and never updated after
 
+### `Medical_Event_Context_Composition`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `composition` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0404` (string)
++ display_value: `null` (string, required) - This field is filled on creating and never updated after
+
+
 ### `Medical_Event_Context_Care_Plan_with_Episode_Response`
 + `episode` (`Medical_Event_Context_Episode`)
 + `care_plan` (`Medical_Event_Context_Care_Plan`) - Care plan identifier related to the Activity on which Device request is based on
+
+
+### `Medical_Event_Context_Composition_with_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
++ `care_plan` (`Medical_Event_Context_Composition`) - Composition identifier related to the Activity on which Composition is based on
 
 
 ### `Device_Request_Base`
@@ -10624,7 +11301,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + end : `2023-04-20T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
 + duration (object, optional) - How long it took to collect Specimen
     + value: 5 (number, required)
-    + system: `UNITS_OF_TIME` (string, required)
+    + system: `eHealth/ucum/units` (string, required)
     + code: min (string, required)
     + comparator: `>` (string, optional)
 + quantity (object, required) - The quantity of specimen collected
@@ -10807,7 +11484,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + display_value: `Василенко Олена Павлівна` (string, required) - This field is filled on creating and never updated after
     + duration (object, optional) - How long it took to collect Specimen
         + value: 5 (number, required)
-        + system: `UNITS_OF_TIME` (string, required)
+        + system: `eHealth/ucum/units` (string, required)
         + code: min (string, required)
         + comparator: `>` (string, optional)
         + unit: хв (string, required)
