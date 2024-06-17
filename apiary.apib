@@ -2668,14 +2668,14 @@ http code| processing method | Client recommendations
 
 ### Mark in error Composition[PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error]
 
-This method must be used to cancel existing Composition. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+This method must be used to mark in error existing Composition. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
 1. Signed content of a Composition must be equal to the Composition stored in DB. See Get Composition details
 2. status_reason must be added to signed content
 3. status must be changed to `entered_in_error` for the purpose of displaying in the signed content
 
-Please see [Composition status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3872260122/Composition+status+model) and Dummy Cancel Composition for more details
+Please see [Composition status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3872260122/Composition+status+model) and Dummy Mark-in-error Composition for more details
 
 
 **Scopes required:** `composition:mark_in_error`
