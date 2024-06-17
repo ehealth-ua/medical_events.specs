@@ -2678,7 +2678,7 @@ This method must be used to cancel existing Composition. Method receives signed 
 Please see [Composition status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3872260122/Composition+status+model) and Dummy Cancel Composition for more details
 
 
-**Scopes required:** `composition:cancel`
+**Scopes required:** `composition:mark_in_error`
 
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
@@ -2721,11 +2721,11 @@ http code| processing method | Client recommendations
             api-key: aFBLVTZ6Z2dON1V
             X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
-    + Attributes (Composition_Response)
+    + Attributes (Composition_Create)
         + `status_reason` (Codeable_Concept, required)
             + coding (array, fixed-type)
                 + (Coding)
-                    + system: `composition_cancel_reasons` (string)
+                    + system: `composition_mark_in_error_reasons` (string)
                     + code: `default` (string)
         + `status`: `entered_in_error` (string, required)
         
