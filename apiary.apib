@@ -2423,7 +2423,7 @@ http code| processing method | Client recommendations
             X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
-    + Attributes (Response_Collection)
+    + Attributes (Response_Collection_OK)
         + data (array[`Composition_Full_Response`])
 
 
@@ -2664,6 +2664,77 @@ http code| processing method | Client recommendations
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data(`Device_Dispense_Response`)
+        
+
+### Mark in error Composition[PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error]
+
+This method must be used to cancel existing Composition. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of a Composition must be equal to the Composition stored in DB. See Get Composition details
+2. status_reason must be added to signed content
+3. status must be changed to `entered_in_error` for the purpose of displaying in the signed content
+
+Please see [Composition status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3872260122/Composition+status+model) and Dummy Cancel Composition for more details
+
+
+**Scopes required:** `composition:cancel`
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Composition identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Mark in error Composition [PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error/dummy]
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Composition identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (Composition_Response)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `composition_cancel_reasons` (string)
+                    + code: `default` (string)
+        + `status`: `entered_in_error` (string, required)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
 
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
@@ -6174,7 +6245,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + code: `DRIVERS` (string)
             + system: `COMPOSITION_TYPES` (string)
-+ `category`: (object, optional, fixed-type)
++ `category`: (object, required, fixed-type)
     + coding (array, fixed-type)
         + (Coding)
             + code: `DRIVERS_GROUP1` (string)
@@ -6273,6 +6344,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                                 + (Coding)
                                     + code: `a` (string)
                                     + system: `Довідник букв до 340` (string)
+            + code: (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `20.07` (string)
+                        + system: `Довідник кодів постанови №340` (string)
 + `relates_to`: (array, optional, fixed-type)
     + (object)
         + type: `replaces`
@@ -6310,6 +6386,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + period: (object, required, fixed-type)
             + start: `2018-08-02T10:45:16.000Z` (string, required)
             + end: `2018-08-12T10:45:16.000Z` (string, required)
++ `authorize_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 
 ### `Composition_Short_Response` 
@@ -6477,6 +6554,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                                 + (Coding)
                                     + code: `a` (string)
                                     + system: `Довідник букв до 340` (string)
+            + code: (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `20.07` (string)
+                        + system: `Довідник кодів постанови №340` (string)
 + `relates_to`: (array, optional, fixed-type)
     + (object)
         + type: `replaces`
