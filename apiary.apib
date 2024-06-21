@@ -1,11 +1,11 @@
 FORMAT: 1A
-HOST: http://api.ehealth.gov.ua/
+HOST: https://api.ehealth.gov.ua
 
-# MEDICAL EVENTS MIS API 
+# MEDICAL EVENTS MIS API
 
-**Version: 9.5.2 v.1**
+**Version: 9.5.5.11 v.1**
 
-Environment: **PROD**
+> This is a **MIS-related consumers  part** of API documentation for Ukrainian Health Services government institution back-end, that should provide
 
 > Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
 
@@ -1312,6 +1312,7 @@ Observation| 0-* |true
 Diagnostic report|1-1| true
 
 To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061216257/Submit+Encounter+Package)
+
 + Request Package (application/json)
 
     + Headers
@@ -7526,6 +7527,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ `created_by` (Reference_request, optional) - author of the request for approval
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 + access_level: `read` (enum, required) - access rights type
     - read
     - write
@@ -7588,6 +7595,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
++ `created_by` (Reference_request, required) - author of the request for approval
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 + `is_verified`: true (boolean, required) - state of verification of approval
     - true
     - false
@@ -7617,6 +7630,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service_request` (string)
++ `created_by` (Reference_request, required) - author of the request for approval
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
 + `is_verified`: true (boolean, required) - state of verification of approval
     - true
     - false
