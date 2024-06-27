@@ -2387,11 +2387,12 @@ http code| processing method | Client recommendations
     + type: `DRIVERS` (string, optional) - type of the Composition
     + category: `DRIVERS_GROUP1` (string, optional) - category of Composition
     + status: `FINAL` (string, optional) - status of Composition
-    + focus: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional) - person who related with Composition
+    + title: `444-D5354-AA002` (string, optional) - number of Composition
     + author: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - author of Composition
     + attester: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - attester of Composition
     + custodian: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - LE where Composition was created
-    + `date`: `2023-12-25` (string, optional) - sign date of the Composition
+    + `date_from`: `2023-12-25` (string, optional) - the date from which the Composition was signed 
+    + `date_to`: `2023-12-25` (string, optional) - the date to which the Composition was signed
     + page: 2 (number, optional) - Page number
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -7184,7 +7185,12 @@ This web service returns rule engine rule details filtered by ID with active rul
         - One Of
             + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
             + value_quantity (Quantity, required)
-            + value_codeable_concept (Codeable_Concept, required)
+            + value_codeable_concept (object, required)
+                + `coding` (array, required, fixed-type)
+                    + (object)
+                        + include `Coding`
+                        + extension (Extension, optional)
+                + text (string, optional)
             + value_sampled_data (object, required)
                 + origin (number, optional) //SimpleQuantity Zero value and units
                 + period (number, optional) // decimal Number of milliseconds between samples
@@ -10695,7 +10701,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Medical_Event_Context_Composition_with_Episode_Response`
 + `episode` (`Medical_Event_Context_Episode`)
-+ `care_plan` (`Medical_Event_Context_Composition`) - Composition identifier related to the Activity on which Composition is based on
 
 
 ### `Device_Request_Base`
@@ -11644,4 +11649,11 @@ This web service returns rule engine rule details filtered by ID with active rul
     - `value_quantity` (Quantity, optional)
     - `value_range` (Range, optional)
     - `value_boolean` (boolean, optional)
+    - `value_string` (string, optional)
+
+### `Extension`
++ code: `item_weight` (string)
+- One Of
+    - `value_codeable_concept` (Codeable_Concept)
+    - `value_decimal` (number, optional)
     - `value_string` (string, optional)
