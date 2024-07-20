@@ -2304,7 +2304,7 @@ http code| processing method | Client recommendations
 
 ## Composition [/api/patients/{patient_id}/composition]
 
-### Create Composition Title [POST /api/patients/{patient_id}/createCompositionNumber]
+### Create Composition Title [POST /api/patients/{patient_id}/composition_title]
 This WS allows to create a title for Composition.
 **Scopes required:** `composition:write`
 
@@ -2321,7 +2321,8 @@ This WS allows to create a title for Composition.
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 202 (number)
-        + data (`Job`)
+        + data
+            + title: 1234-1234-1234-1234 (string, required)
 
 ### Create Composition [POST /api/patients/{patient_id}/compositions]
 This WS allows to register Composition by its own.
@@ -2361,10 +2362,10 @@ This WS allows to register Composition by its own.
             
     + Attributes (Composition_Create)
 
-+ Response 202 (application/json)
++ Response 201 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
-            + code: 202 (number)
+            + code: 201 (number)
         + data (`Job`)
         
 
