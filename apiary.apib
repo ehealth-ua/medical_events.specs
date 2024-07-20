@@ -2304,6 +2304,25 @@ http code| processing method | Client recommendations
 
 ## Composition [/api/patients/{patient_id}/composition]
 
+### Create Composition Title [POST /api/patients/{patient_id}/createCompositionNumber]
+This WS allows to create a title for Composition.
+**Scopes required:** `composition:write`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer WUZKa1BnUTRkOWhYcTAxOHNmUTdUUT09
+            api-key: b1lPV3d3blRHRHdOYVYrYmNPU0tJdz09
+            X-Custom-PSK: a1aa07c96f3f4d91870f923a53cc9aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 ### Create Composition [POST /api/patients/{patient_id}/compositions]
 This WS allows to register Composition by its own.
 **Scopes required:** `composition:write`
@@ -2428,13 +2447,13 @@ http code| processing method | Client recommendations
         + data (array[`Composition_Full_Response`])
 
 
-### Generate Composition print form  [GET /api/patients/{patient_id}/compositions/{id}/actions/generate_print_form]
+### Generate Composition print form  [GET /api/patients/{patient_id}/compositions/{id}/print_form?form_type=informational_certificate]
 **Scopes required:** `composition:read`
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
     + composition_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique composition identifier
-  
+    + `form_type`: `informational_certificate`(string, required) - Type of the print form
 + Request (application/json)
 
     + Headers
