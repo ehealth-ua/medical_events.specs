@@ -2427,6 +2427,27 @@ http code| processing method | Client recommendations
 + Response 200 (application/json)
     + Attributes (Response_Collection)
         + data (array[`Composition_Short_Response`])
+        
+
+### Get Composition Configurations by search params [GET /api/composition_configurations{?type,category,page,page_size}]
+
++ Parameters
+    + type: `DRIVERS` (string, required) - type of the Composition
+    + category: `DRIVERS_GROUP1` (string, required) - category of Composition
+    + page: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Composition_Configurations_Response`])
 
 
 ### Get Composition by identifier  [GET /api/patients/{patient_id}/compositions/{id}]
@@ -11684,3 +11705,22 @@ This web service returns rule engine rule details filtered by ID with active rul
     - `value_codeable_concept` (Codeable_Concept)
     - `value_decimal` (number, optional)
     - `value_string` (string, optional)
+    
+### `Composition_Configurations_Response`
++ `id`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `is_active`: true (boolean, required)
++ `settings`: `[ { "condition": { "code": "01.01.", "system": "eHealth/composition_additional_condition_admission" }, "check": true } ]`(string,required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
