@@ -2454,7 +2454,8 @@ http code| processing method | Client recommendations
 **Scopes required:** `composition:read`
 
 + Parameters
-    + id: `1234-3224-2342-1233` (string, required) - human readable Composition number
+    + patient_id: `25878134-7592-472a-adc1-f9532ce7f048` (string, required) - patient identifier
+    + id: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - human readable Composition number
     
 + Request (application/json)
 
@@ -6416,7 +6417,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 
 ### `Composition_Short_Response` 
-+ `id`: `1234-3224-2342-1233` (string, required) - `Identifier of composition`
++ `id`: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - `Identifier of composition`
 + `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
 + `type`: (object, required, fixed-type)
     + coding (array, fixed-type)
@@ -6477,7 +6478,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `context_episode_id`: `DDD-23323-FDadc-32fd` (string, required)
 
 ### `Composition_Full_Response`
-+ `id`: `1234-3224-2342-1233` (string, required) - `Identifier of composition`
++ `id`: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - `Identifier of composition`
 + `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
 + `type`: (object, required, fixed-type)
     + coding (array, fixed-type)
