@@ -4717,6 +4717,7 @@ care_plan|read, write
 encounter|write
 procedure|write
 specimen|write
+composition|write
 
 
 Block child_resource may consist next entities:
@@ -9998,6 +9999,15 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + system: `eHealth/resources` (string, required)
                     + code: `device` (string)
             + text (string)
+    - `composition` (object, optional) - access to composition and its child resources including forbidden groups
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `composition` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
 + `child_resource` (object, optional) - should be submitted with resources field only. Describes medical event included in the resource
     + identifier (object, optional)
         + type (object, optional)
