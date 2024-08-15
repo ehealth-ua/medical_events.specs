@@ -2322,7 +2322,7 @@ This WS allows to create a title for Composition.
         + meta (Response__Meta)
             + code: 202 (number)
         + data
-            + title: 1234-1234-1234-1234 (string, required)
+            + title: `98CC-P696-E34T-X4T2` (string, required)
 
 ### Submit Composition [POST /api/patients/{patient_id}/compositions]
 This WS allows to register Composition by its own.
@@ -2407,7 +2407,7 @@ http code| processing method | Client recommendations
     + type: `DRIVERS` (string, optional) - type of the Composition
     + category: `DRIVERS_GROUP1` (string, optional) - category of Composition
     + status: `FINAL` (string, optional) - status of Composition
-    + title: `444-D5354-AA002` (string, optional) - number of Composition
+    + title: `98CC-P696-E34T-X4T2` (string, optional) - number of Composition
     + author: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - author of Composition
     + attester: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - attester of Composition
     + custodian: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - LE where Composition was created
@@ -6296,7 +6296,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Composition_Create` 
 + `id`: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
-+ `title`: `1234-1234-1234-1234` (string, required)
++ `title`: `98CC-P696-E34T-X4T2` (string, required)
 + `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
 + `type`: (object, required, fixed-type)
     + coding (array, fixed-type)
@@ -6434,7 +6434,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + code: `DRIVERS_GROUP1` (string)
             + system: `COMPOSITION_CATEGORIES` (string)
 + `date`: `2018-08-02T10:45:16.000Z` (string, required)
-+ `title`: `AA-323-xx-1111` (string, required)
++ `title`: `98CC-P696-E34T-X4T2` (string, required)
 + `encounter`: (object, required, fixed-type)
     + identifier (Identifier)
         + type (object, fixed-type)
@@ -6495,7 +6495,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + code: `DRIVERS_GROUP1` (string)
             + system: `COMPOSITION_CATEGORIES` (string)
 + `date`: `2018-08-02T10:45:16.000Z` (string, required)
-+ `title`: `AA-323-xx-1111` (string, required)
++ `title`: `98CC-P696-E34T-X4T2` (string, required)
 + `custodian`: (object, required, fixed-type)
     + identifier (Identifier)
         + type (object, fixed-type)
