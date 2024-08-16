@@ -1874,7 +1874,7 @@ This method is used to set a received_time for a Specimen.
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `specimen:process`
@@ -1905,7 +1905,7 @@ This method is used to mark Specimen as unavailable.
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `specimen:invalidate`
@@ -1940,7 +1940,7 @@ This method is used to mark Specimen as unsatisfactory.
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `specimen:reject`
@@ -1985,7 +1985,7 @@ Please see [Specimen status model](https://e-health-ua.atlassian.net/wiki/spaces
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
@@ -7155,7 +7155,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## Procedures
 ### Procedure_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
++ `based_on` (Reference_request, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests) is required
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7248,7 +7248,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_response, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
++ `based_on` (Reference_response, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
