@@ -3,7 +3,7 @@ HOST: https://api.ehealth.gov.ua
 
 # MEDICAL EVENTS MIS API
 
-**Version: 9.5.5.11 v.1**
+**Version: 9.7.5 v.1**
 
 > This is a **MIS-related** **consumers** **part** of API documentation for Ukrainian Health Services government institution back-end, that should provide
 
@@ -31,6 +31,12 @@ user should have approval on ALL patients medical data, otherwise the response w
  `/patient/{patient_id}/conditions?episode_context={episode_1}`
 
 Here you can find the list of current [rules](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17049388207/ABAC+rules+EN).
+
+## About Forbidden Groups filtration
+Some routes in eHealth are managed not only by scope-based  model and ABAC rules, but Forbidden Groups model.
+
+After successfull access with ABAC response will be filtered according to [Medical Events filtration by Forbidden groups](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/5056954517/Medical+Events+filtration+by+Forbidden+groups+EN)
+
 # Group Medical Events
 Medical events API is a set of web services designed to provide methods of communication between eHealth Medical Data Storage and medical information systems (MIS).
 Medical events API is based on the international framework for exchanging digital health records - FHIR( Release 3 (STU)). Most of  major resources, data types, data structures and their way of interpretation are inherited from FHIR. However, there are minor сhanges described in Apiary.
@@ -60,6 +66,7 @@ Medication administration|0-*|true
 Diagnostic report|0-*| true
 Procedure|0-*| true
 Clinical impression|0-*| true
+Specimen|0-*| true
 
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
@@ -73,6 +80,8 @@ To find out more about the process of encounter package creation read [Confluenc
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Submit_Encounter_Package`
 
@@ -107,6 +116,7 @@ This resource should be used to get the processing status of the async job.
     + Headers
 
             Authorization: Bearer 342432fdsfdsgfdt24535422fgds
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -155,6 +165,9 @@ This resource should be used to get the processing status of the async job.
                 + (object)
                     + entity: `procedure` (string, required)
                     + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/procedure/42e5985d-2a79-452f-8bc4-ed3a02fdefc5` (string, required)
+                + (object)
+                    + entity: `specimen` (string, required)
+                    + href: `{host}/api/patients/3da18c10-d2ca-469e-bde5-7413201cea2/specimens/42e5985d-2a79-452f-8bc4-ed3a02fdefc6` (string, required)
                 
 
 + Response 403 (application/json)
@@ -198,10 +211,13 @@ This resource should be used to get the processing status of the async job.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (Encounter_Request)
         
     
 #### Dummy Condition [POST]
+
 This chapter describes the structure of a single unsigned condition that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request (application/json)
@@ -209,10 +225,13 @@ This chapter describes the structure of a single unsigned condition that could b
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Condition_Request`)
     
     
 #### Dummy Observation [POST]
+
 This chapter describes the structure of a single unsigned observation that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
 + Request 1 (application/json)
@@ -220,6 +239,8 @@ This chapter describes the structure of a single unsigned observation that could
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Observation_Request_1`)
     
     
@@ -228,6 +249,8 @@ This chapter describes the structure of a single unsigned observation that could
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4 
+            
     + Attributes (`Observation_Request_2`)
 
         
@@ -241,6 +264,8 @@ This chapter describes the structure of a single unsigned immunization that coul
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Immunization_Request`) 
     
 #### Dummy Allergy_Intolerance [POST]
@@ -251,6 +276,8 @@ This chapter describes the structure of a single unsigned allergy_intolerance th
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Allergy_Intolerance_Request`)
 
 #### Dummy Risk_Assessment [POST]
@@ -261,6 +288,8 @@ This chapter describes the structure of a single unsigned risk_assessment that c
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Risk_Assessment_Request`)
 
 #### Dummy Device [POST]
@@ -271,6 +300,8 @@ This chapter describes the structure of a single unsigned device that could be s
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Device_Request`)
 
 
@@ -282,6 +313,8 @@ This chapter describes the structure of a single unsigned medication statement t
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Medication_Statement_Request`)
     
     
@@ -293,6 +326,8 @@ This chapter describes the structure of a single unsigned diagnostic report that
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Diagnostic_Report_EncounterPCG_Request`)
 
 
@@ -304,6 +339,8 @@ This chapter describes the structure of a single unsigned procedure that could b
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Procedure_EncounterPCG_Request`)  
 
 #### Dummy Medication Administration [POST]
@@ -314,6 +351,8 @@ This chapter describes the structure of a single unsigned medication that could 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Medication_Administration_EncounterPCG_Request`) 
 
 #### Dummy Clinical Impression [POST]
@@ -324,7 +363,38 @@ This chapter describes the structure of a single unsigned clinical impression th
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Clinical_Impression_EncounterPCG_Request`)
+
+#### Dummy Specimen [POST]
+This chapter describes the structure of a single unsigned Specimen that could be submitted as a part of Encounter Package. This is not an actual web-service.
+
++ Request  (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (`Specimen_Request`)
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
+        + collection (`Specimen_Collection_Request`, required) - Collection details
+            + procedure (Reference_request, optional) - Procedure that collects the specimen.
+                + identifier (Identifier, required)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `procedure` (string, required)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
+        + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+            - available
+            - unavailable
 
 ### Cancel Encounter Package [PATCH]
 Read more about [business logic and validations.](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061314561/Cancel+Encounter+Package)
@@ -333,6 +403,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + signed_data: `ew0KICAicGVyaW9kIjogew0KIC...` (string, required)
 
@@ -357,6 +429,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Cancel_Encounter`) 
 
 + Response 200 (application/json)
@@ -371,6 +445,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Episode_Of_Care_Request`
 
@@ -398,6 +474,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -425,6 +502,8 @@ Use period_from period_to to find episodes that were active in a certain period 
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -448,6 +527,7 @@ This web service returns episodes, that patient gave approvals to read by a curr
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -475,6 +555,7 @@ If you have an approval - you can obtain episode details and nested entities thr
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -490,6 +571,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + include `Update_Episode`
@@ -518,6 +600,8 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Close_Episode`
 
@@ -545,6 +629,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + include `Cancel_Episode`
@@ -580,6 +665,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -596,6 +682,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -616,6 +703,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -632,6 +720,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -652,6 +741,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -668,6 +758,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -688,6 +779,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -704,6 +796,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -724,6 +817,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -740,6 +834,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -758,6 +853,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -773,11 +869,13 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
     + `incoming_referral_id`: `f10aeafb-0df2-4091-bc83-f07e92a100ae` (string, optional)
     + `origin_episode_id`: `d11aeafb-0df2-4091-bc83-f07e92a100af` (string, optional)
+    + `managing_organization_id`: `887a37a4-c95f-4017-ba11-a000c61bf700` (string, optional)
 
 + Request (application/json)
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -794,6 +892,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -812,6 +911,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -827,11 +927,13 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
     + `onset_date_from`:`1990-01-01` (string, optional)
     + `onset_date_to`: `2000-01-01` (string, optional)
+    + `managing_organization_id`: `887a37a4-c95f-4017-ba11-a000c61bf700` (string, optional)
 
 + Request (application/json)
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -849,6 +951,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -868,6 +971,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -883,11 +987,14 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + `episode_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
     + `issued_from`:`1990-01-01` (string, optional)
     + `issued_to`: `2000-01-01` (string, optional)
+    + `managing_organization_id`: `887a37a4-c95f-4017-ba11-a000c61bf700` (string, optional)
+    + `specimen_id`: `f48d1b6c-a021-4d6a-a5a4-aee93e152ecc` (string, optional)
 
 + Request (application/json)
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -905,6 +1012,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -923,6 +1031,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -943,6 +1052,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -959,6 +1069,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -976,6 +1087,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -998,6 +1110,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1015,6 +1128,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1033,6 +1147,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1055,6 +1170,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1072,6 +1188,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1090,6 +1207,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1112,6 +1230,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1129,6 +1248,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1145,6 +1265,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1166,6 +1287,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1183,6 +1305,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1199,6 +1322,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1223,6 +1347,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1240,6 +1365,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1255,6 +1381,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1278,6 +1405,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1295,6 +1423,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1311,13 +1440,15 @@ Object| Required| Part of Signed content
 Observation| 0-* |true
 Diagnostic report|1-1| true
 
-To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061216257/Submit+Encounter+Package)
+To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061216257/Submit+Encounter+Package).
 
 + Request Package (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + `signed_data` : 'ew0KICAicGVyaW9kIjogew0KIC...' (string, required, fixed-type)
 
@@ -1342,6 +1473,8 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Submit_DR_Package`
 
@@ -1351,6 +1484,8 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + `signed_data` : 'ew0KICAicGVyaW9kIjogew0KIC...' (string, required, fixed-type)
 
@@ -1375,6 +1510,8 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Submit_DR_Package_Cancel`
 
@@ -1389,6 +1526,7 @@ To find out more about the process of diagnostic report package creation read [C
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1406,13 +1544,14 @@ To find out more about the process of diagnostic report package creation read [C
     + `issued_to`: `2000-01-01` (string, optional) 
     + `based_on`: `09dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
     + `managing_organization_id`: `19dc3ed7-2169-45d8-8fa3-d918c6839bf9` (string, optional) 
-    
+    + `specimen_id`: `90dc3ed7-2169-45d8-8fa3-d918c6839b21` (string, optional)
 
 + Request (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1434,6 +1573,7 @@ This web service allows to get a list of diagnostic reports that were allowed to
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1450,6 +1590,7 @@ This web service allows to get a list of diagnostic reports that were allowed to
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1468,6 +1609,7 @@ This WS allows to register procedure by its own. Also prosedure can be registere
     + Headers
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -1486,6 +1628,8 @@ This chapter describes the structure of a single procedure creation. This is not
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (`Procedure_Request`)
  
 ### Get Procedures by ID [GET /api/patients/{patient_id}/procedures/{id}]
@@ -1500,6 +1644,7 @@ This chapter describes the structure of a single procedure creation. This is not
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Procedure_Response`)
@@ -1531,6 +1676,7 @@ This chapter describes the structure of a single procedure creation. This is not
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -1548,6 +1694,7 @@ This chapter describes the structure of a single procedure creation. This is not
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1574,6 +1721,7 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -1591,6 +1739,7 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Procedure_Request)
         + `status_reason` (Codeable_Concept, required)
@@ -1607,6 +1756,288 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
         + meta (Response__Meta)
             + code: 202 (number)
         + data (`Job`)
+
+
+## Specimen [/api/patients/{patient_id}/specimens]
+
+### Create Specimen [POST]
+This WS allows to register Specimen by its own. Also Specimen can be registered as a part of [encounter package](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
+**Scopes required:** `specimen:write`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Dummy create Specimen [POST]
+This chapter describes the structure of a single Specimen creation. This is not an actual web-service.
+
++ Request (application/json)
+
+    + Headers
+            api-key: aFBLVTZ6Z2dON1V
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (`Specimen_Request`)
+
+### Get Specimen details [GET /api/patients/{patient_id}/specimens/{id}]
+**Scopes required:** `specimen:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique specimen identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Specimen_Response`)
+
+
+### Get Specimen by search params [GET /api/patients/{patient_id}/specimens{?type,status,registered_by,collected_from,collected_to,container_identifier,container_type,parent,request,page,page_size}]
+**Scopes required:** `specimen:read`
+
++ Parameters
+    + status: available (string, optional) - status of the Specimen
+    + type: ABP (string, optional) - kind of material that forms the Specimen
+    + `registered_by`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - identifier of employee who registered the specimen
+    + `collected_from`: `2023-12-25` (string, optional) - the date from which the Specimen was collected
+    + `collected_to`: `2023-12-28` (string, optional)  - the date to which the Specimen was collected
+    + `container_identifier`: `1-ABC-4311` (string, optional) - identifier of the container in the Specimen
+    + `container_type`: tube (string, optional) - type of the container in the Specimen
+    + parent: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - parent Specimen 
+    + request: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - service request identifier linked to the Specimen
+    + encounter: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - encounter/context identifier linked to the Specimen
+    + page: 2 (number, optional) - Page number.    
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Specimen_Response`])
+
+### Get Specimen by accession identifier  [GET /api/specimens/{accession_identifier}]
+**Scopes required:** `specimen:read`
+
++ Parameters
+    + accession_identifier: `1234-3224-2342-1233` (string, required) - human readable Specimen number
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Specimen_Response`)
+            + identity (object, required)
+                + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
+                    - MALE
+                    - FEMALE
+                + age: 35 (number, required) - full years between current date and birth date
+    
+
+### Process Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/process]
+
+This method is used to set a received_time for a Specimen.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
+**Scopes required:** `specimen:process`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, required) - The time when Specimen was received for processing
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Invalidate Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/invalidate]
+
+This method is used to mark Specimen as unavailable.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
+**Scopes required:** `specimen:invalidate`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+    
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)    
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_invalidate_reasons` (string)
+                    + code: `default` (string)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Reject Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/reject]
+
+This method is used to mark Specimen as unsatisfactory.
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+
+**Scopes required:** `specimen:reject`
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)    
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_reject_reasons` (string)
+                    + code: `default` (string)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+### Cancel Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/cancel]
+
+This method must be used to cancel existing Specimen. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of a Specimen must be equal to the Specimen stored in DB. See Get Specimen details
+2. status_reason must be added to signed content
+3. status must be changed to `entered_in_error` for the purpose of displaying in the signed content
+
+Please see [Specimen status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17629118869/RC.+Specimen+status+model+EN) and Dummy Cancel Specimen for more details
+
+
+**Scopes required:** `specimen:cancel`
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Cancel Specimen [PATCH /api/patients/{patient_id}/specimens/{id}/actions/cancel/dummy]
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Specimen identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (Specimen_Response)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_cancel_reasons` (string)
+                    + code: `default` (string)
+        + `status`: `entered_in_error` (string, required)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
 
 ## Patient Summary [/api/patients/{patient_id}/summary]
 
@@ -1643,13 +2074,16 @@ If you have an approval - you can obtain episode details and nested entities thr
     + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
     + `page`: 2 (number, optional) - Page number
     + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-    + `period_from`: `2017-01-01` (string, optional)
-    + `period_to`: `2018-01-01` (string, optional)
+    + `period_start_from`: `2017-01-01` (string, optional)
+    + `period_start_to`: `2018-01-01` (string, optional)
+    + `period_end_from`: `2017-01-01` (string, optional)
+    + `period_endperiod_to`: `2018-01-01` (string, optional)
 + Request (application/json)
     + Headers
     
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1677,6 +2111,7 @@ The endpoint returns a list of short Encounter info filtered by search params.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -1695,6 +2130,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1717,6 +2153,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1735,6 +2172,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1757,6 +2195,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1775,6 +2214,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1797,6 +2237,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1815,6 +2256,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1837,6 +2279,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1855,6 +2298,7 @@ The endpoint returns single short Encounter info.
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1877,6 +2321,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1897,6 +2342,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1919,6 +2365,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1936,6 +2383,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1962,6 +2410,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -1982,6 +2431,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -1997,6 +2447,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2018,6 +2469,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2033,6 +2485,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2055,6 +2508,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2070,6 +2524,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -2091,6 +2546,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection`)
@@ -2115,6 +2571,7 @@ This method is used to pre-qualify service request in order to define whether th
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `service_request` (object, required)
@@ -2181,6 +2638,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -2205,6 +2663,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (Service_Request_Create)
 
@@ -2230,7 +2689,6 @@ This method returns all service requests related to specified episode of care.
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
     + episode_id: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, required) - Unique episode identifier
     + status: active (string, optional) - The status of the service request. Default: active
-   
 
 + Request (application/json)
 
@@ -2238,6 +2696,7 @@ This method returns all service requests related to specified episode of care.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2269,7 +2728,6 @@ This method returns all service requests related to specified episode of care.
     + `used_by_legal_entity`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
     + `code`: `9075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional)
     + `care_plan_id`: `8075e0e2-6b57-47fd-aff7-324806efa7e6` (string, optional) - Unique care plan identifier
-    
 
 + Request (application/json)
 
@@ -2277,6 +2735,7 @@ This method returns all service requests related to specified episode of care.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -2306,6 +2765,7 @@ This method returns all service requests related to specified episode of care.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -2335,6 +2795,7 @@ This method returns all service requests related to specified episode of care.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -2375,6 +2836,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -2398,6 +2860,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Service_Request_Base)
         + `status_reason` (Codeable_Concept, required)
@@ -2432,6 +2895,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -2449,6 +2913,7 @@ Please see [Service request (Referral) state model](https://e-health-ua.atlassia
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Service_Request_Base)
         + `status_reason` (Codeable_Concept, required)
@@ -2485,6 +2950,7 @@ http code| processing method | Client recommendations
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
 + Response 201 (application/json)
@@ -2518,10 +2984,41 @@ This service must be used to discover service requests by requisition number. If
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
         + data (array[`Service_Request_List`])
+
+### Get Service requests in Specimen context [GET /api/specimens/{specimen_id}/service_requests{?status,page,page_size}]
+
+This service must be used to discover service requests relaated to specified Specimen. If nothing found - it will return empty list
+
+**Scopes required:** `service_request:impersonal_read`
+
++ Parameters
+    + `specimen_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique Specimen identifier
+    + status: active (string, optional) - The status of the service request.
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array)
+            + (`Service_Request_List`)
+                + identity (object, required)
+                    + gender: MALE (enum, required) - gender of the patient, value from the dictionary GENDER
+                        - MALE
+                        - FEMALE
+                    + age: 35 (number, required) - full years between current date and birth date
 
 ### Qualify Service request by ID [POST /api/service_requests/{service_request_id}/actions/qualify]
 
@@ -2536,6 +3033,7 @@ This service must be used to discover service requests by requisition number. If
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes
         + `programs` (array, required) - Medical programs list for qualify
@@ -2564,6 +3062,7 @@ This service must be used to discover service requests by requisition number. If
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (Use_Service_Request_Request)
 
@@ -2589,6 +3088,7 @@ Will be deprecated!
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 
 + Response 202 (application/json)
@@ -2612,6 +3112,7 @@ Will be deprecated!
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -2638,6 +3139,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (Complete_Service_Request)
 
@@ -2669,6 +3171,7 @@ This method is used to pre-qualify Device Request in order to define whether the
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `device_request` (object, required)
@@ -2723,6 +3226,7 @@ Look at [Dummy Device request](https://medicaleventsmisapi.docs.apiary.io/#refer
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -2744,13 +3248,14 @@ Look at [Dummy Device request](https://medicaleventsmisapi.docs.apiary.io/#refer
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
 
     + Attributes (object)
         + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
         + include `Device_Request_Base`
         + note: `Some notes` (string, optionnal)
-        + `program` (Reference_response, optional)
+        + `program` (Reference_request, optional)
             + identifier (Identifier, required)
                 + type (Codeable_Concept)
                     + coding (array, fixed-type)
@@ -2769,7 +3274,7 @@ Look at [Dummy Device request](https://medicaleventsmisapi.docs.apiary.io/#refer
 
 ### Qualify Device Request by ID [POST /api/device_requests/{device_request_id}/actions/qualify]
 
-This method is used to qualify (possibility to use device definition for the program) Device request by Id . Fields descriptions are listed in request Example view.
+This method is used to qualify (possibility to use device definition for the program) Device request by ID . Fields descriptions are listed in request Example view.
 
 + Parameters
     + device_request_id: `2848a935-5fd7-48ba-b235-a9b5d475c647` (string, required) - `Device request identifier`
@@ -2780,6 +3285,7 @@ This method is used to qualify (possibility to use device definition for the pro
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + location (Reference_request, required) - `Division where device will be dispensed`
@@ -2826,17 +3332,22 @@ This method returns all device requests related to specified patient.
     + `encounter`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `program`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
     + `context_episode_id`: `ef30f210-5328-4f48-bfe6-c7150d4737a6` (string, optional) - Unique episode identifier    
-
+    + `based_on`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `replaces`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    + `priority`: `low` (string, optional)
+    + `performer`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional)
+    
 + Request (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
-        + data (array[`Device_Request_Response_List`])
+        + data (array[`Device_Request_Response_Base`])
 
 + Response 404 (application/json)
     + Attributes (Response_Error)
@@ -2861,6 +3372,7 @@ This method returns all device requests related to specified patient.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -2897,13 +3409,14 @@ This service must be used to discover device request by requisition number. If n
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (`Device_Request_Response_List`)
-            + identity (`Person_identity`, required)            
+    + Attributes (Response_Collection)
+        + data (array)
+            + (object)
+                + include `Device_Request_Response_Base`
+                + identity (`Person_identity`, required)
 
 ### Resend SMS on Device request [PATCH /api/patients/{patient_id}/device_requests/{device_request_id}/actions/resend]
 Method to resend sms on Device request
@@ -2923,6 +3436,7 @@ http code| processing method | Client recommendations
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 
 + Response 202 (application/json)
@@ -2937,7 +3451,7 @@ http code| processing method | Client recommendations
 This method must be used to revoke existing Device Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of Device request must be equal to Device request stored in DB. See Get Device Request details
+1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://medicaleventsmisapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
 2. status_reason must be added to signed content
 3. status must be changed to revoked for the purpose of displaying in the signed content
 
@@ -2957,6 +3471,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -2976,6 +3491,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Device_Request_Response_Base)
         + `status_reason` (Codeable_Concept, required)
@@ -3014,6 +3530,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Device_Dispense_Create_Request)
         + verification_code: `102364` (string, required) - Verification code obtained from patient
@@ -3036,7 +3553,7 @@ Service will store signed copy of Device Dispense in Media Content Storage if al
 
 **Important**
 1. Signed content of Device dispense must be equal to Device dispense stored in DB. See Get Device dispense details
-2. `what_handed_over`, `payment_amount` and `payment_id`  must be added to signed content
+2. `what_handed_over` and `payment_amount`   must be added to signed content
 3. status must be changed to completed for the purpose of displaying in the signed content
 
 It can be processed in async way only, so Server might answer with:
@@ -3058,6 +3575,7 @@ Look at [Dummy Complete Device dispense](https://medicaleventsmisapi.docs.apiary
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3082,6 +3600,7 @@ Look at [Dummy Complete Device dispense](https://medicaleventsmisapi.docs.apiary
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (Device_Dispense_Complete_Request)
 
@@ -3115,6 +3634,7 @@ This method returns all device dispenses related to legal entity.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -3135,6 +3655,7 @@ This method returns all device dispenses related to legal entity.
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -3164,6 +3685,11 @@ http code| processing method | Client recommendations
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
 
++ Request
+
+    + Headers
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+        
 + Response 202 (application/json)
     + Attributes (Response_OK)
         + meta (Response__Meta)
@@ -3188,6 +3714,7 @@ diagnostic_report|read, write
 care_plan|read, write
 encounter|write
 procedure|write
+specimen|write
 
 
 Block child_resource may consist next entities:
@@ -3216,6 +3743,8 @@ risk_assessment|read
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
     + Attributes (object)
         + include `Approval_Request`
 
@@ -3245,6 +3774,7 @@ risk_assessment|read
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `code`: 3782 (number)
@@ -3271,6 +3801,7 @@ http code| processing method | Client recommendations
     + Headers
 
             Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 201 (application/json)
     + Attributes (Response_OK)
@@ -3308,6 +3839,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response_Collection)
@@ -3331,6 +3863,7 @@ It is allowed only for the doctor who has an active declaration with a patient f
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3361,6 +3894,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -3400,6 +3934,7 @@ Look at [Dummy Care Plan](https://medicaleventsmisapi.docs.apiary.io/#reference/
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3428,6 +3963,7 @@ Look at [Dummy Care Plan](https://medicaleventsmisapi.docs.apiary.io/#reference/
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     
     + Attributes (Care_Plan_Create)
@@ -3460,6 +3996,7 @@ This method is used to pre-qualify care plan activity in order to define whether
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
     + Attributes (object)
         + `activity` (object, required)
@@ -3523,6 +4060,7 @@ Look at [Dummy Create Care Plan activity](https://medicaleventsmisapi.docs.apiar
     + Headers
         Authorization: Bearer F3GF124Df565FDS234SDF34
         api-key: aDGFDFGT46S5gFGD
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
         
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3551,6 +4089,7 @@ Look at [Dummy Create Care Plan activity](https://medicaleventsmisapi.docs.apiar
     + Headers
         Authorization: Bearer F3GF124Df565FDS234SDF34
         api-key: aDGFDFGT46S5gFGD
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
         
     + Attributes (`Care_Plan_activity_base`)
         + `detail` (object, required)
@@ -3598,6 +4137,7 @@ Returns care plan details by it's identifier in patient context
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3635,6 +4175,7 @@ Returns care plan list filtered by submitted parameters withtin specified patien
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3660,6 +4201,7 @@ This service must be used to discover Care plans by requisition number. If nothi
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3686,6 +4228,7 @@ Returns care plan's activity details by it's identifier within care plan and pat
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3721,6 +4264,7 @@ Returns all the activities related to the care plan in patient context
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -3767,6 +4311,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3797,6 +4342,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (`Care_Plan_Show`)
         + `status_reason` (Codeable_Concept, required)
@@ -3845,6 +4391,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `status_reason` (Codeable_Concept, required)
@@ -3898,6 +4445,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
@@ -3944,6 +4492,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (`Care_plan_activity_show`)
         + `detail` (object, fixed-type)
@@ -4022,6 +4571,7 @@ http code| processing method | Client recommendations
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
     
     + Attributes (object)
         + `outcome_codeable_concept` (array, required, fixed-type)
@@ -4082,6 +4632,9 @@ This web service returns a catalog of all active rule engine rules in eHealth.
 
 + Request (application/json)
 
+    + Headers
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+        
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (array)
@@ -4099,6 +4652,9 @@ This web service returns rule engine rule details filtered by ID with active rul
     + id: `1f8444a0-e48b-440b-a082-c4703233efa2` (string, required)
 
 + Request (application/json)
+
++ Headers
+    X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -4699,6 +5255,25 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `diagnostic_reports` (array[`Diagnostic_Report_EncounterPCG_Request`], optional, fixed-type)
 + procedures (array[`Procedure_EncounterPCG_Request`], optional, fixed-type)
 + `clinical_impressions` (array[`Clinical_Impression_EncounterPCG_Request`], optional, fixed-type)
++ specimens (array, optional, fixed-type)
+    + (`Specimen_Request`)
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
+        + collection (`Specimen_Collection_Request`, required) - Collection details
+            + procedure (Reference_request, optional) - Procedure that collects the specimen.
+                + identifier (Identifier, required)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `procedure` (string, required)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
+        + status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+            - available
+            - unavailable
 
 ### `Encounter_Response`
 + id: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
@@ -4906,6 +5481,31 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `clinical_impressions` (array, optional, fixed-type)
     + (`Clinical_Impression_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/clinical_impression_statuses`
++ specimens (array, optional, fixed-type)
+    + (`Specimen_Request`)
+        + `context` (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `encounter` (string)
+        + collection (`Specimen_Collection_Request`, required) - Collection details
+            + procedure (Reference_request, optional) - Procedure that collects the specimen.
+                + identifier (Identifier, required)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `procedure` (string, required)
+        + `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing
+        + status: `entered_in_error` (enum, required) - status of the Specimen according to `specimen_statuses`
+        + `status_reason` (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `specimen_cancel_reasons` (enum, string)
+                        - `specimen_reject_reasons`
+                        - `specimen_invalidate_reasons`
+                        - `specimen_cancel_reasons`
+                    + code: `typo` (string)
       
 ### `Paper_referral`
 + requisition: `1111-2222-3333-4444` (string, optional) - `Service request number`
@@ -5282,6 +5882,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
++ specimen (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `specimen` (string)
 
 ###  `Observation_Request_Base_DRP`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -5466,6 +6072,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
++ specimen (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `specimen` (string)
 
 ### `Observation_Request_1` (`Observation_Request_Base`)
 + `context` (Reference_request, optional)
@@ -5609,6 +6221,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                 - system (string, optional)
                 - code (string, optional)
         + text: `Some text` (string, optional)
++ specimen (Reference_response, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `specimen` (string)
 
 ## `Immunization`
 
@@ -5881,7 +6499,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + code ( Codeable_Concept, required ), // Code that identifies the allergy or intolerance
     +  coding (array, fixed-type)
         + (Coding)
-            2+ system: `eHealth/allergy_intolerance_codes` (string)
+            + system: `eHealth/allergy_intolerance_codes` (string)
             + code: `227493005` (string)- `dictionary - eHealth/allergy_intolerance_codes`
                 
 
@@ -6130,10 +6748,17 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ specimens (array, optional)
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 ### `Diagnostic_Report_Base_response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ based_on (Reference_response, optional)
++ `based_on` (Reference_response, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -6161,13 +6786,20 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `eHealth/ICD10_AM/condition_codes` (string)
             + code: `H04.2` (string)
-+ recorded_by (Reference_response, required)
++ `recorded_by` (Reference_response, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
     + display_value: `Опанасенко Олексій Володимирович` (string, required) - This field is filled on creating and never updated after
++ specimens (array, optional)
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 
 ### `Diagnostic_Report_EncounterPCG_Request`
@@ -6523,7 +7155,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## Procedures
 ### Procedure_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_request, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
++ `based_on` (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -6616,7 +7248,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_response, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests)
++ `based_on` (Reference_response, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7051,7 +7683,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-+ `context` (Reference_response, required)
++ `context` (Reference_response, optional) - encounter on which the service request is based on, optional if focus is set
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7177,6 +7809,20 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `eHealth/service_request_recall_reasons` (string)
             + code: `cured` (string)
++ specimens (array, optional)
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ focus (array, optional) - what the service request is about, when it is not about the subject of record
+    + (Reference_response)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -7222,7 +7868,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `service` (string)
-+ `context` (Reference_request, required)
++ `context` (Reference_request, optional) - encounter on which the service request is based on, optional if focus is set
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7292,6 +7938,22 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 10 (number, required)
     + `system`: `SERVICE_UNIT` (string, required)
     + `code`: `PIECE` (string, required)
++ specimens (array, optional)
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ focus (array, optional) - what the service request is about, when it is not about the subject of record
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 ### `Service_Request_Create`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
@@ -7328,7 +7990,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `medical_program` (string)
-+ `context` (Reference_request, required)
++ `context` (Reference_request, optional) - encounter on which service request is based on, optional if focus is set 
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7398,6 +8060,22 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 10 (number, required)
     + system: `SERVICE_UNIT` (string, required)
     + code: PIECE (string, required)
++ specimens (array, optional)
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ focus (array, optional) - what the service request is about, when it is not about the subject of record
+    + (Reference_request)
+        + identifier (Identifier, optional, fixed-type)
+            + type (Codeable_Concept, required)
+                + coding (array, required,fixed-type)
+                    + (Coding)
+                        + code: `specimen` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method 
 
 ### `Use_Service_Request_Request`
 + `used_by_employee` (Reference_request, optional)
@@ -7554,7 +8232,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ expires_at: 1498749591 (number, required) - expiration date-time timestamp
++ expires_at: `2018-08-02T10:45:16.000Z` (string, required) - expiration date-time timestamp
 + reason (Reference_response, optional) - type and identifier of entity based on which approval has been created
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -7604,7 +8282,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `is_verified`: true (boolean, required) - state of verification of approval
     - true
     - false
-+ expires_at: 1498749591 (number, required) - expiration date-time timestamp
++ expires_at: `2018-08-02T10:45:16.000Z` (string, required) - expiration date-time timestamp
 + access_level: `read` (string, required)
 
 ### `Get_Approval_Details`
@@ -8233,20 +8911,20 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
     + code: piece (string, required)
-+ `encounter` (Reference_response, required)
++ `encounter` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
 + `reason` (array, optional)
-    + (Reference_response)
+    + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `condition` (string)
-+ `requester` (Reference_response, required)
++ `requester` (Reference_request, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8273,11 +8951,24 @@ This web service returns rule engine rule details filtered by ID with active rul
         + (Coding)
             + system: `device_request_revoke_reasons` (string)
             + code: `incorrect_patient` (string)
++ `encounter` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
 + `subject` (Reference_response, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
++ `reason` (array, optional)
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `condition` (string)
 + `requester` (Reference_response, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
@@ -8307,53 +8998,18 @@ This web service returns rule engine rule details filtered by ID with active rul
 + note: `Some notes` (string, optionnal)
 + `inserted_at`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `updated_at`: `2018-08-02T10:45:16.000Z` (string, optional)
++ `based_on` (array, optional)
+    + (Reference_response)
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `device_request` (enum, required)
+                            - device_request
+                            - care_plan
+                            - activity
 
-### `Device_Request_Response_List`
-+ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
-+ include `Device_Request_Base`
-+ quantity (object)
-    + value: 10 (number, required)
-    + system: `device_unit` (string, required)
-    + code: piece (string, required)
-    + unit: шт (string, required)   
-+ `status`: `active` (string, required)
-+ `status_reason` (Codeable_Concept, optional)
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `device_request_revoke_reasons` (string)
-            + code: `incorrect_patient` (string)
-+ `subject` (Reference_response, required)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-+ `requester` (Reference_response, required)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
-        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
-+ `requester_legal_entity` (Reference_response, required)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `legal_entity` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
-+ `program` (Reference_response, optional)
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `medical_program` (string)
-        + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after    
-+ requisition: `AX65-4654-TІВ1-ТВТ1` (string, required)
-+ dispense_valid_to: `2018-08-02T10:45:16.000Z` (string, required)
-+ note: `Some notes` (string, optionnal)
+
 
 
 ### `Qualify_Device_Request_Base`
@@ -8412,38 +9068,35 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Device_Dispense_Create_Request
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
-+ `based_on` (Reference_response, required) - Device request
++ `based_on` (Reference_request, required) - Device request
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `device_request` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-+ `performer` (Reference_response, required)
++ `performer` (Reference_request, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-    + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
-+ `location` (Reference_response, required)
++ `location` (Reference_request, required)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `division` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-    + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
 + `note`: `Some notes` (string, optionnal)
-+ `program` (Reference_response, optional)
++ `program` (Reference_request, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `medical_program` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
-    + display_value: `Доступні медичні вироби` (string, required) - This field is filled on creating and never updated after
 + `details` (array[`Device_Dispense_Detail_Request`], fixed, required)
 
 ### Device_Dispense_Complete_Request
@@ -8511,6 +9164,29 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 ### `Device_Dispense_Detail_Request`
++ `device` (Reference_request, required) - Device definition
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `device_definition` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ `program_device` (Reference_request, optional) - Program device
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `program_device` (string)
+        + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
++ quantity (object, required)
+    + value: 10 (number, required)
+    + system: `device_unit` (string, required)
+    + code: piece (string, required)
++ `sell_price`: 18.65 (number, optional) - pharmacy's price for one device
++ `discount_amount`: 150 (number, optional) - pharmacy's expected price of dicsount for the requested device quantity
+
+### `Device_Dispense_Detail_Response`
++ include `Device_Dispense_Detail_Request`
 + `device` (Reference_response, required) - Device definition
     + identifier (Identifier, required)
         + type (Codeable_Concept)
@@ -8529,14 +9205,211 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: 10 (number, required)
     + system: `device_unit` (string, required)
     + code: piece (string, required)
-+ `sell_price`: 18.65 (number, optional) - pharmacy's price for one device
-+ `discount_amount`: 150 (number, optional) - pharmacy's expected price of dicsount for the requested device quantity
-
-### `Device_Dispense_Detail_Response`
-+ include `Device_Dispense_Detail_Request`
-+ quantity (object, required)
-    + value: 10 (number, required)
-    + system: `device_unit` (string, required)
-    + code: piece (string, required)
     + unit: шт (string, required)
 + `reimbursement_amount`: 450 (number, optional) - Amount to reimburse for device by medical_program
+
+### `Specimen_Collection_Request`
++ collector (Reference_request, required) - Who collected the Specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (enum, required)
+                        - employee
+                        - patient
+- One Of
+    + collected_date_time: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was collected. ISO 8601 date and time in UTC timezone.
+    + collected_period (object, optional) - The period of time during which the Specimen was collected
+        + start : `2023-04-20T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2023-04-20T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
++ duration (object, optional) - How long it took to collect Specimen
+    + value: 5 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: min (string, required)
+    + comparator: `>` (string, optional)
++ quantity (object, required) - The quantity of specimen collected
+    + value: 20 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: g (string, required)
++ method (Codeable_Concept, optional) - Technique used to perform collection
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_collection_methods` (string)
+            + code: `default` (string)
++ `body_site` (Codeable_Concept, optional) - Anatomical collection site
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/body_sites` (string)
+            + code: `head` (string)
++ `fasting_status_codeable_concept` (Codeable_Concept, optional) - Whether or how long patient abstained from food and/or drink
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `fasting_statuses` (string)
+            + code: `default` (string)
+
+
+### `Specimen_Container_Request`
++ identifier: `1-3244-ABC` (string, required) - Id for the container
++ description: `Some container description` (string, optional) - Textual description of the container
++ type (Codeable_Concept, required) - Kind of container directly associated with specimen.
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_container_types` (string)
+            + code: `default` (string)
++ capacity (object, required) - Container volume or size
+    + value: 30000 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: mg (string, required)
++ specimen_quantity (object, required) - Quantity of specimen within container
+    + value: 20 (number, required)
+    + system: `eHealth/ucum/units` (string, required)
+    + code: g (string, required)
++ `additive_codeable_concept` (Codeable_Concept, optional) - Additive associated with container.
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_container_additives` (string)
+            + code: `default` (string)
+
+### `Specimen_Request`
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Specimen Identifier
++ status: `available` (string, required) - status of the Specimen according to `specimen_statuses`
++ type (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_types` (string)
+            + code: `default` (string)
++ condition (Codeable_Concept, optional) - State of the specimen.
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_conditions` (string)
+            + code: `default` (string)
++ note: `Some notes` (string, optional) - Comments
++ `managing_organization` (Reference_request, required) - Legal entity where the specimen was created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ `registered_by` (Reference_request, required) - Who registered the specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string, required)
++ parent (array, optional) - Specimens from which this Specimen originated
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: specimen (string)
++ request (array, optional) - Service requests on diagnostic, represents why the Specimen was collected.
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: service_request (string)
++ collection (`Specimen_Collection_Request`, required) - Collection details
++ container (array, required) - Direct container of Specimen 
+    + (`Specimen_Container_Request`)
+
+### `Specimen_Response`
++ include `Specimen_Request`
++ status: `available` (enum, required) - status of the Specimen according to `specimen_statuses`
+    - available
+    - unavailable
+    - unsatisfactory
+    - `entered_in_error`
++ `managing_organization` (Reference_response, required) - Legal entity where the Specimen was created
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+    + display_value: `Комунальне підприємство Медлаб` (string, required) - This field is filled on creating and never updated after
++ `registered_by` (Reference_response, required) - Who registered the Specimen.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string, required)
+    + display_value: `Тарасенко Максим Петрович` (string, required) - This field is filled on creating and never updated after
++ context (Reference_response, optional) - Encounter if Specimen created using EDP.
+    + identifier (Identifier, required)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string, required)
++ `accession_identifier`: `AX64-654T-X654-AX65` (string, required) - Human readable requisition number
++ `received_time`: `2023-04-20T19:14:13Z` (string, optional) - The time when Specimen was received for processing. ISO 8601 date and time in UTC timezone.
++ parent (array, optional) - Specimens from which this Specimen originated
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: specimen (string)
++ request (array, optional) - Service requests on diagnostic, represents why the Specimen was collected.
+    + (Reference_response)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: service_request (string)
++ `subject` (Reference_response, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
++ `status_reason` (Codeable_Concept)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `specimen_invalidate_reasons` (enum, string)
+                - `specimen_reject_reasons`
+                - `specimen_invalidate_reasons`
+                - `specimen_cancel_reasons`
+            + code: `default` (string)
++ collection (`Specimen_Collection_Request`, required) - Collection details
+    + collector (Reference_response, required) - Who collected the Specimen.
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (enum, required)
+                            - employee
+                            - patient
+        + display_value: `Василенко Олена Павлівна` (string, required) - This field is filled on creating and never updated after
+    + duration (object, optional) - How long it took to collect Specimen
+        + value: 5 (number, required)
+        + system: `eHealth/ucum/units` (string, required)
+        + code: min (string, required)
+        + comparator: `>` (string, optional)
+        + unit: хв (string, required)
+    + quantity (object, required) - The quantity of Specimen collected
+        + value: 20 (number, required)
+        + system: `eHealth/ucum/units` (string, required)
+        + code: g (string, required)
+        + unit: грам (string, required)
+    + procedure (Reference_response, optional) - Procedure that collects the Specimen.
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `procedure` (string, required)
++ container (array, required) - Direct container of Specimen 
+    + (`Specimen_Container_Request`)
+        + capacity (object, required) - Container volume or size
+            + value: 30000 (number, required)
+            + system: `eHealth/ucum/units` (string, required)
+            + code: mg (string, required)
+            + unit: міліграм (string, required)
+        + specimen_quantity (object, required) - Quantity of Specimen within container
+            + value: 20 (number, required)
+            + system: `eHealth/ucum/units` (string, required)
+            + code: g (string, required)
+            + unit: грам (string, required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
