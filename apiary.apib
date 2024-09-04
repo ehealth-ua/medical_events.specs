@@ -6786,7 +6786,9 @@ This web service returns rule engine rule details filtered by ID with active rul
              + (Coding)
                 + system: `eHealth/diagnostic_report_categories` (string)
                 + code: `diagnostic_procedure` (string)
-+ effective_period(Period, optional)
+- One Of
+    - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    - effective_period(Period, optional)
 + issued: `2018-10-08T09:46:37.694Z` (string, required)
 + conclusion: `At risk of osteoporotic fracture` (string, optional)
 + `conclusion_code` (Codeable_Concept)
