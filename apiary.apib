@@ -74,7 +74,7 @@ Detected issue|0-*| true
 
 You can send the same request (with the same body) multiple times, but a new job will not be created before previous is not performed.
 
-To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402843/Submit+Encounter+Data+Package).
+To find out more about the process of encounter package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061216257/Submit+Encounter+Package).
 
 
 
@@ -1634,7 +1634,7 @@ Object| Required| Part of Signed content
 Observation| 0-* |true
 Diagnostic report|1-1| true
 
-To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402843/Submit+Encounter+Data+Package).
+To find out more about the process of diagnostic report package creation read [Confluence Submit Encounter Data Package ](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17061216257/Submit+Encounter+Package).
 
 + Request Package (application/json)
 
@@ -3584,7 +3584,7 @@ This method must be used to cancel existing Service Request. Method receives sig
 1. Signed content of service request must be equal to service request stored in DB. See Get Service Request details
 2. status_reason and explanatory_letter (optional) must be added to signed content
 
-Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402276/Referrals+State+Model+-+V1) and Dummy Cancel Service Request for more details
+Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583403541/Service+Requests+Status+State+Model) and Dummy Cancel Service Request for more details
 
 
 **Scopes required:** `service_request:cancel`
@@ -3651,7 +3651,7 @@ This method must be used to recall existing Service Request. Method receives sig
 1. Signed content of service request must be equal to service request stored in DB. See Get Service Request details
 2. status_reason and explanatory_letter (optional) must be added to signed content
 
-Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402276/Referrals+State+Model+-+V1) and Dummy Recall Service Request for more details
+Please see [Service request (Referral) state model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583403541/Service+Requests+Status+State+Model) and Dummy Recall Service Request for more details
 
 **Scopes required:** `service_request:recall`
 
