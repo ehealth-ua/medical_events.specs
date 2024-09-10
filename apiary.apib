@@ -3946,7 +3946,7 @@ This method is used to pre-qualify Device Request in order to define whether the
                 + value: 10 (number, required)
                 + system: `device_unit` (string, required)
                 + code: piece (string, required)
-            + `authorize_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
+            + `inform_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
         + `programs` (array, required) - Medical programs list for qualify
             + (Reference_request)
                 + identifier (Identifier)
@@ -4030,7 +4030,7 @@ Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#r
                             + code: `medical_program` (string)
                 + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
         + `status`: `active` (string, required)
-        + `authorize_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
+        + `inform_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 
 + Response 202 (application/json)
