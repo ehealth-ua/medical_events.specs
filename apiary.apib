@@ -1815,7 +1815,7 @@ This web service allows to get a list of diagnostic reports that were allowed to
 ## Procedures [/api/patients/{patient_id}/procedures]
 
 ### Create procedure [POST]
-This WS allows to register procedure by its own. Also prosedure can be registered as a part of [encounter package](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details).
+This WS allows to register procedure by its own. Also prosedure can be registered as a part of [encounter package](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
 **Scopes required:** `procedure:write`
 
 + Parameters
@@ -1956,7 +1956,7 @@ This WS allows to cancel existing procedure and change its status to `entered_in
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of procedure must be equal to procedure stored in DB. See [Get Procedure by search params](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/procedures)
+1. Signed content of procedure must be equal to procedure stored in DB. See [Get Procedure by search params](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/procedures/get-procedure-by-search-params)
 2. `status_reason` and `explanatory_letter` (optional) must be added to signed content
 
 Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
@@ -2022,7 +2022,7 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
 ## Specimen [/api/patients/{patient_id}/specimens]
 
 ### Create Specimen [POST]
-This WS allows to register Specimen by its own. Also Specimen can be registered as a part of [encounter package](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details).
+This WS allows to register Specimen by its own. Also Specimen can be registered as a part of [encounter package](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
 **Scopes required:** `specimen:write`
 
 + Parameters
@@ -4431,7 +4431,7 @@ http code| processing method | Client recommendations
 
 **Scopes required:** `care_plan:write`
 
-Look at [Dummy Care Plan](https://medicaleventsmisapi.docs.apiary.io/#reference/care-plan) for more details
+Look at [Dummy Care Plan](https://medicaleventsmisapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
@@ -4558,7 +4558,7 @@ http code| processing method | Client recommendations
 
 **Scopes required:** `care_plan:write`
 
-Look at [Dummy Create Care Plan activity](https://medicaleventsmisapi.docs.apiary.io/#reference/care-plan) for more details
+Look at [Dummy Create Care Plan activity](https://medicaleventsmisapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
@@ -7978,7 +7978,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## Procedures
 ### Procedure_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_request, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests/get-async-job-processing-details); One of (based_on OR paper_referral) is required
++ `based_on` (Reference_request, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8079,7 +8079,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_response, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests/get-async-job-processing-details)
++ `based_on` (Reference_response, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
