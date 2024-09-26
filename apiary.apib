@@ -2735,7 +2735,7 @@ This method must be used to mark in error existing Composition. Method receives 
 **Important**
 1. Signed content of a Composition must be equal to the Composition stored in DB. See Get Composition details
 2. status_reason must be added to signed content
-3. status must be changed to `entered_in_error` for the purpose of displaying in the signed content
+3. status must be changed to `ENTERED_IN_ERROR` for the purpose of displaying in the signed content
 
 Please see [Composition status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3872260122/Composition+status+model) and Dummy Mark-in-error Composition for more details
 
@@ -2789,7 +2789,7 @@ http code| processing method | Client recommendations
                 + (Coding)
                     + system: `composition_mark_in_error_reasons` (string)
                     + code: `default` (string)
-        + `status`: `entered_in_error` (string, required)
+        + `status`: `ENTERED_IN_ERROR` (string, required)
         + `explanatory_letter`: `Comments about the reason to mark composition in error` (string, required)
         
 
@@ -6297,7 +6297,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Composition_Create` 
 + `id`: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
 + `title`: `98CC-P696-E34T-X4T2` (string, required)
-+ `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
++ `status`: `FINAL`  (string, required) - `dictionary COMPOSITION_STATUS`
 + `type`: (object, required, fixed-type)
     + coding (array, fixed-type)
         + (Coding)
@@ -6334,7 +6334,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `11348-0` (string)
-                    + system: `http://loinc.org` (string)
+                    + system: `COMPOSITION_SECTION_CODES` (string)
         + author: (array, required)
             + (Reference_request, required)
                 + identifier (Identifier)
@@ -6350,7 +6350,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `system` (string)
-                        + system: `http://terminology.hl7.org/CodeSystem/list-order` (string)
+                        + system: `COMPOSITION_SECTION_ORDERBY` (string)
         + entry: (array, required)
             + (Reference_request, required)
                 + identifier (Identifier)
@@ -6362,7 +6362,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `withheld` (string)
-                    + system: `http://terminology.hl7.org/CodeSystem/list-empty-reason` (string)
+                    + system: `COMPOSITION_SECTION_EMPTY_REASON` (string)
         + section: (array[Section], optional) - Nested Section
 + `extension`: (array, optional, fixed-type)
     + (object)
@@ -6398,7 +6398,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `legal` (string)
-                    + system: `http://hl7.org/fhir/composition-attestation-mode` (string)
+                    + system: `COMPOSITION_ATTESTER_MODES` (string)
         + party: (Reference_request, required)
             + identifier (Identifier)
                 + type (Codeable_Concept)
