@@ -10518,7 +10518,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `care_plan` (string)
-+ `detail` (Prequslify_Care_Plan_activity_detail_base, required)
++ `detail` (Prequalify_Care_Plan_activity_detail_base, required)
 
 ### `Prequalify_Care_Plan_Activity_Responce`
 + `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program identifier`
@@ -10544,8 +10544,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `care_plan` (string)
 + `detail` (`Care_Plan_activity_detail_base`, required)
 
-### `Prequslify_Care_Plan_activity_detail_base`
-+ kind: `medication_request` (enum, required)
+### `Prequalify_Care_Plan_activity_detail_base`
++ kind: `medication_request` (enum, required) - according to the `eHealth/activity_kinds` dictionary
     - service_request
     - medication_request
     - device_request
@@ -10567,7 +10567,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + coding (array, optional, fixed-type)
             + object
                 + code: `30221` (string)
-                + system: `device_definition_classification_type` (string, required)
+                + system: `device_definition_classification_type` (string, required) - depends on `prescribable_device_codes` configuration
 + `reason_code` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -10626,7 +10626,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 
 ### `Care_Plan_activity_detail_base`
-+ kind: `medication_request` (enum, required)
++ kind: `medication_request` (enum, required) - according to the `eHealth/activity_kinds` dictionary
     - service_request
     - medication_request
     - device_request
@@ -10648,7 +10648,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + coding (array, optional, fixed-type)
             + object
                 + code: `30221` (string)
-                + system: `device_definition_classification_type` (string, required)
+                + system: `device_definition_classification_type` (string, required) - depends on `prescribable_device_codes` configuration
 + `reason_code` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -10972,7 +10972,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + `code` (object, optional)
         + coding (array, optional, fixed-type)
             + object
-                + system: `device_definition_classification_type` (string)
+                + system: `device_definition_classification_type` (string) - depends on `prescribable_device_codes` configuration
                 + code: `30221` (string)
     + `code_reference`  (object, optional)
         + identifier (object, optional)
