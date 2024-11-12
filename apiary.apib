@@ -3959,7 +3959,7 @@ This method is used to pre-qualify Device Request in order to define whether the
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
-        +  data (array[`Qualify_Device_Request_Base`]))
+        +  data (array[`Qualify_Device_Request_Base`])
 
 + Response 422 (application/json)
     + Attributes (Response_Error)
@@ -9843,6 +9843,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -10344,6 +10346,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     - false
 + expires_at: `2018-08-02T10:45:16.000Z` (string, required) - expiration date-time timestamp
 + access_level: `read` (string, required)
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of patient's auth method
 
 ### `Get_Approval_Details`
 + `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
@@ -10385,6 +10388,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     - true
     - false
 + access_level: `read` (string, required)
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of patient's auth method
 + `authentication_method_current` (object, required)
     + type: `OTP` (enum, required)
         - OTP
@@ -10507,7 +10511,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
 + inform_with (object, optional)
-    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method 
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 + status: new (string, required)
 
 ### `Prequalify_Care_Plan_Activity_base`
@@ -10909,6 +10913,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                 - INPATIENT
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 ### `Medical_Event_Context_Episode_Response`
 + `episode` (`Medical_Event_Context_Episode`)
@@ -11148,6 +11154,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                             - episode
                             - device
                             - device_association
++ `inform_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 
 ### `Device_Request_Response_Details`
