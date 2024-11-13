@@ -11196,7 +11196,11 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Device_Definition_base`
 + id: `3e34da3d-9b8c-4aaf-be8e-24a161279b6a` (string, required) - Unique identifier of Device definition
 + `device_names` (array [`device_name`], required)
-+ `classification_type`: `30221` (string, required) - Classification type. Dictionary `device_definition_classification_type`
++ `classification_type`: `30221` (string, optional) - Classification type. Dictionary `device_definition_classification_type`. Obsolete, will be removed. Use `classification_types` instead
++ `classification_types` (array, required) - Classification types. Dictionary and its value
+    + (Coding)
+        + system: `device_definition_classification_type` (string, required)
+        + code: `30221` (string, required)
 + `manufacturer` (`Manufacturer`, optional)
 + model_number: `M23N76` (string, optional) - Model number
 + `packaging` (`Device_definition_package`, required)
