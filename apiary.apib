@@ -11402,6 +11402,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `medical_program` (string)
         + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
++ primary_source: `true` (boolean, required)
 + `details` (array[`Device_Dispense_Detail_Request`], fixed, required)
 + `when_handed_over`:`2018-08-02T10:45:16.000Z` (string, optional) 
         
@@ -11781,7 +11782,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + system: `eHealth/resources` (string, required)
                         + code: `device_definition` (string)
             + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
-    + `device_code` (object, optional)
+    + `device_code` (object, optional) - might contain different dictionaries in the `system` attribute
         + coding (array, optional, fixed-type)
             + object
                 + system: `device_definition_classification_type` (string)
