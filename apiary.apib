@@ -5227,7 +5227,7 @@ Returns care plan list filtered by submitted parameters withtin specified patien
         + data (array[`Care_plan_summary`])
 
 
-### Get Care Plans by search params NEW [GET /api/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,managing_organization_id,status,page,page_size}]
+### Get Care Plans by search params V2 [GET /api/v2/patients/{patient_id}/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,managing_organization_id,status,page,page_size}]
 Returns care plan list filtered by submitted parameters withtin specified patient.
 
 **Scopes required:** `care_plan:read`
@@ -7295,7 +7295,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + `coding` (array, required, fixed-type)
                     + (object)
                         + include `Coding`
-                        + extension (Extension, optional)
+                        + extension (Extension, optional, fixed-type)
                 + text (string, optional)
             + value_sampled_data (object, required)
                 + origin (number, optional) //SimpleQuantity Zero value and units
@@ -7862,7 +7862,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + `coding` (array, required, fixed-type)
                     + (object)
                         + include `Coding`
-                        + extension (Extension, optional)
+                        + extension (Extension, optional, fixed-type)
                 + text (string, optional)
             + value_sampled_data (object, required)
                 + origin (number, optional) //SimpleQuantity Zero value and units
