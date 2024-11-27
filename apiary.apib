@@ -11473,6 +11473,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, required)
 + `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
 + `payment_amount`: 50 (number, required) - receipt amount which was paid by patient (UAH)
++ `signed_content_links` (array[string], optional)
 
 ### Device_Dispense_Response
 + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Device Dispense Response Identifier
@@ -11670,7 +11671,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-+ `performer` (Reference_response, required)
++ `performer` (Reference_response, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -11678,7 +11679,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
         + value: `b4a6d991-0bf7-476f-b3cf-bec83f044b1b` (string, required)
     + display_value: `Мельник Микола Микитович` (string, required) - This field is filled on creating and never updated after
-+ `location` (Reference_response, required)
++ `location` (Reference_response, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -11688,7 +11689,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + display_value: `Перше відділення` (string, required) - This field is filled on creating and never updated after
 + `when_handed_over`: `2018-08-02T10:45:16.000Z` (string, optional)
 + `note`: `Some notes` (string, optionnal)
-+ `performer_legal_entity` (Reference_response, required)
++ `performer_legal_entity` (Reference_response, optional)
     + identifier (Identifier, required)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -11707,6 +11708,17 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `details` (array[`Device_Dispense_Detail_Response`], fixed, required)
 + `payment_id`: 1239804 (string, optional) - receipt number for the paid devices
 + `payment_amount`: 50 (number, optional) - receipt amount which was paid by patient (UAH)
++ `primary_source`: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string)
++ `external_provider` (object, optional)
+    + provider_legal_entity_name: `Assistive Devices Provider` (string, required)
+    + provider_legal_entity_edrpou: `03562649` (string, required)
++ `external_performer`: `03562649` (string, optional)
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
