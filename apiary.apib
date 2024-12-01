@@ -5755,6 +5755,79 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (object)
                     + ...
 
+## Group Configurations
+There are public method presented to get configurations from PRM (`composition_configurations` and `devices_configurations`). 
+
+### Get Configuration list [GET /api/configurations{?configuration_name,source,category,device_code,is_active,page,page_size}]
+This web service returns a list of configurations from multiple sources. It can filter records that contain the specified field from the search param. All other data are excluded from the response.
+
++ Parameters
+    + `configuration_name`: `COMPOSITION_PERSON_AGE` (string, optional) - The field to filter by. If this parameter is specified, only the values with this configuration will be returned. Supports nested JSON fields. 
+    + `source`: `composition_configurations` (string, optional) - Configurations source.
+    + `category`: `ADOPTERS` (string, optional) - Only for `composition_configurations` configs.
+    + `device_code`: `12_18_06` (string, optional) - Only for `devices_configurations` configs.
+    + `is_active`: `true` (boolean, optional) - Is configuration active or not. Only for `composition_configurations` configs
+    + `page`: 1 (number, optional) - Page number for pagination.
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50.
+
++ Request (application/json)
+
+    + Headers
+        X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (array) - List of objects returned by the service that match the filter criteria
+            + (object)
+                + id: `1b49a938-2d3c-4700-9110-44ae154bd8aa` (string, required) - Record identifier
+                + source: `composition_configuration` (string, required) - Source table name
+                + attributes (object, required) - Object containing all fields from the respective record
+                    + type: `DRIVERS` (string, optional) - Field from `composition_configuration`
+                    + category: `DRIVERS_GROUP1` (string, optional) - Field from `composition_configuration`
+                    + is_active: `true` (boolean, optional) - Is configuration active or not. Only for `composition_configurations` configs
+                    + settings (object, optional) - Nested settings field from `composition_configuration`
+                        + COMPOSITION_PERSON_AGE (array, optional)
+                            + (object)
+                                + check (object, optional)
+                                    + min (object, optional)
+                                        + units: `years` (string, required)
+                                        + value: `16` (number, required)
+                        + COMPOSITION_SECTION_CONFIG (array, optional)
+                            + (object)
+                                + code: `DRIVERS_DRIVERS_GROUP1_THERAPIST_SECTION_CNS` (string, required)                           
+                                + is_empty: `false` (string, required)                           
+                                + sections (array, optional) 
+                                    + (object)
+                                        + code: `DRIVERS_DRIVERS_GROUP1_THERAPIST_SECTION_CNS_OBSERVATION` (string, required)                           
+                                        + is_empty: `false` (string, required)
+                                            + sections (array, optional) 
+                                                + (object)
+                                                    + code: `DRIVERS_DRIVERS_GROUP1_THERAPIST_SECTION_CNS_OBSERVATION_EEG` (string, required)                           
+                                                    + is_empty: `false` (string, required)   
+                                                    + is_empty: `true` (string, required)
+                                                    + mandatory: `true` (string, required)
+                                                    + section_allowed: `true` (string, required)
+                                                    + contains_resources: `true` (string, required)
+                                        + mandatory: `true` (string, required)
+                                        + section_allowed: `true` (string, required)
+                                        + contains_resources: `true` (string, required)
+            + (object)
+                + id: `1b49a938-2d3c-4700-9110-44ae154bd8aa` (string, required) - Record identifier
+                + source: `device_requests` (string, required) - Source table name
+                + attributes (object, required) - Object containing all fields from the respective record
+                    + device_code: `12_18_06` (string, optional) - Field from `device_requests`
+                    + device_code_system: `eHealth/assistive_devices` (string, optional) - Field from `device_requests`
+                    + config (object, optional) - Nested settings field from `device_requests`
+                        + DEVICE_REQUIRED_PARAMETERS (array, optional)
+                            + (object)
+                                + check (array, optional)
+                                    + (object)
+                                        + code: `side_of_the_body` (string, required)
+                                        + system: `device_request_code_parameter` (string, required)
+                                    + (object)
+                                        + code: `presence_of_a_hinge` (string, required)
+                                        + system: `device_request_code_parameter` (string, required)
+
 # Data Structures
 
 ## Responses
