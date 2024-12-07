@@ -5756,17 +5756,18 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + ...
 
 ## Group Configurations
-There are public method presented to get configurations from PRM (`composition_configurations` and `devices_configurations`). 
+There are public method presented to get configurations from PRM. 
 
 ### Get Configuration list [GET /api/configurations{?configuration_name,source,category,device_code,is_active,page,page_size}]
-This web service returns a list of configurations from multiple sources. It can filter records that contain the specified field from the search param. All other data are excluded from the response.
+This web service returns a list of configurations from multiple sources.
 
 + Parameters
-    + `configuration_name`: `COMPOSITION_PERSON_AGE` (string, optional) - The field to filter by. If this parameter is specified, only the values with this configuration will be returned. Supports nested JSON fields. 
     + `source`: `composition_configurations` (string, optional) - Configurations source.
-    + `category`: `ADOPTERS` (string, optional) - Only for `composition_configurations` configs.
-    + `device_code`: `12_18_06` (string, optional) - Only for `devices_configurations` configs.
     + `is_active`: `true` (boolean, optional) - Is configuration active or not. Only for `composition_configurations` configs
+    + `inserted_at_from`: `2024-10-31 12:48:43.367092` (string, optional) - Inserted_at filter period start date
+    + `inserted_at_to`: `2024-10-31 12:48:43.367092` (string, optional) - Inserted_at filter period end date
+    + `updated_at_from`: `2024-10-31 12:48:43.367092` (string, optional) - Updated_at filter period start date
+    + `updated_at_to`: `2024-10-31 12:48:43.367092` (string, optional) - Updated_at filter period end date
     + `page`: 1 (number, optional) - Page number for pagination.
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50.
 
@@ -5781,10 +5782,12 @@ This web service returns a list of configurations from multiple sources. It can 
             + (object)
                 + id: `1b49a938-2d3c-4700-9110-44ae154bd8aa` (string, required) - Record identifier
                 + source: `composition_configuration` (string, required) - Source table name
+                + `is_active`: `true` (boolean, optional) - Is configuration active or not.
+                + `inserted_at`: `2024-10-31 12:48:43.367092` (string, optional) - Inserted_at date
+                + `updated_at`: `2024-10-31 12:48:43.367092` (string, optional) - Updated_at date
                 + attributes (object, required) - Object containing all fields from the respective record
                     + type: `DRIVERS` (string, optional) - Field from `composition_configuration`
                     + category: `DRIVERS_GROUP1` (string, optional) - Field from `composition_configuration`
-                    + is_active: `true` (boolean, optional) - Is configuration active or not. Only for `composition_configurations` configs
                     + settings (object, optional) - Nested settings field from `composition_configuration`
                         + COMPOSITION_PERSON_AGE (array, optional)
                             + (object)
@@ -5814,9 +5817,12 @@ This web service returns a list of configurations from multiple sources. It can 
             + (object)
                 + id: `1b49a938-2d3c-4700-9110-44ae154bd8aa` (string, required) - Record identifier
                 + source: `device_requests` (string, required) - Source table name
+                + `is_active`: `true` (boolean, optional) - Is configuration active or not.
+                + `inserted_at`: `2024-10-31 12:48:43.367092` (string, optional) - Inserted_at date
+                + `updated_at`: `2024-10-31 12:48:43.367092` (string, optional) - Updated_at date
                 + attributes (object, required) - Object containing all fields from the respective record
-                    + device_code: `12_18_06` (string, optional) - Field from `device_requests`
-                    + device_code_system: `eHealth/assistive_devices` (string, optional) - Field from `device_requests`
+                    + `device_code`: `12_18_06` (string, optional) - Field from `device_requests`
+                    + `device_code_system`: `eHealth/assistive_devices` (string, optional) - Field from `device_requests`
                     + config (object, optional) - Nested settings field from `device_requests`
                         + DEVICE_REQUIRED_PARAMETERS (array, optional)
                             + (object)
@@ -5827,6 +5833,55 @@ This web service returns a list of configurations from multiple sources. It can 
                                     + (object)
                                         + code: `presence_of_a_hinge` (string, required)
                                         + system: `device_request_code_parameter` (string, required)
+            + (object)
+                + id: `1b49a938-2d3c-4700-9110-44ae154bd8aa` (string, required) - Record identifier
+                + source: `device_parameters_configurations` (string, required) - Source table name
+                + `is_active`: `true` (boolean, optional) - Is configuration active or not.
+                + `inserted_at`: `2024-10-31 12:48:43.367092` (string, optional) - Inserted_at date
+                + `updated_at`: `2024-10-31 12:48:43.367092` (string, optional) - Updated_at date
+                + attributes (object, required) - Object containing all fields from the respective record
+                    + `parameter_code`: `activity_level_of_the_wheelchair` (string, optional) - Field from `device_parameters_configurations`
+                    + `parameter_system`: `device_request_code_parameter` (string, optional) - Field from `device_parameters_configurations`
+                    + config (object, optional) - Nested settings field from `device_parameters_configurations`
+                        + DEVICE_PARAMETER_DATA_TYPE (object, optional)
+                           + check: `codeable_concept` (string, required)
+                        + DEVICE_PARAMETER_DICTIONARY (object, optional)
+                           + check: `eHealth/activity_level_of_the_wheelchair_values` (string, required)
+            + (object)
+                + id: `1b49a938-2d3c-4700-9110-44ae154bd8aa` (string, required) - Record identifier
+                + source: `dictionaries_configurations` (string, required) - Source table name
+                + `is_active`: `true` (boolean, optional) - Is configuration active or not.
+                + `inserted_at`: `2024-10-31 12:48:43.367092` (string, optional) - Inserted_at date
+                + `updated_at`: `2024-10-31 12:48:43.367092` (string, optional) - Updated_at date
+                + attributes (object, required) - Object containing all fields from the respective record
+                    + name: `assistive_devices` (string, optional) - Field from `dictionaries_configurations`
+                    + content (array, optional) - Nested settings field from `dictionaries_configurations`
+                        + (object)
+                            + codes (array, optional)
+                                + `18_03_06`
+                                + `12_22_06`
+                                + `06_03_15`
+                    + system: `eHealth/assistive_devices` (string, required)
+            + (object)
+                + id: `1b49a938-2d3c-4700-9110-44ae154bd8aa` (string, required) - Record identifier
+                + source: `observation_configurations` (string, required) - Source table name
+                + `is_active`: `true` (boolean, optional) - Is configuration active or not.
+                + `inserted_at`: `2024-10-31 12:48:43.367092` (string, optional) - Inserted_at date
+                + `updated_at`: `2024-10-31 12:48:43.367092` (string, optional) - Updated_at date
+                + attributes (object, required) - Object containing all fields from the respective record
+                    + code: `_WHODAS_2.0` (string, optional) - Field from `observation_configurations`
+                    + system: `eHealth/LOINC/observation_codes` (string, optional) - Field from `observation_configurations`
+                    + settings (object, required)
+                        + CATEGORY (object, required)
+                            + check (array, required)
+                                + (object)
+                                    + code: `survey` (string, required)
+                                    + system: `eHealth/observation_categories` (string, required)
+                        + RESULT_TYPE (object, required)
+                            + check: `codeable_concept` (string, required)
+                        + RESULT_BINDING (object, required)
+                            + check (array, required)
+                                + `eHealth/LOINC/LL5900-7`
 
 # Data Structures
 
