@@ -3644,6 +3644,12 @@ http code| processing method | Client recommendations
         + meta (Response__Meta)
             + code: 201 (number)
         + data (`Service_Request_Show`)
+            + `status_reason` (Codeable_Concept, required)
+             + coding (array, fixed-type)
+                 + (Coding)
+                      + system: `eHealth/service_request_cancel_reasons` (string)
+                      + code: `default` (string)
+            + `explanatory_letter`: `Направлення було відмінене у зв'язку з помилкою при виборі пацієнта ` (string, optional)
         
 + Response 202 (application/json)
     + Attributes (Response_OK)
@@ -10038,6 +10044,7 @@ This web service returns a list of configurations from multiple sources.
                         + code: `specimen` (string)
 + inform_with (object, optional)
     + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
++ `explanatory_letter`: `null` (string, optional) - This field is required in the Reference, so it may be returned empty.
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
