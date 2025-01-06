@@ -246,7 +246,7 @@ This chapter describes the structure of a single unsigned condition that could b
 
 This chapter describes the structure of a single unsigned observation that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
-+ Request 1 (application/json)
++ Request General (application/json)
 
     + Headers
 
@@ -254,20 +254,25 @@ This chapter describes the structure of a single unsigned observation that could
             X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
             
     + Attributes (`Observation_Request_1`)
-    
-    
-+ Request 2 (application/json)
+
++ Request EDP Observation with Components - ASIA (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
             X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4 
             
-    + Attributes (`Observation_Request_2`)
+    + Attributes (`Observation_Request_ASIA`)
 
-        
-        
-    
++ Request EDP Observation with Components and extensions - Bartel (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4 
+            
+    + Attributes (`Observation_Request_Bartel`)
+
 #### Dummy Immunization [POST]
 This chapter describes the structure of a single unsigned immunization that could be submitted as a part of Encounter Package. This is not an actual web-service.
 
@@ -1662,7 +1667,7 @@ To find out more about the process of diagnostic report package creation read [C
             
 
 ### Dummy Submit Diagnostic Report Package [POST]            
-+ Request Package (application/json)
++ Request Package General (application/json)
 
     + Headers
 
@@ -1671,6 +1676,26 @@ To find out more about the process of diagnostic report package creation read [C
             
     + Attributes (object)
         + include `Submit_DR_Package`
+
++ Request EDP Observation with Components - ASIA (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (object)
+        + include `Submit_DR_Package_ASIA`
+
++ Request DRP Observation with Components and extensions - Bartel (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (object)
+        + include `Submit_DR_Package_Bartel`
 
 ### Cancel Diagnostic Report Package[PATCH]
 + Request Package (application/json)
@@ -7764,6 +7789,74 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `encounter` (string)
 
+### `Observation_Request_ASIA` (`Observation_Request_Base`)
++ `context` (Reference_request, optional)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ categories (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/observation_categories` (string)
+                + code: `survey` (string)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/LOINC/observation_codes` (string)
+            + code: `97843-7` (string)
++ components (array, optional, fixed-type)
+    + (object)
+        + code (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/custom/observation_components` (string)
+                    + code: `SPINE_LEVEL` (string)
+        + value_codeable_concept (object, required)
+            + `coding` (array, required, fixed-type)
+                + (Coding)
+                    + system: `eHealth/LOINC/LL5913-0` (string)
+                    + code: `LA32084-8` (string)
+            + text (string, optional)
+
+### `Observation_Request_Bartel` (`Observation_Request_Base`)
++ `context` (Reference_request, optional)
+     + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ categories (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/observation_categories` (string)
+                + code: `survey` (string)
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/LOINC/observation_codes` (string)
+            + code: `96761-2` (string)
++ components (array, optional, fixed-type)
+    + (object)
+        + code (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/LOINC/observation_components` (string)
+                    + code: `83184-2` (string)
+        + value_codeable_concept (object, required)
+            + `coding` (array, required, fixed-type)
+                + (Coding)
+                    + extension (array, optional, fixed-type)
+                        + (object)
+                            + code: `item_weight` (string, required)
+                            + value_decimal: 10 (number, required)
+                    + system: `eHealth/LOINC/LL5785-2` (string)
+                    + code: `LA12302-8` (string)
+            + text (string, optional)
+
 ### `Observation_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required)
@@ -8960,6 +9053,80 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + coding (array, required,fixed-type)
                         + (Coding)
                             + code: `diagnostic_report` (string)
+
+### `Submit_DR_Package_ASIA`
++ `diagnostic_report` (Diagnostic_Report_Package_Request, required)
++ `observations` (array, optional, fixed-type)
+    + (Observation_Request_Base_DRP)
+        + `diagnostic_report` (Reference_request, required)
+            + identifier (Identifier, optional, fixed-type)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `diagnostic_report` (string)
+        + categories (array, required)
+            + (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + system: `eHealth/observation_categories` (string)
+                        + code: `survey` (string)
+        + code (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/LOINC/observation_codes` (string)
+                    + code: `97843-7` (string)
+        + components (array, optional, fixed-type)
+            + (object)
+                + code (Codeable_Concept, required)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/custom/observation_components` (string)
+                            + code: `SPINE_LEVEL` (string)
+                + value_codeable_concept (object, required)
+                    + `coding` (array, required, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/LOINC/LL5913-0` (string)
+                            + code: `LA32084-8` (string)
+                    + text (string, optional)
+
+### `Submit_DR_Package_Bartel`
++ `diagnostic_report` (Diagnostic_Report_Package_Request, required)
++ `observations` (array, optional, fixed-type)
+    + (Observation_Request_Base_DRP)
+        + `diagnostic_report` (Reference_request, required)
+            + identifier (Identifier, optional, fixed-type)
+                + type (Codeable_Concept, required)
+                    + coding (array, required,fixed-type)
+                        + (Coding)
+                            + code: `diagnostic_report` (string)
+        + categories (array, required)
+            + (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + system: `eHealth/observation_categories` (string)
+                        + code: `survey` (string)
+        + code (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/LOINC/observation_codes` (string)
+                    + code: `96761-2` (string)
+        + components (array, optional, fixed-type)
+            + (object)
+                + code (Codeable_Concept, required)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/LOINC/observation_components` (string)
+                            + code: `83184-2` (string)
+                + value_codeable_concept (object, required)
+                    + `coding` (array, required, fixed-type)
+                        + (Coding)
+                            + extension (array, optional, fixed-type)
+                                + (object)
+                                    + code: `item_weight` (string, required)
+                                    + value_decimal: 10 (number, required)
+                            + system: `eHealth/LOINC/LL5785-2` (string)
+                            + code: `LA12302-8` (string)
+                    + text (string, optional)
 
 ### `Submit_DR_Package_Cancel`
 + `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
