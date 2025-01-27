@@ -8861,11 +8861,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Diagnostic_Report_Package_Request_Cancel`
 + include `Diagnostic_Report_Base_request`
-- One Of
-    - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
-    - effective_period (object, optional, fixed-type)
-        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
-        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary
 + `primary_source`: `true` (boolean, required) - could NOT be false
 + performer (required) - required if primary_source=true
     - One Of
@@ -8909,6 +8904,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `eHealth/cancellation_reasons` (string)
             + code: `misspelling` (string) \\ wrong_patient, misspelling
     + text (string)
+- override 
+    - One Of
+        - `effective_date_time`: `2018-08-02T10:45:16.000Z` (string, optional)
+        - `effective_period` (object, optional, fixed-type)
+            + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+            + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary
 
 
 ### `Diagnostic_Report_Response`
