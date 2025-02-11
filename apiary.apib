@@ -9706,11 +9706,6 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `status` : `completed` (enum, required) - Status for provided procedure
     - `completed`
     - `entered_in_error`
-+ `status_reason` (Codeable_Concept, optional) - Reason why current status was set to procedure. Is mandatory for `entered_in_error`
-    + coding (array, fixed-type)
-        + (Coding)
-            + system: `eHealth/procedure_status_reasons` (string)
-            + code: `default` (string)
 + `based_on` (Reference_request, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
