@@ -2730,6 +2730,24 @@ http code| processing method | Client recommendations
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data(`Device_Dispense_Response`)
+
+
+### Get Activity details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/activities/{activity_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `activity_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Activity identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Activity_Response`)
         
 
 ### Mark in error Composition[PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error]
