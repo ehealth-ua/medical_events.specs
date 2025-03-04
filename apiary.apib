@@ -7921,9 +7921,6 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `eHealth/LOINC/observation_codes` (string)
             + code: `10569-2` (string)
             
-+ components (array, optional, fixed-type)
-    
-
 - One Of
     + effective_date_time: `2018-10-08T09:46:37.694Z` (string, optional)
     + effective_period (Period, optional)
@@ -7986,8 +7983,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + lowerLimit (number, optional)// decimal Lower limit of detection
                 + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
                 + dimensions (number, optional) // positiveInt Number of sample points at each time point
-                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
-            
+                + data (string, required) // Decimal values with spaces, or "E" | "U" | "Lchore
             + value_boolean (boolean, required)
             + value_range (object, required, fixed-type)
                 + low (Quantity, required)
@@ -7998,6 +7994,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + value_time (string, required)
             + value_date_time (string, required)
             + value_period (Period, required)
+            
         + interpretation (Codeable_Concept, optional)
             + coding (array, fixed-type)
                 + (Coding)
@@ -8037,6 +8034,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
+                
 + specimen (Reference_response, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
