@@ -12175,7 +12175,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + system: `eHealth/ucum/units` (string, required)
     + code: min (string, required)
     + comparator: `>` (string, optional)
-+ quantity (object, required) - The quantity of specimen collected
++ quantity (object, optional) - The quantity of specimen collected
     + value: 20 (number, required)
     + system: `eHealth/ucum/units` (string, required)
     + code: g (string, required)
@@ -12199,16 +12199,16 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Specimen_Container_Request`
 + identifier: `1-3244-ABC` (string, required) - Id for the container
 + description: `Some container description` (string, optional) - Textual description of the container
-+ type (Codeable_Concept, required) - Kind of container directly associated with specimen.
++ type (Codeable_Concept, optional) - Kind of container directly associated with specimen.
     + coding (array, fixed-type)
         + (Coding)
             + system: `specimen_container_types` (string)
             + code: `default` (string)
-+ capacity (object, required) - Container volume or size
++ capacity (object, optional) - Container volume or size
     + value: 30000 (number, required)
     + system: `eHealth/ucum/units` (string, required)
     + code: mg (string, required)
-+ specimen_quantity (object, required) - Quantity of specimen within container
++ specimen_quantity (object, optional) - Quantity of specimen within container
     + value: 20 (number, required)
     + system: `eHealth/ucum/units` (string, required)
     + code: g (string, required)
@@ -12359,7 +12359,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + code: min (string, required)
         + comparator: `>` (string, optional)
         + unit: хв (string, required)
-    + quantity (object, required) - The quantity of Specimen collected
+    + quantity (object, optional) - The quantity of Specimen collected
         + value: 20 (number, required)
         + system: `eHealth/ucum/units` (string, required)
         + code: g (string, required)
@@ -12372,12 +12372,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `procedure` (string, required)
 + container (array, required) - Direct container of Specimen 
     + (`Specimen_Container_Request`)
-        + capacity (object, required) - Container volume or size
+        + capacity (object, optional) - Container volume or size
             + value: 30000 (number, required)
             + system: `eHealth/ucum/units` (string, required)
             + code: mg (string, required)
             + unit: міліграм (string, required)
-        + specimen_quantity (object, required) - Quantity of Specimen within container
+        + specimen_quantity (object, optional) - Quantity of Specimen within container
             + value: 20 (number, required)
             + system: `eHealth/ucum/units` (string, required)
             + code: g (string, required)
