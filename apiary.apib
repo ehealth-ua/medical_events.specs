@@ -2822,7 +2822,7 @@ Conditions                  | Only specific *Conditions* are available for Patie
 Observations                | Only specific *Observations* are available for Patient Summary. Restrictions is based on *observation.code*
 Diagnoses                   | Only current diagnoses related to active *Episodes* that refer to specific *Conditions* are available for Patient Summary. Restrictions is based on *condition.code*
 Risk Assessment             | All patient's risk assessments
-Device                      | All patient`s devices
+Device                      | Only specific *Devices* are available for Patient Summary
 Medication Statment         | All patient`s medication statments
 Diagnostic Report           | Only specific *Diagnostic Reports* are available for Patient Summary
 Procedure                   | Only specific *Procedures* are available for Patient Summary
@@ -2830,7 +2830,7 @@ Encounter                   | All patient's encounters with reduced info
 Clinical Impression         | Only specific *Clinical Impressions* are available for Patient Summary
 Care Plan                   | All *Care Plan* are available for Patient Summary
 
-### Get Short Episodes by search params [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
+### Get Short Episodes by search params (Summary) [GET /api/patients/{patient_id}/summary/episodes{?period_from,period_to,page,page_size}]
 
 This web service returns brief information in order not to disclose confidential and sensitive data. Access to full episode data is restricted by patient's approval.
 If you have an approval - you can obtain episode details and nested entities through `/episode/:id/*` web services.
@@ -2856,7 +2856,7 @@ If you have an approval - you can obtain episode details and nested entities thr
     + Attributes (`Response_Collection`)
         + data(array[`Episode_Of_Care_Short`])
 
-### Get Short Encounters by search params [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
+### Get Short Encounters by search params (Summary) [GET /api/patients/{patient_id}/summary/encounters{?status,episode_id,type,class,performer_speciality,date_from,date_to}]
 The endpoint returns a list of short Encounter info filtered by search params.
 **Scopes required:** `patient_summary:read`
 
@@ -2886,7 +2886,7 @@ The endpoint returns a list of short Encounter info filtered by search params.
     + Attributes (Response_Collection)
         + data (array[`Encounter_Short`])
 
-### Get Short Encounter by id [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
+### Get Short Encounter by id (Summary) [GET /api/patients/{patient_id}/summary/encounters/{encounter_id}]
 The endpoint returns single short Encounter info.
 **Scopes required:** `patient_summary:read`
 
@@ -2905,7 +2905,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_OK`)
         + data (`Encounter_Short`)
 
-### Get Immunizations [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,date_from,date_to}]
+### Get Immunizations (Summary) [GET /api/patients/{patient_id}/summary/immunizations{?page,page_size,code,vaccine_code,date_from,date_to}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -2928,7 +2928,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_Collection`)
         + data (array[`Immunization_Response`], fixed-type)
 
-### Get Immunization by id [GET /api/patients/{patient_id}/summary/immunizations/{id}]
+### Get Immunization by id (Summary) [GET /api/patients/{patient_id}/summary/immunizations/{id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -2947,7 +2947,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_OK`)
         + data (`Immunization_Response`, fixed-type)
 
-### Get Allergy Intolerances [GET /api/patients/{patient_id}/summary/allergy_intolerances{?page,page_size,code,onset_date_time_from,onset_date_time_to}]
+### Get Allergy Intolerances (Summary) [GET /api/patients/{patient_id}/summary/allergy_intolerances{?page,page_size,code,onset_date_time_from,onset_date_time_to}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -2970,7 +2970,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_Collection`)
         + data (array[`Allergy_Intolerance_Response`], fixed-type)
 
-### Get Allergy Intolerance by id [GET /api/patients/{patient_id}/summary/allergy_intolerances/{id}]
+### Get Allergy Intolerance by id (Summary) [GET /api/patients/{patient_id}/summary/allergy_intolerances/{id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -2989,7 +2989,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_OK`)
         + data (`Allergy_Intolerance_Response`, fixed-type)
 
-### Get Observations [GET /api/patients/{patient_id}/summary/observations{?page,page_size,code,issued_from,issued_to}]
+### Get Observations (Summary) [GET /api/patients/{patient_id}/summary/observations{?page,page_size,code,issued_from,issued_to}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -3012,7 +3012,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_Collection`)
         + data (array[`Observation_Response`], fixed-type)
 
-### Get Observation by id [GET /api/patients/{patient_id}/summary/observations/{id}]
+### Get Observation by id (Summary) [GET /api/patients/{patient_id}/summary/observations/{id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -3031,7 +3031,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_OK`)
         + data (`Observation_Response`, fixed-type)
 
-### Get Conditions [GET /api/patients/{patient_id}/summary/conditions{?page,page_size,code,onset_date_from,onset_date_to}]
+### Get Conditions (Summary) [GET /api/patients/{patient_id}/summary/conditions{?page,page_size,code,onset_date_from,onset_date_to}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -3054,7 +3054,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_Collection`)
         + data (array[`Condition_Response`], fixed-type)
 
-### Get Condition by id [GET /api/patients/{patient_id}/summary/conditions/{id}]
+### Get Condition by id (Summary) [GET /api/patients/{patient_id}/summary/conditions/{id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -3073,7 +3073,7 @@ The endpoint returns single short Encounter info.
     + Attributes (`Response_OK`)
         + data (`Condition_Response`, fixed-type)
 
-### Get active Diagnoses [GET /api/patients/{patient_id}/summary/diagnoses]
+### Get active Diagnoses (Summary) [GET /api/patients/{patient_id}/summary/diagnoses{?page,page_size,code}]
 
 This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/patient-summary/get-condition-by-id)
 
@@ -3101,7 +3101,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 
 
-### Get Risk Assessment by id [GET /api/patients/{patient_id}/summary/risk_assessments/{risk_assessment_id}]
+### Get Risk Assessment by id (Summary) [GET /api/patients/{patient_id}/summary/risk_assessments/{risk_assessment_id}]
 
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -3117,7 +3117,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_OK`)
         + data (`Risk_Assessment_Response`)
 
-### Get Risk Assessments by search params [GET /api/patients/{patient_id}/summary/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
+### Get Risk Assessments by search params (Summary) [GET /api/patients/{patient_id}/summary/risk_assessments{?code,asserted_date_from,asserted_date_to,page,page_size,encounter_id,episode_id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -3140,7 +3140,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_Collection`)
         + data (array[`Risk_Assessment_Response`], fixed-type)
 
-### Get Device by id [GET /api/patients/{patient_id}/summary/devices/{device_id}]
+### Get Device by id (Summary) [GET /api/patients/{patient_id}/summary/devices/{device_id}]
 
 **Scopes required:** `patient_summary:read`
 
@@ -3158,11 +3158,12 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_OK`)
         + data (`Device_Response`)
 
-### Get Devices by search params [GET /api/patients/{patient_id}/summary/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
+### Get Devices by search params (Summary) [GET /api/patients/{patient_id}/summary/devices{?asserted_date_from,asserted_date_to,page,page_size,type,encounter_id,episode_id}]
 
 **Scopes required:** `patient_summary:read`
 
 + Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `type`: `spine_board` (string, optional) 
@@ -3181,7 +3182,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         + data (array[`Device_Response`], fixed-type)    
     
 
-### Get Medication Statement by id  [GET /api/patients/{patient_id}/summary/medication_statements/{medication_statement_id}]
+### Get Medication Statement by id (Summary) [GET /api/patients/{patient_id}/summary/medication_statements/{medication_statement_id}]
 **Scopes required:** `patient_summary:read`
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -3197,9 +3198,10 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_OK`)
         + data (`Medication_Statement_Response`)
 
-### Get Medication Statement by search params [GET /api/patients/{patient_id}/summary/medication_statements/{?asserted_date_from,asserted_date_to,page,page_size,medication_code,encounter_id,episode_id}]
+### Get Medication Statement by search params (Summary) [GET /api/patients/{patient_id}/summary/medication_statements/{?asserted_date_from,asserted_date_to,page,page_size,medication_code,encounter_id,episode_id}]
 **Scopes required:** `patient_summary:read`
 + Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `medication_code`: `spine_board` (string, optional) 
@@ -3218,7 +3220,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_Collection`)
         + data (array[`Medication_Statement_Response`], fixed-type)
 
-### Get Diagnostic Report by id [GET /api/patients/{patient_id}/summary/diagnostic_reports/{diagnostic_report_id}]
+### Get Diagnostic Report by id (Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{diagnostic_report_id}]
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
     + diagnostic_report_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique DR identifier
@@ -3234,10 +3236,11 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_OK`)
         + data (`Diagnostic_Report_Response`)
 
-### Get Diagnostic Report by search params [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
+### Get Diagnostic Report by search params (Summary) [GET /api/patients/{patient_id}/summary/diagnostic_reports/{?issued_from,issued_to,page,page_size,code,encounter_id,context_episode_id, initial_episode_id}]
 
 
 + Parameters
+    + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
     + `page`: 2 (number, optional) - Page number.    
     + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     + `code`: `12345` (string, optional) 
@@ -3256,7 +3259,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_Collection`)
         + data (array[`Diagnostic_Report_Response`], fixed-type)
 
-### Get Procedure by id [GET /api/patients/{patient_id}/summary/procedures/{procedure_id}]
+### Get Procedure by id (Summary) [GET /api/patients/{patient_id}/summary/procedures/{procedure_id}]
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
     + procedure_id: `340b86fd-23f3-4a33-94c5-8ec19d116c33` (string, required) - Unique procedure identifier
@@ -3272,7 +3275,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_OK`)
         + data (`Procedure_Response`)
 
-### Get Procedures by search params [GET /api/patients/{patient_id}/summary/procedures{?status,episode_id,code,service_request_id,recorded_by,managing_organization_id}]
+### Get Procedures by search params (Summary) [GET /api/patients/{patient_id}/summary/procedures{?status,episode_id,code,service_request_id,recorded_by,managing_organization_id}]
 **Scopes required:** `patient_summary:read`
 
 + Parameters
@@ -3295,7 +3298,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (Response_Collection)
         + data (array[`Procedure_Response`])
 
-### Get Clinical Impression by id  [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
+### Get Clinical Impression by id (Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions/{clinical_impression_id}]
 **Scopes required:** `patient_summary:read`
 + Parameters
     + patient_id: `e549c257-232e-4dab-9f1e-b2322cac3968` (string, required) - Unique patient identifier
@@ -3311,7 +3314,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
     + Attributes (`Response_OK`)
         + data (`Clinical_Impression_Show`)
 
-### Get Clinical Impressions [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
+### Get Clinical Impressions (Summary) [GET /api/patients/{patient_id}/summary/clinical_impressions{?encounter_id,episode_id,code,status,page,page_size}]
 **Scopes required:** `patient_summary:read`
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the patient. 
@@ -3334,7 +3337,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
         + data (array[`Clinical_Impression_Show`], fixed-type)
 
       
-### Get Short Care Plans by search params [GET /api/patients/{patient_id}/summary/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,managing_organization_id,status,page,page_size}]
+### Get Short Care Plans by search params (Summary) [GET /api/patients/{patient_id}/summary/care_plans{?legal_entity_id,period_date,encounter_id,requisition,based_on,part_of,managing_organization_id,status,page,page_size}]
 Returns care plan short list filtered by submitted parameters withtin specified patient.
 
 **Scopes required:** `patient_summary:read`
