@@ -5762,6 +5762,9 @@ This web service returns rule engine rule details filtered by ID with active rul
             + description: `Some text` (string, optional) - Rule engine rule description
             + is_active: true (boolean, required) - Rule engine rule status
             + is_enabled: true (boolean, required) - Whether Rule engine rule is enabled
+            + items_comparator: `and` (enum, required)
+                - `and`
+                - `or`
             + items (array)
                 + (object)
                     + value: `Rule engine rule value in Json Logic format` (string, required) - Rule value in Json Logic format
