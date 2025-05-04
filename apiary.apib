@@ -10599,6 +10599,15 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `patient` (string)
                 + text (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
+    - `person` (object, optional) - access to personal data that fall under the restrictions specified for the person
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `person` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
     - `resource_types` (array, optional, fixed-type) - list of resources that are requested access to be granted
         + resource_types (object, optional) 
             + coding (array, optional, fixed-type)
