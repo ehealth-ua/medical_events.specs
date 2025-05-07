@@ -3,7 +3,9 @@ HOST: https://api.ehealth.gov.ua/
 
 # MEDICAL EVENTS MIS API
 
-**Version: 9.8.8 v.1**
+**Version: 9.9.1 v1**
+
+**Environment: PROD**
 
 > Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
 
@@ -1815,7 +1817,7 @@ This web service allows to get a list of diagnostic reports that were allowed to
 ## Procedures [/api/patients/{patient_id}/procedures]
 
 ### Create procedure [POST]
-This WS allows to register procedure by its own. Also prosedure can be registered as a part of [encounter package](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
+This WS allows to register procedure by its own. Also prosedure can be registered as a part of [encounter package](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
 **Scopes required:** `procedure:write`
 
 + Parameters
@@ -1956,7 +1958,7 @@ This WS allows to cancel existing procedure and change its status to `entered_in
 Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of procedure must be equal to procedure stored in DB. See [Get Procedure by search params](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/procedures/get-procedure-by-search-params)
+1. Signed content of procedure must be equal to procedure stored in DB. See [Get Procedure by search params](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/procedures/get-procedure-by-search-params)
 2. `status_reason` and `explanatory_letter` (optional) must be added to signed content
 
 Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
@@ -2022,7 +2024,7 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
 ## Specimen [/api/patients/{patient_id}/specimens]
 
 ### Create Specimen [POST]
-This WS allows to register Specimen by its own. Also Specimen can be registered as a part of [encounter package](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
+This WS allows to register Specimen by its own. Also Specimen can be registered as a part of [encounter package](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package).
 **Scopes required:** `specimen:write`
 
 + Parameters
@@ -2135,7 +2137,7 @@ This method is used to set a received_time for a Specimen.
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `specimen:process`
@@ -2166,7 +2168,7 @@ This method is used to mark Specimen as unavailable.
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `specimen:invalidate`
@@ -2201,7 +2203,7 @@ This method is used to mark Specimen as unsatisfactory.
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `specimen:reject`
@@ -2246,7 +2248,7 @@ Please see [Specimen status model](https://e-health-ua.atlassian.net/wiki/spaces
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
@@ -2291,6 +2293,504 @@ http code| processing method | Client recommendations
                     + system: `specimen_cancel_reasons` (string)
                     + code: `default` (string)
         + `status`: `entered_in_error` (string, required)
+        
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+## Composition [/api/patients/{patient_id}/composition]
+
+### Create Composition Title [POST /api/patients/{patient_id}/composition_title{?composition_title}]
+This WS allows to create a title for Composition.
+**Scopes required:** `composition:write`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + composition_type: `ADOPTION`(string, required) - Composition type
++ Request (application/json)
+    + Headers
+            Authorization: Bearer WUZKa1BnUTRkOWhYcTAxOHNmUTdUUT09
+            api-key: b1lPV3d3blRHRHdOYVYrYmNPU0tJdz09
+            X-Custom-PSK: a1aa07c96f3f4d91870f923a53cc9aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data
+            + title: `98CC-P696-E34T-X4T2` (string, required)
+
+### Submit Composition [POST /api/patients/{patient_id}/compositions]
+This WS allows to register Composition by its own.
+**Scopes required:** `composition:write`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+
++ Request (application/json)
+    + Headers
+            Authorization: Bearer WUZKa1BnUTRkOWhYcTAxOHNmUTdUUT09
+            api-key: b1lPV3d3blRHRHdOYVYrYmNPU0tJdz09
+            X-Custom-PSK: a1aa07c96f3f4d91870f923a53cc9aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Submit Composition [POST /api/patients/{patient_id}/compositions]
+**Scopes required:** `composition:write`
+
++ Parameters
+    + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+            
+    + Attributes (Composition_Create)
+
++ Response 201 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Job`)
+        
+
+### Resend SMS on Composition [PATCH /api/patients/{patient_id}/compositions/{composition_id}/actions/resend]
+Method to resend sms on Composition
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
+**Scopes required:** `composition:resend`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + composition_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique composition identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer d368a4b0-4a0e-457a-b267-32359fa6288f
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+
+### Get Composition by search params [GET /api/patients/{patient_id}/compositions/search{?patient_id,encounter_id,type,date,page,page_size}]
+**Scopes required:** `composition:read`
+
++ Parameters
+    + encounter_id: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, optional) - encounter identifier linked to the Composition
+    + context_episode_id: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, optional) - episode
+    + type: `DRIVERS` (string, optional) - type of the Composition
+    + category: `DRIVERS_GROUP1` (string, optional) - category of Composition
+    + status: `FINAL` (string, optional) - status of Composition
+    + title: `98CC-P696-E34T-X4T2` (string, optional) - number of Composition
+    + author: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - author of Composition
+    + attester: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - attester of Composition
+    + custodian: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, optional) - LE where Composition was created
+    + `date_from`: `2023-12-25` (string, optional) - the date from which the Composition was signed 
+    + `date_to`: `2023-12-25` (string, optional) - the date to which the Composition was signed
+    + page: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Composition_Short_Response`])
+        
+
+### Get Composition Configurations by search params [GET /api/composition_configurations{?type,category,page,page_size}]
+**Scopes required:** `composition_configuration:read`
++ Parameters
+    + type: `DRIVERS` (string, required) - type of the Composition
+    + category: `DRIVERS_GROUP1` (string, required) - category of Composition
+    + page: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (array[`Composition_Configurations_Response`])
+
+
+### Get Composition by identifier  [GET /api/patients/{patient_id}/compositions/{id}]
+**Scopes required:** `composition:read`
+
++ Parameters
+    + patient_id: `25878134-7592-472a-adc1-f9532ce7f048` (string, required) - patient identifier
+    + id: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - Unique composition identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_OK)
+        + data (array[`Composition_Full_Response`])
+
+
+### Generate Composition print form  [GET /api/patients/{patient_id}/compositions/{id}/print_form?form_type=informational_certificate]
+**Scopes required:** `composition:read`
+
++ Parameters
+    + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique patient identifier
+    + composition_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique composition identifier
+    + `form_type`: `informational_certificate`(string, required) - Type of the print form
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (text/html)
+        <!DOCTYPE html> .... </html>
+
+
+### Get Composition context [GET /api/patients/{patient_id}/compositions/{id}/context]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `a10aeafb-0df2-4091-bc83-f07e92a100ae` (string, required) -  Composition identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Medical_Event_Context_Composition_with_Episode_Response`)
+
+### Get Episode details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/episodes/{episode_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `episode_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Episode identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Episode_Of_Care_Response`)
+
+### Get Diagnostic Report details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/diagnostic_reports/{diagnostic_report_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `diagnostic_report_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Diagnostic Report identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Diagnostic_Report_Response`)
+
+### Get Encounter details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/encounters/{encounter_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `encounter_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Encounter identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Encounter_Response`)
+
+### Get Care Plan details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/care_plans/{care_plan_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `care_plan_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Care Plan identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Care_Plan_Show`)
+
+### Get Procedure details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/procedures/{procedure_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `procedure_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Procedure identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Procedure_Response`)
+
+### Get Condition details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/conditions/{condition_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `condition_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Condition identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Condition_Response`, fixed-type)
+
+### Get Observation details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/observations/{observation_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `observation_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Observation identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Observation_Response`, fixed-type)
+
+### Get Clinical Impression details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/clinical_impressions/{clinical_impression_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `clinical_impression_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Clinical Impression identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Clinical_Impression_Show`)
+
+### Get Immunization details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/immunizations/{immunization_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `immunization_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Immunization identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Immunization_Response`, fixed-type)
+
+### Get Service Request details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/service_requests/{service_request_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `service_request_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Service Request identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Service_Request_Show`)
+
+### Get Composition details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/compositions/{composition_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier: Main Composition
+    + `composition_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Composition identifier: Mentioned in section.entry
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Composition_Full_Response`)
+
+### Get Device Request details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/device_requests/{device_request_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `device_request_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Device Request identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Device_Request_Response_Details`)
+
+### Get Device Dispense details in Composition context [GET /api/patients/{patient_id}/compositions/{id}/device_dispenses/{device_dispense_id}]
+
++ Parameters
+    + `patient_id`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, required) - Patient identifier
+    + `id`: `cabd49d0-9ac0-439d-85a6-d8809bfb8e04` (string, required) - Composition identifier
+    + `device_dispense_id`: `3a0dcfd7-5348-4511-b46d-b2dc4b94ca98` (string, required) - Device Dispense identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data(`Device_Dispense_Response`)
+        
+
+### Mark in error Composition[PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error]
+
+This method must be used to mark in error existing Composition. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
+
+**Important**
+1. Signed content of a Composition must be equal to the Composition stored in DB. See Get Composition details
+2. status_reason must be added to signed content
+3. status must be changed to `ENTERED_IN_ERROR` for the purpose of displaying in the signed content
+
+Please see [Composition status model](https://e-health-ua.atlassian.net/wiki/spaces/emal/pages/18119950362/NEW+ME+Composition+status+model) and Dummy Mark-in-error Composition for more details
+
+
+**Scopes required:** `composition:mark_in_error`
+
+It can be processed in async way only, so Server might answer with:
+http code| processing method | Client recommendations
+--|--|--
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Composition identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (object)
+        + `signed_data`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+
+
++ Response 202 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 202 (number)
+        + data (`Job`)
+
+
+### Dummy Mark in error Composition [PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error/dummy]
++ Parameters
+    + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
+    + id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique Composition identifier
+    
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+            X-Custom-PSK: a2aa05c76f3f2d91870f923a53cc8aa8f23bbc01a8238d1c2c26d4299715a7e4
+    
+    + Attributes (Composition_Create)
+        + `status_reason` (Codeable_Concept, required)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `composition_mark_in_error_reasons` (string)
+                    + code: `default` (string)
+        + `status`: `ENTERED_IN_ERROR` (string, required)
+        + `explanatory_letter`: `Comments about the reason to mark composition in error` (string, required)
         
 
 + Response 202 (application/json)
@@ -2570,7 +3070,7 @@ The endpoint returns single short Encounter info.
 
 ### Get active Diagnoses [GET /api/patients/{patient_id}/summary/diagnoses]
 
-This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/patient-summary/get-condition-by-id)
+This endpoint returns current diagnoses related only to active episodes. In order to get specific condition details, use [Get Condition by ID](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/patient-summary/get-condition-by-id)
 
 **Scopes required:** `patient_summary:read`
 
@@ -2834,7 +3334,7 @@ This endpoint returns current diagnoses related only to active episodes. In orde
 
 ## Manage Service Requests in patient context [/api/patients/{patient_id}/service_requests]
 
-Use [GET Service Catalog](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-programs/medical-program/get-services-dictionary) to receive current catalog of services. 
+Use [GET Service Catalog](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-programs/medical-program/get-services-dictionary) to receive current catalog of services. 
 
 ### PreQualify Service request [POST /api/patients/{patient_id}/service_requests/prequalify]
 
@@ -2903,7 +3403,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `service_request:write`
 
@@ -3094,7 +3594,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Request (application/json)
 
@@ -3203,7 +3703,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `service_request:use`
 
@@ -3392,7 +3892,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `service_request:complete`
 
@@ -3446,7 +3946,7 @@ This method is used to pre-qualify Device Request in order to define whether the
                 + value: 10 (number, required)
                 + system: `device_unit` (string, required)
                 + code: piece (string, required)
-            + `authorize_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
+            + `inform_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
         + `programs` (array, required) - Medical programs list for qualify
             + (Reference_request)
                 + identifier (Identifier)
@@ -3459,7 +3959,7 @@ This method is used to pre-qualify Device Request in order to define whether the
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
-        +  data (array[`Qualify_Device_Request_Base`]))
+        +  data (array[`Qualify_Device_Request_Base`])
 
 + Response 422 (application/json)
     + Attributes (Response_Error)
@@ -3478,11 +3978,11 @@ Service will store signed copy of Device Request in Media Content Storage if all
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_request:write`
 
-Look at [Dummy Device request](https://medicaleventsmisapi.docs.apiary.io/#reference/device-requests/create-device-request/dummy-device-request) for more details
+Look at [Dummy Device request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/create-device-request/dummy-device-request) for more details
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
@@ -3530,7 +4030,7 @@ Look at [Dummy Device request](https://medicaleventsmisapi.docs.apiary.io/#refer
                             + code: `medical_program` (string)
                 + value: `c5a6d991-0bf7-476f-b3cf-bec83f044b2a` (string, required)
         + `status`: `active` (string, required)
-        + `authorize_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
+        + `inform_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 
 + Response 202 (application/json)
@@ -3658,7 +4158,7 @@ This method returns all device requests related to specified patient.
                     - OTP
                     - OFFLINE
                     - THIRD_PERSON
-                + number: `+38093*****85` (string, optional) - returns if type is OTP 
+                + phone_number: `+38093*****85` (string, optional) - returns if type is OTP 
             + `verification_code`: `1234` (string, optional) - returns for requests with medical program if type is OFFLINE, or if type is OTP and `request_notification_disabled` medical program setting is true
 
 + Response 404 (application/json)
@@ -3717,7 +4217,7 @@ Method to resend sms on Device request
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_request:resend`
 
@@ -3745,7 +4245,7 @@ http code| processing method | Client recommendations
 This method must be used to revoke existing Device Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://medicaleventsmisapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
+1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
 2. status_reason must be added to signed content
 3. status must be changed to revoked for the purpose of displaying in the signed content
 
@@ -3757,7 +4257,7 @@ Please see [Device request status model](https://e-health-ua.atlassian.net/wiki/
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Request (application/json)
 
@@ -3831,7 +4331,7 @@ Method to complete device request
 This method must be used to cancel existing Device Request. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://medicaleventsmisapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
+1. Signed content of Device request must be equal to Device request stored in DB. See [Get Device request details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-requests/get-device-request-details/get-device-request-details)
 2. `status_reason`  must be added to signed content
 2. status must be changed to entered_in_error for the purpose of displaying in the signed content
 
@@ -3843,7 +4343,7 @@ Please see [Device request status model](https://e-health-ua.atlassian.net/wiki/
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/submit-encounter-package) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Request (application/json)
 
@@ -3896,7 +4396,7 @@ Method to create device dispense
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/submit-encounter-package) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_dispense:write`
 
@@ -3932,17 +4432,17 @@ Service will store signed copy of Device Dispense in Media Content Storage if al
 
 **Important**
 1. Signed content of Device dispense must be equal to Device dispense stored in DB. See Get Device dispense details
-2. `what_handed_over` and `payment_amount`   must be added to signed content
+2. `when_handed_over` and `payment_amount`   must be added to signed content
 3. status must be changed to completed for the purpose of displaying in the signed content
 
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `device_dispense:complete`
 
-Look at [Dummy Complete Device dispense](https://medicaleventsmisapi.docs.apiary.io/#reference/device-dispenses/complete-device-dispense/dummy-complete-device-dispense) for more details
+Look at [Dummy Complete Device dispense](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-dispenses/complete-device-dispense/dummy-complete-device-dispense) for more details
 
 + Parameters
     + patient_id: `aff00bf6-68bf-4b49-b66d-f031d48922b3` (string, required) - Unique patient identifier
@@ -4122,7 +4622,7 @@ This method is used to stop Device dispense.
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `device_dispense:stop`
@@ -4147,7 +4647,7 @@ http code| processing method | Client recommendations
 This method must be used to cancel existing Device dispense. Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority)
 
 **Important**
-1. Signed content of Device dispense must be equal to Device dispense stored in DB. See [Get Device dispense details](https://medicaleventsmisapi.docs.apiary.io/#reference/device-dispenses/get-device-dispense-details/get-device-dispense-details)
+1. Signed content of Device dispense must be equal to Device dispense stored in DB. See [Get Device dispense details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/device-dispenses/get-device-dispense-details/get-device-dispense-details)
 2. `status_reason`  must be added to signed content
 3. status must be changed to entered_in_error for the purpose of displaying in the signed content
 
@@ -4159,7 +4659,7 @@ Please see [Device dispense status model](https://e-health-ua.atlassian.net/wiki
 It can be processed in async way only, so Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 + Request (application/json)
 
@@ -4206,7 +4706,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 Block resources may consist next entities:
 Object| Access level
@@ -4217,6 +4717,7 @@ care_plan|read, write
 encounter|write
 procedure|write
 specimen|write
+composition|write
 
 
 Block child_resource may consist next entities:
@@ -4296,7 +4797,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `approval:create`
 
@@ -4388,7 +4889,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `approval:cancel`
 
@@ -4427,11 +4928,11 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
-Look at [Dummy Care Plan](https://medicaleventsmisapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
+Look at [Dummy Care Plan](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/dummy-care-plan/dummy-care-plan) for more details
 
 + Parameters
     + patient_id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - MPI identifier of the person.
@@ -4554,11 +5055,11 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
-Look at [Dummy Create Care Plan activity](https://medicaleventsmisapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
+Look at [Dummy Create Care Plan activity](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/care-plan/create-care-plan-activity/dummy-care-plan-activity) for more details
 
 + Parameters
     + patient_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the person.
@@ -4807,7 +5308,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `care_plan:write`
@@ -4887,7 +5388,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 **Scopes required:** `care_plan:write`
@@ -4941,7 +5442,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 **Scopes required:** `care_plan:write`
 
@@ -5071,7 +5572,7 @@ Depends on processing method Server might answer with:
 http code| processing method | Client recommendations
 --|--|--
 201 | sync | use payload from response
-202 | async: **default** method | use [Get job details](https://medicaleventsmisapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
+202 | async: **default** method | use [Get job details](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/medical-events/encounter-data-package/get-async-job-processing-details) to get processing result. Response payload will be returned in the job details
 
 
 + Parameters
@@ -5279,6 +5780,50 @@ This web service returns rule engine rule details filtered by ID with active rul
         + include `Coding`
 + text (string, optional)
 
+### `Section`
++ title: `History of present illness` (string, required)
++ code (object, required, fixed-type)
+    + code (object, required, fixed-type)
+        + (Coding)
+            + code: `11348-0` (string)
+            + system: `http://loinc.org` (string)
+            + display: `History of present illness` (string)
++ author: (array, required, fixed-type)
+    + (object)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ text: (object, optional, fixed-type)
+    + status: `generated` (string, required)
+    + div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">...` (string, required)
++ ordered_by: (object, optional, fixed-type)
+    + type (object, fixed-type)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `system` (string)
+                + system: `http://terminology.hl7.org/CodeSystem/list-order` (string)
+                + display: `Sorted by System` (string)
++ entry: (array, optional, fixed-type)
+    + (Reference_request, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `observation` (string)
++ empty_reason: (array, optional, fixed-type)
+    + (object)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `withheld` (string)
+                + system: `http://terminology.hl7.org/CodeSystem/list-empty-reason` (string)
+                + display: `Information Withheld` (string)
++ section: (array[Section], optional) - Nested Section
+
+
 ### `Coding`
 + system : `eHealth/resources` (string, required)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
@@ -5429,6 +5974,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + diagnoses (array, required, fixed-type)
             + (Diagnosis_Referrence_Condition)
             + (Diagnosis_Referrence_Condition_2)
+        + `is_active`: `true` (string, required)
 + `status_history` (array, required, fixed_type)
     + (object)
         + status: `active` (string, required)
@@ -5746,6 +6292,341 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `Health/encounter_discharge_department` (string) 
                 + code: `default` (string)- `dictionary eHealth/encounter_discharge_department`
     + `pre_admission_identifier`: `12345` (string) - Pre-admission identifier
+
+### `Composition_Create` 
++ `id`: `465fb6fe-2dea-4b8a-9ef7-58379d1eaab0` (string, required)
++ `title`: `98CC-P696-E34T-X4T2` (string, required)
++ `status`: `FINAL`  (string, required) - `dictionary COMPOSITION_STATUS`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `custodian`: (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
++ `encounter`: (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `author`:  (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
++ `section`: (array, required, fixed-type)
+    + (object)
+        + title: `History of present illness` (string, required)
+        + code (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `11348-0` (string)
+                    + system: `COMPOSITION_SECTION_CODES` (string)
+        + author: (array, required)
+            + (Reference_request, required)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `employee` (string)
+        + text: (object, optional, fixed-type)
+            + status: `generated` (string, required)
+            + div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">...` (string, required)
+        + ordered_by: (object, optional, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `system` (string)
+                        + system: `COMPOSITION_SECTION_ORDERBY` (string)
+        + entry: (array, required)
+            + (Reference_request, required)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `observation` (string)
+        + empty_reason: (object, optional, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `withheld` (string)
+                    + system: `COMPOSITION_SECTION_EMPTY_REASON` (string)
+        + section: (array[Section], optional) - Nested Section
++ `extension`: (array, optional, fixed-type)
+    + (object)
+        + code: `COMPOSITION_ADDITIONAL_CONDITION_ADMISSION` (string)
+        + value_codeable_concept: (object, required, fixed-type)
+            + extension: (array, required, fixed-type)
+                + (object)
+                    + code: `COMPOSITION_ADDITIONAL_CONDITION_ADMISSION_VALUE` (string, required)
+                    + value_decimal: `300` (number, required)
+                + (object)
+                    + code: `COMPOSITION_ADDITIONAL_CONDITION_ADMISSION_LETTER_DESIGNATIONS` (string, required)
+                    + value_codeable_concept: (object, required, fixed-type)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `a` (string)
+                                + system: `eHealth/composition_additional_condition_admission_letter_designations` (string)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `35.04` (string)
+                    + system: `eHealth/composition_additional_condition_admission` (string)
++ `relates_to`: (array, optional, fixed-type)
+    + (object)
+        + type: `replaces` (string, required)
+        + `resource_reference`: (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `composition` (string)
++ `attester`: (array, required, fixed-type)
+    + (object)
+        + mode: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal` (string)
+                    + system: `COMPOSITION_ATTESTER_MODES` (string)
+        + party: (Reference_request, required)
+            + identifier (Identifier)
+                + type (Codeable_Concept)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
++ `event`: (array, optional, fixed-type)
+    + (object)
+        + code: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `COMPOSITION_VALIDITY_PERIOD` (string)
+                    + system: `COMPOSITION_EVENTS` (string)
+        + period: (object, required, fixed-type)
+            + start: `2018-08-02T10:45:16.000Z` (string, required)
+            + end: `2018-08-12T10:45:16.000Z` (string, required)
++ `inform_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
+
+
+### `Composition_Short_Response` 
++ `id`: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - `Identifier of composition`
++ `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, optional, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `title`: `98CC-P696-E34T-X4T2` (string, required)
++ `encounter`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ `custodian`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ `author`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ `attester`: (array, optional, fixed-type)
+    + (object)
+        + mode: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal` (string)
+                    + system: `http://hl7.org/fhir/composition-attestation-mode` (string)
+                    + display: `Legal` (string)
+        + party: (object, required, fixed-type)
+            + identifier (Identifier)
+                + type: (object, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
++ `context_episode_id`: `DDD-23323-FDadc-32fd` (string, required)
+
+### `Composition_Full_Response`
++ `id`: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required) - `Identifier of composition`
++ `status`: `FINAL`  (string, required) - `dictionary eHealth/composition_statuses`
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, optional, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `date`: `2018-08-02T10:45:16.000Z` (string, required)
++ `title`: `98CC-P696-E34T-X4T2` (string, required)
++ `custodian`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_entity` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+    + `display_value` (string, required)
++ `encounter`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+    + `display_value` (string, required)
++ `author`: (object, required, fixed-type)
+    + identifier (Identifier)
+        + type (object, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+                    + system: `eHealth/resources` (string)
+            + text: `string` (string, required)
+        + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+    + `display_value` (string, required)
++ `section`: (array, optional, fixed-type)
+    + (object)
+        + title: `History of present illness` (string, required)
+        + code (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `11348-0` (string)
+                    + system: `http://loinc.org` (string)
+                    + display: `History of present illness` (string)
+        + author: (array, required, fixed-type)
+            + (object)
+                + type (object, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+            + `display_value` (string, required)
+        + text: (object, optional, fixed-type)
+            + status: `generated` (string, required)
+            + div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">...` (string, required)
+        + ordered_by: (object, optional, fixed-type)
+            + type (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `system` (string)
+                        + system: `http://terminology.hl7.org/CodeSystem/list-order` (string)
+                        + display: `Sorted by System` (string)
+        + entry: (array, optional, fixed-type)
+            + (Reference_request, required)
+                + identifier (Identifier)
+                    + type (Codeable_Concept)
+                        + coding (array, fixed-type)
+                            + (Coding)
+                                + code: `observation` (string)
+        + empty_reason: (array, optional, fixed-type)
+            + (object)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `withheld` (string)
+                        + system: `http://terminology.hl7.org/CodeSystem/list-empty-reason` (string)
+                        + display: `Information Withheld` (string)
+        + section: (array[Section], optional) - Nested Section
++ `extension`: (array, optional, fixed-type)
+    + (object)
+        + code: `COMPOSITION_ADDITIONAL_CONDITION_ADMISSION` (string)
+        + valueCodeableConcept: (object, required, fixed-type)
+            + extension: (array, required, fixed-type)
+                + (object)
+                    + code: `ЗНАЧЕННЯ ДО Codeable Concept` (string, required)
+                    + valueDecimal: `300` (number, required)
+                + (object)
+                    + code: `БУКВА ДО обраного коду з постанови 340` (string, required)
+                    + valueCodeableConcept: (object, required, fixed-type)
+                        + code: (object, fixed-type)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `a` (string)
+                                    + system: `Довідник букв до 340` (string)
+            + code: (object, fixed-type)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `20.07` (string)
+                        + system: `Довідник кодів постанови №340` (string)
++ relates_to: (array, optional, fixed-type)
+    + (Reference_request, required)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `observation` (string)
++ `attester`: (array, optional, fixed-type)
+    + (object)
+        + mode: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal` (string)
+                    + system: `http://hl7.org/fhir/composition-attestation-mode` (string)
+                    + display: `Legal` (string)
+        + party: (object, required, fixed-type)
+            + identifier (Identifier)
+                + type: (object, required, fixed-type)
+                    + coding (array, fixed-type)
+                        + (Coding)
+                            + code: `employee` (string)
+                            + system: `eHealth/resources` (string)
+                    + text: `string` (string, required)
+                + value: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, required)
+            + `display_value` (string, required)
++ `event`: (array, optional, fixed-type)
+    + (object)
+        + code: (object, required, fixed-type)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `COMPOSITION_VALIDITY_PERIOD` (string)
+                    + system: `COMPOSITION_EVENTS` (string)
+        + period: (object, required, fixed-type)
+            + start: `2018-08-02T10:45:16.000Z` (string, required)
+            + end: `2018-08-12T10:45:16.000Z` (string, required)
++ `context_episode_id`: `DDD-23323-FDadc-32fd` (string, required)
++ `status_reason`: `TYPO` (string, required)
++ `explanatory_letter`: `test` (string, required)
++ `inform_with`: `781ccc01-36a5-4cb7-bc4a-ea3dca500367` (string, optional)
 
 ### `Encounter_Request` 
 + encounter (`Encounter_Base`, required, fixed-type)
@@ -6332,7 +7213,12 @@ This web service returns rule engine rule details filtered by ID with active rul
         - One Of
             + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
             + value_quantity (Quantity, required)
-            + value_codeable_concept (Codeable_Concept, required)
+            + value_codeable_concept (object, required)
+                + `coding` (array, required, fixed-type)
+                    + (object)
+                        + include `Coding`
+                        + extension (Extension, optional)
+                + text (string, optional)
             + value_sampled_data (object, required)
                 + origin (number, optional) //SimpleQuantity Zero value and units
                 + period (number, optional) // decimal Number of milliseconds between samples
@@ -6406,6 +7292,203 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `equipment` (string)                     
 
 ###  `Observation_Request_Base_DRP`
++ id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
++ status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
++ `diagnostic_report` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `diagnostic_report` (string)
++ categories (array, required)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + system: `eHealth/observation_categories` (string)
+                + code: `vital_signs` (string)
+                
+
++ code (Codeable_Concept, required)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/LOINC/observation_codes` (string)
+            + code: `10569-2` (string)
+            
+
+- One Of
+    + effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    + effective_period (Period, optional, fixed-type)
++ issued: `2018-08-02T10:45:16.000Z` (string, required)
+
++ primary_source: `true` (boolean, required) - could NOT be false on DRP
++ `performer` (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `employee` (string)
+
++ interpretation (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/observation_interpretations` (string)
+            + code: `L` (string)
+            
+    
++ comment: `Some comment` (string, optional)
++ `body_site` (Codeable_Concept, optional)
+     + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/body_sites` (string) 
+            + code: `head` (string)
+            
+
++ method (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/observation_methods` (string)
+            + code: `anamnesis` (string)
+            
+
+- One Of
+    + value_quantity (Quantity, required)
+    + value_codeable_concept (Codeable_Concept, required)
+    + value_sampled_data (object, required)
+        + origin (number, optional) //SimpleQuantity Zero value and units
+        + period (number, optional) // decimal Number of milliseconds between samples
+        + factor (number, optional) // decimal Multiply data by this before adding to origin
+        + lower_limit (number, optional)// decimal Lower limit of detection
+        + upper_limit (number, optional) // Σ 0..1 decimal Upper limit of detection
+        + dimensions (number, optional) // positiveInt Number of sample points at each time point
+        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+    + value_string (string, required)
+    + value_boolean (boolean, required)
+    + value_range (Range, required, fixed-type)
+    + value_ratio (object, required)//Need an example 
+        + numerator (Quantity, required)
+        + denominator (Quantity, required)
+    + value_time (string, required)
+    + value_date_time (string, required)
+    + value_period (Period, required)
++ reference_ranges (array, optional, fixed-type)
+    + (object)
+        + low (Quantity, optional)
+        + high (Quantity, optional)
+            + value: `27,5` (number, required)
+            + comparator: `<` (string, required)
+        + type (Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_types` (string)
+                    + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                        
+        + `applies_to`(Codeable_Concept, optional)
+            +  coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/reference_range_applications` (string)
+                    + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                     
+        + age (Range, optional)
+            + low (Quantity, optional)
+                + value : `18` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `years` (string, optinal)
+                - system  (string, optional)
+                - code (string, optional)
+            + high (Quantity, optional)
+                + value : `35` (number, required)
+                + comparator : `<` (string, optional)
+                + unit : `years` (string, optinal)
+                - system (string, optional)
+                - code (string, optional)
+        + text: `Some text` (string, optional)
++ `reaction_on` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `immunization` (string)
+    
++ components (array, optional, fixed-type)
+    + (object)
+        + code (Codeable_Concept, required)
+        - One Of
+            + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
+            + value_quantity (Quantity, required)
+            + value_codeable_concept (Codeable_Concept, required)
+            + value_sampled_data (object, required)
+                + origin (number, optional) //SimpleQuantity Zero value and units
+                + period (number, optional) // decimal Number of milliseconds between samples
+                + factor (number, optional) // decimal Multiply data by this before adding to origin
+                + lowerLimit (number, optional)// decimal Lower limit of detection
+                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+                + dimensions (number, optional) // positiveInt Number of sample points at each time point
+                + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+            
+            + value_boolean (boolean, required)
+            + value_range (object, required, fixed-type)
+                + low (Quantity, required)
+                + high (Quantity, required)
+            + value_ratio (object, required)//Need an example 
+                + numerator (Quantity, required)
+                + denominator (Quantity, required)
+            + value_time (string, required)
+            + value_date_time (string, required)
+            + value_period (Period, required)
+        + interpretation (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/observation_interpretations` (string)
+                    + code: `L` (string)
+                    
+        + reference_ranges (array, optional, fixed-type)
+            + (object)
+                + low (Quantity, optional)
+                + high (Quantity, optional)
+                    + value: `27,5` (number, required)
+                    + comparator: `<` (string, required)
+                + type (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_types` (string)
+                            + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                                
+                + `applies_to` (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_applications` (string)
+                            + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                             
+                + age (Range, optional)
+                    + low (Quantity, optional)
+                        + value : `18` (number, required)
+                        + comparator : `>` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system  (string, optional)
+                        - code (string, optional)
+                    + high (Quantity, optional)
+                        + value : `35` (number, required)
+                        + comparator : `<` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system (string, optional)
+                        - code (string, optional)
+                
+                + text: `Some text` (string, optional)
++ specimen (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `specimen` (string)
+                    
++ device (Reference_request, optional) - Item used during observation.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `equipment` (string)
+
+###  `Observation_Request_Base_DRP_Cancel`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required) - `dictionary - eHealth/observation_statuses`
 + `diagnostic_report` (Reference_request, optional)
@@ -7389,7 +8472,11 @@ This web service returns rule engine rule details filtered by ID with active rul
              + (Coding)
                 + system: `eHealth/diagnostic_report_categories` (string)
                 + code: `diagnostic_procedure` (string)
-+ effective_period(Period, optional)
+- One Of
+    - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    - effective_period (object, optional, fixed-type)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
 + issued: `2018-10-08T09:46:37.694Z` (string, required)
 + conclusion: `At risk of osteoporotic fracture` (string, optional)
 + `conclusion_code` (Codeable_Concept)
@@ -7440,7 +8527,11 @@ This web service returns rule engine rule details filtered by ID with active rul
              + (Coding)
                 + system: `eHealth/diagnostic_report_categories` (string)
                 + code: `diagnostic_procedure` (string)
-+ effective_period(Period, optional)
+- One Of
+    - effective_date_time: `2018-08-02T10:45:16.000Z` (string, optional)
+    - effective_period (object, optional, fixed-type)
+        + start : `2018-08-02T10:45:16.000Z`(string, required) - Starting time with inclusive boundary
+        + end : `2018-08-02T11:00:00.000Z`(string, optional) - End time with inclusive boundary, if not ongoing
 + issued: `2018-10-08T09:46:37.694Z` (string, required)
 + conclusion: `At risk of osteoporotic fracture` (string, optional)
 + `conclusion_code` (Codeable_Concept)
@@ -7801,7 +8892,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Submit_DR_Package_Cancel`
 + `diagnostic_report` (Diagnostic_Report_Package_Request_Cancel, required)
 + `observations` (array, optional, fixed-type)
-    + (Observation_Request_Base_DRP)
+    + (Observation_Request_Base_DRP_Cancel)
         + `diagnostic_report` (Reference_request, required)
             + identifier (Identifier, optional, fixed-type)
                 + type (Codeable_Concept, required)
@@ -7978,7 +9069,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ## Procedures
 ### Procedure_Request
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_request, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
++ `based_on` (Reference_request, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests); One of (based_on OR paper_referral) is required
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8079,7 +9170,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### Procedure_Response
 + id: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, required) - Unique procedure identifier 
-+ `based_on` (Reference_response, optional) - reference to [Service Request](https://medicaleventsmisapi.docs.apiary.io/#reference/service-requests)
++ `based_on` (Reference_response, optional) - reference to [Service Request](https://ehealthmedicaleventsapi.docs.apiary.io/#reference/service-requests)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -8730,6 +9821,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, required,fixed-type)
                     + (Coding)
                         + code: `specimen` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 ### `Service_Request_Show`
 + include `Service_Request_Base`
@@ -9114,6 +10207,15 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + system: `eHealth/resources` (string, required)
                     + code: `device` (string)
             + text (string)
+    - `composition` (object, optional) - access to composition and its child resources including forbidden groups
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `composition` (string)
+                + text (string)
+            + value: `97d57238-ffbe-4335-92ea-28d4de117ea3` (string, required)
 + `child_resource` (object, optional) - should be submitted with resources field only. Describes medical event included in the resource
     + identifier (object, optional)
         + type (object, optional)
@@ -9222,6 +10324,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     - false
 + expires_at: `2018-08-02T10:45:16.000Z` (string, required) - expiration date-time timestamp
 + access_level: `read` (string, required)
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of patient's auth method
 
 ### `Get_Approval_Details`
 + `id`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of approval
@@ -9263,6 +10366,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     - true
     - false
 + access_level: `read` (string, required)
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of patient's auth method
 + `authentication_method_current` (object, required)
     + type: `OTP` (enum, required)
         - OTP
@@ -9385,7 +10489,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
 + inform_with (object, optional)
-    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method 
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 + status: new (string, required)
 
 ### `Prequalify_Care_Plan_Activity_base`
@@ -9787,6 +10891,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                 - INPATIENT
                 - OUTPATIENT
             + system: `PROVIDING_CONDITION` (string)
++ inform_with (object, optional)
+    + `auth_method_id`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 ### `Medical_Event_Context_Episode_Response`
 + `episode` (`Medical_Event_Context_Episode`)
@@ -9826,9 +10932,23 @@ This web service returns rule engine rule details filtered by ID with active rul
     + value: `7c3da506-804d-4550-8993-bf17f9ee0404` (string)
 + display_value: `null` (string, required) - This field is filled on creating and never updated after
 
+### `Medical_Event_Context_Composition`
++ identifier (Identifier)
+    + type (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+                + code: `composition` (string)
+    + value: `7c3da506-804d-4550-8993-bf17f9ee0404` (string)
++ display_value: `null` (string, required) - This field is filled on creating and never updated after
+
+
 ### `Medical_Event_Context_Care_Plan_with_Episode_Response`
 + `episode` (`Medical_Event_Context_Episode`)
 + `care_plan` (`Medical_Event_Context_Care_Plan`) - Care plan identifier related to the Activity on which Device request is based on
+
+
+### `Medical_Event_Context_Composition_with_Episode_Response`
++ `episode` (`Medical_Event_Context_Episode`)
 
 
 ### `Device_Request_Base`
@@ -10012,6 +11132,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                             - episode
                             - device
                             - device_association
++ `inform_with`: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional) - identifier of patient's auth method
 
 
 ### `Device_Request_Response_Details`
@@ -10778,3 +11899,29 @@ This web service returns rule engine rule details filtered by ID with active rul
     - `value_range` (Range, optional)
     - `value_boolean` (boolean, optional)
     - `value_string` (string, optional)
+
+### `Extension`
++ code: `item_weight` (string)
+- One Of
+    - `value_codeable_concept` (Codeable_Concept)
+    - `value_decimal` (number, optional)
+    - `value_string` (string, optional)
+    
+### `Composition_Configurations_Response`
++ `id`: `2017-04-20T19:14:13Z` (string, required)
++ `type`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS` (string)
+            + system: `COMPOSITION_TYPES` (string)
++ `category`: (object, required, fixed-type)
+    + coding (array, fixed-type)
+        + (Coding)
+            + code: `DRIVERS_GROUP1` (string)
+            + system: `COMPOSITION_CATEGORIES` (string)
++ `is_active`: true (boolean, required)
++ `settings`: `{ "COMPOSITION_PERSON_GENDER": { "check": [ "female", "male" ] }, "COMPOSITION_SECTION_EMPTY_REASON": { "check": ["NILKNOWN", "NOTASKED", "WITHHELD", "UNAVAILABLE", "CLOSED"] }, "COMPOSITION_SECTION_NESTING_LEVEL": { "check": 5 }, "COMPOSITION_SECTION_COUNT_LIMIT": { "check": 100 }, "COMPOSITION_SECTION_ORDERBY": { "check": [ "USER", "SYSTEM", "EVENT-DATE", "ALPHABETIC", "CATEGORY" ] }, "COMPOSITION_DRIVER_RELATED_CODES": [ { "condition": { "code": "01.", "system": "eHealth/composition_additional_condition_admission" }, "check": ["a", "b", "c", "d", "e", "f", "g"] }, { "condition": { "code": "01.01.", "system": "eHealth/composition_additional_condition_admission" }, "check": ["a", "b", "c", "d", "e", "f", "g"] }, { "condition": { "code": "01.02.", "system": "eHealth/composition_additional_condition_admission" }, "check": ["a", "b", "c", "d", "e", "f", "g"] }]}`(string,required)
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
