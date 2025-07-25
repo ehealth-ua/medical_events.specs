@@ -3,7 +3,7 @@ HOST: https://api.ehealth.gov.ua/
 
 # MEDICAL EVENTS MIS API
 
-**Version: 9.9.1 v.2**
+**Version: 9.9.1 v.3**
 
 **Environment: PROD**
 
@@ -6835,9 +6835,11 @@ This web service returns rule engine rule details filtered by ID with active rul
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
         + `verification_status`: `entered_in_error` (string) - `dictionary eHealth/condition_verification_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
 + observations (array, optional, fixed-type)
     + (`Observation_Request_1`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/observation_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
         + `context` (Reference_request, required)
             + identifier (Identifier)
                 + type (Codeable_Concept)
@@ -6847,13 +6849,15 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `allergy_intolerances` (array, optional, fixed-type)
     + (`Allergy_Intolerance_Request`)
         + `verification_status`: `entered_in_error` (string)- `dictionary eHealth/allergy_intolerance_verification_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
 + immunizations (array, optional, fixed-type)
     + (`Immunization_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/immunization_statuses`
-
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
 + devices (array, optional, fixed-type)
     + (`Device_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/device_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
         + `status_reason` (Codeable_Concept, optional)
             + coding (array, fixed-type)
                 + (Coding)
@@ -6861,16 +6865,20 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `risk_assessments` (array, optional, fixed-type)
     + (`Risk_Assessment_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/risk_assessment_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
 + `medication_statements` (array, optional, fixed-type)
     + (`Medication_Statement_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/medication_statement_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
 + `medication_administrations` (array, optional, fixed-type)
     + (`Medication_Administration_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/medication_administration_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
         + `status_reason`: `default` (string) - `dictionary eHealth/medication_administration_status_reasons`
 + `diagnostic_reports` (array, optional, fixed-type)
     + (`Diagnostic_Report_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/diagnostic_reports_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
 + `procedures` (array, optional, fixed-type)
     + (`Procedure_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/diagnostic_reports_statuses`
@@ -6878,9 +6886,11 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `clinical_impressions` (array, optional, fixed-type)
     + (`Clinical_Impression_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/clinical_impression_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
 + specimens (array, optional, fixed-type)
     + (`Specimen_EDP_Request`)
         + status: `entered_in_error` (enum, required) - status of the Specimen according to `specimen_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
         + `status_reason` (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
@@ -6898,9 +6908,11 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + system: `device_dispense_mark_in_error_reasons` (string)
                     + code: `incorrect_patient` (string)
         + `status` : `entered_in_error` (required)
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
 + `device_associations` (array, optional, fixed-type)
     + (`Device_assosiation_request`)
         + `status`: `entered_in_error` (string)- `dictionary device_association_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
         + `status_reason` (Codeable_Concept, optional)
             + coding (array, fixed-type)
                 + (Coding)
@@ -6909,6 +6921,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + `detected_issues` (array, optional, fixed-type)
     + (`Detected_issue_Request`)
         + `status`: `entered_in_error` (string)- `dictionary detected_issue_statuses`
+        + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
         + `status_reason` (Codeable_Concept, optional)
             + coding (array, fixed-type)
                 + (Coding)
@@ -8177,23 +8190,15 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `encounter` (string)
 + asserted_date: `2018-08-02T10:45:00.000Z` (string, required)
-+ primary_source: `true` (boolean, required)
-- One Of
-    - performer (object, optional) - if primary_source=true
-        + identifier (object, optional)
-            + type (object, optional)
-                + coding (array, optional, fixed-type)
-                    + object
-                        + system: `eHealth/resources` (string, required)
-                        + code: `employee` (string)
-                + text: `Галина Олександрівна` (string)
-            + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
-    - `report_origin` (object, optional) - if primary_source=false
-        + coding (array, optional, fixed-type)
-            + object
-                + system: `eHealth/report_origins` (string, required)
-                + code: `mother` (string)
-        + text: `зі слів пацієнта` (string)
++ performer (object, required)
+    + identifier (object, optional)
+        + type (object, optional)
+            + coding (array, optional, fixed-type)
+                + object
+                    + system: `eHealth/resources` (string, required)
+                    + code: `employee` (string)
+            + text: `Галина Олександрівна` (string)
+        + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
 + mitigation: `some text` (string, optional)
 + basis (Ext_Reference, optional)
     + references (array, fixed-type)
@@ -8440,7 +8445,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `encounter` (string)
 + primary_source: `true` (boolean, required)
 - One Of
-    - `asserter` (object, optional)
+    - `asserter` (object, optional) - if primary_source=true
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
@@ -8449,7 +8454,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `employee` (string)
                 + text (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)                        
-    - `report_origin` (object, optional)
+    - `report_origin` (object, optional)  - if primary_source=false
         + coding (array, optional, fixed-type)
             + object
                 + system: `eHealth/report_origins` (string, required)
