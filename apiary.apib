@@ -9017,16 +9017,17 @@ This web service returns rule engine rule details filtered by ID with active rul
 + include `Diagnostic_Report_Base_request`
 + primary_source: `true` (boolean, required) - could NOT be false
 + performer (array, required)
-    - One Of
-        - reference (object, optional)
-            + identifier (object, optional)
-                + type (object, optional)
-                    + coding (array, optional, fixed-type)
-                        + object
-                            + system: `eHealth/resources` (string, required)
-                            + code: `employee` (string)
-                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
-        - text: `Галина Олександрівна` (string)          
+    + (object)
+        - One Of
+            - reference (object, optional)
+                + identifier (object, optional)
+                    + type (object, optional)
+                        + coding (array, optional, fixed-type)
+                            + object
+                                + system: `eHealth/resources` (string, required)
+                                + code: `employee` (string)
+                    + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+            - text: `Галина Олександрівна` (string)          
 + `managing_organization` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -9055,17 +9056,18 @@ This web service returns rule engine rule details filtered by ID with active rul
 + include `Diagnostic_Report_Base_Request_Cancel`
 + `primary_source`: `true` (boolean, required) - could NOT be false
 + performer (array, required) - required if primary_source=true
-    - One Of
-        - reference (object, optional)
-            + identifier (object, optional)
-                + type (object, optional)
-                    + coding (array, optional, fixed-type)
-                        + object
-                            + system: `eHealth/resources` (string, required)
-                            + code: `employee` (string)
+    + (object)
+        - One Of
+            - reference (object, optional)
+                + identifier (object, optional)
+                    + type (object, optional)
+                        + coding (array, optional, fixed-type)
+                            + (object)
+                                + system: `eHealth/resources` (string, required)
+                                + code: `employee` (string)
                     + text: `Галина Олександрівна` (string)
                 + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
-        - text: `Галина Олександрівна` (string)        
+            - text: `Галина Олександрівна` (string)        
 + `managing_organization` (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
