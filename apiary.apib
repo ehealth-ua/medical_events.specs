@@ -522,7 +522,7 @@ Read more about [business logic and validations.](https://e-health-ua.atlassian.
         + data(`Episode_Of_Care_Response`)
     
 
-### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,status,page,page_size}]
+### Get Episodes by search params [GET /api/patients/{patient_id}/episodes{?period_from,period_to,status,care_team,part_of,page,page_size}]
 Use period_from period_to to find episodes that were active in a certain period of time
 
 
@@ -534,6 +534,8 @@ Use period_from period_to to find episodes that were active in a certain period 
     + `period_to`: `2018-01-01` (string, optional)
     + `code`: `R80` (string, optional)
     + `status`: `active` (string, optional)
+    + `care_team`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
+    + `part_of`: `70a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)
     + `managing_organization_id`: `80a9e15b-b71b-4caf-8f2e-ff247e8a5677` (string, optional)    
     + `page`: 2 (number, optional) - Page number
     + `page_size`: 50 (number,optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
