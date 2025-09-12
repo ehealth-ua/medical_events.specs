@@ -3,7 +3,7 @@ HOST: https://api.ehealth.gov.ua/
 
 # MEDICAL EVENTS MIS API
 
-**Version: 9.9.1 v.4**
+**Version: 9.9.1 v.5**
 
 **Environment: PROD**
 
@@ -6212,7 +6212,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + system: `eHealth/ICPC2/reasons` (string)
                 + code: `D09` (string)-  `dictionary eHealth/ICPC2/reasons`
 
-+ diagnoses (array, required, fixed-type)
++ diagnoses (array, required, fixed-type) - optional for encounter.type = `intervention`
     + (`Diagnosis_Request`)
         
         
@@ -7734,7 +7734,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Observation_Response`
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + status: `valid` (string, required)
-+ diagnostic_report (Reference_response, optional)
++ `diagnostic_report` (Reference_response, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7760,7 +7760,6 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `eHealth/LOINC/observation_codes` (string)
             + code: `10569-2` (string)
             
-
 - One Of
     + effective_date_time: `2018-10-08T09:46:37.694Z` (string, optional)
     + effective_period (Period, optional)
@@ -7768,17 +7767,20 @@ This web service returns rule engine rule details filtered by ID with active rul
 + inserted_at: `2018-08-02T10:45:16.000Z` (string, required)
 + updated_at: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `false` (boolean, required)
+
 - One Of
-    + `performer` (Reference_response, required)
-        + identifier (Identifier)
-            + type (Codeable_Concept)
+    + `performer` (object, optional)
+        + identifier (object)
+            + type (object)
+                + text : `Галина Олександрівна` (string)
                 + coding (array, fixed-type)
-                    + (Coding)
+                    + (object)
                         + code: `employee` (string)
-        + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
-    + `report_origin` (Codeable_Concept, optional)
-        + coding (array, fixed-type)
-            + (Coding)
+                        + system: `eHealth/resources` (string)
+        + display_value: `Шевченко Олесь Вікторович` (string, required)
+    + `report_origin` (object, optional)
+        + coding (array)
+            + (object)
                 + system: `eHealth/report_origins` (string)
                 + code: `mother` (string)
         + text: `зі слів пацієнта` (string)
@@ -7804,59 +7806,91 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `eHealth/observation_methods` (string)
             + code: `anamnesis` (string)
             
-
-- One Of
-    + value_quantity (Quantity, required)
-    + value_codeable_concept (Codeable_Concept, required)
-    + value_sampled_data (object, required)
-        + origin (number, optional) //SimpleQuantity Zero value and units
-        + period (number, optional) // decimal Number of milliseconds between samples
-        + factor (number, optional) // decimal Multiply data by this before adding to origin
-        + lowerLimit (number, optional)// decimal Lower limit of detection
-        + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
-        + dimensions (number, optional) // positiveInt Number of sample points at each time point
-        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
-    + value_string (string, required)
-    + value_boolean (boolean, required)
-    + value_range (Range, required, fixed-type)
-    + value_ratio (object, required)//Need an example 
-        + numerator (Quantity, required)
-        + denominator (Quantity, required)
-    + value_time (string, required)
-    + value_date_time (string, required)
-    + value_period (Period, required)
-+ reference_ranges (array, optional, fixed-type)
++ components (array, optional, fixed-type)
     + (object)
-        + low (Quantity, optional)
-        + high (Quantity, optional)
-            + value: `27,5` (number, required)
-            + comparator: `<` (string, required)
-        + type (Codeable_Concept, optional)
-            +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/reference_range_types` (string)
-                    + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
-                        
-        + `applies_to`(Codeable_Concept, optional)
-            +  coding (array, fixed-type)
-                + (Coding)
-                    + system: `eHealth/reference_range_applications` (string)
-                    + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
-                     
-        + age (Range, optional)
-            + low (Quantity, optional)
-                + value : `18` (number, required)
+        + code (Codeable_Concept, required)
+        + coding (array)
+                + (object)
+                    + system: `eHealth/LOINC/observation_components` (string)
+                    + code: `83184-2` (string)
+            + text (string, optional)
+        - One Of
+            + value_string: `Some text` (string, required)
+            + value_quantity (object)
+                + value : `13,5` (number, required)
                 + comparator : `>` (string, optional)
-                + unit : `years` (string, optinal)
-                - system  (string, optional)
-                - code (string, optional)
-            + high (Quantity, optional)
-                + value : `35` (number, required)
-                + comparator : `<` (string, optional)
-                + unit : `years` (string, optinal)
-                - system (string, optional)
-                - code (string, optional)
-        + text: `Some text` (string, optional)
+                + unit : `kg` (string, optional)
+                + system : `eHealth/ucum/units` (string, required)
+                + code: `kg` (string, required)
+            + value_codeable_concept (object)
+                + `coding` (array)
+                    + (object)
+                        + system: `eHealth/LOINC/LL5913-0` (string)
+                        + code: `LA32084-8` (string)
+                        + extension (array, optional, fixed-type)
+                            + (object)
+                                + code: `item_weight` (string, required)
+                                + value_decimal: 10 (number, required)
+                    + text (string, optional)
+            + value_sampled_data (object)
+                + origin (number, optional) //SimpleQuantity Zero value and units
+                + period (number, optional) // decimal Number of milliseconds between samples
+                + factor (number, optional) // decimal Multiply data by this before adding to origin
+                + lowerLimit (number, optional)// decimal Lower limit of detection
+                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+                + dimensions (number, optional) // positiveInt Number of sample points at each time point
+                + data (string) // Decimal values with spaces, or "E" | "U" | "Lchore
+            + value_boolean (boolean)
+            + value_range (object, fixed-type)
+                + low (Quantity)
+                + high (Quantity)
+            + value_ratio (object)//Need an example 
+                + numerator (Quantity)
+                + denominator (Quantity)
+            + value_time (string)
+            + value_date_time (string)
+            + value_period (Period)
+
+        + interpretation (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/observation_interpretations` (string)
+                    + code: `L` (string)
+                    
+        + reference_ranges (array, optional, fixed-type)
+            + (object)
+                + low (Quantity, optional)
+                + high (Quantity, optional)
+                    + value: `27,5` (number, required)
+                    + comparator: `<` (string, required)
+                + type (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_types` (string)
+                            + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                                
+                + `applies_to` (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_applications` (string)
+                            + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                             
+                + age (Range, optional)
+                    + low (Quantity, optional)
+                        + value : `18` (number, required)
+                        + comparator : `>` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system  (string, optional)
+                        - code (string, optional)
+                    + high (Quantity, optional)
+                        + value : `35` (number, required)
+                        + comparator : `<` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system (string, optional)
+                        - code (string, optional)
+                
+                + text: `Some text` (string, optional)
+
 + specimen (Reference_response, optional)
     + identifier (Identifier)
         + type (Codeable_Concept)
