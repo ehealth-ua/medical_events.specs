@@ -7265,7 +7265,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             
 
 - One Of
-    + value_quantity (Quantity, required)
+    + value_quantity (object, required)
+        + value : `18` (number)
+        + comparator : `>` (string)
+        + unit : `mg` (string)
+        + system: `eHealth/ucum/units` (string)
+        + code: `mg` (string)
     + value_codeable_concept (Codeable_Concept, required)
     + value_sampled_data (object, required)
         + origin (number, optional) //SimpleQuantity Zero value and units
@@ -7328,7 +7333,12 @@ This web service returns rule engine rule details filtered by ID with active rul
         + code (Codeable_Concept, required)
         - One Of
             + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
-            + value_quantity (Quantity, required)
+            + value_quantity (object, required)
+                + value : `18` (number)
+                + comparator : `>` (string)
+                + unit : `mg` (string)
+                + system: `eHealth/ucum/units` (string)
+                + code: `mg` (string)
             + value_codeable_concept (object, required)
                 + `coding` (array, required, fixed-type)
                     + (object)
@@ -7467,7 +7477,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             
 
 - One Of
-    + value_quantity (Quantity, required)
+    + value_quantity (object, required)
+        + value : `18` (number)
+        + comparator : `>` (string)
+        + unit : `mg` (string)
+        + system: `eHealth/ucum/units` (string)
+        + code: `mg` (string)
     + value_codeable_concept (Codeable_Concept, required)
     + value_sampled_data (object, required)
         + origin (number, optional) //SimpleQuantity Zero value and units
@@ -7530,7 +7545,12 @@ This web service returns rule engine rule details filtered by ID with active rul
         + code (Codeable_Concept, required)
         - One Of
             + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
-            + value_quantity (Quantity, required)
+            + value_quantity (object, required)
+                + value : `18` (number)
+                + comparator : `>` (string)
+                + unit : `mg` (string)
+                + system: `eHealth/ucum/units` (string)
+                + code: `mg` (string)
             + value_codeable_concept (Codeable_Concept, required)
             + value_sampled_data (object, required)
                 + origin (number, optional) //SimpleQuantity Zero value and units
@@ -7664,7 +7684,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             
 
 - One Of
-    + value_quantity (Quantity, required)
+    + value_quantity (object, required)
+        + value : `18` (number)
+        + comparator : `>` (string)
+        + unit : `mg` (string)
+        + system: `eHealth/ucum/units` (string)
+        + code: `mg` (string)
     + value_codeable_concept (Codeable_Concept, required)
     + value_sampled_data (object, required)
         + origin (number, optional) //SimpleQuantity Zero value and units
@@ -7727,7 +7752,12 @@ This web service returns rule engine rule details filtered by ID with active rul
         + code (Codeable_Concept, required)
         - One Of
             + value_string: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.` (string, required)
-            + value_quantity (Quantity, required)
+            + value_quantity (object, required)
+                + value : `18` (number)
+                + comparator : `>` (string)
+                + unit : `mg` (string)
+                + system: `eHealth/ucum/units` (string)
+                + code: `mg` (string)
             + value_codeable_concept (Codeable_Concept, required)
             + value_sampled_data (object, required)
                 + origin (number, optional) //SimpleQuantity Zero value and units
@@ -12416,7 +12446,12 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `device_request_code_parameter` (enum, string)
 - One Of
     - `value_codeable_concept` (Codeable_Concept)
-    - `value_quantity` (Quantity, optional)
+    - `value_quantity` (object, optinal)
+        + value : `18` (number)
+        + comparator : `>` (string)
+        + unit : `mg` (string)
+        + system: `eHealth/ucum/units` (string)
+        + code: `mg` (string)
     - `value_range` (Range, optional)
     - `value_boolean` (boolean, optional)
     - `value_string` (string, optional)
