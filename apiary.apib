@@ -7267,7 +7267,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, optional, fixed-type)
                     + object
                         + system: `eHealth/resources` (string, required)
-                        + code: `employee` (string)
+                        + code: `employee` (enum)
+                            - care_team
                 + text: `Галина Олександрівна` (string)
             + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
     - `report_origin` (object, optional) - if primary_source=false
@@ -7484,7 +7485,8 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `employee` (string)
+                    + code: `employee` (enum)
+                        - care_team
 
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
@@ -7691,7 +7693,8 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `employee` (string)
+                    + code: `employee` (enum)
+                        - care_team
 
 + interpretation (Codeable_Concept, optional)
     + coding (array, fixed-type)
@@ -8008,7 +8011,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + text : `Галина Олександрівна` (string)
                 + coding (array, fixed-type)
                     + (object)
-                        + code: `employee` (string)
+                        + code: `employee` (enum)
+                            - care_team
                         + system: `eHealth/resources` (string)
         + display_value: `Шевченко Олесь Вікторович` (string, required)
     + `report_origin` (object, optional)
