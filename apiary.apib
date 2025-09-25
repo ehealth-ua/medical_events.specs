@@ -10954,14 +10954,16 @@ This web service returns rule engine rule details filtered by ID with active rul
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
-                    + code: `employee` (string)
+                    + code: `employee` (enum)
+                        - care_team
 + contributor (array, optional, fixed-type)
     + (Reference_request)
         + identifier (Identifier)
             + type (Codeable_Concept)
                 + coding (array, fixed-type)
                     + (Coding)
-                        + code: `employee` (string)
+                        + code: `employee` (enum)
+                            - care_team
 + `terms_of_service` (Codeable_Concept,required)
     + coding (array, fixed-type)
         + (Coding)
