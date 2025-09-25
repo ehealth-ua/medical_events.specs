@@ -8972,17 +8972,19 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `division` (string)
 - One Of
     - performer (array, optional) - required if primary_source=true
-        - One Of
-            - reference (object, optional)
-                + identifier (object, optional)
-                    + type (object, optional)
-                        + coding (array, optional, fixed-type)
-                            + object
-                                + system: `eHealth/resources` (string, required)
-                                + code: `employee` (string)
-                        + text: `Галина Олександрівна` (string)
-                    + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
-            - text: `Галина Олександрівна` (string)
+        + (object)
+            - One Of
+                - reference (object, optional)
+                    + identifier (object, optional)
+                        + type (object, optional)
+                            + coding (array, optional, fixed-type)
+                                + object
+                                    + system: `eHealth/resources` (string, required)
+                                    + code: `employee` (enum)
+                                        - care_team
+                            + text: `Галина Олександрівна` (string)
+                        + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+                - text: `Галина Олександрівна` (string)
     - `report_origin` (object, optional) - if primary_source=false
         + coding (array, optional, fixed-type)
             + object
@@ -9024,18 +9026,19 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `division` (string)
 - One Of
     - performer (array, optional) - required if primary_source=true
-        - One Of
-            - reference (object, optional)
-                + identifier (object, optional)
-                    + type (object, optional)
-                        + coding (array, optional, fixed-type)
-                            + object
-                                + system: `eHealth/resources` (string, required)
-                                + code: `employee` (enum)
-                                    - care_team
-                        + text: `Галина Олександрівна` (string)
-                    + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
-            - text: `Галина Олександрівна` (string)
+        + (object)
+            - One Of
+                - reference (object, optional)
+                    + identifier (object, optional)
+                        + type (object, optional)
+                            + coding (array, optional, fixed-type)
+                                + object
+                                    + system: `eHealth/resources` (string, required)
+                                    + code: `employee` (enum)
+                                        - care_team
+                            + text: `Галина Олександрівна` (string)
+                        + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+                - text: `Галина Олександрівна` (string)
     - `report_origin` (object, optional) - if primary_source=false
         + coding (array, optional, fixed-type)
             + object
