@@ -8129,6 +8129,32 @@ This web service returns rule engine rule details filtered by ID with active rul
                         - code (string, optional)
                 
                 + text: `Some text` (string, optional)
+            
+- One Of
+    + value_quantity (object, required)
+        + value : `18` (number)
+        + comparator : `>` (string)
+        + unit : `mg` (string)
+        + system: `eHealth/ucum/units` (string)
+        + code: `mg` (string)
+    + value_codeable_concept (Codeable_Concept, required)
+    + value_sampled_data (object, required)
+        + origin (number, optional) //SimpleQuantity Zero value and units
+        + period (number, optional) // decimal Number of milliseconds between samples
+        + factor (number, optional) // decimal Multiply data by this before adding to origin
+        + lower_limit (number, optional)// decimal Lower limit of detection
+        + upper_limit (number, optional) // Σ 0..1 decimal Upper limit of detection
+        + dimensions (number, optional) // positiveInt Number of sample points at each time point
+        + data (string, required) // Decimal values with spaces, or "E" | "U" | "L"
+    + value_string (string, required)
+    + value_boolean (boolean, required)
+    + value_range (Range, required, fixed-type)
+    + value_ratio (object, required)//Need an example 
+        + numerator (Quantity, required)
+        + denominator (Quantity, required)
+    + value_time (string, required)
+    + value_date_time (string, required)
+    + value_period (Period, required)
                 
 + specimen (Reference_response, optional)
     + identifier (Identifier)
