@@ -1,11 +1,11 @@
 FORMAT: 1A
-HOST: http://ehealth.edenlabllc.com/
+HOST: https://api.ehealth.gov.ua/
 
-# eHealth Medical Events API
+# MEDICAL EVENTS MIS API
 
-Environment: **DEVELOPMENT**
+**Version: 9.13.0**
 
-> In order to get specification for PREPROD/PROD environment please proceed [here](https://medicaleventsmisapi.docs.apiary.io/#)
+Environment: **DEMO**
 
 > Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
 
@@ -13,7 +13,7 @@ All the medical data, stored in eHealth, belongs to the patient and must be prop
 
 1. Only authenticated user with appropriate scope can access medical data
 List of scopes available for the specific user role can be recieved using [/roles endpoint](https://ehealthmisapi1.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/roles/list-roles) [wiki: Scopes data model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583404101/Scopes+model)
-2. Access to Patient Medical Data is driven by Attribute-based access control(ABAC). Rules [https://github.com/edenlabllc/ehealth.abac.api/blob/develop/apps/rules/priv/features/medical_events.feature]
+2. Access to Patient Medical Data is driven by Attribute-based access control(ABAC). Rules [https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17049388207/ABAC+rules+EN]
 3. Patient is able to grant access to specific episode(s) for specific users. User with this approval can view episode details and its nested entities
 4. Post methods are async
 
@@ -2269,7 +2269,7 @@ This method must be used to cancel existing Specimen. Method receives signed mes
 2. status_reason must be added to signed content
 3. status must be changed to `entered_in_error` for the purpose of displaying in the signed content
 
-Please see [Specimen status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3872260122/Specimen+status+model) and Dummy Cancel Specimen for more details
+Please see [Specimen status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17629118869/RC.+Specimen+status+model+EN) and Dummy Cancel Specimen for more details
 
 
 **Scopes required:** `specimen:cancel`
@@ -2746,7 +2746,7 @@ This method must be used to mark in error existing Composition. Method receives 
 2. status_reason must be added to signed content
 3. status must be changed to `ENTERED_IN_ERROR` for the purpose of displaying in the signed content
 
-Please see [Composition status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3872260122/Composition+status+model) and Dummy Mark-in-error Composition for more details
+Please see [Composition status model](https://e-health-ua.atlassian.net/wiki/spaces/emal/pages/18119950362/NEW+ME+Composition+status+model) and Dummy Mark-in-error Composition for more details
 
 
 **Scopes required:** `composition:mark_in_error`
@@ -4299,7 +4299,7 @@ This method must be used to revoke existing Device Request. Method receives sign
 2. status_reason must be added to signed content
 3. status must be changed to revoked for the purpose of displaying in the signed content
 
-Please see [Device request status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3765535052/Device+request+status+model) and Dummy Revoke Device request for more details
+Please see [Device request status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17573085356/Device+request+status+model) and Dummy Revoke Device request for more details
 
 
 **Scopes required:** `device_request:revoke`
@@ -4385,7 +4385,7 @@ This method must be used to cancel existing Device Request. Method receives sign
 2. `status_reason`  must be added to signed content
 2. status must be changed to entered_in_error for the purpose of displaying in the signed content
 
-Please see [Device request status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3765535052/Device+request+status+model) and Dummy Mark in error Device request for more details
+Please see [Device request status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17573085356/Device+request+status+model) and Dummy Mark in error Device request for more details
 
 
 **Scopes required:** `device_request:mark_in_error`
@@ -4701,7 +4701,7 @@ This method must be used to cancel existing Device dispense. Method receives sig
 2. `status_reason`  must be added to signed content
 3. status must be changed to entered_in_error for the purpose of displaying in the signed content
 
-Please see [Device dispense status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/3771760803/Device+dispense+status+model) and Dummy Mark in error Device dispense for more details
+Please see [Device dispense status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/17575543212/Device+dispense+status+model) and Dummy Mark in error Device dispense for more details
 
 
 **Scopes required:** `device_dispense:mark_in_error`
@@ -5384,7 +5384,7 @@ This method must be used to cancel of existing patient's Care plan. Method recei
 2. Activities should not be presented in signed content. 
 3. $.status_reason must be added to signed content
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan* for more details
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN) and *Dummy Cancel Care plan* for more details
 
 It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
@@ -5464,7 +5464,7 @@ http code| processing method | Client recommendations
 
 This method must be used to complete of existing patient's Care plan.
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model)
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN)
 
 It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
@@ -5518,7 +5518,7 @@ This method must be used to cancel of existing activity from patient's Care plan
 1. Signed content of activity must be equal to activity stored in DB. See *Get Care plan activity by ID*
 2. $.detail.status_reason must be changed in signed content
 
-Please see [Care plan status model](https://edenlab.atlassian.net/wiki/spaces/EH/pages/1757349003/Care+plan+status+model) and *Dummy Cancel Care plan activity* for more details
+Please see [Care plan status model](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/2125038784/Care+plan+status+model+EN) and *Dummy Cancel Care plan activity* for more details
 
 It can be processed in both sync and async methods depends on Server decision.
 Depends on processing method Server might answer with:
