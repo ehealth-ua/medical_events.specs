@@ -6950,11 +6950,22 @@ This web service returns rule engine rule details filtered by ID with active rul
             + (Coding)
                 + system: `eHealth/cancellation_reasons` (string)
                 + code: `misspelling` (string) - `dictionary eHealth/cancellation_reasons`
+    + diagnoses (array, required, fixed-type) - optional for encounter.type = `intervention`
+        + (`Diagnosis_Request`)
+            + `code` (Codeable_Concept, optional) 
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + `system`: `eHealth/ICPC2/conditions`,
+                        + `code`: `A20` - `dictionary eHealth/ICPC2/condition_codes or eHealth/ICD10/condition_codes`
+    + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+    + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
                     
 + conditions (array, optional, fixed-type)
     + (`Condition_Request`)
         + `verification_status`: `entered_in_error` (string) - `dictionary eHealth/condition_verification_statuses`
         + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + observations (array, optional, fixed-type)
     + (`Observation_Request_1`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/observation_statuses`
@@ -6965,14 +6976,28 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + coding (array, fixed-type)
                         + (Coding)
                             + code: `encounter` (string)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + `allergy_intolerances` (array, optional, fixed-type)
     + (`Allergy_Intolerance_Request`)
         + `verification_status`: `entered_in_error` (string)- `dictionary eHealth/allergy_intolerance_verification_statuses`
         + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + immunizations (array, optional, fixed-type)
     + (`Immunization_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/immunization_statuses`
         + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
+        + reactions : (array, optional) - the field might be absent. Used for compatibility with a response of GET-method
+            + (object)
+                + detail : (Reference_response, optional) , // Additional information on reaction Observation
+                    + identifier (Identifier)
+                        + type (Codeable_Concept)
+                            + coding (array, fixed-type)
+                                + (Coding)
+                                    + code: `observation` (string)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + devices (array, optional, fixed-type)
     + (`Device_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/device_statuses`
@@ -6985,27 +7010,44 @@ This web service returns rule engine rule details filtered by ID with active rul
     + (`Risk_Assessment_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/risk_assessment_statuses`
         + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + `medication_statements` (array, optional, fixed-type)
     + (`Medication_Statement_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/medication_statement_statuses`
         + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + `medication_administrations` (array, optional, fixed-type)
     + (`Medication_Administration_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/medication_administration_statuses`
         + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
-        + `status_reason`: `default` (string) - `dictionary eHealth/medication_administration_status_reasons`
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/medication_administration_status_reasons` (string)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + `diagnostic_reports` (array, optional, fixed-type)
     + (`Diagnostic_Report_EncounterPCG_Request_Cancel`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/diagnostic_reports_statuses`
         + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + `procedures` (array, optional, fixed-type)
     + (`Procedure_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/diagnostic_reports_statuses`
         + `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional)
+        + `status_reason` (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/procedure_status_reasons` (string)
 + `clinical_impressions` (array, optional, fixed-type)
     + (`Clinical_Impression_EncounterPCG_Request`)
         + `status`: `entered_in_error` (string)- `dictionary eHealth/clinical_impression_statuses`
         + `explanatory_letter`: `Я, Шевченко Наталія Олександрівна, 20.07.2018 здійснила механічну помилку при внесенні обстеження до системи.` (string, required)
+        + inserted_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
+        + updated_at: `2018-08-02T10:45:16.000Z` (string) - the field might be absent. Used for compatibility with a response of GET-method
 + specimens (array, optional, fixed-type)
     + (`Specimen_EDP_Request`)
         + status: `entered_in_error` (enum, required) - status of the Specimen according to `specimen_statuses`
@@ -7878,20 +7920,88 @@ This web service returns rule engine rule details filtered by ID with active rul
 + components (array, optional, fixed-type)
     + (object)
         + code (Codeable_Concept, required)
-            + coding (array, fixed-type)
-                + (Coding)
+            + coding (array)
+                + (object)
                     + system: `eHealth/LOINC/observation_components` (string)
                     + code: `83184-2` (string)
-        + value_codeable_concept (object, required)
-            + `coding` (array, required, fixed-type)
-                + (Coding)
-                    + extension (array, optional, fixed-type)
-                        + (object)
-                            + code: `item_weight` (string, required)
-                            + value_decimal: 10 (number, required)
-                    + system: `eHealth/LOINC/LL5785-2` (string)
-                    + code: `LA12302-8` (string)
             + text (string, optional)
+        - One Of
+            + value_string: `Some text` (string, required)
+            + value_quantity (object)
+                + value : `13,5` (number, required)
+                + comparator : `>` (string, optional)
+                + unit : `kg` (string, optional)
+                + system : `eHealth/ucum/units` (string, required)
+                + code: `kg` (string, required)
+            + value_codeable_concept (object)
+                + `coding` (array)
+                    + (object)
+                        + system: `eHealth/LOINC/LL5913-0` (string)
+                        + code: `LA32084-8` (string)
+                        + extension (array, optional, fixed-type)
+                            + (object)
+                                + code: `item_weight` (string, required)
+                                + value_decimal: 10 (number, required)
+                    + text (string, optional)
+            + value_sampled_data (object)
+                + origin (number, optional) //SimpleQuantity Zero value and units
+                + period (number, optional) // decimal Number of milliseconds between samples
+                + factor (number, optional) // decimal Multiply data by this before adding to origin
+                + lowerLimit (number, optional)// decimal Lower limit of detection
+                + upperLimit (number, optional) // Σ 0..1 decimal Upper limit of detection
+                + dimensions (number, optional) // positiveInt Number of sample points at each time point
+                + data (string) // Decimal values with spaces, or "E" | "U" | "Lchore
+            + value_boolean (boolean)
+            + value_range (object, fixed-type)
+                + low (Quantity)
+                + high (Quantity)
+            + value_ratio (object)//Need an example 
+                + numerator (Quantity)
+                + denominator (Quantity)
+            + value_time (string)
+            + value_date_time (string)
+            + value_period (Period)
+            
+        + interpretation (Codeable_Concept, optional)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + system: `eHealth/observation_interpretations` (string)
+                    + code: `L` (string)
+                    
+        + reference_ranges (array, optional, fixed-type)
+            + (object)
+                + low (Quantity, optional)
+                + high (Quantity, optional)
+                    + value: `27,5` (number, required)
+                    + comparator: `<` (string, required)
+                + type (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_types` (string)
+                            + code: `normal` (string) - `dictionary - eHealth/reference_range_types`
+                                
+                + `applies_to` (Codeable_Concept, optional)
+                    +  coding (array, fixed-type)
+                        + (Coding)
+                            + system: `eHealth/reference_range_applications` (string)
+                            + code: `male` (string) - `dictionary - eHealth/reference_range_applications`
+                             
+                + age (Range, optional)
+                    + low (Quantity, optional)
+                        + value : `18` (number, required)
+                        + comparator : `>` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system  (string, optional)
+                        - code (string, optional)
+                    + high (Quantity, optional)
+                        + value : `35` (number, required)
+                        + comparator : `<` (string, optional)
+                        + unit : `years` (string, optinal)
+                        - system (string, optional)
+                        - code (string, optional)
+                
+                + text: `Some text` (string, optional)
+
 
 ### `Observation_Request_2` (`Observation_Request_Base`)
 + `context` (Reference_request, optional)
