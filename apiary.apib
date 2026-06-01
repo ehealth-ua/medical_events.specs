@@ -8699,6 +8699,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `device` (string)
++ primary_source: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string)
 + recorder: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -8780,6 +8787,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ primary_source: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string) 
 + recorder: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -8803,20 +8817,28 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `encounter` (string)
 + identified_date_time : `2018-08-02T10:45:16.000Z`,
++ primary_source: `true` (boolean, required) - source of detected issue information. True - the issue is detected by author, false - according to someone description.
 + recorder: (Reference_request, required) - The employee who registered the issue
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ author: (Reference_request, required) - The employee or person who identified the issue
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (enum, required)
-                        - employee
-                        - patient
+- One Of
+    - `author` (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + (Coding)
+                        + code: `employee` (enum, required)
+                            - employee
+                            - patient
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + implicated: (Reference_request, optional) - device which caused an issue in the subject
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -9543,6 +9565,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `device` (string)
++ primary_source: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string)
 + recorder: (Reference_response, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -9582,6 +9611,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ primary_source: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string)                   
 + recorder: (Reference_response, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -9601,20 +9637,28 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ primary_source: `true` (boolean, required) - source of detected issue information. True - the issue is detected by author, false - according to someone description.
 + recorder: (Reference_response, required) - The employee who registered the issue
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ author: (Reference_response, required) - The employee or person who identified the issue
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (enum, required)
-                        - employee
-                        - patient
+- One Of
+    - `author` (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + (Coding)
+                        + code: `employee` (enum, required)
+                            - employee
+                            - patient
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + implicated: (Reference_response, optional) - device which caused an issue in the subject
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
