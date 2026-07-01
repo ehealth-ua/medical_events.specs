@@ -8825,10 +8825,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `employee` (string)
 - One Of
-    - `author` (object, optional) - if primary_source=true
-        + identifier (object, optional)
-            + type (object, optional)
-                + coding (array, optional, fixed-type)
+    - `author` (Reference_request, optional) - if primary_source=true
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (enum, required)
                             - employee
@@ -9626,8 +9626,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
-+ inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
-+ updated_by: `2018-08-02T10:55:00.000Z` (string, optional)
++ inserted_by: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional)
++ updated_by: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional)
 
 ### `Detected_issue_Response`
 + include `Detected_issue_Request`
@@ -9645,10 +9645,10 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `employee` (string)
 - One Of
-    - `author` (object, optional) - if primary_source=true
-        + identifier (object, optional)
-            + type (object, optional)
-                + coding (array, optional, fixed-type)
+    - `author` (Reference_response, optional) - if primary_source=true
+        + identifier (Identifier, required)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
                     + (Coding)
                         + code: `employee` (enum, required)
                             - employee
@@ -9678,8 +9678,8 @@ This web service returns rule engine rule details filtered by ID with active rul
             + code: `default` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
-+ inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
-+ updated_by: `2018-08-02T10:55:00.000Z` (string, optional)
++ inserted_by: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional)
++ updated_by: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional)
 
 ### `Clinical_Impression_Show`
 + include `Clinical_Impression_EncounterPCG_Request`
