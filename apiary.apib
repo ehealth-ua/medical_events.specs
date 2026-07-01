@@ -8713,14 +8713,16 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `employee` (string)
 - One Of
-    - `author` (Reference_request, optional) - if primary_source=true
-        + identifier (Identifier, required)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - `author` (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (enum, required)
                             - employee
                             - patient
+            + value: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required)
     - `report_origin` (object, optional) - if primary_source=false
         + coding (array, optional, fixed-type)
             + object
@@ -9533,14 +9535,16 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `employee` (string)
 - One Of
-    - `author` (Reference_response, optional) - if primary_source=true
-        + identifier (Identifier, required)
-            + type (Codeable_Concept)
-                + coding (array, fixed-type)
-                    + (Coding)
+    - `author` (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
                         + code: `employee` (enum, required)
                             - employee
                             - patient
+            + value: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required)
     - `report_origin` (object, optional) - if primary_source=false
         + coding (array, optional, fixed-type)
             + object
