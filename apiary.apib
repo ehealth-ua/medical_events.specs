@@ -3,9 +3,7 @@ HOST: https://api.ehealth.gov.ua/
 
 # MEDICAL EVENTS MIS API
 
-**Version: 9.11.0 v.2**
-
-**Environment: PROD**
+**Version: 9.15.3**
 
 > Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
 
@@ -8384,6 +8382,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `device` (string)
++ primary_source: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string)
 + recorder: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -8465,6 +8470,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ primary_source: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string) 
 + recorder: (Reference_request, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -8488,20 +8500,31 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `encounter` (string)
 + identified_date_time : `2018-08-02T10:45:16.000Z`,
++ primary_source: `true` (boolean, required) - source of detected issue information. True - the issue is detected by author, false - according to someone description.
 + recorder: (Reference_request, required) - The employee who registered the issue
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ author: (Reference_request, required) - The employee or person who identified the issue
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (enum, required)
-                        - employee
-                        - patient
+- One Of
+    - `author` (object, optional) - if primary_source=true
+        + identifier (object, optional)
+            + type (object, optional)
+                + coding (array, optional, fixed-type)
+                    + object
+                        + system: `eHealth/resources` (string, required)
+                        + code: `employee` (enum, required)
+                            - employee
+                            - patient
+                + text: `Галина Олександрівна` (string)
+            + value: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `patient` (string)
+        + text: `зі слів пацієнта` (string)
 + implicated: (Reference_request, optional) - device which caused an issue in the subject
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -9038,6 +9061,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `device` (string)
++ primary_source: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string)
 + recorder: (Reference_response, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -9077,6 +9107,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ primary_source: `false` (boolean, required)
++ `report_origin` (object, optional)
+    + coding (array, fixed-type)
+        + (object)
+            + system: `eHealth/report_origins` (string, required)
+            + code: `patient` (string, required)
+    + text: `зі слів пацієнта` (string)                   
 + recorder: (Reference_response, required)
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -9085,8 +9122,8 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
-+ inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
-+ updated_by: `2018-08-02T10:55:00.000Z` (string, optional)
++ inserted_by: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional)
++ updated_by: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional)
 
 ### `Detected_issue_Response`
 + include `Detected_issue_Request`
@@ -9096,20 +9133,13 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ primary_source: `true` (boolean, required) - source of detected issue information. True - the issue is detected by author, false - according to someone description.
 + recorder: (Reference_response, required) - The employee who registered the issue
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
             + coding (array, required,fixed-type)
                 + (Coding)
                     + code: `employee` (string)
-+ author: (Reference_response, required) - The employee or person who identified the issue
-    + identifier (Identifier, required)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (enum, required)
-                        - employee
-                        - patient
 + implicated: (Reference_response, optional) - device which caused an issue in the subject
     + identifier (Identifier, optional, fixed-type)
         + type (Codeable_Concept, required)
@@ -9129,8 +9159,8 @@ This web service returns rule engine rule details filtered by ID with active rul
             + code: `default` (string)
 + inserted_at: `2018-08-02T10:55:00.000Z` (string, optional)
 + updated_at: `2018-08-02T10:55:00.000Z` (string, optional)
-+ inserted_by: `2018-08-02T10:55:00.000Z` (string, optional)
-+ updated_by: `2018-08-02T10:55:00.000Z` (string, optional)
++ inserted_by: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional)
++ updated_by: `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, optional)
 
 ### `Clinical_Impression_Show`
 + include `Clinical_Impression_EncounterPCG_Request`
@@ -11474,7 +11504,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                             - diagnostic_report
                             - procedure
                             - encounter
-                            - episode_of_care 
+                            - episode 
                             - device
                             - device_association
 + `primary_source`: `false` (boolean, required)
@@ -11892,7 +11922,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + system: `eHealth/ucum/units` (string, required)
     + code: min (string, required)
     + comparator: `>` (string, optional)
-+ quantity (object, required) - The quantity of specimen collected
++ quantity (object, optional) - The quantity of specimen collected
     + value: 20 (number, required)
     + system: `eHealth/ucum/units` (string, required)
     + code: g (string, required)
@@ -11916,16 +11946,16 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Specimen_Container_Request`
 + identifier: `1-3244-ABC` (string, required) - Id for the container
 + description: `Some container description` (string, optional) - Textual description of the container
-+ type (Codeable_Concept, required) - Kind of container directly associated with specimen.
++ type (Codeable_Concept, optional) - Kind of container directly associated with specimen.
     + coding (array, fixed-type)
         + (Coding)
             + system: `specimen_container_types` (string)
             + code: `default` (string)
-+ capacity (object, required) - Container volume or size
++ capacity (object, optional) - Container volume or size
     + value: 30000 (number, required)
     + system: `eHealth/ucum/units` (string, required)
     + code: mg (string, required)
-+ specimen_quantity (object, required) - Quantity of specimen within container
++ specimen_quantity (object, optional) - Quantity of specimen within container
     + value: 20 (number, required)
     + system: `eHealth/ucum/units` (string, required)
     + code: g (string, required)
@@ -12076,7 +12106,7 @@ This web service returns rule engine rule details filtered by ID with active rul
         + code: min (string, required)
         + comparator: `>` (string, optional)
         + unit: хв (string, required)
-    + quantity (object, required) - The quantity of Specimen collected
+    + quantity (object, optional) - The quantity of Specimen collected
         + value: 20 (number, required)
         + system: `eHealth/ucum/units` (string, required)
         + code: g (string, required)
@@ -12089,12 +12119,12 @@ This web service returns rule engine rule details filtered by ID with active rul
                         + code: `procedure` (string, required)
 + container (array, required) - Direct container of Specimen 
     + (`Specimen_Container_Request`)
-        + capacity (object, required) - Container volume or size
+        + capacity (object, optional) - Container volume or size
             + value: 30000 (number, required)
             + system: `eHealth/ucum/units` (string, required)
             + code: mg (string, required)
             + unit: міліграм (string, required)
-        + specimen_quantity (object, required) - Quantity of Specimen within container
+        + specimen_quantity (object, optional) - Quantity of Specimen within container
             + value: 20 (number, required)
             + system: `eHealth/ucum/units` (string, required)
             + code: g (string, required)
