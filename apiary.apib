@@ -2029,7 +2029,7 @@ Please see [Cancel Procedure]() and [Dummy Cancel Procedure for more details
                     + code: `default` (string)
         + `explanatory_letter`: `Процедура була відмінена у зв'язку з помилкою при виборі пацієнта ` (string, optional)
         + `status` : `ENTERED_IN_ERROR` (required) - Status for provided procedure
-        + `focal_device` (object, optional) - Manipulated, implanted, or removed device
+        + `focal_device` (array, optional) - Manipulated, implanted, or removed device
             + action (Codeable_Concept, optional) - Kind of change to Device
                 + coding (array, fixed-type)
                     + (Coding)
@@ -9833,7 +9833,7 @@ This web service returns rule engine rule details filtered by ID with active rul
             + (Coding)
              + system: `eHealth/assistive_products` (string) 
              + code: `03_05_38` (string)
-+ `focal_device` (object, optional) - Manipulated, implanted, or removed device
++ `focal_device` (array, optional) - Manipulated, implanted, or removed device
     + action (Codeable_Concept, optional) - Kind of change to Device
         + coding (array, fixed-type)
             + (Coding)
@@ -9988,7 +9988,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + coding (array, fixed-type)
                     + (Coding)
                         + code: `equipment` (string) 
-+ `focal_device` (object, optional) - Manipulated, implanted, or removed device
++ `focal_device` (array, optional) - Manipulated, implanted, or removed device
     + action (Codeable_Concept, optional) - Kind of change to Device
         + coding (array, fixed-type)
             + (Coding)
