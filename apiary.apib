@@ -3,7 +3,7 @@ HOST: https://api.ehealth.gov.ua/
 
 # MEDICAL EVENTS MIS API
 
-**Version: 9.15.3**
+**Version: 9.15.6**
 
 > Read more about eHealth API Manifest [here](https://ehealthapimanifest.docs.apiary.io/#introduction/interacting-with-api)
 
@@ -2721,7 +2721,6 @@ http code| processing method | Client recommendations
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data(`Care_plan_activity_show`)
-
 
 ### Mark in error Composition[PATCH /api/patients/{patient_id}/compositions/{id}/actions/mark_in_error]
 
@@ -5999,6 +5998,18 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ `care_team` (Reference_request, optinal)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_team` (string)
++ `part_of` (Reference_request, optinal)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode_of_care` (string)
 
 
 ### `Episode_Of_Care_Response`
@@ -6069,7 +6080,19 @@ This web service returns rule engine rule details filtered by ID with active rul
             + system: `eHealth/episode_closing_reasons` (string)
             + code: `cured` (string) \\ wrong_patient, misspelling
             
-+ `explanatory_letter`: `Епізод був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)    
++ `explanatory_letter`: `Епізод був відмінений у зв'язку з помилкою при виборі пацієнта ` (string, optional)
++ `care_team` (Reference_request, optinal)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_team` (string)
++ `part_of` (Reference_request, optinal)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode_of_care` (string)
 
 
 ### `Update_Episode`
@@ -6080,6 +6103,18 @@ This web service returns rule engine rule details filtered by ID with active rul
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `employee` (string)
++ `care_team` (Reference_request, optinal)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `care_team` (string)
++ `part_of` (Reference_request, optinal)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `episode_of_care` (string)
 
                     
 
@@ -7029,7 +7064,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + id: `90a9e15b-b71b-4caf-8f2e-ff247e8a5600` (string, required)
 + primary_source: `false` (boolean, required)
 - One Of
-    - `asserter` (object, optional)
+    - `asserter` (array, optional)
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
@@ -7097,7 +7132,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + id: `6fe6d880-f100-4e39-a278-1d14eb8472ef` (string, required)
 + primary_source: `true` (boolean, required)
 - One Of
-    - `asserter` (object, optional)
+    - `asserter` (array, optional)
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
@@ -7203,7 +7238,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
 + primary_source: `true` (boolean, required) - could NOT be false on DRP
 - One Of
-    - performer (object, optional) - if primary_source=true
+    - performer (array, optional) - if primary_source=true
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
@@ -7411,7 +7446,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + issued: `2018-08-02T10:45:16.000Z` (string, required)
 
 + primary_source: `true` (boolean, required) - could NOT be false on DRP
-+ `performer` (Reference_request, required)
++ `performer` (array, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
@@ -7829,7 +7864,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 + primary_source: `false` (boolean, required)
 
 - One Of
-    + `performer` (object, optional)
+    + `performer` (array, optional)
         + identifier (object)
             + type (object)
                 + text : `Галина Олександрівна` (string)
@@ -8491,8 +8526,8 @@ This web service returns rule engine rule details filtered by ID with active rul
 + code (Codeable_Concept, optional) - Specific type of detected issue
     + coding (array, fixed-type)
         + (Coding)
-            + system: `detected_issue_categories` (string) 
-            + code: `default` (string)- `dictionary -  detected_issue_categories`
+            + system: `detected_issue_codes` (string) 
+            + code: `default` (string)- `dictionary -  detected_issue_codes`
 + encounter (Reference_request, required)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -8762,7 +8797,59 @@ This web service returns rule engine rule details filtered by ID with active rul
                 + (Coding)
                     + code: `division` (string)
 - One Of
-    - performer (optional) - required if primary_source=true
+    - performer (array, optional) - required if primary_source=true
+        - One Of
+            - reference (object, optional)
+                + identifier (object, optional)
+                    + type (object, optional)
+                        + coding (array, optional, fixed-type)
+                            + object
+                                + system: `eHealth/resources` (string, required)
+                                + code: `employee` (string)
+                        + text: `Галина Олександрівна` (string)
+                    + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+            - text: `Галина Олександрівна` (string)
+    - `report_origin` (object, optional) - if primary_source=false
+        + coding (array, optional, fixed-type)
+            + object
+                + system: `eHealth/report_origins` (string, required)
+                + code: `mother` (string)
+        + text: `зі слів пацієнта` (string)
++ `results_interpreter` (optional)
+    - One Of
+        - reference (object, optional)
+            + identifier (object, optional)
+                + type (object, optional)
+                    + coding (array, optional, fixed-type)
+                        + object
+                            + system: `eHealth/resources` (string, required)
+                            + code: `employee` (string)
+                + value: `97d57238-ffbe-4335-92ea-28d4de117ea2` (string, required)
+        - text: `Опанасенко Олексій Володимирович` (string, optional)
+
+### `Diagnostic_Report_EncounterPCG_Request_Cancel`
++ include `Diagnostic_Report_Base_Request_Cancel`
++ encounter (Reference_request, required)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ primary_source: `true` (boolean, required) - could be false
++ `managing_organization` (Reference_request, optional)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `legal_enity` (string)
++ `division` (Reference_request, optional, fixed-type) - Division of legal_entity where DR have been performed.
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `division` (string)
+- One Of
+    - performer (array, optional) - required if primary_source=true
         - One Of
             - reference (object, optional)
                 + identifier (object, optional)
@@ -8795,7 +8882,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Diagnostic_Report_Package_Request`
 + include `Diagnostic_Report_Base_request`
 + primary_source: `true` (boolean, required) - could NOT be false
-+ performer (required)
++ performer (array, required)
     - One Of
         - reference (object, optional)
             + identifier (object, optional)
@@ -8833,7 +8920,7 @@ This web service returns rule engine rule details filtered by ID with active rul
 ### `Diagnostic_Report_Package_Request_Cancel`
 + include `Diagnostic_Report_Base_request`
 + `primary_source`: `true` (boolean, required) - could NOT be false
-+ performer (required) - required if primary_source=true
++ performer (array, required) - required if primary_source=true
     - One Of
         - reference (object, optional)
             + identifier (object, optional)
@@ -8909,7 +8996,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + `display_value`: `Київська обласна лікарня №1` (string, required) - This field is filled on creating and never updated after          
 + `primary_source`: `true` (boolean, required)
 - One Of
-    - performer (optional) - required if primary_source=true
+    - performer (array, optional) - required if primary_source=true
         - One Of
             - reference (object, optional)
                 + identifier (object, optional)
@@ -9251,7 +9338,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
 - One Of
-    - performer (object, optional) - if primary_source=true
+    - performer (array, optional) - if primary_source=true
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
@@ -9353,7 +9440,7 @@ This web service returns rule engine rule details filtered by ID with active rul
     + display_value: `Шевченко Олесь Вікторович` (string, required) - This field is filled on creating and never updated after
 + primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
 - One Of
-    - performer (object, optional) - if primary_source=true
+    - performer (array, optional) - if primary_source=true
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
@@ -9527,7 +9614,7 @@ This web service returns rule engine rule details filtered by ID with active rul
                     + code: `employee` (string)
 + primary_source: `true` (boolean, required) - source of procedure information. True - the procedure is done by current doctor, false - according to someone description.
 - One Of
-    - performer (object, optional) - if primary_source=true
+    - performer (array, optional) - if primary_source=true
         + identifier (object, optional)
             + type (object, optional)
                 + coding (array, optional, fixed-type)
@@ -10641,12 +10728,13 @@ This web service returns rule engine rule details filtered by ID with active rul
 + status: new (string, required)
 
 ### `Prequalify_Care_Plan_Activity_base`
-+ author (Reference_request, required) - `author of the activity`
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
++ author (array, required) - `author of the activity`
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
 + `care_plan` (Reference_request, required) - `Care plan to which the activity belongs`
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -10665,12 +10753,13 @@ This web service returns rule engine rule details filtered by ID with active rul
 
 ### `Care_Plan_activity_base`
 + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - unique within the care plan
-+ author (Reference_request, required) - `author of the activity`
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `employee` (string)
++ author (array, required) - `author of the activity`
+    + (Reference_request)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `employee` (string)
 + `care_plan` (Reference_request, required) - `Care plan to which the activity belongs`
     + identifier (Identifier)
         + type (Codeable_Concept)
